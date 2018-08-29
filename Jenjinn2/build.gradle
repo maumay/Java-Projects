@@ -1,0 +1,40 @@
+
+dependencies {
+	compile project(':JFlow')
+}
+
+version = '1.0'
+
+jar {
+	
+    manifest {
+        attributes(
+        	'Implementation-Title': 'Jenjinn',
+            'Implementation-Version': version,
+            )
+    }
+}
+
+
+// task wrapper(type: Wrapper) {
+// 	gradleVersion = '4.6'
+// }
+
+// test {
+//     useJUnitPlatform()
+// }
+
+// task sourcesJar(type: Jar, dependsOn: classes) {
+//     classifier = 'sources'
+//     from sourceSets.main.java
+// }
+
+// task javadocJar(type: Jar, dependsOn: javadoc) {
+//     classifier = 'javadoc'
+//     from javadoc.destinationDir
+// }
+
+// artifacts {
+//     archives sourcesJar
+//     archives javadocJar
+// }
