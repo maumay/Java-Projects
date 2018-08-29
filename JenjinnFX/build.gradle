@@ -1,0 +1,22 @@
+version = '1.0'
+
+dependencies {
+    compile project(':JFlow')
+    compile project(':Jenjinn2')
+}
+
+jar {
+    manifest {
+        attributes(
+            'Implementation-Title': 'JenjinnFX',
+            'Implementation-Version': version,
+            'Main-Class': 'jenjinn.fx.JenjinnApp',
+            'Class-Path': configurations.compileClasspath.files.collect {"$it.name"} .join(' ')
+            )
+    }
+    
+    from {
+         configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
