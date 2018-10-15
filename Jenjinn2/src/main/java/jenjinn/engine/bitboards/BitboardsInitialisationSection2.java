@@ -1,9 +1,9 @@
 package jenjinn.engine.bitboards;
 
 import static java.util.Arrays.asList;
-import static xawd.jflow.utilities.CollectionUtil.last;
-import static xawd.jflow.utilities.CollectionUtil.take;
-import static xawd.jflow.utilities.MapUtil.longMap;
+import static jflow.utilities.CollectionUtil.last;
+import static jflow.utilities.CollectionUtil.take;
+import static jflow.utilities.MapUtil.longMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +11,8 @@ import java.util.List;
 import jenjinn.engine.base.BoardSquare;
 import jenjinn.engine.base.Direction;
 import jenjinn.engine.pieces.PieceMovementDirections;
-import xawd.jflow.iterators.factories.IterRange;
-import xawd.jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.IterRange;
+import jflow.iterators.factories.Iterate;
 
 /**
  * Second of three utility classes containing only static methods to initialise

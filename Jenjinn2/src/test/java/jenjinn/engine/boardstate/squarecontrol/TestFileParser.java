@@ -3,9 +3,9 @@
  */
 package jenjinn.engine.boardstate.squarecontrol;
 
-import static xawd.jflow.utilities.CollectionUtil.drop;
-import static xawd.jflow.utilities.CollectionUtil.sizeOf;
-import static xawd.jflow.utilities.CollectionUtil.take;
+import static jflow.utilities.CollectionUtil.drop;
+import static jflow.utilities.CollectionUtil.sizeOf;
+import static jflow.utilities.CollectionUtil.take;
 
 import java.util.HashSet;
 import java.util.List;
@@ -22,9 +22,9 @@ import jenjinn.engine.parseutils.CordParser;
 import jenjinn.engine.pgn.CommonRegex;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
-import xawd.jflow.iterators.factories.Iterate;
-import xawd.jflow.iterators.misc.Pair;
-import xawd.jflow.utilities.Strings;
+import jflow.iterators.factories.Iterate;
+import jflow.iterators.misc.Pair;
+import jflow.utilities.Strings;
 
 
 /**

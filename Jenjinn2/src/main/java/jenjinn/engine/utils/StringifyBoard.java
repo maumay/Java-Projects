@@ -6,7 +6,7 @@ package jenjinn.engine.utils;
 import java.util.Arrays;
 import java.util.List;
 
-import xawd.jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iterate;
 
 /**
  * @author t

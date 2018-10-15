@@ -4,7 +4,7 @@
 package jenjinn.engine.bitboards;
 
 import jenjinn.engine.base.BoardSquare;
-import xawd.jflow.iterators.Flow;
+import jflow.iterators.Flow;
 
 /**
  * @author t

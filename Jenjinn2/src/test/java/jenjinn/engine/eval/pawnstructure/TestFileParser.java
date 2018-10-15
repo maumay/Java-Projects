@@ -3,8 +3,8 @@
  */
 package jenjinn.engine.eval.pawnstructure;
 
-import static xawd.jflow.utilities.CollectionUtil.head;
-import static xawd.jflow.utilities.CollectionUtil.last;
+import static jflow.utilities.CollectionUtil.head;
+import static jflow.utilities.CollectionUtil.last;
 
 import java.util.List;
 
@@ -13,9 +13,9 @@ import org.junit.jupiter.params.provider.Arguments;
 import jenjinn.engine.base.BoardSquare;
 import jenjinn.engine.parseutils.AbstractTestFileParser;
 import jenjinn.engine.pgn.CommonRegex;
-import xawd.jflow.collections.FList;
-import xawd.jflow.iterators.misc.IntPair;
-import xawd.jflow.utilities.Strings;
+import jflow.collections.FList;
+import jflow.iterators.misc.IntPair;
+import jflow.utilities.Strings;
 
 /**
  * @author ThomasB

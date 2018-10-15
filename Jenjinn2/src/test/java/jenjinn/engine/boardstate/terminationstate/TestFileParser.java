@@ -3,8 +3,8 @@
  */
 package jenjinn.engine.boardstate.terminationstate;
 
-import static xawd.jflow.utilities.CollectionUtil.last;
-import static xawd.jflow.utilities.CollectionUtil.take;
+import static jflow.utilities.CollectionUtil.last;
+import static jflow.utilities.CollectionUtil.take;
 
 import java.util.List;
 

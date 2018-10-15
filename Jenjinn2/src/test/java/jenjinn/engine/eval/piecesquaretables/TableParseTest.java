@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import jenjinn.engine.eval.PieceValues;
 import jenjinn.engine.pieces.ChessPiece;
-import xawd.jflow.iterators.factories.IterRange;
+import jflow.iterators.factories.IterRange;
 
 /**
  * @author ThomasB

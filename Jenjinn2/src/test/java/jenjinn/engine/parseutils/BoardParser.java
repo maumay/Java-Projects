@@ -5,9 +5,9 @@ package jenjinn.engine.parseutils;
 
 import static jenjinn.engine.eval.piecesquaretables.TestingPieceSquareTables.getEndgameTables;
 import static jenjinn.engine.eval.piecesquaretables.TestingPieceSquareTables.getMidgameTables;
+import static jflow.utilities.Strings.allMatches;
+import static jflow.utilities.Strings.firstMatch;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static xawd.jflow.utilities.Strings.allMatches;
-import static xawd.jflow.utilities.Strings.firstMatch;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -28,9 +28,9 @@ import jenjinn.engine.boardstate.HalfMoveCounter;
 import jenjinn.engine.boardstate.HashCache;
 import jenjinn.engine.eval.piecesquaretables.PieceSquareTables;
 import jenjinn.engine.utils.BoardHasher;
-import xawd.jflow.iterators.factories.IterRange;
-import xawd.jflow.iterators.factories.Iterate;
-import xawd.jflow.utilities.Strings;
+import jflow.iterators.factories.IterRange;
+import jflow.iterators.factories.Iterate;
+import jflow.utilities.Strings;
 
 /**
  * Lets us construct {@linkplain BoardState} instances in an easy way via external files.

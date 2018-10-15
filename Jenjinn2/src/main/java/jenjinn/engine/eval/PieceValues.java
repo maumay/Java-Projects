@@ -4,7 +4,7 @@
 package jenjinn.engine.eval;
 
 import jenjinn.engine.pieces.ChessPiece;
-import xawd.jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iterate;
 
 /**
  * @author ThomasB

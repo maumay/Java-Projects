@@ -3,14 +3,14 @@
  */
 package jenjinn.engine.eval.staticexchangeevaluator;
 
-import static xawd.jflow.utilities.CollectionUtil.head;
-import static xawd.jflow.utilities.CollectionUtil.last;
-import static xawd.jflow.utilities.Strings.allMatches;
-import static xawd.jflow.utilities.Strings.firstMatch;
+import static jflow.utilities.CollectionUtil.head;
+import static jflow.utilities.CollectionUtil.last;
+import static jflow.utilities.Strings.allMatches;
+import static jflow.utilities.Strings.firstMatch;
 
 import jenjinn.engine.base.BoardSquare;
 import jenjinn.engine.pgn.CommonRegex;
-import xawd.jflow.collections.FList;
+import jflow.collections.FList;
 
 /**
  * @author ThomasB

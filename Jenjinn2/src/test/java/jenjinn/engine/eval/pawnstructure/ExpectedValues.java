@@ -3,8 +3,8 @@
  */
 package jenjinn.engine.eval.pawnstructure;
 
-import xawd.jflow.collections.FList;
-import xawd.jflow.iterators.misc.IntPair;
+import jflow.collections.FList;
+import jflow.iterators.misc.IntPair;
 
 /**
  * @author ThomasB

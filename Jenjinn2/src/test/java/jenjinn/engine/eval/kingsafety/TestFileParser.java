@@ -3,11 +3,11 @@
  */
 package jenjinn.engine.eval.kingsafety;
 
-import static xawd.jflow.utilities.CollectionUtil.drop;
-import static xawd.jflow.utilities.CollectionUtil.head;
-import static xawd.jflow.utilities.CollectionUtil.last;
-import static xawd.jflow.utilities.CollectionUtil.take;
-import static xawd.jflow.utilities.Strings.allMatches;
+import static jflow.utilities.CollectionUtil.drop;
+import static jflow.utilities.CollectionUtil.head;
+import static jflow.utilities.CollectionUtil.last;
+import static jflow.utilities.CollectionUtil.take;
+import static jflow.utilities.Strings.allMatches;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import jenjinn.engine.parseutils.AbstractTestFileParser;
 import jenjinn.engine.parseutils.BoardParser;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
-import xawd.jflow.iterators.misc.Pair;
+import jflow.iterators.misc.Pair;
 
 /**
  * @author ThomasB

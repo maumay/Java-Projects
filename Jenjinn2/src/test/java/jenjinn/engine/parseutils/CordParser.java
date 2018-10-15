@@ -3,16 +3,16 @@
  */
 package jenjinn.engine.parseutils;
 
-import static xawd.jflow.utilities.CollectionUtil.head;
-import static xawd.jflow.utilities.CollectionUtil.last;
-import static xawd.jflow.utilities.Strings.allMatches;
+import static jflow.utilities.CollectionUtil.head;
+import static jflow.utilities.CollectionUtil.last;
+import static jflow.utilities.Strings.allMatches;
 
 import java.util.List;
 
 import jenjinn.engine.base.BoardSquare;
 import jenjinn.engine.base.Direction;
 import jenjinn.engine.pgn.CommonRegex;
-import xawd.jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iterate;
 
 /**
  * @author ThomasB

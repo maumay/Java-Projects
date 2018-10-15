@@ -18,7 +18,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import jenjinn.engine.base.BoardSquare;
 import jenjinn.engine.base.Direction;
-import xawd.jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iterate;
 
 /**
  * @author ThomasB

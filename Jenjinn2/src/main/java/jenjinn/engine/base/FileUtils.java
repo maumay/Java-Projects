@@ -12,9 +12,9 @@ import java.util.Collection;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import xawd.jflow.collections.FList;
-import xawd.jflow.collections.Lists;
-import xawd.jflow.iterators.factories.Iterate;
+import jflow.collections.FList;
+import jflow.collections.Lists;
+import jflow.iterators.factories.Iterate;
 
 /**
  * @author ThomasB

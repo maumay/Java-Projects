@@ -3,8 +3,8 @@
  */
 package jenjinn.engine.moves;
 
-import static xawd.jflow.utilities.CollectionUtil.sizeOf;
-import static xawd.jflow.utilities.CollectionUtil.string;
+import static jflow.utilities.CollectionUtil.sizeOf;
+import static jflow.utilities.CollectionUtil.string;
 
 import java.util.Iterator;
 
@@ -14,8 +14,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.MoveReversalData;
-import xawd.jflow.iterators.factories.IterRange;
-import xawd.jflow.iterators.factories.Repeatedly;
+import jflow.iterators.factories.IterRange;
+import jflow.iterators.factories.Repeatedly;
 
 /**
  * @author ThomasB

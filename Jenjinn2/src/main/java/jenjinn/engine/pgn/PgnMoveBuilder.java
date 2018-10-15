@@ -3,10 +3,10 @@
  */
 package jenjinn.engine.pgn;
 
-import static xawd.jflow.utilities.CollectionUtil.head;
-import static xawd.jflow.utilities.CollectionUtil.last;
-import static xawd.jflow.utilities.Strings.allMatches;
-import static xawd.jflow.utilities.Strings.firstMatch;
+import static jflow.utilities.CollectionUtil.head;
+import static jflow.utilities.CollectionUtil.last;
+import static jflow.utilities.Strings.allMatches;
+import static jflow.utilities.Strings.firstMatch;
 
 import java.util.List;
 import java.util.Map;
@@ -23,8 +23,8 @@ import jenjinn.engine.moves.ChessMove;
 import jenjinn.engine.moves.PromotionMove;
 import jenjinn.engine.moves.PromotionResult;
 import jenjinn.engine.pieces.ChessPieces;
-import xawd.jflow.iterators.factories.Iterate;
-import xawd.jflow.utilities.Strings;
+import jflow.iterators.factories.Iterate;
+import jflow.utilities.Strings;
 
 /**
  * @author ThomasB

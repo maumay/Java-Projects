@@ -14,7 +14,7 @@ import jenjinn.engine.bitboards.BitboardIterator;
 import jenjinn.engine.boardstate.DetailedPieceLocations;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
-import xawd.jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iterate;
 
 /**
  * @author ThomasB

@@ -23,9 +23,9 @@ import jenjinn.engine.moves.ChessMove;
 import jenjinn.engine.moves.EnpassantMove;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
-import xawd.jflow.collections.FList;
-import xawd.jflow.iterators.Flow;
-import xawd.jflow.iterators.factories.IterRange;
+import jflow.collections.FList;
+import jflow.iterators.Flow;
+import jflow.iterators.factories.IterRange;
 
 /**
  * @author ThomasB

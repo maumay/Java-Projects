@@ -3,9 +3,9 @@
  */
 package jenjinn.engine.boardstate.legalmoves;
 
+import static jflow.utilities.CollectionUtil.sizeOf;
+import static jflow.utilities.CollectionUtil.string;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static xawd.jflow.utilities.CollectionUtil.sizeOf;
-import static xawd.jflow.utilities.CollectionUtil.string;
 
 import java.util.Comparator;
 import java.util.HashSet;
@@ -20,9 +20,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.calculators.LegalMoves;
 import jenjinn.engine.moves.ChessMove;
-import xawd.jflow.iterators.factories.IterRange;
-import xawd.jflow.iterators.factories.Iterate;
-import xawd.jflow.iterators.factories.Repeatedly;
+import jflow.iterators.factories.IterRange;
+import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Repeatedly;
 
 /**
  * @author ThomasB

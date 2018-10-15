@@ -7,7 +7,7 @@ import static java.util.Arrays.asList;
 
 import java.util.Map;
 
-import xawd.jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iterate;
 
 /**
  * @author ThomasB

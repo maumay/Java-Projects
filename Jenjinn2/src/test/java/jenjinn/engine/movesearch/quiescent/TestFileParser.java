@@ -3,9 +3,9 @@
  */
 package jenjinn.engine.movesearch.quiescent;
 
-import static xawd.jflow.utilities.CollectionUtil.last;
-import static xawd.jflow.utilities.CollectionUtil.string;
-import static xawd.jflow.utilities.CollectionUtil.take;
+import static jflow.utilities.CollectionUtil.last;
+import static jflow.utilities.CollectionUtil.string;
+import static jflow.utilities.CollectionUtil.take;
 
 import java.util.List;
 

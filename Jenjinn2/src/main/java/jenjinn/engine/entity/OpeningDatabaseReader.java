@@ -3,8 +3,8 @@
  */
 package jenjinn.engine.entity;
 
-import static xawd.jflow.utilities.CollectionUtil.head;
-import static xawd.jflow.utilities.CollectionUtil.last;
+import static jflow.utilities.CollectionUtil.head;
+import static jflow.utilities.CollectionUtil.last;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -18,8 +18,8 @@ import jenjinn.engine.base.FileUtils;
 import jenjinn.engine.moves.ChessMove;
 import jenjinn.engine.moves.EnpassantMove;
 import jenjinn.engine.moves.MoveCache;
-import xawd.jflow.collections.FList;
-import xawd.jflow.utilities.Strings;
+import jflow.collections.FList;
+import jflow.utilities.Strings;
 
 /**
  * @author ThomasB

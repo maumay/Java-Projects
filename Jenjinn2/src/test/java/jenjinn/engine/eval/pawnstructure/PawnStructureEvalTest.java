@@ -24,7 +24,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import jenjinn.engine.eval.PawnStructureEvaluator;
-import xawd.jflow.iterators.misc.IntPair;
+import jflow.iterators.misc.IntPair;
 
 /**
  * @author ThomasB

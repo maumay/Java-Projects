@@ -8,7 +8,7 @@ import static jenjinn.engine.bitboards.Bitboards.emptyBoardAttackset;
 import jenjinn.engine.base.BoardSquare;
 import jenjinn.engine.bitboards.BitboardIterator;
 import jenjinn.engine.pieces.ChessPiece;
-import xawd.jflow.collections.FList;
+import jflow.collections.FList;
 
 /**
  * @author ThomasB

@@ -20,8 +20,8 @@ import static jenjinn.engine.base.BoardSquare.H1;
 import static jenjinn.engine.base.BoardSquare.H8;
 
 import jenjinn.engine.pgn.CommonRegex;
-import xawd.jflow.iterators.Flow;
-import xawd.jflow.iterators.factories.Iterate;
+import jflow.iterators.Flow;
+import jflow.iterators.factories.Iterate;
 
 /**
  * @author ThomasB

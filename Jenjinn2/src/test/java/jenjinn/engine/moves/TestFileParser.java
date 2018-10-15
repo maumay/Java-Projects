@@ -3,8 +3,8 @@
  */
 package jenjinn.engine.moves;
 
+import static jflow.utilities.CollectionUtil.head;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static xawd.jflow.utilities.CollectionUtil.head;
 
 import java.util.List;
 

@@ -11,8 +11,8 @@ import jenjinn.engine.base.FileUtils;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.moves.ChessMove;
 import jenjinn.engine.movesearch.TreeSearcher;
-import xawd.jflow.collections.FList;
-import xawd.jflow.collections.Lists;
+import jflow.collections.FList;
+import jflow.collections.Lists;
 
 /**
  * @author ThomasB

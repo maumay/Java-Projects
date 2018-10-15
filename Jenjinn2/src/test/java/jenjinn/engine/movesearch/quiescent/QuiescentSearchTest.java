@@ -3,10 +3,10 @@
  */
 package jenjinn.engine.movesearch.quiescent;
 
+import static jflow.utilities.CollectionUtil.sizeOf;
+import static jflow.utilities.CollectionUtil.string;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
-import static xawd.jflow.utilities.CollectionUtil.sizeOf;
-import static xawd.jflow.utilities.CollectionUtil.string;
 
 import java.util.Iterator;
 
@@ -17,8 +17,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.movesearch.QuiescentSearcher;
-import xawd.jflow.iterators.factories.IterRange;
-import xawd.jflow.iterators.factories.Repeatedly;
+import jflow.iterators.factories.IterRange;
+import jflow.iterators.factories.Repeatedly;
 
 /**
  * @author ThomasB

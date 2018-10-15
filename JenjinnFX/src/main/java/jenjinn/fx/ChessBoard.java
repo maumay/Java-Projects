@@ -20,8 +20,8 @@ import jenjinn.engine.boardstate.calculators.LegalMoves;
 import jenjinn.engine.moves.ChessMove;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
-import xawd.jflow.collections.FList;
-import xawd.jflow.iterators.misc.Pair;
+import jflow.collections.FList;
+import jflow.iterators.misc.Pair;
 
 /**
  * @author ThomasB

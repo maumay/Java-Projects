@@ -12,9 +12,9 @@ import java.util.Set;
 
 import jenjinn.engine.base.BoardSquare;
 import jenjinn.engine.bitboards.BitboardIterator;
-import xawd.jflow.iterators.AbstractFlow;
-import xawd.jflow.iterators.Flow;
-import xawd.jflow.utilities.Optionals;
+import jflow.iterators.AbstractFlow;
+import jflow.iterators.Flow;
+import jflow.utilities.Optionals;
 
 /**
  * @author t

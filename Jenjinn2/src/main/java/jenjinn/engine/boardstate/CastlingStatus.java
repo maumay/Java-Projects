@@ -3,7 +3,7 @@
  */
 package jenjinn.engine.boardstate;
 
-import static xawd.jflow.utilities.CollectionUtil.string;
+import static jflow.utilities.CollectionUtil.string;
 
 import java.util.EnumSet;
 import java.util.Set;

@@ -23,9 +23,9 @@ import jenjinn.engine.boardstate.calculators.LegalMoves;
 import jenjinn.engine.boardstate.calculators.TerminationState;
 import jenjinn.engine.entity.Jenjinn;
 import jenjinn.engine.moves.ChessMove;
-import xawd.jflow.collections.FList;
-import xawd.jflow.collections.impl.FlowArrayList;
-import xawd.jflow.utilities.Optionals;
+import jflow.collections.FList;
+import jflow.collections.impl.FlowArrayList;
+import jflow.utilities.Optionals;
 
 /**
  * @author ThomasB

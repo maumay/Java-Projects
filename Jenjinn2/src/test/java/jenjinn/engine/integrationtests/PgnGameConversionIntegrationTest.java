@@ -21,9 +21,9 @@ import jenjinn.engine.moves.AbstractBoardStateTest;
 import jenjinn.engine.moves.ChessMove;
 import jenjinn.engine.pgn.BadPgnException;
 import jenjinn.engine.pgn.PgnGameConverter;
-import xawd.jflow.collections.FList;
-import xawd.jflow.collections.Lists;
-import xawd.jflow.iterators.factories.Iterate;
+import jflow.collections.FList;
+import jflow.collections.Lists;
+import jflow.iterators.factories.Iterate;
 
 /**
  * @author ThomasB

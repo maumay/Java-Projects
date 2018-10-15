@@ -3,8 +3,8 @@
  */
 package jenjinn.engine.boardstate.pinnedpieces;
 
-import static xawd.jflow.utilities.CollectionUtil.last;
-import static xawd.jflow.utilities.CollectionUtil.take;
+import static jflow.utilities.CollectionUtil.last;
+import static jflow.utilities.CollectionUtil.take;
 
 import java.util.Collections;
 import java.util.List;
@@ -16,7 +16,7 @@ import jenjinn.engine.base.BoardSquare;
 import jenjinn.engine.parseutils.AbstractTestFileParser;
 import jenjinn.engine.parseutils.BoardParser;
 import jenjinn.engine.pgn.CommonRegex;
-import xawd.jflow.utilities.Strings;
+import jflow.utilities.Strings;
 
 /**
  * @author ThomasB

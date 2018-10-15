@@ -8,8 +8,8 @@ import java.util.Map;
 
 import javafx.geometry.Point2D;
 import jenjinn.engine.base.BoardSquare;
-import xawd.jflow.iterators.Flow;
-import xawd.jflow.iterators.misc.Pair;
+import jflow.iterators.Flow;
+import jflow.iterators.misc.Pair;
 
 /**
  * @author ThomasB

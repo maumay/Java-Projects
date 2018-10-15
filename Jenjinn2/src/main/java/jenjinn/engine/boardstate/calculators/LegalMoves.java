@@ -6,9 +6,9 @@ package jenjinn.engine.boardstate.calculators;
 import static java.lang.Math.abs;
 import static java.util.Arrays.asList;
 import static jenjinn.engine.bitboards.BitboardUtils.bitboardsIntersect;
-import static xawd.jflow.utilities.CollectionUtil.head;
-import static xawd.jflow.utilities.CollectionUtil.last;
-import static xawd.jflow.utilities.CollectionUtil.sizeOf;
+import static jflow.utilities.CollectionUtil.head;
+import static jflow.utilities.CollectionUtil.last;
+import static jflow.utilities.CollectionUtil.sizeOf;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +30,9 @@ import jenjinn.engine.moves.PromotionMove;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
 import jenjinn.engine.utils.PieceSquarePair;
-import xawd.jflow.iterators.Flow;
-import xawd.jflow.iterators.factories.Iterate;
-import xawd.jflow.iterators.misc.PredicatePartition;
+import jflow.iterators.Flow;
+import jflow.iterators.factories.Iterate;
+import jflow.iterators.misc.PredicatePartition;
 
 /**
  * @author ThomasB

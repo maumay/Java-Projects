@@ -18,7 +18,7 @@ import jenjinn.engine.moves.ChessMove;
 import jenjinn.engine.movesearch.TreeSearcher;
 import jenjinn.engine.pgn.BadPgnException;
 import jenjinn.engine.pgn.PgnGameConverter;
-import xawd.jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iterate;
 
 /**
  * @author ThomasB

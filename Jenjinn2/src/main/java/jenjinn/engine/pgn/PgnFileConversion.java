@@ -11,10 +11,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.function.Consumer;
 
-import xawd.jflow.collections.FList;
-import xawd.jflow.collections.Lists;
-import xawd.jflow.iterators.Flow;
-import xawd.jflow.iterators.factories.Iterators;
+import jflow.collections.FList;
+import jflow.collections.Lists;
+import jflow.iterators.Flow;
+import jflow.iterators.factories.Iterators;
 
 /**
  * @author t

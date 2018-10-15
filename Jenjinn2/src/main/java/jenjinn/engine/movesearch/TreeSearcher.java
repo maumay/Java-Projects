@@ -15,8 +15,8 @@ import jenjinn.engine.boardstate.calculators.LegalMoves;
 import jenjinn.engine.boardstate.calculators.TerminationState;
 import jenjinn.engine.moves.ChessMove;
 import jenjinn.engine.movesearch.TranspositionTable.Entry;
-import xawd.jflow.collections.FList;
-import xawd.jflow.iterators.factories.IterRange;
+import jflow.collections.FList;
+import jflow.iterators.factories.IterRange;
 
 /**
  * @author ThomasB

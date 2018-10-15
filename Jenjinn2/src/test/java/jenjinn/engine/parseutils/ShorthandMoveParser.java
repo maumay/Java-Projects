@@ -4,10 +4,10 @@
 package jenjinn.engine.parseutils;
 
 import static java.util.Arrays.asList;
-import static xawd.jflow.utilities.CollectionUtil.drop;
-import static xawd.jflow.utilities.CollectionUtil.head;
-import static xawd.jflow.utilities.CollectionUtil.last;
-import static xawd.jflow.utilities.Strings.allMatches;
+import static jflow.utilities.CollectionUtil.drop;
+import static jflow.utilities.CollectionUtil.head;
+import static jflow.utilities.CollectionUtil.last;
+import static jflow.utilities.Strings.allMatches;
 
 import java.util.List;
 
@@ -20,9 +20,9 @@ import jenjinn.engine.moves.PromotionMove;
 import jenjinn.engine.moves.PromotionResult;
 import jenjinn.engine.moves.StandardMove;
 import jenjinn.engine.pgn.CommonRegex;
-import xawd.jflow.iterators.factories.Iterators;
-import xawd.jflow.iterators.misc.Pair;
-import xawd.jflow.utilities.Strings;
+import jflow.iterators.factories.Iterators;
+import jflow.iterators.misc.Pair;
+import jflow.utilities.Strings;
 
 /**
  * @author ThomasB

@@ -3,8 +3,8 @@
  */
 package jenjinn.engine.boardstate;
 
+import static jflow.utilities.CollectionUtil.string;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static xawd.jflow.utilities.CollectionUtil.string;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -12,9 +12,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import xawd.jflow.iterators.Flow;
-import xawd.jflow.iterators.factories.IterRange;
-import xawd.jflow.iterators.factories.Iterate;
+import jflow.iterators.Flow;
+import jflow.iterators.factories.IterRange;
+import jflow.iterators.factories.Iterate;
 
 /**
  * @author t

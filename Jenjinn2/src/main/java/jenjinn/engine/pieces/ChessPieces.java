@@ -3,14 +3,14 @@
  */
 package jenjinn.engine.pieces;
 
-import static xawd.jflow.utilities.CollectionUtil.head;
-import static xawd.jflow.utilities.CollectionUtil.last;
+import static jflow.utilities.CollectionUtil.head;
+import static jflow.utilities.CollectionUtil.last;
 
 import jenjinn.engine.base.Side;
-import xawd.jflow.collections.FList;
-import xawd.jflow.collections.Lists;
-import xawd.jflow.iterators.Flow;
-import xawd.jflow.iterators.factories.Iterate;
+import jflow.collections.FList;
+import jflow.collections.Lists;
+import jflow.iterators.Flow;
+import jflow.iterators.factories.Iterate;
 
 /**
  * @author ThomasB

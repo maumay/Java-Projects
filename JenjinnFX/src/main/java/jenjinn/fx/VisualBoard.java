@@ -9,8 +9,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
-import xawd.jflow.collections.FList;
-import xawd.jflow.collections.Lists;
+import jflow.collections.FList;
+import jflow.collections.Lists;
 
 /**
  * @author ThomasB

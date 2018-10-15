@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import jenjinn.engine.base.GameTermination;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.calculators.TerminationState;
-import xawd.jflow.iterators.Flow;
+import jflow.iterators.Flow;
 
 /**
  * @author ThomasB

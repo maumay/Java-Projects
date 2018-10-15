@@ -54,13 +54,13 @@ import static jenjinn.engine.base.BoardSquare.H1;
 import static jenjinn.engine.base.BoardSquare.H2;
 import static jenjinn.engine.base.BoardSquare.H5;
 import static jenjinn.engine.base.BoardSquare.H8;
+import static jflow.utilities.CollectionUtil.head;
+import static jflow.utilities.CollectionUtil.last;
+import static jflow.utilities.CollectionUtil.take;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static xawd.jflow.utilities.CollectionUtil.head;
-import static xawd.jflow.utilities.CollectionUtil.last;
-import static xawd.jflow.utilities.CollectionUtil.take;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -76,9 +76,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import jenjinn.engine.base.BoardSquare;
 import jenjinn.engine.base.Direction;
-import xawd.jflow.iterators.factories.IterRange;
-import xawd.jflow.iterators.factories.Iterate;
-import xawd.jflow.iterators.misc.PredicatePartition;
+import jflow.iterators.factories.IterRange;
+import jflow.iterators.factories.Iterate;
+import jflow.iterators.misc.PredicatePartition;
 
 /**
  * @author t

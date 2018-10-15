@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import xawd.jflow.iterators.Flow;
-import xawd.jflow.iterators.factories.Iterate;
+import jflow.iterators.Flow;
+import jflow.iterators.factories.Iterate;
 
 /**
  * Enumeration of the 64 chess squares on a chess board.

@@ -10,8 +10,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import jenjinn.engine.base.BoardSquare;
-import xawd.jflow.iterators.Flow;
-import xawd.jflow.iterators.factories.Iterate;
+import jflow.iterators.Flow;
+import jflow.iterators.factories.Iterate;
 
 /**
  * @author ThomasB

@@ -3,15 +3,15 @@
  */
 package jenjinn.engine.eval.piecesquaretables;
 
-import static xawd.jflow.utilities.Strings.allMatches;
+import static jflow.utilities.Strings.allMatches;
 
 import java.util.List;
 
 import jenjinn.engine.base.FileUtils;
 import jenjinn.engine.eval.PieceValues;
 import jenjinn.engine.pieces.ChessPiece;
-import xawd.jflow.iterators.factories.Iterate;
-import xawd.jflow.utilities.MapUtil;
+import jflow.iterators.factories.Iterate;
+import jflow.utilities.MapUtil;
 
 /**
  * @author ThomasB

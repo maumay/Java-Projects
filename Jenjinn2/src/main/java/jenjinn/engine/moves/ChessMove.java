@@ -3,9 +3,9 @@
  */
 package jenjinn.engine.moves;
 
-import static xawd.jflow.utilities.CollectionUtil.head;
-import static xawd.jflow.utilities.CollectionUtil.last;
-import static xawd.jflow.utilities.Strings.lastMatch;
+import static jflow.utilities.CollectionUtil.head;
+import static jflow.utilities.CollectionUtil.last;
+import static jflow.utilities.Strings.lastMatch;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import jenjinn.engine.base.BoardSquare;
 import jenjinn.engine.base.CastleZone;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.MoveReversalData;
-import xawd.jflow.utilities.Strings;
+import jflow.utilities.Strings;
 
 /**
  * @author ThomasB

@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
 import jenjinn.engine.base.FileUtils;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
-import xawd.jflow.collections.FList;
+import jflow.collections.FList;
 
 /**
  * @author ThomasB

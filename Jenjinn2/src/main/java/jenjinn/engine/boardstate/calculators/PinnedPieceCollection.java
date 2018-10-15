@@ -10,9 +10,9 @@ import java.util.Map;
 import java.util.Set;
 
 import jenjinn.engine.base.BoardSquare;
-import xawd.jflow.iterators.Flow;
-import xawd.jflow.iterators.factories.Iterate;
-import xawd.jflow.iterators.iterables.FlowIterable;
+import jflow.iterators.Flow;
+import jflow.iterators.factories.Iterate;
+import jflow.iterators.iterables.FlowIterable;
 
 /**
  * @author ThomasB

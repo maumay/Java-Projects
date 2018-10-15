@@ -6,10 +6,10 @@ package jenjinn.engine.boardstate;
 import static jenjinn.engine.bitboards.BitboardUtils.bitwiseOr;
 import static jenjinn.engine.eval.piecesquaretables.TestingPieceSquareTables.getEndgameTables;
 import static jenjinn.engine.eval.piecesquaretables.TestingPieceSquareTables.getMidgameTables;
+import static jflow.utilities.CollectionUtil.drop;
+import static jflow.utilities.CollectionUtil.take;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static xawd.jflow.utilities.CollectionUtil.drop;
-import static xawd.jflow.utilities.CollectionUtil.take;
 
 import java.util.List;
 
@@ -21,8 +21,8 @@ import jenjinn.engine.eval.piecesquaretables.PieceSquareTables;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
 import jenjinn.engine.utils.BoardHasher;
-import xawd.jflow.iterators.factories.IterRange;
-import xawd.jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.IterRange;
+import jflow.iterators.factories.Iterate;
 
 /**
  * @author t

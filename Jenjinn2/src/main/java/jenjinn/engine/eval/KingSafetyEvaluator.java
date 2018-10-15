@@ -10,8 +10,8 @@ import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.DetailedPieceLocations;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
-import xawd.jflow.collections.FList;
-import xawd.jflow.iterators.Flow;
+import jflow.collections.FList;
+import jflow.iterators.Flow;
 
 /**
  * @author ThomasB

@@ -4,8 +4,8 @@
 package jenjinn.engine.eval;
 
 import jenjinn.engine.boardstate.BoardState;
-import xawd.jflow.collections.FList;
-import xawd.jflow.collections.Lists;
+import jflow.collections.FList;
+import jflow.collections.Lists;
 
 /**
  * @author ThomasB

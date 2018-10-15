@@ -6,7 +6,7 @@ package jenjinn.engine.utils;
 import java.util.Arrays;
 
 import jenjinn.engine.base.BoardSquare;
-import xawd.jflow.iterators.factories.IterRange;
+import jflow.iterators.factories.IterRange;
 
 /**
  * @author ThomasB

@@ -13,8 +13,8 @@ import jenjinn.engine.eval.piecesquaretables.PieceSquareTables;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
 import jenjinn.engine.utils.BoardHasher;
-import xawd.jflow.iterators.Flow;
-import xawd.jflow.iterators.factories.Iterate;
+import jflow.iterators.Flow;
+import jflow.iterators.factories.Iterate;
 
 /**
  * Handles piece locations as well as tracking the positional evaluation and hash arising
