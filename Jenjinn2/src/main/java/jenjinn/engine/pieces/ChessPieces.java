@@ -10,7 +10,7 @@ import jenjinn.engine.base.Side;
 import jflow.collections.FList;
 import jflow.collections.Lists;
 import jflow.iterators.Flow;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -21,8 +21,8 @@ public final class ChessPieces
 	private ChessPieces() {}
 
 	private static final FList<ChessPiece> ALL_PIECES = Lists.build(ChessPiece.values());
-	private static final FList<ChessPiece> WHITE_PIECES = Iterate.over(ALL_PIECES).take(6).toList();
-	private static final FList<ChessPiece> BLACK_PIECES = Iterate.over(ALL_PIECES).drop(6).toList();
+	private static final FList<ChessPiece> WHITE_PIECES = Iter.over(ALL_PIECES).take(6).toList();
+	private static final FList<ChessPiece> BLACK_PIECES = Iter.over(ALL_PIECES).drop(6).toList();
 	private static final FList<ChessPiece> WHITE_PINNING_PIECES = Lists.build(ChessPiece.WHITE_QUEEN, ChessPiece.WHITE_ROOK, ChessPiece.WHITE_BISHOP);
 	private static final FList<ChessPiece> BLACK_PINNING_PIECES = Lists.build(ChessPiece.BLACK_QUEEN, ChessPiece.BLACK_ROOK, ChessPiece.BLACK_BISHOP);
 
@@ -63,7 +63,7 @@ public final class ChessPieces
 
 	public static Flow<ChessPiece> iterate()
 	{
-		return Iterate.over(all());
+		return Iter.over(all());
 	}
 
 	public static ChessPiece fromIndex(int index)

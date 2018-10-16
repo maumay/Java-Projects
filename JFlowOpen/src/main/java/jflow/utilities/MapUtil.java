@@ -23,7 +23,7 @@ import java.util.function.ToDoubleFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.ToLongFunction;
 
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * Static methods for mapping primitive arrays element-wise with functions.
@@ -303,7 +303,7 @@ public final class MapUtil
 	 */
 	public static <E, R> List<R> objMap(final Function<? super E, R> f, final List<? extends E> xs)
 	{
-		return Iterate.over(xs).map(f).toList();
+		return Iter.over(xs).map(f).toList();
 	}
 
 	/**
@@ -322,7 +322,7 @@ public final class MapUtil
 	 */
 	public static <R> List<R> objMap(final IntFunction<R> f, final int[] xs)
 	{
-		return Iterate.overInts(xs).mapToObject(f).toList();
+		return Iter.overInts(xs).mapToObject(f).toList();
 	}
 
 	/**
@@ -341,7 +341,7 @@ public final class MapUtil
 	 */
 	public static <R> List<R> objMap(final DoubleFunction<R> f, final double[] xs)
 	{
-		return Iterate.overDoubles(xs).mapToObject(f).toList();
+		return Iter.overDoubles(xs).mapToObject(f).toList();
 	}
 
 	/**
@@ -360,6 +360,6 @@ public final class MapUtil
 	 */
 	public static <R> List<R> objMap(final LongFunction<R> f, final long[] xs)
 	{
-		return Iterate.overLongs(xs).mapToObject(f).toList();
+		return Iter.overLongs(xs).mapToObject(f).toList();
 	}
 }

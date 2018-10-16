@@ -12,7 +12,7 @@ import jenjinn.engine.base.BoardSquare;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.calculators.PinnedPieces;
 import jflow.iterators.Flow;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -29,6 +29,6 @@ class PinnedPiecesTest
 	static Flow<Arguments> test()
 	{
 		TestFileParser parser = new TestFileParser();
-		return Iterate.over(parser.parse("case001"), parser.parse("case002"));
+		return Iter.over(parser.parse("case001"), parser.parse("case002"));
 	}
 }

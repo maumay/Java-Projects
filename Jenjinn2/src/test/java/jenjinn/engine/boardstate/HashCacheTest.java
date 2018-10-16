@@ -14,7 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import jflow.iterators.Flow;
 import jflow.iterators.factories.IterRange;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author t
@@ -64,7 +64,7 @@ class HashCacheTest
 
 	static Flow<Arguments> testContainsThreeRepetitions()
 	{
-		return Iterate.over(
+		return Iter.over(
 				Arguments.of(new long[] {0, 1, 2, 4, 1, 5, 5, 7, 9 , 100, -23, 1}, 12, Boolean.TRUE),
 				Arguments.of(new long[] {0, 1, 2, 4, 1, 5, 5, 7, 9 , 100, -23, 1}, 11, Boolean.FALSE),
 				Arguments.of(new long[] {0, 1, 2, 4, 1, 5, 5, 7, 9 , 100, -23, 2}, 20, Boolean.FALSE),

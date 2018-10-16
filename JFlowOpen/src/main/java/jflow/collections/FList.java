@@ -10,7 +10,7 @@ import java.util.function.IntUnaryOperator;
 import java.util.function.Predicate;
 
 import jflow.iterators.Flow;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 import jflow.iterators.iterables.FlowIterable;
 import jflow.utilities.Optionals;
 
@@ -55,7 +55,7 @@ public interface FList<E> extends List<E>, FlowIterable<E>
 	 */
 	default Flow<E> rflow()
 	{
-		return Iterate.overReversed(this);
+		return Iter.overReversed(this);
 	}
 
 	/**

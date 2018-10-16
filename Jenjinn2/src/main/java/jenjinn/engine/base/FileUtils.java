@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 import jflow.collections.FList;
 import jflow.collections.Lists;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -94,7 +94,7 @@ public final class FileUtils
 			return Lists.copy(reader.lines()
 					.map(String::trim)
 					.filter(x -> !x.isEmpty())
-					.filter(x -> Iterate.over(filters).allMatch(filter -> filter.test(x)))
+					.filter(x -> Iter.over(filters).allMatch(filter -> filter.test(x)))
 					.collect(Collectors.toList()));
 		} catch (IOException e) {
 			throw new RuntimeException(e);

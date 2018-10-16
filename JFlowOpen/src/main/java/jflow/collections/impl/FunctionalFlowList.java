@@ -13,7 +13,7 @@ import java.util.function.IntFunction;
 import jflow.collections.FList;
 import jflow.iterators.Flow;
 import jflow.iterators.factories.IterRange;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 import jflow.iterators.impl.FlowFromFunction;
 
 /**
@@ -106,7 +106,7 @@ public class FunctionalFlowList<E> implements FList<E>
 	@Override
 	public boolean containsAll(Collection<?> arg0)
 	{
-		return Iterate.over(arg0).allMatch(this::contains);
+		return Iter.over(arg0).allMatch(this::contains);
 	}
 
 	@Override

@@ -23,7 +23,7 @@ import jenjinn.engine.moves.ChessMove;
 import jenjinn.engine.moves.PromotionMove;
 import jenjinn.engine.moves.PromotionResult;
 import jenjinn.engine.pieces.ChessPieces;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 import jflow.utilities.Strings;
 
 /**
@@ -35,8 +35,8 @@ public final class PgnMoveBuilder
 	/**
 	 * Maps PGN identifiers to piece ordinals mod 6.
 	 */
-	private static final Map<Character, Integer> CHARACTER_PIECE_MAP = Iterate.overInts('N', 'B', 'R', 'Q', 'K')
-			.zipWith(Iterate.over(ChessPieces.white()).drop(1))
+	private static final Map<Character, Integer> CHARACTER_PIECE_MAP = Iter.overInts('N', 'B', 'R', 'Q', 'K')
+			.zipWith(Iter.over(ChessPieces.white()).drop(1))
 			.toMap(p -> Character.valueOf((char) p.getInt()), p -> p.getElement().ordinal());
 
 
@@ -87,7 +87,7 @@ public final class PgnMoveBuilder
 			char pieceIdentifier = firstMatch(mc, PIECE).orElse("P").charAt(0);
 			int pieceOrdinalMod6 = CHARACTER_PIECE_MAP.getOrDefault(pieceIdentifier, 0);
 			DetailedPieceLocations plocs = state.getPieceLocations();
-			List<ChessMove> candidates = Iterate.over(legalMoves)
+			List<ChessMove> candidates = Iter.over(legalMoves)
 					.filter(mv -> mv.getTarget() == target && (plocs.getPieceAt(mv.getSource()).ordinal() % 6) == pieceOrdinalMod6)
 					.toList();
 
@@ -96,13 +96,13 @@ public final class PgnMoveBuilder
 			}
 			else if (files.size() == 2) {
 				char sourceFile = head(files).toUpperCase().charAt(0);
-				return Iterate.over(candidates)
+				return Iter.over(candidates)
 						.filter(mv -> mv.getSource().name().charAt(0) == sourceFile)
 						.safeNext().orElseThrow(() -> new BadPgnException(mc + ", " + sourceFile + ", " + candidates));
 			}
 			else if (ranks.size() == 2) {
 				char sourceRank = head(ranks).charAt(0);
-				return Iterate.over(candidates)
+				return Iter.over(candidates)
 						.filter(mv -> mv.getSource().name().charAt(1) == sourceRank)
 						.safeNext().orElseThrow(() -> new BadPgnException(mc + ", " + sourceRank + ", " + candidates));
 			}
@@ -112,7 +112,7 @@ public final class PgnMoveBuilder
 		}
 		else if (encodedSquares.size() == 2) {
 			BoardSquare source = head(encodedSquares), target = last(encodedSquares);
-			return Iterate.over(legalMoves)
+			return Iter.over(legalMoves)
 					.filter(mv -> mv.getSource() == source && mv.getTarget() == target)
 					.safeNext().orElseThrow(exSupplier);
 		}
@@ -129,7 +129,7 @@ public final class PgnMoveBuilder
 		PromotionResult piece = PromotionResult.valueOf(Strings.lastMatch(mc, "[NBRQ]").get());
 		String encodedTarget = firstMatch(mc, SQUARE).orElseThrow(exSupplier);
 		BoardSquare target = BoardSquare.valueOf(encodedTarget.toUpperCase());
-		List<PromotionMove> candidates = Iterate.over(legalMoves)
+		List<PromotionMove> candidates = Iter.over(legalMoves)
 				.filterAndCastTo(PromotionMove.class)
 				.filter(mv -> mv.getTarget().equals(target) && mv.getPromotionResult().equals(piece))
 				.toList();
@@ -139,7 +139,7 @@ public final class PgnMoveBuilder
 		}
 		else if (candidates.size() == 2) {
 			char file = mc.toUpperCase().charAt(0);
-			return Iterate.over(candidates)
+			return Iter.over(candidates)
 					.filter(mv -> mv.getSource().name().charAt(0) == file)
 					.safeNext().orElseThrow(exSupplier);
 		}

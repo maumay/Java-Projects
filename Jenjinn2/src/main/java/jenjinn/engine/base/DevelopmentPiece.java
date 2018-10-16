@@ -7,7 +7,7 @@ import static java.util.Arrays.asList;
 
 import java.util.Map;
 
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -37,7 +37,7 @@ public enum DevelopmentPiece
 	}
 
 	private static final Map<BoardSquare, DevelopmentPiece> START_SQUARE_MAPPING =
-			Iterate.over(asList(values())).toMap(x -> x.startSquare, x -> x);
+			Iter.over(asList(values())).toMap(x -> x.startSquare, x -> x);
 
 	public static DevelopmentPiece fromStartSquare(BoardSquare startSquare)
 	{

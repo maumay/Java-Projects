@@ -12,7 +12,7 @@ import java.util.function.DoubleToLongFunction;
 import java.util.function.DoubleUnaryOperator;
 import java.util.function.IntUnaryOperator;
 
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 import jflow.iterators.factories.Numbers;
 import jflow.iterators.impl.AccumulationFlow;
 import jflow.iterators.impl.AppendFlow;
@@ -158,7 +158,7 @@ public abstract class AbstractDoubleFlow extends AbstractOptionallySized impleme
 	@Override
 	public AbstractDoubleFlow append(final double... xs)
 	{
-		return append(Iterate.overDoubles(xs));
+		return append(Iter.overDoubles(xs));
 	}
 
 	@Override
@@ -170,7 +170,7 @@ public abstract class AbstractDoubleFlow extends AbstractOptionallySized impleme
 	@Override
 	public AbstractDoubleFlow insert(final double... xs)
 	{
-		return insert(Iterate.overDoubles(xs));
+		return insert(Iter.overDoubles(xs));
 	}
 
 	@Override

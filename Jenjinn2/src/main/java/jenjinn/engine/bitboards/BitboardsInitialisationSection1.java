@@ -8,7 +8,7 @@ import jenjinn.engine.base.BoardSquare;
 import jenjinn.engine.base.Direction;
 import jenjinn.engine.pieces.PieceMovementDirections;
 import jflow.iterators.factories.IterRange;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author Tom
@@ -42,7 +42,7 @@ final class BitboardsInitialisationSection1
 		return IterRange.to(15)
 				.map(i -> i < 8 ? i : 8*(i - 7) + 7)
 				.mapToObject(BoardSquare::of)
-				.map(square -> Iterate.over(square.getAllSquaresInDirections(Direction.NE, 8)).insert(square))
+				.map(square -> Iter.over(square.getAllSquaresInDirections(Direction.NE, 8)).insert(square))
 				.mapToLong(BitboardUtils::bitwiseOr)
 				.toArray();
 	}
@@ -52,7 +52,7 @@ final class BitboardsInitialisationSection1
 		return IterRange.to(15)
 				.map(i -> i < 8 ? 7 - i : 8*(i - 7))
 				.mapToObject(BoardSquare::of)
-				.map(square -> Iterate.over(square.getAllSquaresInDirections(Direction.NW, 8)).insert(square))
+				.map(square -> Iter.over(square.getAllSquaresInDirections(Direction.NW, 8)).insert(square))
 				.mapToLong(BitboardUtils::bitwiseOr)
 				.toArray();
 	}

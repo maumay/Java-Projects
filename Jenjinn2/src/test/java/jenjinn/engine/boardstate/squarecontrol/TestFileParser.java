@@ -22,7 +22,7 @@ import jenjinn.engine.parseutils.CordParser;
 import jenjinn.engine.pgn.CommonRegex;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 import jflow.iterators.misc.Pair;
 import jflow.utilities.Strings;
 
@@ -66,7 +66,7 @@ final class TestFileParser extends AbstractTestFileParser
 
 			Strings.allMatches(ec, cordrx)
 			.map(CordParser::parse)
-			.flatten(Iterate::over)
+			.flatten(Iter::over)
 			.forEach(squares::add);
 
 			return BitboardUtils.bitwiseOr(squares);

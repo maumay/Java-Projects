@@ -9,7 +9,7 @@ import jenjinn.engine.base.BoardSquare;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
 import jflow.iterators.factories.IterRange;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -25,7 +25,7 @@ public final class PieceSquareTable
 			throw new IllegalArgumentException();
 		}
 		this.associatedPiece = associatedPiece;
-		this.locationValues = Iterate.overInts(locationValues).map(n -> n + pieceValue).toArray();
+		this.locationValues = Iter.overInts(locationValues).map(n -> n + pieceValue).toArray();
 	}
 
 	public ChessPiece getAssociatedPiece()

@@ -13,7 +13,7 @@ import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.MoveReversalData;
 import jenjinn.engine.pieces.ChessPiece;
 import jflow.iterators.Flow;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -31,7 +31,7 @@ public final class PromotionMove extends AbstractChessMove
 
 	public static Flow<ChessMove> generateAllPossibilities(BoardSquare start, BoardSquare target)
 	{
-		return Iterate.over(PromotionResult.values()).map(res -> new PromotionMove(start, target, res));
+		return Iter.over(PromotionResult.values()).map(res -> new PromotionMove(start, target, res));
 	}
 
 	public PromotionResult getPromotionResult()

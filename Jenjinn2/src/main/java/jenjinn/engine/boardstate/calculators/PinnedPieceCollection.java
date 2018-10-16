@@ -11,7 +11,7 @@ import java.util.Set;
 
 import jenjinn.engine.base.BoardSquare;
 import jflow.iterators.Flow;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 import jflow.iterators.iterables.FlowIterable;
 
 /**
@@ -30,7 +30,7 @@ public final class PinnedPieceCollection implements FlowIterable<PinnedPiece>
 	@Override
 	public Flow<PinnedPiece> iterator()
 	{
-		return Iterate.over(cache.values());
+		return Iter.over(cache.values());
 	}
 
 	public Set<BoardSquare> getLocations()

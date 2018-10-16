@@ -12,7 +12,7 @@ import jenjinn.engine.base.BoardSquare;
 import jenjinn.engine.base.Direction;
 import jenjinn.engine.pieces.PieceMovementDirections;
 import jflow.iterators.factories.IterRange;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * Second of three utility classes containing only static methods to initialise
@@ -64,12 +64,12 @@ final class BitboardsInitialisationSection2
 
 	static int[] generateRookMagicBitshifts()
 	{
-		return Iterate.overLongs(BitboardsImpl.ROOK_OCCUPANCY_MASKS).mapToInt(x -> 64 - Long.bitCount(x)).toArray();
+		return Iter.overLongs(BitboardsImpl.ROOK_OCCUPANCY_MASKS).mapToInt(x -> 64 - Long.bitCount(x)).toArray();
 	}
 
 	static int[] generateBishopMagicBitshifts()
 	{
-		return Iterate.overLongs(BitboardsImpl.BISHOP_OCCUPANCY_MASKS).mapToInt(x -> 64 - Long.bitCount(x)).toArray();
+		return Iter.overLongs(BitboardsImpl.BISHOP_OCCUPANCY_MASKS).mapToInt(x -> 64 - Long.bitCount(x)).toArray();
 	}
 
 	/**

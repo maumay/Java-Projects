@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import jenjinn.engine.base.BoardSquare;
 import jflow.iterators.Flow;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -22,13 +22,13 @@ class CordParserTest
 	@MethodSource
 	void test(String encodedCord, int[] expectedSquareIndices)
 	{
-		List<BoardSquare> squares = Iterate.overInts(expectedSquareIndices).mapToObject(BoardSquare::of).toList();
+		List<BoardSquare> squares = Iter.overInts(expectedSquareIndices).mapToObject(BoardSquare::of).toList();
 		assertEquals(squares, CordParser.parse(encodedCord));
 	}
 
 	static Flow<Arguments> test()
 	{
-		return Iterate.over(
+		return Iter.over(
 				Arguments.of("g1->D1", new int[] {1, 2, 3, 4}),
 				Arguments.of("G1->F3", new int[] {1, 18})
 				);

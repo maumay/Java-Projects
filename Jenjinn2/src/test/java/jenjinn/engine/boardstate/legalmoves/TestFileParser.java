@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.Arguments;
 
 import jenjinn.engine.parseutils.AbstractTestFileParser;
 import jenjinn.engine.parseutils.BoardParser;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -20,10 +20,10 @@ final class TestFileParser extends AbstractTestFileParser
 	{
 		final List<String> lines = loadFile(fileName);
 
-		final List<String> boardStateAttributes = Iterate.over(lines).take(9).toList();
-		final List<String> expectedMoveLines = Iterate.over(lines)
+		final List<String> boardStateAttributes = Iter.over(lines).take(9).toList();
+		final List<String> expectedMoveLines = Iter.over(lines)
 				.drop(9).takeWhile(s -> !s.startsWith("---")).toList();
-		final List<String> expectedAttackLines = Iterate.over(lines)
+		final List<String> expectedAttackLines = Iter.over(lines)
 				.dropWhile(s -> !s.startsWith("---")).drop(1).toList();
 
 		return Arguments.of(

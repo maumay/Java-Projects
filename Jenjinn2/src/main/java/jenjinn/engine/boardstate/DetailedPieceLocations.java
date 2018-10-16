@@ -14,7 +14,7 @@ import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
 import jenjinn.engine.utils.BoardHasher;
 import jflow.iterators.Flow;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * Handles piece locations as well as tracking the positional evaluation and hash arising
@@ -41,8 +41,8 @@ public final class DetailedPieceLocations
 			throw new IllegalArgumentException();
 		}
 		this.pieceLocations = pieceLocations;
-		this.whiteLocations = Iterate.over(pieceLocations).take(6).mapToLong(x -> x.allLocs()).fold(0L, (a, b) -> a | b);
-		this.blackLocations = Iterate.over(pieceLocations).drop(6).mapToLong(x -> x.allLocs()).fold(0L, (a, b) -> a | b);
+		this.whiteLocations = Iter.over(pieceLocations).take(6).mapToLong(x -> x.allLocs()).fold(0L, (a, b) -> a | b);
+		this.blackLocations = Iter.over(pieceLocations).drop(6).mapToLong(x -> x.allLocs()).fold(0L, (a, b) -> a | b);
 		this.midgameTables = midgameTables;
 		this.endgameTables = endgameTables;
 		this.midgameEval = midgameTables.evaluateLocations(pieceLocations);
@@ -55,7 +55,7 @@ public final class DetailedPieceLocations
 			PieceSquareTables midgameTables,
 			PieceSquareTables endgameTables)
 	{
-		this (Iterate.overLongs(pieceLocations).mapToObject(LocationTracker::new).toList(),
+		this (Iter.overLongs(pieceLocations).mapToObject(LocationTracker::new).toList(),
 				midgameTables,
 				endgameTables);
 	}
@@ -173,7 +173,7 @@ public final class DetailedPieceLocations
 
 	public DetailedPieceLocations copy()
 	{
-		List<LocationTracker> locTrackerCopy = Iterate.over(pieceLocations).map(LocationTracker::copy).toList();
+		List<LocationTracker> locTrackerCopy = Iter.over(pieceLocations).map(LocationTracker::copy).toList();
 		return new DetailedPieceLocations(locTrackerCopy, midgameTables, endgameTables);
 	}
 

@@ -17,7 +17,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import jenjinn.engine.base.BoardSquare;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -68,7 +68,7 @@ class BitboardUtilsTest
 	@MethodSource("testBitwiseOrOfBoardSquareList")
 	void testBitwiseOrOfBoardSquareFlow(final List<BoardSquare> squares, final Long expectedResult)
 	{
-		assertEquals(expectedResult.longValue(), BitboardUtils.bitwiseOr(Iterate.over(squares)));
+		assertEquals(expectedResult.longValue(), BitboardUtils.bitwiseOr(Iter.over(squares)));
 	}
 
 	static Stream<Arguments> testBitwiseOrOfBoardSquareList()

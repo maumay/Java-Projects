@@ -7,7 +7,7 @@ import java.util.List;
 
 import jenjinn.engine.pieces.ChessPieces;
 import jflow.iterators.factories.IterRange;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author t
@@ -21,7 +21,7 @@ public final class TestingPieceSquareTables
 
 	private static PieceSquareTables initMidgameTables()
 	{
-		final List<PieceSquareTable> whiteTables = Iterate.over(ChessPieces.white())
+		final List<PieceSquareTable> whiteTables = Iter.over(ChessPieces.white())
 				.map(piece -> new PieceSquareTable(piece, 0, IterRange.to(64).map(i -> i + 100*piece.ordinal()).toArray()))
 				.toList();
 
@@ -30,7 +30,7 @@ public final class TestingPieceSquareTables
 
 	private static PieceSquareTables initEndgameTables()
 	{
-		final List<PieceSquareTable> whiteTables = Iterate.over(ChessPieces.white())
+		final List<PieceSquareTable> whiteTables = Iter.over(ChessPieces.white())
 				.map(piece -> new PieceSquareTable(piece, 0, IterRange.to(64).map(i -> i + 1000*piece.ordinal()).toArray()))
 				.toList();
 

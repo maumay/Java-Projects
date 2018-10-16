@@ -12,7 +12,7 @@ import java.util.List;
 import jenjinn.engine.base.BoardSquare;
 import jenjinn.engine.base.Direction;
 import jenjinn.engine.pgn.CommonRegex;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -50,7 +50,7 @@ public final class CordParser
 		Direction dir = Direction.ofLineBetween(start, end)
 				.orElseThrow(() -> new IllegalArgumentException(encodedCord));
 
-		return Iterate.over(start.getAllSquaresInDirections(dir, 10))
+		return Iter.over(start.getAllSquaresInDirections(dir, 10))
 				.takeWhile(sq -> sq != end)
 				.insert(start)
 				.append(end)

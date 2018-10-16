@@ -11,7 +11,7 @@ import java.util.function.IntToDoubleFunction;
 import java.util.function.IntToLongFunction;
 import java.util.function.IntUnaryOperator;
 
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 import jflow.iterators.factories.Numbers;
 import jflow.iterators.impl.AccumulationFlow;
 import jflow.iterators.impl.AppendFlow;
@@ -157,7 +157,7 @@ public abstract class AbstractIntFlow extends AbstractOptionallySized implements
 	@Override
 	public AbstractIntFlow append(final int... xs)
 	{
-		return append(Iterate.overInts(xs));
+		return append(Iter.overInts(xs));
 	}
 
 	@Override
@@ -169,7 +169,7 @@ public abstract class AbstractIntFlow extends AbstractOptionallySized implements
 	@Override
 	public AbstractIntFlow insert(final int... xs)
 	{
-		return insert(Iterate.overInts(xs));
+		return insert(Iter.overInts(xs));
 	}
 
 	@Override

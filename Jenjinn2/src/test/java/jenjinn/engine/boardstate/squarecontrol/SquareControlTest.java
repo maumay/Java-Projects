@@ -18,7 +18,7 @@ import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
 import jenjinn.engine.utils.VisualGridGenerator;
 import jflow.iterators.Flow;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -51,6 +51,6 @@ class SquareControlTest
 	static Flow<Arguments> test()
 	{
 		TestFileParser parser = new TestFileParser();
-		return Iterate.over(parser.parse("case001"));
+		return Iter.over(parser.parse("case001"));
 	}
 }

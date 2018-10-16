@@ -23,7 +23,7 @@ import jenjinn.engine.moves.PromotionMove;
 import jenjinn.engine.moves.PromotionResult;
 import jenjinn.engine.moves.StandardMove;
 import jflow.iterators.Flow;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -34,13 +34,13 @@ class ShorthandMoveParserTest
 	@MethodSource
 	void testMoveConstruction(String encodedMove, List<StandardMove> expectedMoves)
 	{
-		Set<ChessMove> upcast = Iterate.over(expectedMoves).filterAndCastTo(ChessMove.class).toSet();
+		Set<ChessMove> upcast = Iter.over(expectedMoves).filterAndCastTo(ChessMove.class).toSet();
 		assertEquals(upcast, new HashSet<>(ShorthandMoveParser.parse(encodedMove)));
 	}
 
 	static Flow<Arguments> testMoveConstruction()
 	{
-		return Iterate.over(
+		return Iter.over(
 				Arguments.of("s[a1->a3]", asList(new StandardMove(A1, A2), new StandardMove(A1, A3))),
 				Arguments.of("S[a1->{ a2 a3  }]", asList(new StandardMove(A1, A2), new StandardMove(A1, A3))),
 
@@ -64,7 +64,7 @@ class ShorthandMoveParserTest
 
 	static Flow<Arguments> testMoveConstructionFailure()
 	{
-		return Iterate.over(
+		return Iter.over(
 				Arguments.of("S [a1->a3]"),
 				Arguments.of("S[a1 ->a3]"),
 				Arguments.of("S[a1->k3]"),

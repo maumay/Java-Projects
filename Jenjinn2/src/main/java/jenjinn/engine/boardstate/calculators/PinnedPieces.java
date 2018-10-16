@@ -15,7 +15,7 @@ import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.DetailedPieceLocations;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -46,7 +46,7 @@ public final class PinnedPieces
 		BoardSquare kingLoc = pieceLocs.iterateLocs(activeKing).next();
 		long kloc = kingLoc.asBitboard();
 
-		return Iterate.over(ChessPieces.pinnersOn(passive))
+		return Iter.over(ChessPieces.pinnersOn(passive))
 				/*
 				 * Map piece to a Flow of its locations at which it would attack king on empty
 				 * board and flatten (we no longer need piece info).

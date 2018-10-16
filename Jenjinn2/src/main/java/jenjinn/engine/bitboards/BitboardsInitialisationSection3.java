@@ -10,7 +10,7 @@ import java.util.function.Predicate;
 import jenjinn.engine.base.BoardSquare;
 import jenjinn.engine.base.Direction;
 import jenjinn.engine.pieces.PieceMovementDirections;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -56,10 +56,10 @@ final class BitboardsInitialisationSection3
 
 	static long findControlSetFromOccupancyVariation(BoardSquare startSq, long occVar, List<Direction> movementDirections)
 	{
-		return bitwiseOr(Iterate.over(movementDirections)
+		return bitwiseOr(Iter.over(movementDirections)
 				.map(direction -> startSq.getAllSquaresInDirections(direction, 8))
 				.map(squares -> BitboardsInitialisationSection3.takeUntil(square -> bitboardsIntersect(occVar, square.asBitboard()), squares))
-				.flatten(Iterate::over));
+				.flatten(Iter::over));
 	}
 
 	/**

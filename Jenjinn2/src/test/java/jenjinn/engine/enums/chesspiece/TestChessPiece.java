@@ -31,7 +31,7 @@ import jenjinn.engine.base.BoardSquare;
 import jenjinn.engine.base.Direction;
 import jenjinn.engine.pieces.Moveable;
 import jflow.iterators.Flow;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -337,7 +337,7 @@ public enum TestChessPiece implements Moveable
 	private static long getSlidingPieceSquaresOfControl(final long allPieces, final BoardSquare startSquare, final List<Direction> movementDirections)
 	{
 		final List<BoardSquare> controlSquares = new ArrayList<>(64);
-		Iterate.over(movementDirections).forEach(direction ->
+		Iter.over(movementDirections).forEach(direction ->
 		{
 			BoardSquare current = startSquare.getNextSquareInDirection(direction);
 
@@ -359,6 +359,6 @@ public enum TestChessPiece implements Moveable
 
 	public static Flow<TestChessPiece> iterateAll()
 	{
-		return Iterate.over(valuesAsList());
+		return Iter.over(valuesAsList());
 	}
 }

@@ -10,7 +10,7 @@ import java.util.List;
 import jenjinn.engine.base.FileUtils;
 import jenjinn.engine.eval.PieceValues;
 import jenjinn.engine.pieces.ChessPiece;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 import jflow.utilities.MapUtil;
 
 /**
@@ -43,10 +43,10 @@ public final class TableParser
 		List<String> lines = FileUtils.cacheResource(packageProvider, filename);
 
 		if (lines.size() == 8) {
-			int[] locationValues = Iterate.overReversed(lines)
+			int[] locationValues = Iter.overReversed(lines)
 					.map(line -> allMatches(line, NUMBER_PATTERN).toList())
 					.map(matches -> MapUtil.intMap(Integer::parseInt, matches))
-					.flattenToInts(Iterate::overReversedInts)
+					.flattenToInts(Iter::overReversedInts)
 					.toArray();
 
 			return new PieceSquareTable(piece, pvalues.valueOf(piece), locationValues);

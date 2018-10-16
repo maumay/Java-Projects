@@ -37,7 +37,7 @@ import jenjinn.engine.base.Direction;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.PieceMovementDirections;
 import jflow.iterators.factories.IterRange;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -54,8 +54,8 @@ class BitboardsInitialisationSection1Test
 	@Test
 	void testRankBitboard()
 	{
-		final long[] expectedRanks = Iterate.over(A1, A2, A3, A4, A5, A6, A7, A8)
-				.map(square -> Iterate.over(square.getAllSquaresInDirections(Direction.E, 8)).insert(square))
+		final long[] expectedRanks = Iter.over(A1, A2, A3, A4, A5, A6, A7, A8)
+				.map(square -> Iter.over(square.getAllSquaresInDirections(Direction.E, 8)).insert(square))
 				.mapToLong(BitboardUtils::bitwiseOr)
 				.toArray();
 
@@ -65,8 +65,8 @@ class BitboardsInitialisationSection1Test
 	@Test
 	void testFileBitboard()
 	{
-		final long[] expectedFiles = Iterate.over(H1, G1, F1, E1, D1, C1, B1, A1)
-				.map(square -> Iterate.over(square.getAllSquaresInDirections(Direction.N, 8)).insert(square))
+		final long[] expectedFiles = Iter.over(H1, G1, F1, E1, D1, C1, B1, A1)
+				.map(square -> Iter.over(square.getAllSquaresInDirections(Direction.N, 8)).insert(square))
 				.mapToLong(BitboardUtils::bitwiseOr)
 				.toArray();
 
@@ -76,8 +76,8 @@ class BitboardsInitialisationSection1Test
 	@Test
 	void testDiagonalBitboard()
 	{
-		final long[] expectedDiagonals = Iterate.over(asList(H1, G1, F1, E1, D1, C1, B1, A1, A2, A3, A4, A5, A6, A7, A8))
-				.map(square -> Iterate.over(square.getAllSquaresInDirections(Direction.NE, 8)).insert(square))
+		final long[] expectedDiagonals = Iter.over(asList(H1, G1, F1, E1, D1, C1, B1, A1, A2, A3, A4, A5, A6, A7, A8))
+				.map(square -> Iter.over(square.getAllSquaresInDirections(Direction.NE, 8)).insert(square))
 				.mapToLong(BitboardUtils::bitwiseOr)
 				.toArray();
 
@@ -87,8 +87,8 @@ class BitboardsInitialisationSection1Test
 	@Test
 	void testAntiDiagonalBitboard()
 	{
-		final long[] expectedDiagonals = Iterate.over(asList(A1, B1, C1, D1, E1, F1, G1, H1, H2, H3, H4, H5, H6, H7, H8))
-				.map(square -> Iterate.over(square.getAllSquaresInDirections(Direction.NW, 8)).insert(square))
+		final long[] expectedDiagonals = Iter.over(asList(A1, B1, C1, D1, E1, F1, G1, H1, H2, H3, H4, H5, H6, H7, H8))
+				.map(square -> Iter.over(square.getAllSquaresInDirections(Direction.NW, 8)).insert(square))
 				.mapToLong(BitboardUtils::bitwiseOr)
 				.toArray();
 

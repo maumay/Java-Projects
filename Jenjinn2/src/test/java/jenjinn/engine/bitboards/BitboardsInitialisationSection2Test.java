@@ -18,7 +18,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import jenjinn.engine.base.BoardSquare;
 import jenjinn.engine.base.Direction;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -29,7 +29,7 @@ class BitboardsInitialisationSection2Test
 	@MethodSource
 	void testFindAllPossibleOrCombos(final long[] input, final Set<Long> expectedResult)
 	{
-		assertEquals(expectedResult, Iterate.overLongs(BitboardsInitialisationSection2.bitwiseOrAllSetsInPowerset(input)).mapToObject(x -> x).toSet());
+		assertEquals(expectedResult, Iter.overLongs(BitboardsInitialisationSection2.bitwiseOrAllSetsInPowerset(input)).mapToObject(x -> x).toSet());
 	}
 
 	static Stream<Arguments> testFindAllPossibleOrCombos()
@@ -46,7 +46,7 @@ class BitboardsInitialisationSection2Test
 	@MethodSource
 	void testCalculateOccupancyVariations(final Set<Long> expectedResult, final BoardSquare startSquare, final List<Direction> movementDirections)
 	{
-		assertEquals(expectedResult, Iterate.overLongs(calculateOccupancyVariations(startSquare, movementDirections)).mapToObject(i -> i).toSet());
+		assertEquals(expectedResult, Iter.overLongs(calculateOccupancyVariations(startSquare, movementDirections)).mapToObject(i -> i).toSet());
 	}
 
 	static Stream<Arguments> testCalculateOccupancyVariations()

@@ -26,9 +26,9 @@ import jflow.utilities.Exceptions;
  *
  * @author ThomasB
  */
-public final class Iterate
+public final class Iter
 {
-	private Iterate()
+	private Iter()
 	{
 	}
 	

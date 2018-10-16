@@ -14,7 +14,7 @@ import jenjinn.engine.boardstate.LocationTracker;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
 import jflow.iterators.factories.IterRange;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -90,7 +90,7 @@ public enum BoardHasher
 	{
 		long hash = activeSide.isWhite()? 0L : getBlackToMoveFeature();
 		hash ^= enpassantSquare == null? 0L : getEnpassantFileFeature(enpassantSquare);
-		hash ^= Iterate.over(castlingStatus.getCastlingRights()).mapToLong(this::getCastleRightsFeature).fold(0L, (a, b) -> a ^ b);
+		hash ^= Iter.over(castlingStatus.getCastlingRights()).mapToLong(this::getCastleRightsFeature).fold(0L, (a, b) -> a ^ b);
 		return hash;
 	}
 }

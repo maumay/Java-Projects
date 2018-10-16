@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import jflow.iterators.Flow;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * Enumeration of the 64 chess squares on a chess board.
@@ -102,7 +102,7 @@ public enum BoardSquare
 
 	public static Flow<BoardSquare> iterateAll()
 	{
-		return Iterate.over(Arrays.asList(values()));
+		return Iter.over(Arrays.asList(values()));
 	}
 
 	public static List<BoardSquare> valuesAsList()

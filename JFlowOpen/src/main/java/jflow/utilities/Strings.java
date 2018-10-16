@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 import jflow.iterators.AbstractFlow;
 import jflow.iterators.Flow;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 
 /**
@@ -49,7 +49,7 @@ public class Strings
 	 */
 	public static String concat(String... source)
 	{
-		return concat(Iterate.over(source));
+		return concat(Iter.over(source));
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class Strings
 	 */
 	public static String concat(Collection<String> source)
 	{
-		return concat(Iterate.over(source));
+		return concat(Iter.over(source));
 	}
 
 	/**

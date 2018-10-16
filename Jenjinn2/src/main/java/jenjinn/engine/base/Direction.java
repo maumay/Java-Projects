@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import jflow.iterators.Flow;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * Enum representing all the different directions
@@ -34,7 +34,7 @@ public enum Direction
 
 	public static Flow<Direction> iterateAll()
 	{
-		return Iterate.over(Arrays.asList(values()));
+		return Iter.over(Arrays.asList(values()));
 	}
 
 	public static Optional<Direction> ofLineBetween(BoardSquare start, BoardSquare end)

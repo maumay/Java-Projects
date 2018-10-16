@@ -22,7 +22,7 @@ import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
 import jenjinn.engine.utils.BoardHasher;
 import jflow.iterators.factories.IterRange;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author t
@@ -75,7 +75,7 @@ class DetailedPieceLocationsTest
 	{
 		final List<BoardSquare> locationsToAddPieceAt = getLocationSquares();
 		final PieceSquareTables midTables = getMidgameTables(), endTables = getEndgameTables();
-		final long[] initialLocations = Iterate.over(locationsToAddPieceAt).mapToLong(BoardSquare::asBitboard).toArray();
+		final long[] initialLocations = Iter.over(locationsToAddPieceAt).mapToLong(BoardSquare::asBitboard).toArray();
 		final DetailedPieceLocations locations = new DetailedPieceLocations(initialLocations, midTables, endTables);
 
 		int runningMidgameEval = locations.getMidgameEval(), runningEndgameEval = locations.getEndgameEval();
@@ -116,7 +116,7 @@ class DetailedPieceLocationsTest
 	void testGetPieceAt()
 	{
 		final List<BoardSquare> locationsToAddPieceAt = getLocationSquares();
-		final long[] initialLocations = Iterate.over(locationsToAddPieceAt).mapToLong(BoardSquare::asBitboard).toArray();
+		final long[] initialLocations = Iter.over(locationsToAddPieceAt).mapToLong(BoardSquare::asBitboard).toArray();
 		final DetailedPieceLocations locations = new DetailedPieceLocations(initialLocations, getMidgameTables(), getEndgameTables());
 
 		for (final ChessPiece piece : ChessPieces.all()) {

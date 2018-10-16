@@ -21,7 +21,7 @@ import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.calculators.LegalMoves;
 import jenjinn.engine.moves.ChessMove;
 import jflow.iterators.factories.IterRange;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 import jflow.iterators.factories.Repeatedly;
 
 /**
@@ -44,7 +44,7 @@ class LegalMovesGenerationTest
 	{
 		final Set<ChessMove> expectedcpy = new HashSet<>(expectedMoves);
 		expectedcpy.removeAll(actualMoves);
-		final List<String> missingMoves = Iterate.over(expectedcpy).map(ChessMove::toString).toMutableList();
+		final List<String> missingMoves = Iter.over(expectedcpy).map(ChessMove::toString).toMutableList();
 		missingMoves.sort(Comparator.naturalOrder());
 
 		final StringBuilder sb = new StringBuilder("Moves which should have been calculated:\n")
@@ -53,7 +53,7 @@ class LegalMovesGenerationTest
 
 		final Set<ChessMove> actualcpy = new HashSet<>(actualMoves);
 		actualcpy.removeAll(expectedMoves);
-		final List<String> addedMoves = Iterate.over(actualcpy).map(ChessMove::toString).toMutableList();
+		final List<String> addedMoves = Iter.over(actualcpy).map(ChessMove::toString).toMutableList();
 		addedMoves.sort(Comparator.naturalOrder());
 
 		return sb.append("Moves which should not have been calculated:\n")

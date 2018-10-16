@@ -10,7 +10,7 @@ import jenjinn.engine.boardstate.LocationTracker;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
 import jflow.iterators.factories.IterRange;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -25,8 +25,8 @@ public final class PieceSquareTables
 		if (whiteTables.size() != 6 || IterRange.to(6).anyMatch(i -> whiteTables.get(i).getAssociatedPiece().ordinal() != i)) {
 			throw new IllegalArgumentException();
 		}
-		this.tables = Iterate.over(whiteTables)
-				.append(Iterate.over(whiteTables).map(PieceSquareTable::invertValues))
+		this.tables = Iter.over(whiteTables)
+				.append(Iter.over(whiteTables).map(PieceSquareTable::invertValues))
 				.toList();
 	}
 
@@ -78,7 +78,7 @@ public final class PieceSquareTables
 	public static PieceSquareTables endgame()
 	{
 		return new PieceSquareTables(
-				Iterate.over(ChessPieces.white())
+				Iter.over(ChessPieces.white())
 				.map(p -> TableParser.parseFile(p, p.name().substring(6).toLowerCase() + "-endgame"))
 				.toList());
 	}
@@ -86,7 +86,7 @@ public final class PieceSquareTables
 	public static PieceSquareTables midgame()
 	{
 		return new PieceSquareTables(
-				Iterate.over(ChessPieces.white())
+				Iter.over(ChessPieces.white())
 				.map(p -> TableParser.parseFile(p, p.name().substring(6).toLowerCase() + "-midgame"))
 				.toList());
 	}

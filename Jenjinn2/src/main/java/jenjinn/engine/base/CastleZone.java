@@ -21,7 +21,7 @@ import static jenjinn.engine.base.BoardSquare.H8;
 
 import jenjinn.engine.pgn.CommonRegex;
 import jflow.iterators.Flow;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -128,6 +128,6 @@ public enum CastleZone
 
 	public static Flow<CastleZone> iterateAll()
 	{
-		return Iterate.over(asList(values()));
+		return Iter.over(asList(values()));
 	}
 }

@@ -29,7 +29,7 @@ import jenjinn.engine.boardstate.HashCache;
 import jenjinn.engine.eval.piecesquaretables.PieceSquareTables;
 import jenjinn.engine.utils.BoardHasher;
 import jflow.iterators.factories.IterRange;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 import jflow.utilities.Strings;
 
 /**
@@ -53,7 +53,7 @@ public final class BoardParser
 		if (attributes.size() != 9) {
 			throw new IllegalArgumentException();
 		}
-		List<String> atts = Iterate.over(attributes).map(String::trim).map(String::toLowerCase).toList();
+		List<String> atts = Iter.over(attributes).map(String::trim).map(String::toLowerCase).toList();
 		DetailedPieceLocations pieceLocations = constructPieceLocations(atts.get(0), atts.get(1));
 		HalfMoveCounter halfMoveCount = constructHalfMoveCounter(atts.get(2));
 		CastlingStatus castlingStatus = constructCastlingStatus(atts.get(3), atts.get(4), atts.get(5));
@@ -93,12 +93,12 @@ public final class BoardParser
 	{
 		assertTrue(developedPieces.trim().matches("^developed_pieces:(( *none)|(( *[a-h][1-8])( +[a-h][1-8]){0,11}))$"), developedPieces);
 		List<String> squaresMatched = Strings.allMatches(developedPieces, "[a-h][1-8]").toList();
-		Set<BoardSquare> uniqueSquares = Iterate.over(squaresMatched).map(String::toUpperCase).map(BoardSquare::valueOf).toSet();
+		Set<BoardSquare> uniqueSquares = Iter.over(squaresMatched).map(String::toUpperCase).map(BoardSquare::valueOf).toSet();
 		if (uniqueSquares.size() != squaresMatched.size()) {
 			throw new IllegalArgumentException(developedPieces);
 		}
 		// Will error here if invalid square was passed, cannot add null to enumset.
-		return Iterate.over(uniqueSquares).map(DevelopmentPiece::fromStartSquare).toCollection(() -> EnumSet.noneOf(DevelopmentPiece.class));
+		return Iter.over(uniqueSquares).map(DevelopmentPiece::fromStartSquare).toCollection(() -> EnumSet.noneOf(DevelopmentPiece.class));
 	}
 
 	private static CastlingStatus constructCastlingStatus(String rights, String whiteStatus, String blackStatus)
@@ -109,17 +109,17 @@ public final class BoardParser
 
 		Map<String, CastleZone> regexMatchers = CastleZone.iterateAll().toMap(CastleZone::getSimpleIdentifier, Function.identity());
 
-		Set<CastleZone> rightSet = Iterate.over(regexMatchers.keySet())
+		Set<CastleZone> rightSet = Iter.over(regexMatchers.keySet())
 				.filter(rx -> Strings.matchesAnywhere(rights, rx))
 				.map(regexMatchers::get)
 				.toCollection(() -> EnumSet.noneOf(CastleZone.class));
 
-		CastleZone whiteCastleStatus = Iterate.over(regexMatchers.keySet())
+		CastleZone whiteCastleStatus = Iter.over(regexMatchers.keySet())
 				.filter(rx -> Strings.matchesAnywhere(whiteStatus, rx))
 				.map(regexMatchers::get)
 				.safeNext().orElse(null);
 
-		CastleZone blackCastleStatus = Iterate.over(regexMatchers.keySet())
+		CastleZone blackCastleStatus = Iter.over(regexMatchers.keySet())
 				.filter(rx -> Strings.matchesAnywhere(blackStatus, rx))
 				.map(regexMatchers::get)
 				.safeNext().orElse(null);

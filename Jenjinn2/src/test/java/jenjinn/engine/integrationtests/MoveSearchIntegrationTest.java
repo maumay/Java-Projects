@@ -18,7 +18,7 @@ import jenjinn.engine.moves.ChessMove;
 import jenjinn.engine.movesearch.TreeSearcher;
 import jenjinn.engine.pgn.BadPgnException;
 import jenjinn.engine.pgn.PgnGameConverter;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -39,7 +39,7 @@ class MoveSearchIntegrationTest
 				try {
 					List<ChessMove> mvs = PgnGameConverter.parse(game);
 					BoardState state = StartStateGenerator.createStartBoard();
-					Iterate.over(mvs).take(mvs.size()/2).forEach(mv -> mv.makeMove(state));
+					Iter.over(mvs).take(mvs.size()/2).forEach(mv -> mv.makeMove(state));
 					searcher.getBestMoveFrom(state, timePerSearch);
 				} catch (BadPgnException e) {
 					fail("Error in parsing pgn: " + game);

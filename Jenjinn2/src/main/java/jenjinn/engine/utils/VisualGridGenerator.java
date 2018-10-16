@@ -14,7 +14,7 @@ import jenjinn.engine.bitboards.BitboardIterator;
 import jenjinn.engine.boardstate.DetailedPieceLocations;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -28,7 +28,7 @@ public final class VisualGridGenerator
 	public static String from(final String title, final Map<BoardSquare, ChessPiece> locations)
 	{
 		return StringifyBoard.formatGrid(
-				new TitledVisualGrid(title, Iterate.over(locations.keySet()).toMap(x -> x, x -> CharPair.from(locations.get(x))))
+				new TitledVisualGrid(title, Iter.over(locations.keySet()).toMap(x -> x, x -> CharPair.from(locations.get(x))))
 				);
 	}
 
@@ -56,7 +56,7 @@ public final class VisualGridGenerator
 
 	public static String from(final long... bitboards)
 	{
-		return StringifyBoard.formatGrids(Iterate.overLongs(bitboards).mapToObject(TitledVisualGrid::from).toList());
+		return StringifyBoard.formatGrids(Iter.overLongs(bitboards).mapToObject(TitledVisualGrid::from).toList());
 	}
 
 	public static TitledVisualGrid from(final String title, final BasicPieceLocations locations)

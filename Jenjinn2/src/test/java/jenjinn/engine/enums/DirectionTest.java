@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import jenjinn.engine.base.BoardSquare;
 import jenjinn.engine.base.Direction;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -30,7 +30,7 @@ class DirectionTest
 			}
 		});
 
-		Iterate.over(complementOf(visitedSquares)).forEach(square -> {
+		Iter.over(complementOf(visitedSquares)).forEach(square -> {
 			final Optional<Direction> result = Direction.ofLineBetween(start, square);
 			assertEquals(Optional.empty(), result, square.name());
 		});

@@ -189,7 +189,7 @@ public class Repeatedly
 	 */
 	public static IntFlow cycleInts(int... source)
 	{
-		return new CyclicFlow.OfInt(() -> Iterate.overInts(source));
+		return new CyclicFlow.OfInt(() -> Iter.overInts(source));
 	}
 	
 	// Doubles
@@ -261,7 +261,7 @@ public class Repeatedly
 	 */
 	public static DoubleFlow cycleDoubles(double... source)
 	{
-		return new CyclicFlow.OfDouble(() -> Iterate.overDoubles(source));
+		return new CyclicFlow.OfDouble(() -> Iter.overDoubles(source));
 	}
 	
 	// Longs
@@ -333,6 +333,6 @@ public class Repeatedly
 	 */
 	public static LongFlow cycleLongs(long... source)
 	{
-		return new CyclicFlow.OfLong(() -> Iterate.overLongs(source));
+		return new CyclicFlow.OfLong(() -> Iter.overLongs(source));
 	}
 }

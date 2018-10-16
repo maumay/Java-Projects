@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.Arguments;
 
 import jenjinn.engine.parseutils.AbstractTestFileParser;
 import jenjinn.engine.parseutils.BoardParser;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -32,6 +32,6 @@ final class TestFileParser extends AbstractTestFileParser
 		if (caseLines.isEmpty()) {
 			throw new IllegalArgumentException();
 		}
-		return Iterate.over(caseLines).map(IndividualStateCase::from).toList();
+		return Iter.over(caseLines).map(IndividualStateCase::from).toList();
 	}
 }

@@ -14,7 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.eval.StaticExchangeEvaluator;
 import jflow.iterators.Flow;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -38,6 +38,6 @@ class StaticExchangeEvaluatorTest
 	static Flow<Arguments> test()
 	{
 		TestFileParser parser = new TestFileParser();
-		return Iterate.over("case001").map(parser::parse);
+		return Iter.over("case001").map(parser::parse);
 	}
 }

@@ -23,7 +23,7 @@ import jenjinn.engine.pgn.BadPgnException;
 import jenjinn.engine.pgn.PgnGameConverter;
 import jflow.collections.FList;
 import jflow.collections.Lists;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -50,9 +50,9 @@ class PgnGameConversionIntegrationTest extends AbstractBoardStateTest
 					try {
 						List<ChessMove> mvs = PgnGameConverter.parse(pgn.trim());
 						BoardState state = StartStateGenerator.createStartBoard();
-						FList<MoveReversalData> reversalData = Iterate.over(mvs).map(x -> new MoveReversalData()).toList();
+						FList<MoveReversalData> reversalData = Iter.over(mvs).map(x -> new MoveReversalData()).toList();
 						reversalData.flow().zipWith(mvs).forEach(p -> p.second().makeMove(state, p.first()));
-						reversalData.rflow().zipWith(Iterate.overReversed(mvs)).forEach(p -> p.second().reverseMove(state, p.first()));
+						reversalData.rflow().zipWith(Iter.overReversed(mvs)).forEach(p -> p.second().reverseMove(state, p.first()));
 						assertBoardStatesAreEqual(StartStateGenerator.createStartBoard(), state);
 					} catch (BadPgnException e) {
 						e.printStackTrace();

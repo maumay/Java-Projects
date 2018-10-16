@@ -77,7 +77,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import jenjinn.engine.base.BoardSquare;
 import jenjinn.engine.base.Direction;
 import jflow.iterators.factories.IterRange;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 import jflow.iterators.misc.PredicatePartition;
 
 /**
@@ -136,7 +136,7 @@ class BoardSquareTest
 			// Test that combining two directions works
 			for (List<Direction> pair : asList(asList(Direction.N, Direction.E),
 					asList(Direction.S, Direction.SE))) {
-				Set<BoardSquare> expected = Iterate.over(expectedSquaresInEachDirection.get(head(pair))).take(j)
+				Set<BoardSquare> expected = Iter.over(expectedSquaresInEachDirection.get(head(pair))).take(j)
 						.toCollection(HashSet::new);
 				expected.addAll(take(j, expectedSquaresInEachDirection.get(last(pair))));
 

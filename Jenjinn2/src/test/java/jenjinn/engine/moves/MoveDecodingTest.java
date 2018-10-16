@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import jenjinn.engine.base.BoardSquare;
 import jenjinn.engine.base.CastleZone;
 import jflow.iterators.Flow;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -30,7 +30,7 @@ class MoveDecodingTest
 
 	static Flow<Arguments> test()
 	{
-		return Iterate.over(
+		return Iter.over(
 				Arguments.of("StandardMove[source=a3|target=a4]", "Sa3a4", new StandardMove(BoardSquare.A3, BoardSquare.A4)),
 				Arguments.of("EnpassantMove[source=a3|target=a4]", "Ea3a4", new EnpassantMove(BoardSquare.A3, BoardSquare.A4)),
 				Arguments.of("PromotionMove[source=a3|target=a4|result=R]", "Pa3a4R", new PromotionMove(BoardSquare.A3, BoardSquare.A4, PromotionResult.R)),

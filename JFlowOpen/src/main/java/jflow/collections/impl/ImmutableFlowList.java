@@ -17,7 +17,7 @@ import jflow.collections.Lists;
 import jflow.iterators.AbstractFlow;
 import jflow.iterators.Flow;
 import jflow.iterators.factories.IterRange;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 import jflow.utilities.Optionals;
 
 /**
@@ -53,12 +53,12 @@ public final class ImmutableFlowList<E> implements FList<E>
 	@SafeVarargs
 	public ImmutableFlowList(E... elements)
 	{
-		this(Iterate.over(elements));
+		this(Iter.over(elements));
 	}
 
 	public ImmutableFlowList(Collection<? extends E> src)
 	{
-		this(Iterate.over(src));
+		this(Iter.over(src));
 	}
 
 	@Deprecated
@@ -110,7 +110,7 @@ public final class ImmutableFlowList<E> implements FList<E>
 	@Override
 	public boolean containsAll(Collection<?> c)
 	{
-		return Iterate.over(c).allMatch(this::contains);
+		return Iter.over(c).allMatch(this::contains);
 	}
 
 	@SuppressWarnings("unchecked")

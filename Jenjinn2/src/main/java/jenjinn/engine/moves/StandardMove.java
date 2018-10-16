@@ -21,7 +21,7 @@ import jenjinn.engine.base.Side;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.MoveReversalData;
 import jenjinn.engine.pieces.ChessPiece;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -44,7 +44,7 @@ public final class StandardMove extends AbstractChessMove
 		Optional<Direction> dir = Direction.ofLineBetween(getSource(), getTarget());
 		if (dir.isPresent()) {
 			List<BoardSquare> squares = getSource().getAllSquaresInDirections(dir.get(), 10);
-			return Iterate.over(squares)
+			return Iter.over(squares)
 					.takeWhile(sq -> sq != getTarget())
 					.insert(getSource())
 					.append(getTarget())

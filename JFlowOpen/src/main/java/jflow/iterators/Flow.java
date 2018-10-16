@@ -25,7 +25,7 @@ import jflow.collections.FList;
 import jflow.collections.FSet;
 import jflow.collections.impl.DelegatingFlowList;
 import jflow.collections.impl.DelegatingFlowSet;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 import jflow.iterators.misc.Bool;
 import jflow.iterators.misc.DoubleWith;
 import jflow.iterators.misc.IntWith;
@@ -737,7 +737,7 @@ public interface Flow<E> extends PrototypeFlow<E>
 	 */
 	default Flow<E> append(E e)
 	{
-		return append(Iterate.over(e));
+		return append(Iter.over(e));
 	}
 
 	/**
@@ -751,7 +751,7 @@ public interface Flow<E> extends PrototypeFlow<E>
 	 */
 	default Flow<E> insert(E e)
 	{
-		return insert(Iterate.over(e));
+		return insert(Iter.over(e));
 	}
 
 	/**

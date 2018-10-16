@@ -33,7 +33,7 @@ public class IterRange
 	 */
 	public static IntFlow to(int upperBound)
 	{
-		return upperBound > 0 ? Iterate.intsByIndexing(i -> i, upperBound) : Iterate.emptyInts();
+		return upperBound > 0 ? Iter.intsByIndexing(i -> i, upperBound) : Iter.emptyInts();
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class IterRange
 	 */
 	public static IntFlow between(int low, int high)
 	{
-		return high > low ? Iterate.intsByIndexing(i -> i + low, high - low) : Iterate.emptyInts();
+		return high > low ? Iter.intsByIndexing(i -> i + low, high - low) : Iter.emptyInts();
 	}
 
 	/**
@@ -80,8 +80,8 @@ public class IterRange
 	{
 		int length = end - start;
 		int elementCount = (int) Math.ceil(abs((double) length / step));
-		return signum(step) == signum(length) ? Iterate.intsByIndexing(i -> start + i * step, elementCount)
-				: Iterate.emptyInts();
+		return signum(step) == signum(length) ? Iter.intsByIndexing(i -> start + i * step, elementCount)
+				: Iter.emptyInts();
 	}
 
 	/**

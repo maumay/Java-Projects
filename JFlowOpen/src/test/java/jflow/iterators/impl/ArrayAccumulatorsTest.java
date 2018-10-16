@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import jflow.iterators.Flow;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 import jflow.iterators.impl.ArrayAccumulators;
 
 /**
@@ -35,7 +35,7 @@ class ArrayAccumulatorsTest
 	
 	static Flow<Arguments> testIntAccumulation()
 	{
-		return Iterate.over(
+		return Iter.over(
 				Arguments.of(10),
 				Arguments.of(20),
 				Arguments.of(21),
@@ -61,7 +61,7 @@ class ArrayAccumulatorsTest
 	
 	static Flow<Arguments> testDoubleAccumulation()
 	{
-		return Iterate.over(
+		return Iter.over(
 				Arguments.of(10),
 				Arguments.of(20),
 				Arguments.of(21),
@@ -87,7 +87,7 @@ class ArrayAccumulatorsTest
 	
 	static Flow<Arguments> testLongAccumulation()
 	{
-		return Iterate.over(
+		return Iter.over(
 				Arguments.of(10),
 				Arguments.of(20),
 				Arguments.of(21),

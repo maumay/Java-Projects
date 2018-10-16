@@ -31,7 +31,7 @@ import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
 import jenjinn.engine.utils.PieceSquarePair;
 import jflow.iterators.Flow;
-import jflow.iterators.factories.Iterate;
+import jflow.iterators.factories.Iter;
 import jflow.iterators.misc.PredicatePartition;
 
 /**
@@ -70,7 +70,7 @@ public final class LegalMoves
 		boolean inCheck = bitboardsIntersect(passiveControl, kingLoc.asBitboard());
 		boolean castlingAllowed = !inCheck && !forceAttacks
 				&& state.getCastlingStatus().getStatusFor(active) == null;
-		Flow<ChessMove> moves = castlingAllowed ? getCastlingMoves(state, passiveControl) : Iterate.empty();
+		Flow<ChessMove> moves = castlingAllowed ? getCastlingMoves(state, passiveControl) : Iter.empty();
 		long allowedMoveArea = forceAttacks ? passivePieceLocs : Bitboards.universal();
 
 		if (inCheck) {
@@ -101,7 +101,7 @@ public final class LegalMoves
 		// Add moves from non king pieces
 		long faa = allowedMoveArea;
 		moves = moves.append(
-				Iterate.overReversed(activePieces).drop(1).flatten(p -> getNonKingMoves(state, p, pinnedPieces, faa)));
+				Iter.overReversed(activePieces).drop(1).flatten(p -> getNonKingMoves(state, p, pinnedPieces, faa)));
 
 		// Add king moves
 		long kingConstraint = forceAttacks ? ~passiveControl & passivePieceLocs : ~passiveControl;
@@ -115,7 +115,7 @@ public final class LegalMoves
 		Side activeSide = state.getActiveSide();
 		Predicate<CastleZone> sideFilter = activeSide.isWhite() ? z -> z.isWhiteZone() : z -> !z.isWhiteZone();
 		Set<CastleZone> allRights = state.getCastlingStatus().getCastlingRights();
-		Flow<CastleZone> availableRights = Iterate.over(allRights).filter(sideFilter);
+		Flow<CastleZone> availableRights = Iter.over(allRights).filter(sideFilter);
 		long allPieces = state.getPieceLocations().getAllLocations();
 		Flow<CastleZone> legalAvailableRights = availableRights.filter(zone -> {
 			long reqClearArea = zone.getRequiredFreeSquares();
@@ -144,7 +144,7 @@ public final class LegalMoves
 			PinnedPieceCollection pinnedPieces, long overallAreaConstraint)
 	{
 		if (Long.bitCount(overallAreaConstraint) == 0) {
-			return Iterate.empty();
+			return Iter.empty();
 		}
 
 		DetailedPieceLocations pieceLocs = state.getPieceLocations();
@@ -168,7 +168,7 @@ public final class LegalMoves
 			BoardSquare ep = state.getEnPassantSquare();
 			long plocs = pieceLocs.locationsOf(piece);
 			List<Direction> searchDirs = piece.isWhite() ? WHITE_EP_SEARCH_DIRS : BLACK_EP_SEARCH_DIRS;
-			Flow<ChessMove> epContribution = Iterate.over(searchDirs).map(ep::getNextSquareInDirection)
+			Flow<ChessMove> epContribution = Iter.over(searchDirs).map(ep::getNextSquareInDirection)
 					.filter(sq -> {
 						if (sq != null && bitboardsIntersect(plocs, sq.asBitboard())) {
 							if (pinnedPieces.containsLocation(sq)) {
@@ -205,7 +205,7 @@ public final class LegalMoves
 		long activePawnLocs = state.getPieceLocations().locationsOf(activePawn);
 		List<Direction> searchDirs = active.isWhite() ? WHITE_EP_SEARCH_DIRS : BLACK_EP_SEARCH_DIRS;
 
-		return Iterate.over(searchDirs).map(enpassantSquare::getNextSquareInDirection).filter(x -> x != null)
+		return Iter.over(searchDirs).map(enpassantSquare::getNextSquareInDirection).filter(x -> x != null)
 				.filter(square -> {
 					if (bitboardsIntersect(activePawnLocs, square.asBitboard())) {
 						if (pinnedPieces.containsLocation(square)) {
