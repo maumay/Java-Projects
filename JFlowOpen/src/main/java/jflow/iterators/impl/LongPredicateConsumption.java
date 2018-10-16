@@ -6,8 +6,6 @@ package jflow.iterators.impl;
 import java.util.PrimitiveIterator;
 import java.util.function.LongPredicate;
 
-import jflow.iterators.misc.LongPredicatePartition;
-
 /**
  * @author ThomasB
  */
@@ -63,20 +61,5 @@ public final class LongPredicateConsumption
 			}
 		}
 		return true;
-	}
-
-	public static LongPredicatePartition partition(final PrimitiveIterator.OfLong source, final LongPredicate predicate)
-	{
-		final ArrayAccumulators.OfLong accepted = ArrayAccumulators.longAccumulator(), rejected = ArrayAccumulators.longAccumulator();
-		while (source.hasNext()) {
-			final long next = source.nextLong();
-			if (predicate.test(next)) {
-				accepted.add(next);
-			}
-			else {
-				rejected.add(next);
-			}
-		}
-		return new LongPredicatePartition(accepted.compress(), rejected.compress());
 	}
 }

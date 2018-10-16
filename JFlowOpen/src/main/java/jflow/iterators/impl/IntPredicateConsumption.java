@@ -6,8 +6,6 @@ package jflow.iterators.impl;
 import java.util.PrimitiveIterator;
 import java.util.function.IntPredicate;
 
-import jflow.iterators.misc.IntPredicatePartition;
-
 /**
  * @author ThomasB
  */
@@ -63,20 +61,5 @@ public final class IntPredicateConsumption
 			}
 		}
 		return true;
-	}
-
-	public static IntPredicatePartition partition(final PrimitiveIterator.OfInt source, final IntPredicate predicate)
-	{
-		final ArrayAccumulators.OfInt accepted = ArrayAccumulators.intAccumulator(), rejected = ArrayAccumulators.intAccumulator();
-		while (source.hasNext()) {
-			final int next = source.nextInt();
-			if (predicate.test(next)) {
-				accepted.add(next);
-			}
-			else {
-				rejected.add(next);
-			}
-		}
-		return new IntPredicatePartition(accepted.compress(), rejected.compress());
 	}
 }

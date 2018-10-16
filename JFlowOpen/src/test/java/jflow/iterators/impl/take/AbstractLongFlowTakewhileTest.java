@@ -32,8 +32,8 @@ class AbstractLongFlowTakewhileTest extends IteratorExampleProvider implements I
 
 		testData.stream().forEach(testCase ->
 		{
-			assertLongIteratorAsExpected(testCase.first(), createTakewhileIteratorProviderFrom(populated, testCase.second()));
-			assertLongIteratorAsExpected(new long[] {}, createTakewhileIteratorProviderFrom(empty, testCase.second()));
+			assertLongIteratorAsExpected(testCase._1(), createTakewhileIteratorProviderFrom(populated, testCase._2()));
+			assertLongIteratorAsExpected(new long[] {}, createTakewhileIteratorProviderFrom(empty, testCase._2()));
 		});
 	}
 

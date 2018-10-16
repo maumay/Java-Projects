@@ -45,7 +45,7 @@ class AbstractDoubleFlowCollectionConsumptionTest extends IteratorExampleProvide
 	@MethodSource("collectToMapTestDataProvider")
 	void testCollectToMap(final AbstractDoubleFlow iterator, final DoubleFunction<String> keyMapper, final DoubleFunction<Double> valueMapper, final List<Pair<String, Double>> expectedMapPairs)
 	{
-		final Map<String, Double> expectedMap = expectedMapPairs.stream().collect(toMap(Pair::first, Pair::second));
+		final Map<String, Double> expectedMap = expectedMapPairs.stream().collect(toMap(x -> x._1, x -> x._2));
 		assertEquals(expectedMap, iterator.toMap(keyMapper, valueMapper));
 	}
 
@@ -75,7 +75,7 @@ class AbstractDoubleFlowCollectionConsumptionTest extends IteratorExampleProvide
 	@MethodSource("groupByTestDataProvider")
 	void testGroupBy(final AbstractDoubleFlow iterator, final DoubleFunction<Integer> classifier, final List<Pair<Integer, double[]>> expectedMapPairs)
 	{
-		final Map<Integer, double[]> expectedMap = expectedMapPairs.stream().collect(toMap(Pair::first, Pair::second));
+		final Map<Integer, double[]> expectedMap = expectedMapPairs.stream().collect(toMap(Pair::_1, Pair::_2));
 		final Map<Integer, double[]> actualMap = iterator.groupBy(classifier);
 		assertEquals(expectedMap.keySet(), actualMap.keySet());
 		expectedMap.keySet().stream().forEach(key -> assertArrayEquals(expectedMap.get(key), actualMap.get(key), key.toString()));

@@ -3,7 +3,6 @@
  */
 package jflow.iterators.impl;
 
-import static jflow.utilities.CollectionUtil.last;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +45,7 @@ final class ArrayAccumulators
 		
 		void add(int n)
 		{
-			int[] currentStore = last(arrays);
+			int[] currentStore = arrays.get(arrays.size() - 1);
 			currentStore[runningIndex] = n;
 			runningIndex = (runningIndex + 1) % currentStore.length;
 			
@@ -73,7 +72,7 @@ final class ArrayAccumulators
 				indexTracker += array.length;
 			}
 			// copy the last array which is only partially full.
-			System.arraycopy(last(arrays), 0, result, indexTracker, runningIndex);
+			System.arraycopy(arrays.get(arrays.size() - 1), 0, result, indexTracker, runningIndex);
 			return result;
 		}
 	}
@@ -90,7 +89,7 @@ final class ArrayAccumulators
 		
 		void add(double n)
 		{
-			double[] currentStore = last(arrays);
+			double[] currentStore = arrays.get(arrays.size() - 1);
 			currentStore[runningIndex] = n;
 			runningIndex = (runningIndex + 1) % currentStore.length;
 			
@@ -117,7 +116,7 @@ final class ArrayAccumulators
 				indexTracker += array.length;
 			}
 			// copy the last array which is only partially full.
-			System.arraycopy(last(arrays), 0, result, indexTracker, runningIndex);
+			System.arraycopy(arrays.get(arrays.size() - 1), 0, result, indexTracker, runningIndex);
 			return result;
 		}
 	}
@@ -134,7 +133,7 @@ final class ArrayAccumulators
 		
 		void add(long n)
 		{
-			long[] currentStore = last(arrays);
+			long[] currentStore = arrays.get(arrays.size() - 1);
 			currentStore[runningIndex] = n;
 			runningIndex = (runningIndex + 1) % currentStore.length;
 			
@@ -161,7 +160,7 @@ final class ArrayAccumulators
 				indexTracker += array.length;
 			}
 			// copy the last array which is only partially full.
-			System.arraycopy(last(arrays), 0, result, indexTracker, runningIndex);
+			System.arraycopy(arrays.get(arrays.size() - 1), 0, result, indexTracker, runningIndex);
 			return result;
 		}
 	}

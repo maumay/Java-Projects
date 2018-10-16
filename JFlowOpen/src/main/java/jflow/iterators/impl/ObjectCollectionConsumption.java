@@ -9,17 +9,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.OptionalInt;
 import java.util.function.Function;
 import java.util.function.Supplier;
-
-import jflow.collections.FList;
-import jflow.collections.FSet;
-import jflow.collections.impl.FlowArrayList;
-import jflow.collections.impl.FlowHashSet;
-import jflow.collections.impl.ImmutableFlowList;
-import jflow.collections.impl.UnmodifiableDelegatingFlowSet;
-import jflow.iterators.Flow;
 
 /**
  * @author ThomasB
@@ -37,56 +28,46 @@ public final class ObjectCollectionConsumption
 		return container;
 	}
 
-	public static <E> FList<E> toMutableList(final Flow<? extends E> iterator)
-	{
-		final OptionalInt size = iterator.size();
-		final FList<E> container = size.isPresent()? new FlowArrayList<>(size.getAsInt()) : new FlowArrayList<>();
-		while (iterator.hasNext()) {
-			container.add(iterator.next());
-		}
-		return container;
-	}
+//	public static <E> Seq<E> toSeq(final Flow<? extends E> iterator)
+//	{
+//		if (iterator.size().isPresent()) {
+//			return new VectorSeq<>(iterator);
+//		}
+//		else {
+//			final List<E> mutable = new ArrayList<>();
+//			while (iterator.hasNext()) {
+//				mutable.add(iterator.next());
+//			}
+//			return new VectorSeq<>(mutable);
+//		}
+//	}
 
-	public static <E> FList<E> toImmutableList(final Flow<? extends E> iterator)
-	{
-		if (iterator.size().isPresent()) {
-			return new ImmutableFlowList<>(iterator);
-		}
-		else {
-			final List<E> mutable = new ArrayList<>();
-			while (iterator.hasNext()) {
-				mutable.add(iterator.next());
-			}
-			return new ImmutableFlowList<>(mutable);
-		}
-	}
+//	public static <E> FSet<E> toMutableSet(final Flow<? extends E> iterator)
+//	{
+//		final OptionalInt size = iterator.size();
+//		final FSet<E> container = size.isPresent()? new FlowHashSet<>(size.getAsInt()) : new FlowHashSet<>();
+//		while (iterator.hasNext()) {
+//			container.add(iterator.next());
+//		}
+//		return container;
+//	}
+//
+//	public static <E> FSet<E> toImmutableSet(final Flow<? extends E> iterator)
+//	{
+//		final OptionalInt size = iterator.size();
+//		final FSet<E> container = size.isPresent()? new FlowHashSet<>(size.getAsInt()) : new FlowHashSet<>();
+//		while (iterator.hasNext()) {
+//			container.add(iterator.next());
+//		}
+//		return new UnmodifiableDelegatingFlowSet<>(container);
+//	}
 
-	public static <E> FSet<E> toMutableSet(final Flow<? extends E> iterator)
+	public static <E, K, V> Map<K, V> toMap(Iterator<? extends E> iterator, Function<? super E, ? extends K> keyMapper, Function<? super E, ? extends V> valueMapper)
 	{
-		final OptionalInt size = iterator.size();
-		final FSet<E> container = size.isPresent()? new FlowHashSet<>(size.getAsInt()) : new FlowHashSet<>();
+		Map<K, V> collected = new HashMap<>();
 		while (iterator.hasNext()) {
-			container.add(iterator.next());
-		}
-		return container;
-	}
-
-	public static <E> FSet<E> toImmutableSet(final Flow<? extends E> iterator)
-	{
-		final OptionalInt size = iterator.size();
-		final FSet<E> container = size.isPresent()? new FlowHashSet<>(size.getAsInt()) : new FlowHashSet<>();
-		while (iterator.hasNext()) {
-			container.add(iterator.next());
-		}
-		return new UnmodifiableDelegatingFlowSet<>(container);
-	}
-
-	public static <E, K, V> Map<K, V> toMap(final Iterator<? extends E> iterator, final Function<? super E, K> keyMapper, final Function<? super E, V> valueMapper)
-	{
-		final Map<K, V> collected = new HashMap<>();
-		while (iterator.hasNext()) {
-			final E next = iterator.next();
-			final K key = keyMapper.apply(next);
+			E next = iterator.next();
+			K key = keyMapper.apply(next);
 			if (collected.containsKey(key)) {
 				throw new IllegalStateException();
 			}
@@ -97,12 +78,12 @@ public final class ObjectCollectionConsumption
 		return collected;
 	}
 
-	public static <E, K> Map<K, List<E>> groupBy(final Iterator<? extends E> iterator, final Function<? super E, K> classifier)
+	public static <E, K> Map<K, List<E>> groupBy(Iterator<? extends E> iterator, Function<? super E, ? extends K> classifier)
 	{
-		final Map<K, List<E>> collected = new HashMap<>();
+		Map<K, List<E>> collected = new HashMap<>();
 		while (iterator.hasNext()) {
-			final E next = iterator.next();
-			final K key = classifier.apply(next);
+			E next = iterator.next();
+			K key = classifier.apply(next);
 			collected.putIfAbsent(key, new ArrayList<>());
 			collected.get(key).add(next);
 		}

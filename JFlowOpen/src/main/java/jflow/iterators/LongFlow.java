@@ -15,10 +15,7 @@ import java.util.function.LongUnaryOperator;
 import java.util.stream.LongStream;
 
 import jflow.iterators.misc.Bool;
-import jflow.iterators.misc.DoubleWithLong;
-import jflow.iterators.misc.IntWithLong;
 import jflow.iterators.misc.LongPair;
-import jflow.iterators.misc.LongPredicatePartition;
 import jflow.iterators.misc.LongWith;
 
 
@@ -59,7 +56,7 @@ public interface LongFlow extends PrototypeLongFlow
 	 *         parameter mapping function to each element of this LongFlow instance
 	 *         in turn.
 	 */
-	<E> Flow<E> mapToObject(LongFunction<E> f);
+	<E> Flow<E> mapToObject(LongFunction<? extends E> f);
 
 	/**
 	 * Applies a function elementwise to this LongFlow to make a new DoubleFlow.
@@ -121,62 +118,6 @@ public interface LongFlow extends PrototypeLongFlow
 	Flow<LongPair> zipWith(PrimitiveIterator.OfLong other);
 
 	/**
-	 * Combines this LongFlow with another primitive iterator to create a new Flow
-	 * consisting of pairs of elements with the same index in their respective
-	 * origins.
-	 *
-	 * @param other
-	 *            The primitive iterator to zip this source LongFlow with.
-	 *
-	 * @return Denote this source LongFlow by {@code F} with the parameter primitive
-	 *         iterator denoted by {@code I}. We return a new Flow instance
-	 *         {@code G} defined by:
-	 *         <ul>
-	 *         <li>{@code G[j] = (F[j], I[j])}</li>
-	 *         <li>{@code length(G) = min(length(F), length(I))}</li>
-	 *         </ul>
-	 */
-	Flow<DoubleWithLong> zipWith(PrimitiveIterator.OfDouble other);
-
-	/**
-	 * Combines this LongFlow with another primitive iterator to create a new Flow
-	 * consisting of pairs of elements with the same index in their respective
-	 * origins.
-	 *
-	 * @param other
-	 *            The primitive iterator to zip this source LongFlow with.
-	 *
-	 * @return Denote this source LongFlow by {@code F} with the parameter primitive
-	 *         iterator denoted by {@code I}. We return a new Flow instance
-	 *         {@code G} defined by:
-	 *         <ul>
-	 *         <li>{@code G[j] = (F[j], I[j])}</li>
-	 *         <li>{@code length(G) = min(length(F), length(I))}</li>
-	 *         </ul>
-	 */
-	Flow<IntWithLong> zipWith(PrimitiveIterator.OfInt other);
-
-	/**
-	 * Combines this LongFlow with another primitive iterator via a two argument
-	 * function to create a new Flow consisting of the images of pairs of elements
-	 * with the same index in their origin.
-	 *
-	 * @param other
-	 *            The primitive iterator to combine this source LongFlow with.
-	 * @param combiner
-	 *            The combining function.
-	 *
-	 * @return Denote this source LongFlow by {@code F} with the parameter primitive
-	 *         iterator denoted by {@code I} and the combining function by
-	 *         {@code f}. We return a new Flow instance {@code G} defined by:
-	 *         <ul>
-	 *         <li>{@code G[j] = f(F[j], I[j])}</li>
-	 *         <li>{@code length(G) = min(length(F), length(I))}</li>
-	 *         </ul>
-	 */
-	LongFlow combineWith(PrimitiveIterator.OfLong other, LongBinaryOperator combiner);
-
-	/**
 	 * Creates a new Flow by mapping each element in this source LongFlow to a pair
 	 * consisting of the element and the index it appears.
 	 *
@@ -187,7 +128,7 @@ public interface LongFlow extends PrototypeLongFlow
 	 *         <li>{@code length(G) = length(F)}</li>
 	 *         </ul>
 	 */
-	Flow<IntWithLong> enumerate();
+	Flow<LongWith<Integer>> enumerate();
 
 	/**
 	 * Creates a new LongFlow from this LongFlow by selecting elements with indices
@@ -325,7 +266,7 @@ public interface LongFlow extends PrototypeLongFlow
 	 *         <li>{@code [F[0], g(F[0], F[1]), g(g(F[0], F[1]), F[2]), ... ]}</li>
 	 *         </ul>
 	 */
-	LongFlow accumulate(LongBinaryOperator accumulator);
+	LongFlow scan(LongBinaryOperator accumulator);
 
 	/**
 	 * Applies an accumulation operation to this LongFlow to produce a new LongFlow.
@@ -340,7 +281,7 @@ public interface LongFlow extends PrototypeLongFlow
 	 *         <li>{@code [id, g(id, F[0]), g(g(id, F[0]), F[1]), ... ]}</li>
 	 *         </ul>
 	 */
-	LongFlow accumulate(long id, LongBinaryOperator accumulator);
+	LongFlow scan(long id, LongBinaryOperator accumulator);
 
 	/**
 	 * Calculates the minimum value in this LongFlow.
@@ -366,45 +307,6 @@ public interface LongFlow extends PrototypeLongFlow
 	 *         iteration is empty.
 	 */
 	long min(long defaultValue);
-
-	// /**
-	// * Calculates the minimum element in this LongFlow by an embedding into the
-	// real
-	// * numbers.
-	// *
-	// * This method is a 'consuming method', i.e. it will iterate through this
-	// * LongFlow.
-	// *
-	// * @param defaultValue
-	// * The value returned if this LongFlow is empty.
-	// *
-	// * @param key
-	// * A function mapping the elements of this LongFlow into the real
-	// * numbers.
-	// * @return The element of this LongFlow whose image under the key mapping is
-	// the
-	// * minimum among all images. A parameter default value is returned if
-	// * the source is empty. NaN images are ignored.
-	// */
-	// long minByKey(long defaultValue, LongToDoubleFunction key);
-	//
-	// /**
-	// * Calculates the minimum element in this LongFlow by an embedding into the
-	// real
-	// * numbers.
-	// *
-	// * This method is a 'consuming method', i.e. it will iterate through this
-	// * LongFlow.
-	// *
-	// * @param key
-	// * A function mapping the elements of this LongFlow into the real
-	// * numbers.
-	// * @return The element of this LongFlow whose image under the key mapping is
-	// the
-	// * minimum among all images. Nothing is returned if the source is empty.
-	// * NaN images are ignored.
-	// */
-	// OptionalLong minByKey(LongToDoubleFunction key);
 
 	/**
 	 * Calculates the maximum value in this LongFlow.
@@ -548,20 +450,6 @@ public interface LongFlow extends PrototypeLongFlow
 	}
 
 	/**
-	 * Partitions the elements of this LongFlow on whether they pass the supplied
-	 * {@linkplain LongPredicate} test.
-	 *
-	 * This method is a 'consuming method', i.e. it will iterate through this
-	 * LongFlow.
-	 *
-	 * @param predicate
-	 *            The supplied test.
-	 * @return A partition of the cached elements split into two arrays on whether
-	 *         they passed or failed the parameter predicate.
-	 */
-	LongPredicatePartition partition(LongPredicate predicate);
-
-	/**
 	 * Reduces this LongFlow to a single value via some reduction function and an
 	 * initial value.
 	 *
@@ -579,9 +467,10 @@ public interface LongFlow extends PrototypeLongFlow
 	 *         {@code f(...f(f(id, F[0]), F[1])..., F[n - 1])}
 	 */
 	long fold(long id, LongBinaryOperator reducer);
-
+	
 	/**
 	 * Reduces this LongFlow to a single value via some reduction function.
+	 * Throws an exception if empty iterator.
 	 *
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * LongFlow.
@@ -594,7 +483,24 @@ public interface LongFlow extends PrototypeLongFlow
 	 *         <br>
 	 *         {@code f(...f(f(F[0], F[1]), F[2])..., F[n - 1])}
 	 */
-	OptionalLong fold(LongBinaryOperator reducer);
+	long fold(LongBinaryOperator reducer);
+
+	/**
+	 * Reduces this LongFlow to a single value via some reduction function.
+	 * Return nothing if empty iterator.
+	 *
+	 * This method is a 'consuming method', i.e. it will iterate through this
+	 * LongFlow.
+	 *
+	 * @param reducer
+	 *            The reduction function
+	 * @return Let us denote this source LongFlow by {@code F}, the length of
+	 *         {@code F} by {@code n} and the reduction function by {@code f}. If
+	 *         {@code n == 0} we return nothing, else we return: <br>
+	 *         <br>
+	 *         {@code f(...f(f(F[0], F[1]), F[2])..., F[n - 1])}
+	 */
+	OptionalLong foldOption(LongBinaryOperator reducer);
 
 	/**
 	 * Counts the number of elements in this LongFlow.

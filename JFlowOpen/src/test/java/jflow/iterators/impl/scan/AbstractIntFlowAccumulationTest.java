@@ -32,7 +32,7 @@ class AbstractIntFlowAccumulationTest extends IteratorExampleProvider implements
 		return new AbstractIterableInts() {
 			@Override
 			public AbstractIntFlow iterator() {
-				return source.iterator().accumulate(accumulator);
+				return source.iterator().scan(accumulator);
 			}
 		};
 	}
@@ -52,7 +52,7 @@ class AbstractIntFlowAccumulationTest extends IteratorExampleProvider implements
 		return new AbstractIterableInts() {
 			@Override
 			public AbstractIntFlow iterator() {
-				return source.iterator().accumulate(id, accumulator);
+				return source.iterator().scan(id, accumulator);
 			}
 		};
 	}

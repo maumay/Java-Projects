@@ -29,8 +29,8 @@ class AbstractIntFlowTakewhileTest extends IteratorExampleProvider implements It
 
 		testData.stream().forEach(testCase ->
 		{
-			assertIntIteratorAsExpected(testCase.first(), createTakewhileIteratorProviderFrom(populated, testCase.second()));
-			assertIntIteratorAsExpected(new int[] {}, createTakewhileIteratorProviderFrom(empty, testCase.second()));
+			assertIntIteratorAsExpected(testCase._1(), createTakewhileIteratorProviderFrom(populated, testCase._2()));
+			assertIntIteratorAsExpected(new int[] {}, createTakewhileIteratorProviderFrom(empty, testCase._2()));
 		});
 	}
 

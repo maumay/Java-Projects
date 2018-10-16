@@ -16,7 +16,6 @@ import jflow.iterators.factories.Iter;
 import jflow.iterators.factories.Numbers;
 import jflow.iterators.impl.AccumulationFlow;
 import jflow.iterators.impl.AppendFlow;
-import jflow.iterators.impl.CombinedFlow;
 import jflow.iterators.impl.DoubleCollectionConsumption;
 import jflow.iterators.impl.DoubleMinMaxConsumption;
 import jflow.iterators.impl.DoublePredicateConsumption;
@@ -34,10 +33,7 @@ import jflow.iterators.impl.TakeFlow;
 import jflow.iterators.impl.TakewhileFlow;
 import jflow.iterators.impl.ZipFlow;
 import jflow.iterators.misc.DoublePair;
-import jflow.iterators.misc.DoublePredicatePartition;
 import jflow.iterators.misc.DoubleWith;
-import jflow.iterators.misc.DoubleWithLong;
-import jflow.iterators.misc.IntWithDouble;
 
 /**
  * A skeletal implementation of DoubleFlow, users writing custom DoubleFlows
@@ -54,133 +50,115 @@ public abstract class AbstractDoubleFlow extends AbstractOptionallySized impleme
 	}
 
 	@Override
-	public AbstractDoubleFlow slice(final IntUnaryOperator indexMapping)
+	public AbstractDoubleFlow slice(IntUnaryOperator indexMapping)
 	{
 		return new SlicedFlow.OfDouble(this, indexMapping);
 	}
 
 	@Override
-	public AbstractDoubleFlow map(final DoubleUnaryOperator f)
+	public AbstractDoubleFlow map(DoubleUnaryOperator f)
 	{
 		return new MapFlow.OfDouble(this, f);
 	}
 
 	@Override
-	public <E> AbstractFlow<E> mapToObject(final DoubleFunction<E> f)
+	public <E> AbstractFlow<E> mapToObject(DoubleFunction<? extends E> f)
 	{
 		return new MapToObjectFlow.FromDouble<>(this, f);
 	}
 
 	@Override
-	public AbstractLongFlow mapToLong(final DoubleToLongFunction f)
+	public AbstractLongFlow mapToLong(DoubleToLongFunction f)
 	{
 		return new MapToLongFlow.FromDouble(this, f);
 	}
 
 	@Override
-	public AbstractIntFlow mapToInt(final DoubleToIntFunction f)
+	public AbstractIntFlow mapToInt(DoubleToIntFunction f)
 	{
 		return new MapToIntFlow.FromDouble(this, f);
 	}
 
 	@Override
-	public <E> AbstractFlow<DoubleWith<E>> zipWith(final Iterator<? extends E> other)
+	public <E> AbstractFlow<DoubleWith<E>> zipWith(Iterator<? extends E> other)
 	{
 		return new ZipFlow.OfObjectAndDouble<>(other, this);
 	}
 
 	@Override
-	public AbstractFlow<DoublePair> zipWith(final OfDouble other)
+	public AbstractFlow<DoublePair> zipWith(OfDouble other)
 	{
 		return new ZipFlow.OfDoublePair(this, other);
 	}
 
 	@Override
-	public AbstractFlow<DoubleWithLong> zipWith(final OfLong other)
-	{
-		return new ZipFlow.OfDoubleWithLong(this, other);
-	}
-
-	@Override
-	public AbstractFlow<IntWithDouble> zipWith(final OfInt other)
-	{
-		return new ZipFlow.OfIntWithDouble(other, this);
-	}
-
-	@Override
-	public AbstractDoubleFlow combineWith(final OfDouble other, final DoubleBinaryOperator combiner)
-	{
-		return new CombinedFlow.OfDoubles(this, other, combiner);
-	}
-
-	@Override
-	public AbstractFlow<IntWithDouble> enumerate()
+	public AbstractFlow<DoubleWith<Integer>> enumerate()
 	{
 		return zipWith(Numbers.natural());
 	}
 
 	@Override
-	public AbstractDoubleFlow take(final int n)
+	public AbstractDoubleFlow take(int n)
 	{
 		return new TakeFlow.OfDouble(this, n);
 	}
 
 	@Override
-	public AbstractDoubleFlow takeWhile(final DoublePredicate predicate)
+	public AbstractDoubleFlow takeWhile(DoublePredicate predicate)
 	{
 		return new TakewhileFlow.OfDouble(this, predicate);
 	}
 
 	@Override
-	public AbstractDoubleFlow drop(final int n)
+	public AbstractDoubleFlow drop(int n)
 	{
 		return new DropFlow.OfDouble(this, n);
 	}
 
 	@Override
-	public AbstractDoubleFlow dropWhile(final DoublePredicate predicate)
+	public AbstractDoubleFlow dropWhile(DoublePredicate predicate)
 	{
 		return new DropwhileFlow.OfDouble(this, predicate);
 	}
 
 	@Override
-	public AbstractDoubleFlow filter(final DoublePredicate predicate)
+	public AbstractDoubleFlow filter(DoublePredicate predicate)
 	{
 		return new FilteredFlow.OfDouble(this, predicate);
 	}
 
 	@Override
-	public AbstractDoubleFlow append(final OfDouble other)
+	public AbstractDoubleFlow append(OfDouble other)
 	{
 		return new AppendFlow.OfDouble(this, other);
 	}
 
 	@Override
-	public AbstractDoubleFlow append(final double... xs)
+	public AbstractDoubleFlow append(double... xs)
 	{
 		return append(Iter.overDoubles(xs));
 	}
 
 	@Override
-	public AbstractDoubleFlow insert(final OfDouble other)
+	public AbstractDoubleFlow insert(OfDouble other)
 	{
 		return new InsertFlow.OfDouble(this, other);
 	}
 
 	@Override
-	public AbstractDoubleFlow insert(final double... xs)
+	public AbstractDoubleFlow insert(double... xs)
 	{
 		return insert(Iter.overDoubles(xs));
 	}
 
 	@Override
-	public AbstractDoubleFlow accumulate(final DoubleBinaryOperator accumulator)
+	public AbstractDoubleFlow accumulate(DoubleBinaryOperator accumulator)
 	{
 		return new AccumulationFlow.OfDouble(this, accumulator);
 	}
 
 	@Override
-	public AbstractDoubleFlow accumulate(final double id, final DoubleBinaryOperator accumulator)
+	public AbstractDoubleFlow accumulate(double id, DoubleBinaryOperator accumulator)
 	{
 		return new AccumulationFlow.OfDouble(this, id, accumulator);
 	}
@@ -192,7 +170,7 @@ public abstract class AbstractDoubleFlow extends AbstractOptionallySized impleme
 	}
 
 	@Override
-	public double min(final double defaultValue)
+	public double min(double defaultValue)
 	{
 		return DoubleMinMaxConsumption.findMin(this, defaultValue);
 	}
@@ -204,7 +182,7 @@ public abstract class AbstractDoubleFlow extends AbstractOptionallySized impleme
 	}
 
 	@Override
-	public double max(final double defaultValue)
+	public double max(double defaultValue)
 	{
 		return DoubleMinMaxConsumption.findMax(this, defaultValue);
 	}
@@ -216,27 +194,21 @@ public abstract class AbstractDoubleFlow extends AbstractOptionallySized impleme
 	}
 
 	@Override
-	public boolean allMatch(final DoublePredicate predicate)
+	public boolean allMatch(DoublePredicate predicate)
 	{
 		return DoublePredicateConsumption.allMatch(this, predicate);
 	}
 
 	@Override
-	public boolean anyMatch(final DoublePredicate predicate)
+	public boolean anyMatch(DoublePredicate predicate)
 	{
 		return DoublePredicateConsumption.anyMatch(this, predicate);
 	}
 
 	@Override
-	public boolean noneMatch(final DoublePredicate predicate)
+	public boolean noneMatch(DoublePredicate predicate)
 	{
 		return DoublePredicateConsumption.noneMatch(this, predicate);
-	}
-
-	@Override
-	public DoublePredicatePartition partition(final DoublePredicate predicate)
-	{
-		return DoublePredicateConsumption.partition(this, predicate);
 	}
 
 	@Override
@@ -246,15 +218,21 @@ public abstract class AbstractDoubleFlow extends AbstractOptionallySized impleme
 	}
 
 	@Override
-	public double fold(final double id, final DoubleBinaryOperator reducer)
+	public double fold(double id, DoubleBinaryOperator reducer)
 	{
-		return DoubleReductionConsumption.reduce(this, id, reducer);
+		return DoubleReductionConsumption.fold(this, id, reducer);
+	}
+	
+	@Override
+	public double fold(DoubleBinaryOperator reducer)
+	{
+		return DoubleReductionConsumption.fold(this, reducer);
 	}
 
 	@Override
-	public OptionalDouble reduce(final DoubleBinaryOperator reducer)
+	public OptionalDouble foldOption(DoubleBinaryOperator reducer)
 	{
-		return DoubleReductionConsumption.reduce(this, reducer);
+		return DoubleReductionConsumption.foldOption(this, reducer);
 	}
 
 	@Override
@@ -264,13 +242,13 @@ public abstract class AbstractDoubleFlow extends AbstractOptionallySized impleme
 	}
 
 	@Override
-	public <K, V> Map<K, V> toMap(final DoubleFunction<K> keyMapper, final DoubleFunction<V> valueMapper)
+	public <K, V> Map<K, V> toMap(DoubleFunction<K> keyMapper, DoubleFunction<V> valueMapper)
 	{
 		return DoubleCollectionConsumption.toMap(this, keyMapper, valueMapper);
 	}
 
 	@Override
-	public <K> Map<K, double[]> groupBy(final DoubleFunction<K> classifier)
+	public <K> Map<K, double[]> groupBy(DoubleFunction<K> classifier)
 	{
 		return DoubleCollectionConsumption.groupBy(this, classifier);
 	}

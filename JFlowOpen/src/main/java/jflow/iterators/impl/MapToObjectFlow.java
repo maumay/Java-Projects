@@ -23,9 +23,9 @@ public final class MapToObjectFlow
 	public static class FromLong<E> extends AbstractFlow<E>
 	{
 		private final LongFlow sourceFlow;
-		private final LongFunction<E> mappingFunction;
+		private final LongFunction<? extends E> mappingFunction;
 
-		public FromLong(final LongFlow src, final LongFunction<E> mappingFunction)
+		public FromLong(LongFlow src, LongFunction<? extends E> mappingFunction)
 		{
 			super(src.size());
 			this.sourceFlow = src;
@@ -54,9 +54,9 @@ public final class MapToObjectFlow
 	public static class FromInt<E> extends AbstractFlow<E>
 	{
 		private final IntFlow sourceFlow;
-		private final IntFunction<E> mappingFunction;
+		private final IntFunction<? extends E> mappingFunction;
 
-		public FromInt(final IntFlow src, final IntFunction<E> mappingFunction)
+		public FromInt(final IntFlow src, final IntFunction<? extends E> mappingFunction)
 		{
 			super(src.size());
 			this.sourceFlow = src;
@@ -85,9 +85,9 @@ public final class MapToObjectFlow
 	public static class FromDouble<E> extends AbstractFlow<E>
 	{
 		private final DoubleFlow sourceFlow;
-		private final DoubleFunction<E> mappingFunction;
+		private final DoubleFunction<? extends E> mappingFunction;
 
-		public FromDouble(final DoubleFlow src, final DoubleFunction<E> mappingFunction)
+		public FromDouble(DoubleFlow src, DoubleFunction<? extends E> mappingFunction)
 		{
 			super(src.size());
 			this.sourceFlow = src;

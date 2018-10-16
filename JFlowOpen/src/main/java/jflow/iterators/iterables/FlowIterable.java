@@ -1,24 +1,21 @@
 package jflow.iterators.iterables;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.function.ToDoubleFunction;
-import java.util.function.ToIntFunction;
-import java.util.function.ToLongFunction;
+import java.util.function.Supplier;
 
-import jflow.iterators.DoubleFlow;
 import jflow.iterators.Flow;
-import jflow.iterators.IntFlow;
-import jflow.iterators.LongFlow;
 import jflow.iterators.misc.Bool;
-import jflow.iterators.misc.IntWith;
 
 
 /**
@@ -33,105 +30,28 @@ import jflow.iterators.misc.IntWith;
 @FunctionalInterface
 public interface FlowIterable<E> extends Iterable<E>
 {
-	@Override
-	Flow<E> iterator();
-
 	/**
 	 * @return A Flow over the elements in this iterable.
 	 */
-	default Flow<E> flow()
+	Flow<E> flow();
+	
+	@Override
+	default Flow<E> iterator()
 	{
-		return iterator();
+		return flow();
 	}
-
+	
 	/**
-	 * A convenience method which spawns a Flow and delegates to its
-	 * {@link Flow#map(Function)} method.
+	 * Finds the first element (if any) which satisfies a given predicate.
+	 * 
+	 * @param predicate
+	 *            The predicate which will be used to test elements.
+	 * @return The first element to pass the predicate test if there is one, nothing
+	 *         otherwise.
 	 */
-	default <R> Flow<R> map(Function<? super E, R> mappingFunction)
+	default Optional<E> findFirst(Predicate<? super E> predicate)
 	{
-		return flow().map(mappingFunction);
-	}
-
-	/**
-	 * A convenience method which spawns a Flow and delegates to its
-	 * {@link Flow#mapToInt(ToIntFunction)} method.
-	 */
-	default IntFlow mapToInt(ToIntFunction<? super E> mappingFunction)
-	{
-		return flow().mapToInt(mappingFunction);
-	}
-
-	/**
-	 * A convenience method which spawns a Flow and delegates to its
-	 * {@link Flow#mapToDouble(ToDoubleFunction)} method.
-	 */
-	default DoubleFlow mapToDouble(ToDoubleFunction<? super E> mappingFunction)
-	{
-		return flow().mapToDouble(mappingFunction);
-	}
-
-	/**
-	 * A convenience method which spawns a Flow and delegates to its
-	 * {@link Flow#mapToLong(ToLongFunction)} method.
-	 */
-	default LongFlow mapToLong(ToLongFunction<? super E> mappingFunction)
-	{
-		return flow().mapToLong(mappingFunction);
-	}
-
-	/**
-	 * A convenience method which spawns a Flow and delegates to its
-	 * {@link Flow#flatten(Function)} method.
-	 */
-	default <R> Flow<R> flatten(Function<? super E, ? extends Flow<R>> mapping)
-	{
-		return flow().flatten(mapping);
-	}
-
-	/**
-	 * A convenience method which spawns a Flow and delegates to its
-	 * {@link Flow#filter(Predicate)} method.
-	 */
-	default Flow<E> filter(Predicate<? super E> predicate)
-	{
-		return flow().filter(predicate);
-	}
-
-	/**
-	 * A convenience method which spawns a Flow and delegates to its
-	 * {@link Flow#enumerate()} method.
-	 */
-	default Flow<IntWith<E>> enumerate()
-	{
-		return flow().enumerate();
-	}
-
-	/**
-	 * A convenience method which spawns a Flow and delegates to its
-	 * {@link Flow#append(Iterator)} method.
-	 */
-	default Flow<E> append(Iterator<? extends E> other)
-	{
-		return flow().append(other);
-	}
-
-	/**
-	 * A convenience method which spawns a Flow and delegates to its
-	 * {@link Flow#append(Iterator)} method.
-	 */
-	default Flow<E> append(Iterable<? extends E> other)
-	{
-		return flow().append(other.iterator());
-	}
-
-	/**
-	 * A convenience method which spawns a Flow and delegates to its
-	 * {@link Flow#append(Object)} method.
-	 */
-	default Flow<E> append(E other)
-	{
-		return flow().append(other);
+		return flow().filter(predicate).nextOption();
 	}
 
 	/**
@@ -217,22 +137,13 @@ public interface FlowIterable<E> extends Iterable<E>
 
 	/**
 	 * A convenience method which spawns a Flow and delegates to its
-	 * {@link Flow#filterAndCastTo(Class)} method.
-	 */
-	default <R> Flow<R> filterAndCastTo(Class<R> klass)
-	{
-		return flow().filterAndCastTo(klass);
-	}
-
-	/**
-	 * A convenience method which spawns a Flow and delegates to its
 	 * {@link Flow#groupBy(Function)} method.
 	 */
 	default <K> Map<K, List<E>> groupBy(Function<? super E, K> classifier)
 	{
 		return flow().groupBy(classifier);
 	}
-
+	
 	/**
 	 * A convenience method which spawns a Flow and delegates to its
 	 * {@link Flow#fold(Object, BiFunction)} method.
@@ -244,10 +155,35 @@ public interface FlowIterable<E> extends Iterable<E>
 
 	/**
 	 * A convenience method which spawns a Flow and delegates to its
-	 * {@link Flow#reduce(BinaryOperator)} method.
+	 * {@link Flow#foldOption(BinaryOperator)} method.
 	 */
-	default Optional<E> reduce(BinaryOperator<E> reducer)
+	default Optional<E> foldOption(BinaryOperator<E> reducer)
 	{
-		return flow().reduce(reducer);
+		return flow().foldOption(reducer);
+	}
+	
+	default E fold(BinaryOperator<E> reducer)
+	{
+		return flow().fold(reducer);
+	}
+	
+	default <K, V> Map<K, V> toMap(Function<? super E, ? extends K> keyMap, Function<? super E, ? extends V> valueMap)
+	{
+		return flow().toMap(keyMap, valueMap);
+	}
+	
+	default List<E> toList()
+	{
+		return toCollection(ArrayList::new);
+	}
+	
+	default Set<E> toSet()
+	{
+		return toCollection(HashSet::new);
+	}
+	
+	default <C extends Collection<E>> C toCollection(Supplier<C> collectionFactory)
+	{
+		return flow().toCollection(collectionFactory);
 	}
 }

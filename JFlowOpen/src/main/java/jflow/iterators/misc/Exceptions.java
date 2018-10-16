@@ -1,7 +1,7 @@
 /**
  * 
  */
-package jflow.utilities;
+package jflow.iterators.misc;
 
 /**
  * Static methods for throwing exceptions.

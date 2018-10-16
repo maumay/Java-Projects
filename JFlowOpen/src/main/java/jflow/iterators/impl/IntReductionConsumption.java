@@ -3,6 +3,7 @@
  */
 package jflow.iterators.impl;
 
+import java.util.NoSuchElementException;
 import java.util.OptionalInt;
 import java.util.PrimitiveIterator;
 import java.util.function.IntBinaryOperator;
@@ -16,7 +17,7 @@ public final class IntReductionConsumption
 {
 	private IntReductionConsumption() {}
 
-	public static OptionalInt reduce(final PrimitiveIterator.OfInt source, final IntBinaryOperator reducer)
+	public static OptionalInt foldOption(PrimitiveIterator.OfInt source, IntBinaryOperator reducer)
 	{
 		boolean reductionUninitialised = true;
 		int reduction = -1;
@@ -31,8 +32,29 @@ public final class IntReductionConsumption
 		}
 		return reductionUninitialised ? OptionalInt.empty() : OptionalInt.of(reduction);
 	}
+	
+	public static int fold(PrimitiveIterator.OfInt source, IntBinaryOperator reducer)
+	{
+		boolean reductionUninitialised = true;
+		int reduction = -1;
+		while (source.hasNext()) {
+			if (reductionUninitialised) {
+				reduction = source.nextInt();
+				reductionUninitialised = false;
+			}
+			else {
+				reduction = reducer.applyAsInt(reduction, source.nextInt());
+			}
+		}
+		if (reductionUninitialised) {
+			throw new NoSuchElementException("Attempted to unsafely fold empty iterator");
+		}
+		else {
+			return reduction;
+		}
+	}
 
-	public static int reduce(final PrimitiveIterator.OfInt source, final int id, final IntBinaryOperator reducer)
+	public static int fold(PrimitiveIterator.OfInt source, int id, IntBinaryOperator reducer)
 	{
 		int reduction = id;
 		while (source.hasNext()) {
@@ -41,9 +63,9 @@ public final class IntReductionConsumption
 		return reduction;
 	}
 
-	public static long count(final PrimitiveIterator.OfInt source)
+	public static long count(PrimitiveIterator.OfInt source)
 	{
-		final boolean sourceSkippable = source instanceof Skippable;
+		boolean sourceSkippable = source instanceof Skippable;
 		int count = 0;
 		while (source.hasNext()) {
 			if (sourceSkippable) {

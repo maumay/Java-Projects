@@ -15,10 +15,7 @@ import java.util.stream.IntStream;
 
 import jflow.iterators.misc.Bool;
 import jflow.iterators.misc.IntPair;
-import jflow.iterators.misc.IntPredicatePartition;
 import jflow.iterators.misc.IntWith;
-import jflow.iterators.misc.IntWithDouble;
-import jflow.iterators.misc.IntWithLong;
 
 
 /**
@@ -58,7 +55,7 @@ public interface IntFlow extends PrototypeIntFlow
 	 *         parameter mapping function to each element of this IntFlow instance
 	 *         in turn.
 	 */
-	<E> Flow<E> mapToObject(IntFunction<E> f);
+	<E> Flow<E> mapToObject(IntFunction<? extends E> f);
 
 	/**
 	 * Applies a function elementwise to this IntFlow to make a new DoubleFlow.
@@ -118,62 +115,6 @@ public interface IntFlow extends PrototypeIntFlow
 	 *         </ul>
 	 */
 	Flow<IntPair> zipWith(PrimitiveIterator.OfInt other);
-
-	/**
-	 * Combines this IntFlow with another primitive iterator to create a new Flow
-	 * consisting of pairs of elements with the same index in their respective
-	 * origins.
-	 *
-	 * @param other
-	 *            The primitive iterator to zip this source IntFlow with.
-	 *
-	 * @return Denote this source IntFlow by {@code F} with the parameter primitive
-	 *         iterator denoted by {@code I}. We return a new Flow instance
-	 *         {@code G} defined by:
-	 *         <ul>
-	 *         <li>{@code G[j] = (F[j], I[j])}</li>
-	 *         <li>{@code length(G) = min(length(F), length(I))}</li>
-	 *         </ul>
-	 */
-	Flow<IntWithDouble> zipWith(PrimitiveIterator.OfDouble other);
-
-	/**
-	 * Combines this IntFlow with another primitive iterator to create a new Flow
-	 * consisting of pairs of elements with the same index in their respective
-	 * origins.
-	 *
-	 * @param other
-	 *            The primitive iterator to zip this source IntFlow with.
-	 *
-	 * @return Denote this source IntFlow by {@code F} with the parameter primitive
-	 *         iterator denoted by {@code I}. We return a new Flow instance
-	 *         {@code G} defined by:
-	 *         <ul>
-	 *         <li>{@code G[j] = (F[j], I[j])}</li>
-	 *         <li>{@code length(G) = min(length(F), length(I))}</li>
-	 *         </ul>
-	 */
-	Flow<IntWithLong> zipWith(PrimitiveIterator.OfLong other);
-
-	/**
-	 * Combines this IntFlow with another primitive iterator via a two argument
-	 * function to create a new Flow consisting of the images of pairs of elements
-	 * with the same index in their origin.
-	 *
-	 * @param other
-	 *            The primitive iterator to combine this source IntFlow with.
-	 * @param combiner
-	 *            The combining function.
-	 *
-	 * @return Denote this source IntFlow by {@code F} with the parameter primitive
-	 *         iterator denoted by {@code I} and the combining function by
-	 *         {@code f}. We return a new Flow instance {@code G} defined by:
-	 *         <ul>
-	 *         <li>{@code G[j] = f(F[j], I[j])}</li>
-	 *         <li>{@code length(G) = min(length(F), length(I))}</li>
-	 *         </ul>
-	 */
-	IntFlow combineWith(PrimitiveIterator.OfInt other, IntBinaryOperator combiner);
 
 	/**
 	 * Creates a new Flow by mapping each element in this source IntFlow to a pair
@@ -323,7 +264,7 @@ public interface IntFlow extends PrototypeIntFlow
 	 *         <li>{@code [F[0], g(F[0], F[1]), g(g(F[0], F[1]), F[2]), ... ]}</li>
 	 *         </ul>
 	 */
-	IntFlow accumulate(IntBinaryOperator accumulator);
+	IntFlow scan(IntBinaryOperator accumulator);
 
 	/**
 	 * Applies an accumulation operation to this IntFlow to produce a new IntFlow.
@@ -338,7 +279,7 @@ public interface IntFlow extends PrototypeIntFlow
 	 *         <li>{@code [id, g(id, F[0]), g(g(id, F[0]), F[1]), ... ]}</li>
 	 *         </ul>
 	 */
-	IntFlow accumulate(int id, IntBinaryOperator accumulator);
+	IntFlow scan(int id, IntBinaryOperator accumulator);
 
 	/**
 	 * Calculates the minimum value in this IntFlow.
@@ -543,20 +484,6 @@ public interface IntFlow extends PrototypeIntFlow
 	}
 
 	/**
-	 * Partitions the elements of this IntFlow on whether they pass the supplied
-	 * IntPredicate test.
-	 *
-	 * This method is a 'consuming method', i.e. it will iterate through this
-	 * IntFlow.
-	 *
-	 * @param predicate
-	 *            The supplied test.
-	 * @return A partition of the cached elements split into two arrays on whether
-	 *         they passed or failed the parameter predicate.
-	 */
-	IntPredicatePartition partition(IntPredicate predicate);
-
-	/**
 	 * Reduces this IntFlow to a single value via some reduction function and an
 	 * initial value.
 	 *
@@ -574,22 +501,38 @@ public interface IntFlow extends PrototypeIntFlow
 	 *         {@code f(...f(f(id, F[0]), F[1])..., F[n - 1])}
 	 */
 	int fold(int id, IntBinaryOperator reducer);
-
+	
 	/**
-	 * Reduces this IntFlow to a single value via some reduction function.
+	 * Reduces this IntFlow to a single value via some reduction function. Throws
+	 * exception if empty flow.
 	 *
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * IntFlow.
 	 *
-	 * @param reducer
-	 *            The reduction function
+	 * @param reducer The reduction function
 	 * @return Let us denote this source IntFlow by {@code F}, the length of
 	 *         {@code F} by {@code n} and the reduction function by {@code f}. If
 	 *         {@code n == 0} we return nothing, else we return: <br>
 	 *         <br>
 	 *         {@code f(...f(f(F[0], F[1]), F[2])..., F[n - 1])}
 	 */
-	OptionalInt fold(IntBinaryOperator reducer);
+	int fold(IntBinaryOperator reducer);
+
+	/**
+	 * Reduces this IntFlow to a single value via some reduction function. Returns
+	 * nothing if empty flow.
+	 *
+	 * This method is a 'consuming method', i.e. it will iterate through this
+	 * IntFlow.
+	 *
+	 * @param reducer The reduction function
+	 * @return Let us denote this source IntFlow by {@code F}, the length of
+	 *         {@code F} by {@code n} and the reduction function by {@code f}. If
+	 *         {@code n == 0} we return nothing, else we return: <br>
+	 *         <br>
+	 *         {@code f(...f(f(F[0], F[1]), F[2])..., F[n - 1])}
+	 */
+	OptionalInt foldOption(IntBinaryOperator reducer);
 
 	/**
 	 * Counts the number of elements in this IntFlow.
@@ -639,7 +582,7 @@ public interface IntFlow extends PrototypeIntFlow
 	 *         an element of this source IntFlow, say {@code e}, is associated to
 	 *         the key value pair {@code (k(e), v(e))}.
 	 */
-	<K, V> Map<K, V> toMap(IntFunction<K> keyMapper, IntFunction<V> valueMapper);
+	<K, V> Map<K, V> toMap(IntFunction<? extends K> keyMapper, IntFunction<? extends V> valueMapper);
 
 	/**
 	 * Groups elements in this IntFlow via their image under some supplied
@@ -659,7 +602,7 @@ public interface IntFlow extends PrototypeIntFlow
 	 *         classification function are grouped together in a long array accessed
 	 *         by their shared classification key.
 	 */
-	<K> Map<K, int[]> groupBy(IntFunction<K> classifier);
+	<K> Map<K, int[]> groupBy(IntFunction<? extends K> classifier);
 
 	/**
 	 * A convenience method for applying a global function onto this IntFlow.

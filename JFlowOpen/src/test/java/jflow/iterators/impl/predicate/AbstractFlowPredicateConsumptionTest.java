@@ -4,7 +4,6 @@
 package jflow.iterators.impl.predicate;
 
 import static java.lang.Double.parseDouble;
-import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.NoSuchElementException;
@@ -17,7 +16,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import jflow.iterators.AbstractFlow;
-import jflow.iterators.misc.PredicatePartition;
 import jflow.testutilities.IteratorExampleProvider;
 
 /**
@@ -113,26 +111,6 @@ class AbstractFlowPredicateConsumptionTest extends IteratorExampleProvider
 				Arguments.of(getObjectTestIteratorProvider().iterator(), (Predicate<String>) s -> parseDouble(s) > 3, Boolean.FALSE),
 				Arguments.of(getEmptyObjectTestIteratorProvider().iterator(), (Predicate<String>) s -> parseDouble(s) < 3, Boolean.TRUE),
 				Arguments.of(getEmptyObjectTestIteratorProvider().iterator(), (Predicate<String>) s -> parseDouble(s) > -1, Boolean.TRUE)
-				);
-	}
-
-
-	@ParameterizedTest
-	@MethodSource("predicatePartitioningTestDataProvider")
-	void testPredicatePartitioning(final AbstractFlow<String> iterator, final Predicate<String> predicate, final PredicatePartition<String> expectedResult)
-	{
-		assertEquals(expectedResult, iterator.partition(predicate));
-	}
-
-	static Stream<Arguments> predicatePartitioningTestDataProvider()
-	{
-		return Stream.of(
-				Arguments.of(getObjectTestIteratorProvider().iterator(), (Predicate<String>) s -> parseDouble(s) < -1, new PredicatePartition<>(asList(), asList("0", "1", "2", "3", "4"))),
-				Arguments.of(getObjectTestIteratorProvider().iterator(), (Predicate<String>) s -> parseDouble(s) > 2, new PredicatePartition<>(asList("3", "4"), asList("0", "1", "2"))),
-				Arguments.of(getObjectTestIteratorProvider().iterator(), (Predicate<String>) s -> parseDouble(s) > -1, new PredicatePartition<>(asList("0", "1", "2", "3", "4"), asList())),
-				Arguments.of(getEmptyObjectTestIteratorProvider().iterator(), (Predicate<String>) s -> parseDouble(s) < -1, new PredicatePartition<>(asList(), asList())),
-				Arguments.of(getEmptyObjectTestIteratorProvider().iterator(), (Predicate<String>) s -> parseDouble(s) > 3, new PredicatePartition<>(asList(), asList())),
-				Arguments.of(getEmptyObjectTestIteratorProvider().iterator(), (Predicate<String>) s -> parseDouble(s) > -1, new PredicatePartition<>(asList(), asList()))
 				);
 	}
 }

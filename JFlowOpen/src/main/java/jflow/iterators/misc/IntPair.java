@@ -9,11 +9,12 @@ package jflow.iterators.misc;
  */
 public final class IntPair
 {
-	private final int first, second;
+	public final int _1, _2;
 
-	public IntPair(final int first, final int second) {
-		this.first = first;
-		this.second = second;
+	public IntPair(final int first, final int second) 
+	{
+		this._1 = first;
+		this._2 = second;
 	}
 
 	public static IntPair of(final int first, final int second)
@@ -21,21 +22,23 @@ public final class IntPair
 		return new IntPair(first, second);
 	}
 
-	public int first() {
-		return first;
+	public int _1() 
+	{
+		return _1;
 	}
 
-	public int second() {
-		return second;
+	public int _2() 
+	{
+		return _2;
 	}
 
 	@Override
 	public String toString()
 	{
 		return new StringBuilder("(")
-				.append(first)
+				.append(_1)
 				.append(", ")
-				.append(second)
+				.append(_2)
 				.append(")")
 				.toString();
 	}
@@ -44,8 +47,8 @@ public final class IntPair
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + first;
-		result = prime * result + second;
+		result = prime * result + _1;
+		result = prime * result + _2;
 		return result;
 	}
 
@@ -58,9 +61,9 @@ public final class IntPair
 		if (getClass() != obj.getClass())
 			return false;
 		final IntPair other = (IntPair) obj;
-		if (first != other.first)
+		if (_1 != other._1)
 			return false;
-		if (second != other.second)
+		if (_2 != other._2)
 			return false;
 		return true;
 	}

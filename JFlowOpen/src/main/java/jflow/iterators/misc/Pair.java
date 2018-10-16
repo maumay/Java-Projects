@@ -1,74 +1,83 @@
 package jflow.iterators.misc;
 
+import java.util.Objects;
+
 /**
+ * Compact pair.
+ * 
  * @author ThomasB
- * @since 20 Apr 2018
  */
 public final class Pair<T, U>
 {
-	private final T first;
-	private final U second;
+	/**
+	 * First element of the pair. I use the Scala naming convention
+	 * for compactness.
+	 */
+	public final T _1;
+	
+	/**
+	 * Second element of the pair. I use the Scala naming convention
+	 * for compactness.
+	 */
+	public final U _2;
 
-	public Pair(final T first, final U second)
+	
+	public Pair(T first, U second)
 	{
-		this.first = first;
-		this.second = second;
+		this._1 = Objects.requireNonNull(first);
+		this._2 = Objects.requireNonNull(second);
+	}
+	
+	/*
+	 * I provide getters so that e.g Pair::_1 can be used instead of 
+	 * a lambda x -> x._1 (mainly for compatibility with existing code,
+	 * there is only one character difference).
+	 */
+	/**
+	 * First element of the pair. I use the Scala naming convention.
+	 */
+	public T _1()
+	{
+		return _1;
 	}
 
-	public static <T, U> Pair<T, U> of(final T t, final U u)
+	/**
+	 * Second element of the pair. I use the Scala naming convention.
+	 */
+	public U _2()
+	{
+		return _2;
+	}
+
+	public static <T, U> Pair<T, U> of(T t, U u)
 	{
 		return new Pair<>(t, u);
-	}
-
-	public T first()
-	{
-		return first;
-	}
-
-	public U second()
-	{
-		return second;
 	}
 
 	@Override
 	public String toString()
 	{
 		return new StringBuilder("(")
-				.append(first.toString())
+				.append(_1.toString())
 				.append(", ")
-				.append(second.toString())
+				.append(_2.toString())
 				.append(")")
 				.toString();
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((first == null) ? 0 : first.hashCode());
-		result = prime * result + ((second == null) ? 0 : second.hashCode());
-		return result;
+		return Objects.hash(_1, _2);
 	}
 
 	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
+	public boolean equals(Object obj) {
+		if (obj instanceof Pair<?, ?>) {
+			Pair<?, ?> p = (Pair<?, ?>) obj;
+			return _1.equals(p._1) && _2.equals(p._2); 
+		}
+		else {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		final Pair<?, ?> other = (Pair<?, ?>) obj;
-		if (first == null) {
-			if (other.first != null)
-				return false;
-		} else if (!first.equals(other.first))
-			return false;
-		if (second == null) {
-			if (other.second != null)
-				return false;
-		} else if (!second.equals(other.second))
-			return false;
-		return true;
+		}
 	}
 }

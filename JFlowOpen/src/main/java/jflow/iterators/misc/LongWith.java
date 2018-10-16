@@ -6,38 +6,38 @@ package jflow.iterators.misc;
  */
 public final class LongWith<T>
 {
-	private final long longVal;
-	private final T element;
+	public final long _L;
+	public final T _o;
 
-	public LongWith(final long longVal, final T element)
+	public LongWith(long longVal, T element)
 	{
-		this.longVal = longVal;
-		this.element = element;
+		this._L = longVal;
+		this._o = element;
 	}
 	
-	public static <T> LongWith<T> of(final long longVal, final T element)
+	public static <T> LongWith<T> of(long longVal, T element)
 	{
 		return new LongWith<>(longVal, element);
 	}
 
-	public long getLongVal()
+	public long _L()
 	{
-		return longVal;
+		return _L;
 	}
 
 
-	public T getElement()
+	public T _o()
 	{
-		return element;
+		return _o;
 	}
 
 	@Override
 	public String toString()
 	{
 		return new StringBuilder("(")
-				.append(longVal)
+				.append(_L)
 				.append(", ")
-				.append(element.toString())
+				.append(_o.toString())
 				.append(")")
 				.toString();
 	}
@@ -47,8 +47,8 @@ public final class LongWith<T>
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((element == null) ? 0 : element.hashCode());
-		result = prime * result + (int) (longVal ^ (longVal >>> 32));
+		result = prime * result + ((_o == null) ? 0 : _o.hashCode());
+		result = prime * result + (int) (_L ^ (_L >>> 32));
 		return result;
 	}
 
@@ -64,13 +64,13 @@ public final class LongWith<T>
 		@SuppressWarnings("rawtypes")
 		final
 		LongWith other = (LongWith) obj;
-		if (element == null) {
-			if (other.element != null)
+		if (_o == null) {
+			if (other._o != null)
 				return false;
 		}
-		else if (!element.equals(other.element))
+		else if (!_o.equals(other._o))
 			return false;
-		if (longVal != other.longVal)
+		if (_L != other._L)
 			return false;
 		return true;
 	}

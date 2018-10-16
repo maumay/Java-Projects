@@ -32,8 +32,8 @@ class AbstractDoubleFlowTakewhileTest extends IteratorExampleProvider implements
 
 		testData.stream().forEach(testCase ->
 		{
-			assertDoubleIteratorAsExpected(testCase.first(), createTakewhileIteratorProviderFrom(populated, testCase.second()));
-			assertDoubleIteratorAsExpected(new double[] {}, createTakewhileIteratorProviderFrom(empty, testCase.second()));
+			assertDoubleIteratorAsExpected(testCase._1(), createTakewhileIteratorProviderFrom(populated, testCase._2()));
+			assertDoubleIteratorAsExpected(new double[] {}, createTakewhileIteratorProviderFrom(empty, testCase._2()));
 		});
 	}
 

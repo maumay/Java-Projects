@@ -1,7 +1,7 @@
 /**
  *
  */
-package jflow.utilities;
+package jflow.iterators.misc;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;

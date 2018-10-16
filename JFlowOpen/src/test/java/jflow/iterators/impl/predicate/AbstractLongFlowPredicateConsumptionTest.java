@@ -15,7 +15,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import jflow.iterators.AbstractLongFlow;
-import jflow.iterators.misc.LongPredicatePartition;
 import jflow.testutilities.IteratorExampleProvider;
 
 /**
@@ -110,25 +109,6 @@ class AbstractLongFlowPredicateConsumptionTest extends IteratorExampleProvider
 				Arguments.of(getLongTestIteratorProvider().iterator(), (LongPredicate) x -> x > 3, Boolean.FALSE),
 				Arguments.of(getEmptyLongTestIteratorProvider().iterator(), (LongPredicate) x -> x < 3, Boolean.TRUE),
 				Arguments.of(getEmptyLongTestIteratorProvider().iterator(), (LongPredicate) x -> x > -1, Boolean.TRUE)
-				);
-	}
-
-	@ParameterizedTest
-	@MethodSource("predicatePartitioningTestDataProvider")
-	void testPredicatePartitioning(final AbstractLongFlow iterator, final LongPredicate predicate, final LongPredicatePartition expectedResult)
-	{
-		assertEquals(expectedResult, iterator.partition(predicate));
-	}
-
-	static Stream<Arguments> predicatePartitioningTestDataProvider()
-	{
-		return Stream.of(
-				Arguments.of(getLongTestIteratorProvider().iterator(), (LongPredicate) x -> x < -1, new LongPredicatePartition(new long[0], new long[] {0, 1, 2, 3, 4})),
-				Arguments.of(getLongTestIteratorProvider().iterator(), (LongPredicate) x -> x > 2, new LongPredicatePartition(new long[] {3, 4}, new long[] {0, 1, 2})),
-				Arguments.of(getLongTestIteratorProvider().iterator(), (LongPredicate) x -> x > -1, new LongPredicatePartition(new long[] {0, 1, 2, 3, 4}, new long[0])),
-				Arguments.of(getEmptyLongTestIteratorProvider().iterator(), (LongPredicate) x -> x < -1, new LongPredicatePartition(new long[0], new long[0])),
-				Arguments.of(getEmptyLongTestIteratorProvider().iterator(), (LongPredicate) x -> x > 3, new LongPredicatePartition(new long[0], new long[0])),
-				Arguments.of(getEmptyLongTestIteratorProvider().iterator(), (LongPredicate) x -> x > -1, new LongPredicatePartition(new long[0], new long[0]))
 				);
 	}
 }

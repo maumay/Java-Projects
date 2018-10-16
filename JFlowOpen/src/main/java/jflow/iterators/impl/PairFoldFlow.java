@@ -7,7 +7,7 @@ import java.util.function.BiFunction;
 
 import jflow.iterators.AbstractFlow;
 import jflow.iterators.Flow;
-import jflow.utilities.Optionals;
+import jflow.iterators.misc.Optionals;
 
 /**
  * @author ThomasB

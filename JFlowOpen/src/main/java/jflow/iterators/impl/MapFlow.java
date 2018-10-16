@@ -28,9 +28,9 @@ public class MapFlow
 	public static class OfObject<E, R> extends AbstractFlow<R>
 	{
 		private final Flow<E> sourceFlow;
-		private final Function<? super E, R> mappingFunction;
+		private final Function<? super E, ? extends R> mappingFunction;
 
-		public OfObject(final Flow<E> sourceFlow, final Function<? super E, R> mappingFunction)
+		public OfObject(Flow<E> sourceFlow, Function<? super E, ? extends R> mappingFunction)
 		{
 			super(sourceFlow.size());
 			this.sourceFlow = sourceFlow;
@@ -61,7 +61,7 @@ public class MapFlow
 		private final LongFlow sourceFlow;
 		private final LongUnaryOperator mappingFunction;
 
-		public OfLong(final LongFlow src, final LongUnaryOperator mappingFunction)
+		public OfLong(LongFlow src, LongUnaryOperator mappingFunction)
 		{
 			super(src.size());
 			this.sourceFlow = src;
@@ -92,7 +92,7 @@ public class MapFlow
 		private final DoubleFlow sourceFlow;
 		private final DoubleUnaryOperator mappingFunction;
 
-		public OfDouble(final DoubleFlow src, final DoubleUnaryOperator mappingFunction)
+		public OfDouble(DoubleFlow src, DoubleUnaryOperator mappingFunction)
 		{
 			super(src.size());
 			this.sourceFlow = src;
@@ -123,7 +123,7 @@ public class MapFlow
 		private final IntFlow sourceFlow;
 		private final IntUnaryOperator mappingFunction;
 
-		public OfInt(final IntFlow src, final IntUnaryOperator mappingFunction)
+		public OfInt(IntFlow src, IntUnaryOperator mappingFunction)
 		{
 			super(src.size());
 			this.sourceFlow = src;

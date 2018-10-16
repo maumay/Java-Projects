@@ -36,8 +36,8 @@ public class AbstractFlowTakewhileTest extends IteratorExampleProvider implement
 
 		testData.stream().forEach(testCase ->
 		{
-			assertObjectIteratorAsExpected(testCase.first(), createTakewhileIteratorProviderFrom(populated, testCase.second()));
-			assertObjectIteratorAsExpected(asList(), createTakewhileIteratorProviderFrom(empty, testCase.second()));
+			assertObjectIteratorAsExpected(testCase._1(), createTakewhileIteratorProviderFrom(populated, testCase._2()));
+			assertObjectIteratorAsExpected(asList(), createTakewhileIteratorProviderFrom(empty, testCase._2()));
 		});
 	}
 

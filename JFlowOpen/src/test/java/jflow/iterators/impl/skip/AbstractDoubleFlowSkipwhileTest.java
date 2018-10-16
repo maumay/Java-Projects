@@ -32,8 +32,8 @@ class AbstractDoubleFlowSkipwhileTest extends IteratorExampleProvider implements
 
 		testData.stream().forEach(testCase ->
 		{
-			assertDoubleIteratorAsExpected(testCase.first(), createSkipwhileIteratorProviderFrom(populated, testCase.second()));
-			assertDoubleIteratorAsExpected(new double[] {}, createSkipwhileIteratorProviderFrom(empty, testCase.second()));
+			assertDoubleIteratorAsExpected(testCase._1(), createSkipwhileIteratorProviderFrom(populated, testCase._2()));
+			assertDoubleIteratorAsExpected(new double[] {}, createSkipwhileIteratorProviderFrom(empty, testCase._2()));
 		});
 	}
 

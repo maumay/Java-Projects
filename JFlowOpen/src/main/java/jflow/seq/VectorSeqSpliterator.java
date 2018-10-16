@@ -1,7 +1,7 @@
 /**
  *
  */
-package jflow.collections.impl;
+package jflow.seq;
 
 import java.util.Spliterator;
 import java.util.function.Consumer;
@@ -10,13 +10,13 @@ import java.util.function.Consumer;
  * @author t
  *
  */
-final class ImmutableListSpliterator<E> implements Spliterator<E>
+final class VectorSeqSpliterator<E> implements Spliterator<E>
 {
-	private final ImmutableFlowList<E> src;
+	private final VectorSeq<E> src;
 	private final int upperBound;
 	private int position;
 
-	public ImmutableListSpliterator(ImmutableFlowList<E> src, int startPosition, int upperBound)
+	public VectorSeqSpliterator(VectorSeq<E> src, int startPosition, int upperBound)
 	{
 		this.src = src;
 		this.position = startPosition;
@@ -42,7 +42,7 @@ final class ImmutableListSpliterator<E> implements Spliterator<E>
 			final int midpoint = (upperBound + position) / 2;
 			final int oldPosition = position;
 			position = midpoint;
-			return new ImmutableListSpliterator<>(src, oldPosition, midpoint);
+			return new VectorSeqSpliterator<>(src, oldPosition, midpoint);
 		}
 		else {
 			return null;

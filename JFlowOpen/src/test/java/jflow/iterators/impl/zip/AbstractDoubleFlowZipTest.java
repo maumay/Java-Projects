@@ -10,12 +10,8 @@ import org.junit.jupiter.api.Test;
 import jflow.iterators.AbstractFlow;
 import jflow.iterators.misc.DoublePair;
 import jflow.iterators.misc.DoubleWith;
-import jflow.iterators.misc.DoubleWithLong;
-import jflow.iterators.misc.IntWithDouble;
 import jflow.testutilities.AbstractFlowIterable;
 import jflow.testutilities.AbstractIterableDoubles;
-import jflow.testutilities.AbstractIterableInts;
-import jflow.testutilities.AbstractIterableLongs;
 import jflow.testutilities.IteratorExampleProvider;
 import jflow.testutilities.IteratorTest;
 
@@ -92,80 +88,6 @@ class AbstractDoubleFlowZipTest extends IteratorExampleProvider implements Itera
 		return new AbstractFlowIterable<DoubleWith<E>>() {
 			@Override
 			public AbstractFlow<DoubleWith<E>> iterator() {
-				return first.iterator().zipWith(second.iterator());
-			}
-		};
-	}
-
-	@Test
-	void testZipWithLong()
-	{
-		final AbstractIterableDoubles populatedDoubles = getDoubleTestIteratorProvider();
-		final AbstractIterableDoubles emptyDoubles = getEmptyDoubleTestIteratorProvider();
-
-		final AbstractIterableLongs smallLongs = getSmallLongTestIteratorProvider();
-		final AbstractIterableLongs midLongs = getLongTestIteratorProvider();
-		final AbstractIterableLongs largeLongs = getLargeLongTestIteratorProvider();
-		final AbstractIterableLongs emptyLongs = getEmptyLongTestIteratorProvider();
-
-		assertObjectIteratorAsExpected(
-				asList(DoubleWithLong.of(0, 10), DoubleWithLong.of(1, 11)),
-				createZipIteratorProviderFrom(populatedDoubles, smallLongs));
-
-		assertObjectIteratorAsExpected(
-				asList(DoubleWithLong.of(0, 0), DoubleWithLong.of(1, 1), DoubleWithLong.of(2, 2), DoubleWithLong.of(3, 3), DoubleWithLong.of(4, 4)),
-				createZipIteratorProviderFrom(populatedDoubles, midLongs));
-
-		assertObjectIteratorAsExpected(
-				asList(DoubleWithLong.of(0, 10), DoubleWithLong.of(1, 11), DoubleWithLong.of(2, 12), DoubleWithLong.of(3, 13), DoubleWithLong.of(4, 14)),
-				createZipIteratorProviderFrom(populatedDoubles, largeLongs));
-
-		assertObjectIteratorAsExpected(asList(), createZipIteratorProviderFrom(emptyDoubles, emptyLongs));
-		assertObjectIteratorAsExpected(asList(), createZipIteratorProviderFrom(emptyDoubles, smallLongs));
-	}
-
-	private AbstractFlowIterable<DoubleWithLong> createZipIteratorProviderFrom(final AbstractIterableDoubles first, final AbstractIterableLongs second)
-	{
-		return new AbstractFlowIterable<DoubleWithLong>() {
-			@Override
-			public AbstractFlow<DoubleWithLong> iterator() {
-				return first.iterator().zipWith(second.iterator());
-			}
-		};
-	}
-
-	@Test
-	void testZipWithInt()
-	{
-		final AbstractIterableDoubles populatedDoubles = getDoubleTestIteratorProvider();
-		final AbstractIterableDoubles emptyDoubles = getEmptyDoubleTestIteratorProvider();
-
-		final AbstractIterableInts smallInts = getSmallIntTestIteratorProvider();
-		final AbstractIterableInts midInts = getIntTestIteratorProvider();
-		final AbstractIterableInts largeInts = getLargeIntTestIteratorProvider();
-		final AbstractIterableInts emptyInts = getEmptyIntTestIteratorProvider();
-
-		assertObjectIteratorAsExpected(
-				asList(IntWithDouble.of(10, 0), IntWithDouble.of(11, 1)),
-				createZipIteratorProviderFrom(populatedDoubles, smallInts));
-
-		assertObjectIteratorAsExpected(
-				asList(IntWithDouble.of(0, 0), IntWithDouble.of(1, 1), IntWithDouble.of(2, 2), IntWithDouble.of(3, 3), IntWithDouble.of(4, 4)),
-				createZipIteratorProviderFrom(populatedDoubles, midInts));
-
-		assertObjectIteratorAsExpected(
-				asList(IntWithDouble.of(10, 0), IntWithDouble.of(11, 1), IntWithDouble.of(12, 2), IntWithDouble.of(13, 3), IntWithDouble.of(14, 4)),
-				createZipIteratorProviderFrom(populatedDoubles, largeInts));
-
-		assertObjectIteratorAsExpected(asList(), createZipIteratorProviderFrom(emptyDoubles, emptyInts));
-		assertObjectIteratorAsExpected(asList(), createZipIteratorProviderFrom(emptyDoubles, smallInts));
-	}
-
-	private AbstractFlowIterable<IntWithDouble> createZipIteratorProviderFrom(final AbstractIterableDoubles first, final AbstractIterableInts second)
-	{
-		return new AbstractFlowIterable<IntWithDouble>() {
-			@Override
-			public AbstractFlow<IntWithDouble> iterator() {
 				return first.iterator().zipWith(second.iterator());
 			}
 		};

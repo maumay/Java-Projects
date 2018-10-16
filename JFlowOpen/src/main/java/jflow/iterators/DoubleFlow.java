@@ -16,10 +16,7 @@ import java.util.stream.DoubleStream;
 
 import jflow.iterators.misc.Bool;
 import jflow.iterators.misc.DoublePair;
-import jflow.iterators.misc.DoublePredicatePartition;
 import jflow.iterators.misc.DoubleWith;
-import jflow.iterators.misc.DoubleWithLong;
-import jflow.iterators.misc.IntWithDouble;
 
 
 /**
@@ -59,7 +56,7 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 *         parameter mapping function to each element of this DoubleFlow
 	 *         instance in turn.
 	 */
-	<E> Flow<E> mapToObject(DoubleFunction<E> f);
+	<E> Flow<E> mapToObject(DoubleFunction<? extends E> f);
 
 	/**
 	 * Applies a function elementwise to this DoubleFlow to make new LongFlow.
@@ -122,62 +119,6 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	Flow<DoublePair> zipWith(PrimitiveIterator.OfDouble other);
 
 	/**
-	 * Combines this DoubleFlow with another primitive iterator to create a new Flow
-	 * consisting of pairs of elements with the same index in their respective
-	 * origins.
-	 *
-	 * @param other
-	 *            The primitive iterator to zip this source DoubleFlow with.
-	 *
-	 * @return Denote this source DoubleFlow by {@code F} with the parameter
-	 *         primitive iterator denoted by {@code I}. We return a new Flow
-	 *         instance {@code G} defined by:
-	 *         <ul>
-	 *         <li>{@code G[j] = (F[j], I[j])}</li>
-	 *         <li>{@code length(G) = min(length(F), length(I))}</li>
-	 *         </ul>
-	 */
-	Flow<DoubleWithLong> zipWith(PrimitiveIterator.OfLong other);
-
-	/**
-	 * Combines this DoubleFlow with another primitive iterator to create a new Flow
-	 * consisting of pairs of elements with the same index in their respective
-	 * origins.
-	 *
-	 * @param other
-	 *            The primitive iterator to zip this source DoubleFlow with.
-	 *
-	 * @return Denote this source DoubleFlow by {@code F} with the parameter
-	 *         primitive iterator denoted by {@code I}. We return a new Flow
-	 *         instance {@code G} defined by:
-	 *         <ul>
-	 *         <li>{@code G[j] = (F[j], I[j])}</li>
-	 *         <li>{@code length(G) = min(length(F), length(I))}</li>
-	 *         </ul>
-	 */
-	Flow<IntWithDouble> zipWith(PrimitiveIterator.OfInt other);
-
-	/**
-	 * Combines this DoubleFlow with another primitive iterator via a two argument
-	 * function to create a new Flow consisting of the images of pairs of elements
-	 * with the same index in their origin.
-	 *
-	 * @param other
-	 *            The primitive iterator to combine this source DoubleFlow with.
-	 * @param combiner
-	 *            The combining function.
-	 *
-	 * @return Denote this source DoubleFlow by {@code F} with the parameter
-	 *         primitive iterator denoted by {@code I} and the combining function by
-	 *         {@code f}. We return a new Flow instance {@code G} defined by:
-	 *         <ul>
-	 *         <li>{@code G[j] = f(F[j], I[j])}</li>
-	 *         <li>{@code length(G) = min(length(F), length(I))}</li>
-	 *         </ul>
-	 */
-	DoubleFlow combineWith(PrimitiveIterator.OfDouble other, DoubleBinaryOperator combiner);
-
-	/**
 	 * Creates a new Flow by mapping each element in this source DoubleFlow to a
 	 * pair consisting of the element and the index it appears.
 	 *
@@ -188,7 +129,7 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 *         <li>{@code length(G) = length(F)}</li>
 	 *         </ul>
 	 */
-	Flow<IntWithDouble> enumerate();
+	Flow<DoubleWith<Integer>> enumerate();
 
 	/**
 	 * Creates a new DoubleFlow from this DoubleFlow by selecting elements with
@@ -514,21 +455,7 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	}
 
 	/**
-	 * Partitions the elements of this DoubleFlow on whether they pass the supplied
-	 * DoublePredicate test.
-	 *
-	 * This method is a 'consuming method', i.e. it will iterate through this
-	 * DoubleFlow.
-	 *
-	 * @param predicate
-	 *            The supplied test.
-	 * @return A partition of the cached elements split into two arrays on whether
-	 *         they passed or failed the parameter predicate.
-	 */
-	DoublePredicatePartition partition(DoublePredicate predicate);
-
-	/**
-	 * Reduces this DoubleFlow to a single value via some reduction function. and an
+	 * Reduces this DoubleFlow to a single value via some reduction function and an
 	 * initial value
 	 *
 	 * This method is a 'consuming method', i.e. it will iterate through this
@@ -545,22 +472,38 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 *         {@code f(...f(f(id, F[0]), F[1])..., F[n - 1])}
 	 */
 	double fold(double id, DoubleBinaryOperator reducer);
-
+	
 	/**
-	 * Reduces this DoubleFlow to a single value via some reduction function.
+	 * Reduces this DoubleFlow to a single value via some reduction function. Throws
+	 * exception if empty flow.
 	 *
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * DoubleFlow.
 	 *
-	 * @param reducer
-	 *            The reduction function
+	 * @param reducer The reduction function
 	 * @return Let us denote this source DoubleFlow by {@code F}, the length of
 	 *         {@code F} by {@code n} and the reduction function by {@code f}. If
 	 *         {@code n == 0} we return nothing, else we return: <br>
 	 *         <br>
 	 *         {@code f(...f(f(F[0], F[1]), F[2])..., F[n - 1])}
 	 */
-	OptionalDouble reduce(DoubleBinaryOperator reducer);
+	double fold(DoubleBinaryOperator reducer);
+
+	/**
+	 * Reduces this DoubleFlow to a single value via some reduction function.
+	 * Returns nothing if empty flow.
+	 *
+	 * This method is a 'consuming method', i.e. it will iterate through this
+	 * DoubleFlow.
+	 *
+	 * @param reducer The reduction function
+	 * @return Let us denote this source DoubleFlow by {@code F}, the length of
+	 *         {@code F} by {@code n} and the reduction function by {@code f}. If
+	 *         {@code n == 0} we return nothing, else we return: <br>
+	 *         <br>
+	 *         {@code f(...f(f(F[0], F[1]), F[2])..., F[n - 1])}
+	 */
+	OptionalDouble foldOption(DoubleBinaryOperator reducer);
 
 	/**
 	 * Counts the number of elements in this DoubleFlow.

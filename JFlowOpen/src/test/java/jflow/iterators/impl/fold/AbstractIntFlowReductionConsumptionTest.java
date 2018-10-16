@@ -28,12 +28,12 @@ class AbstractIntFlowReductionConsumptionTest extends IteratorExampleProvider
 	void testReductionWithoutId(final IntBinaryOperator reducer, final Integer expectedPopulatedResult)
 	{
 		final AbstractIntFlow populated = getIntTestIteratorProvider().iterator();
-		final OptionalInt reduction = populated.fold(reducer);
+		final OptionalInt reduction = populated.foldOption(reducer);
 		assertTrue(reduction.isPresent());
 		assertEquals(expectedPopulatedResult.intValue(), reduction.getAsInt());
 
 		final AbstractIntFlow empty = getEmptyIntTestIteratorProvider().iterator();
-		assertFalse(empty.fold(reducer).isPresent());
+		assertFalse(empty.foldOption(reducer).isPresent());
 	}
 
 	static Stream<Arguments> reductionWithoutIdTestDataProvider()

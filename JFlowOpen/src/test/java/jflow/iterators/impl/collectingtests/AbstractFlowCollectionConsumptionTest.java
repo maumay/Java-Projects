@@ -54,7 +54,7 @@ class AbstractFlowCollectionConsumptionTest extends IteratorExampleProvider
 	@MethodSource("collectToMapTestDataProvider")
 	void testCollectToMap(final AbstractFlow<String> iterator, final UnaryOperator<String> keyMapper, final Function<String, Integer> valueMapper, final List<Pair<String, Integer>> expectedMapPairs)
 	{
-		final Map<String, Integer> expectedMap = expectedMapPairs.stream().collect(toMap(Pair::first, Pair::second));
+		final Map<String, Integer> expectedMap = expectedMapPairs.stream().collect(toMap(Pair::_1, Pair::_2));
 		assertEquals(expectedMap, iterator.toMap(keyMapper, valueMapper));
 	}
 
@@ -79,7 +79,7 @@ class AbstractFlowCollectionConsumptionTest extends IteratorExampleProvider
 	@MethodSource("groupByTestDataProvider")
 	void testGroupBy(final AbstractFlow<String> iterator, final Function<String, Integer> classifier, final List<Pair<Integer, List<String>>> expectedMapPairs)
 	{
-		final Map<Integer, List<String>> expectedMap = expectedMapPairs.stream().collect(toMap(Pair::first, Pair::second));
+		final Map<Integer, List<String>> expectedMap = expectedMapPairs.stream().collect(toMap(Pair::_1, Pair::_2));
 		assertEquals(expectedMap, iterator.groupBy(classifier));
 	}
 

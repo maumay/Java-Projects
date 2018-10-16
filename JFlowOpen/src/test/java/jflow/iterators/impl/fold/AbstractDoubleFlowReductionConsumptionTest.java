@@ -28,12 +28,12 @@ class AbstractDoubleFlowReductionConsumptionTest extends IteratorExampleProvider
 	void testReductionWithoutId(final DoubleBinaryOperator reducer, final Double expectedPopulatedResult)
 	{
 		final AbstractDoubleFlow populated = getDoubleTestIteratorProvider().iterator();
-		final OptionalDouble reduction = populated.reduce(reducer);
+		final OptionalDouble reduction = populated.foldOption(reducer);
 		assertTrue(reduction.isPresent());
 		assertEquals(expectedPopulatedResult.doubleValue(), reduction.getAsDouble());
 
 		final AbstractDoubleFlow empty = getEmptyDoubleTestIteratorProvider().iterator();
-		assertFalse(empty.reduce(reducer).isPresent());
+		assertFalse(empty.foldOption(reducer).isPresent());
 	}
 
 	static Stream<Arguments> reductionWithoutIdTestDataProvider()

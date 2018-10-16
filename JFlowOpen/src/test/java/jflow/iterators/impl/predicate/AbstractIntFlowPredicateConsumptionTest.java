@@ -15,7 +15,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import jflow.iterators.AbstractIntFlow;
-import jflow.iterators.misc.IntPredicatePartition;
 import jflow.testutilities.IteratorExampleProvider;
 
 /**
@@ -110,25 +109,6 @@ class AbstractIntFlowPredicateConsumptionTest extends IteratorExampleProvider
 				Arguments.of(getIntTestIteratorProvider().iterator(), (IntPredicate) x -> x > 3, Boolean.FALSE),
 				Arguments.of(getEmptyIntTestIteratorProvider().iterator(), (IntPredicate) x -> x < 3, Boolean.TRUE),
 				Arguments.of(getEmptyIntTestIteratorProvider().iterator(), (IntPredicate) x -> x > -1, Boolean.TRUE)
-				);
-	}
-
-	@ParameterizedTest
-	@MethodSource("predicatePartitioningTestDataProvider")
-	void testPredicatePartitioning(final AbstractIntFlow iterator, final IntPredicate predicate, final IntPredicatePartition expectedResult)
-	{
-		assertEquals(expectedResult, iterator.partition(predicate));
-	}
-
-	static Stream<Arguments> predicatePartitioningTestDataProvider()
-	{
-		return Stream.of(
-				Arguments.of(getIntTestIteratorProvider().iterator(), (IntPredicate) x -> x < -1, new IntPredicatePartition(new int[0], new int[] {0, 1, 2, 3, 4})),
-				Arguments.of(getIntTestIteratorProvider().iterator(), (IntPredicate) x -> x > 2, new IntPredicatePartition(new int[] {3, 4}, new int[] {0, 1, 2})),
-				Arguments.of(getIntTestIteratorProvider().iterator(), (IntPredicate) x -> x > -1, new IntPredicatePartition(new int[] {0, 1, 2, 3, 4}, new int[0])),
-				Arguments.of(getEmptyIntTestIteratorProvider().iterator(), (IntPredicate) x -> x < -1, new IntPredicatePartition(new int[0], new int[0])),
-				Arguments.of(getEmptyIntTestIteratorProvider().iterator(), (IntPredicate) x -> x > 3, new IntPredicatePartition(new int[0], new int[0])),
-				Arguments.of(getEmptyIntTestIteratorProvider().iterator(), (IntPredicate) x -> x > -1, new IntPredicatePartition(new int[0], new int[0]))
 				);
 	}
 }

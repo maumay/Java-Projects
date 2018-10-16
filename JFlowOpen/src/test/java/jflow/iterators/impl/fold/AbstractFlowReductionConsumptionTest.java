@@ -27,12 +27,12 @@ class AbstractFlowReductionConsumptionTest extends IteratorExampleProvider
 	void testSingleTypeReduction(final BinaryOperator<String> reducer, final String expectedPopulatedResult)
 	{
 		final AbstractFlow<String> populated = getObjectTestIteratorProvider().iterator();
-		final Optional<String> reduction = populated.reduce(reducer);
+		final Optional<String> reduction = populated.foldOption(reducer);
 		assertTrue(reduction.isPresent());
 		assertEquals(expectedPopulatedResult, reduction.get());
 
 		final AbstractFlow<String> empty = getEmptyObjectTestIteratorProvider().iterator();
-		assertFalse(empty.reduce(reducer).isPresent());
+		assertFalse(empty.foldOption(reducer).isPresent());
 	}
 
 	static Stream<Arguments> singleTypeReductionTestDataProvider()

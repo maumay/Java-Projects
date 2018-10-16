@@ -10,7 +10,7 @@ import jflow.iterators.DoubleFlow;
 import jflow.iterators.Flow;
 import jflow.iterators.IntFlow;
 import jflow.iterators.LongFlow;
-import jflow.utilities.Optionals;
+import jflow.iterators.misc.Optionals;
 
 /**
  * @author ThomasB

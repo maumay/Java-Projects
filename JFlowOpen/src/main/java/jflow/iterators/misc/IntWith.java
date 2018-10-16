@@ -6,37 +6,37 @@ package jflow.iterators.misc;
  */
 public final class IntWith<T>
 {
-	private final int intVal;
-	private final T element;
+	public final int _i;
+	public final T _o;
 
-	private IntWith(final int integer, final T element)
+	private IntWith(int integer, T element)
 	{
-		this.intVal = integer;
-		this.element = element;
+		this._i = integer;
+		this._o = element;
 	}
 
-	public static <T> IntWith<T> of(final int index, final T element)
+	public static <T> IntWith<T> of(int index, T element)
 	{
 		return new IntWith<>(index, element);
 	}
 
-	public int getInt()
+	public int _i()
 	{
-		return intVal;
+		return _i;
 	}
 
-	public T getElement()
+	public T _o()
 	{
-		return element;
+		return _o;
 	}
 
 	@Override
 	public String toString()
 	{
 		return new StringBuilder("(")
-				.append(intVal)
+				.append(_i)
 				.append(", ")
-				.append(element.toString())
+				.append(_o.toString())
 				.append(")")
 				.toString();
 	}
@@ -46,8 +46,8 @@ public final class IntWith<T>
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((element == null) ? 0 : element.hashCode());
-		result = prime * result + intVal;
+		result = prime * result + ((_o == null) ? 0 : _o.hashCode());
+		result = prime * result + _i;
 		return result;
 	}
 
@@ -62,13 +62,13 @@ public final class IntWith<T>
 			return false;
 		@SuppressWarnings("rawtypes")
 		final IntWith other = (IntWith) obj;
-		if (element == null) {
-			if (other.element != null)
+		if (_o == null) {
+			if (other._o != null)
 				return false;
 		}
-		else if (!element.equals(other.element))
+		else if (!_o.equals(other._o))
 			return false;
-		if (intVal != other.intVal)
+		if (_i != other._i)
 			return false;
 		return true;
 	}

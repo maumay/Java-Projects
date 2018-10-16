@@ -6,8 +6,6 @@ package jflow.iterators.impl;
 import java.util.PrimitiveIterator;
 import java.util.function.DoublePredicate;
 
-import jflow.iterators.misc.DoublePredicatePartition;
-
 /**
  * @author ThomasB
  */
@@ -65,20 +63,5 @@ public final class DoublePredicateConsumption
 			}
 		}
 		return true;
-	}
-
-	public static DoublePredicatePartition partition(final PrimitiveIterator.OfDouble source, final DoublePredicate predicate)
-	{
-		final ArrayAccumulators.OfDouble accepted = ArrayAccumulators.doubleAccumulator(), rejected = ArrayAccumulators.doubleAccumulator();
-		while (source.hasNext()) {
-			final double next = source.nextDouble();
-			if (predicate.test(next)) {
-				accepted.add(next);
-			}
-			else {
-				rejected.add(next);
-			}
-		}
-		return new DoublePredicatePartition(accepted.compress(), rejected.compress());
 	}
 }

@@ -45,7 +45,7 @@ class AbstractLongFlowCollectionConsumptionTest extends IteratorExampleProvider
 	@MethodSource("collectToMapTestDataProvider")
 	void testCollectToMap(final AbstractLongFlow iterator, final LongFunction<String> keyMapper, final LongFunction<Long> valueMapper, final List<Pair<String, Long>> expectedMapPairs)
 	{
-		final Map<String, Long> expectedMap = expectedMapPairs.stream().collect(toMap(Pair::first, Pair::second));
+		final Map<String, Long> expectedMap = expectedMapPairs.stream().collect(toMap(Pair::_1, Pair::_2));
 		assertEquals(expectedMap, iterator.toMap(keyMapper, valueMapper));
 	}
 
@@ -75,7 +75,7 @@ class AbstractLongFlowCollectionConsumptionTest extends IteratorExampleProvider
 	@MethodSource("groupByTestDataProvider")
 	void testGroupBy(final AbstractLongFlow iterator, final LongFunction<Integer> classifier, final List<Pair<Integer, long[]>> expectedMapPairs)
 	{
-		final Map<Integer, long[]> expectedMap = expectedMapPairs.stream().collect(toMap(Pair::first, Pair::second));
+		final Map<Integer, long[]> expectedMap = expectedMapPairs.stream().collect(toMap(Pair::_1, Pair::_2));
 		final Map<Integer, long[]> actualMap = iterator.groupBy(classifier);
 		assertEquals(expectedMap.keySet(), actualMap.keySet());
 		expectedMap.keySet().stream().forEach(key -> assertArrayEquals(expectedMap.get(key), actualMap.get(key), key.toString()));

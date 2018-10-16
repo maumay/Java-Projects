@@ -15,11 +15,11 @@ import java.util.function.Consumer;
 public interface PrototypeFlow<E> extends Iterator<E>, Skippable, OptionallySized
 {
 	/**
-	 * A safe alternative to directly calling {@link #next()} method.
+	 * A safe alternative to directly calling {@link Iterator#next()} method.
 	 *
 	 * @return An Optional wrapping the next element if there is one.
 	 */
-	default Optional<E> safeNext()
+	default Optional<E> nextOption()
 	{
 		return hasNext() ? Optional.of(next()) : Optional.empty();
 	}

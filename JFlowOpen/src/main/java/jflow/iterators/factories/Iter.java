@@ -19,7 +19,7 @@ import jflow.iterators.impl.FlowFromFunction;
 import jflow.iterators.impl.FlowFromIterator;
 import jflow.iterators.impl.FlowFromValues;
 import jflow.iterators.impl.ReverseFlowFromValues;
-import jflow.utilities.Exceptions;
+import jflow.iterators.misc.Exceptions;
 
 /**
  * Static methods for building finite Flow instances.

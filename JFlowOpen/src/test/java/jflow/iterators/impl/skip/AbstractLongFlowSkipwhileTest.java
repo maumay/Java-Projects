@@ -32,8 +32,8 @@ class AbstractLongFlowSkipwhileTest extends IteratorExampleProvider implements I
 
 		testData.stream().forEach(testCase ->
 		{
-			assertLongIteratorAsExpected(testCase.first(), createSkipwhileIteratorProviderFrom(populated, testCase.second()));
-			assertLongIteratorAsExpected(new long[] {}, createSkipwhileIteratorProviderFrom(empty, testCase.second()));
+			assertLongIteratorAsExpected(testCase._1(), createSkipwhileIteratorProviderFrom(populated, testCase._2()));
+			assertLongIteratorAsExpected(new long[] {}, createSkipwhileIteratorProviderFrom(empty, testCase._2()));
 		});
 	}
 

@@ -28,12 +28,12 @@ class AbstractLongFlowReductionConsumptionTest extends IteratorExampleProvider
 	void testReductionWithoutId(final LongBinaryOperator reducer, final Long expectedPopulatedResult)
 	{
 		final AbstractLongFlow populated = getLongTestIteratorProvider().iterator();
-		final OptionalLong reduction = populated.fold(reducer);
+		final OptionalLong reduction = populated.foldOption(reducer);
 		assertTrue(reduction.isPresent());
 		assertEquals(expectedPopulatedResult.longValue(), reduction.getAsLong());
 
 		final AbstractLongFlow empty = getEmptyLongTestIteratorProvider().iterator();
-		assertFalse(empty.fold(reducer).isPresent());
+		assertFalse(empty.foldOption(reducer).isPresent());
 	}
 
 	static Stream<Arguments> reductionWithoutIdTestDataProvider()

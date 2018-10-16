@@ -63,7 +63,7 @@ class AbstractFlowFlattenToDoubleTest extends IteratorExampleProvider implements
 		return new AbstractIterableDoubles() {
 			@Override
 			public AbstractDoubleFlow iterator() {
-				return source.iterator().flattenToDoubles(flattenMapping);
+				return source.iterator().flatMapToDouble(flattenMapping);
 			}
 		};
 	}

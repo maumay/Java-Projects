@@ -19,7 +19,6 @@ import jflow.iterators.factories.Iter;
 import jflow.iterators.factories.Numbers;
 import jflow.iterators.impl.AccumulationFlow;
 import jflow.iterators.impl.AppendFlow;
-import jflow.iterators.impl.CombinedFlow;
 import jflow.iterators.impl.DropFlow;
 import jflow.iterators.impl.DropwhileFlow;
 import jflow.iterators.impl.FilteredFlow;
@@ -36,10 +35,7 @@ import jflow.iterators.impl.SlicedFlow;
 import jflow.iterators.impl.TakeFlow;
 import jflow.iterators.impl.TakewhileFlow;
 import jflow.iterators.impl.ZipFlow;
-import jflow.iterators.misc.DoubleWithLong;
-import jflow.iterators.misc.IntWithLong;
 import jflow.iterators.misc.LongPair;
-import jflow.iterators.misc.LongPredicatePartition;
 import jflow.iterators.misc.LongWith;
 
 /**
@@ -56,133 +52,115 @@ public abstract class AbstractLongFlow extends AbstractOptionallySized implement
 	}
 
 	@Override
-	public AbstractLongFlow slice(final IntUnaryOperator indexMapping)
+	public AbstractLongFlow slice(IntUnaryOperator indexMapping)
 	{
 		return new SlicedFlow.OfLong(this, indexMapping);
 	}
 
 	@Override
-	public AbstractLongFlow map(final LongUnaryOperator f)
+	public AbstractLongFlow map(LongUnaryOperator f)
 	{
 		return new MapFlow.OfLong(this, f);
 	}
 
 	@Override
-	public <E> AbstractFlow<E> mapToObject(final LongFunction<E> f)
+	public <E> AbstractFlow<E> mapToObject(LongFunction<? extends E> f)
 	{
 		return new MapToObjectFlow.FromLong<>(this, f);
 	}
 
 	@Override
-	public AbstractDoubleFlow mapToDouble(final LongToDoubleFunction f)
+	public AbstractDoubleFlow mapToDouble(LongToDoubleFunction f)
 	{
 		return new MapToDoubleFlow.FromLong(this, f);
 	}
 
 	@Override
-	public AbstractIntFlow mapToInt(final LongToIntFunction f)
+	public AbstractIntFlow mapToInt(LongToIntFunction f)
 	{
 		return new MapToIntFlow.FromLong(this, f);
 	}
 
 	@Override
-	public <E> AbstractFlow<LongWith<E>> zipWith(final Iterator<? extends E> other)
+	public <E> AbstractFlow<LongWith<E>> zipWith(Iterator<? extends E> other)
 	{
 		return new ZipFlow.OfObjectAndLong<>(other, this);
 	}
 
 	@Override
-	public AbstractFlow<LongPair> zipWith(final OfLong other)
+	public AbstractFlow<LongPair> zipWith(OfLong other)
 	{
 		return new ZipFlow.OfLongPair(this, other);
 	}
 
 	@Override
-	public AbstractFlow<DoubleWithLong> zipWith(final OfDouble other)
-	{
-		return new ZipFlow.OfDoubleWithLong(other, this);
-	}
-
-	@Override
-	public AbstractFlow<IntWithLong> zipWith(final OfInt other)
-	{
-		return new ZipFlow.OfIntWithLong(other, this);
-	}
-
-	@Override
-	public AbstractLongFlow combineWith(final OfLong other, final LongBinaryOperator combiner)
-	{
-		return new CombinedFlow.OfLongs(this, other, combiner);
-	}
-
-	@Override
-	public AbstractFlow<IntWithLong> enumerate()
+	public AbstractFlow<LongWith<Integer>> enumerate()
 	{
 		return zipWith(Numbers.natural());
 	}
 
 	@Override
-	public AbstractLongFlow take(final int n)
+	public AbstractLongFlow take(int n)
 	{
 		return new TakeFlow.OfLong(this, n);
 	}
 
 	@Override
-	public AbstractLongFlow takeWhile(final LongPredicate predicate)
+	public AbstractLongFlow takeWhile(LongPredicate predicate)
 	{
 		return new TakewhileFlow.OfLong(this, predicate);
 	}
 
 	@Override
-	public AbstractLongFlow drop(final int n)
+	public AbstractLongFlow drop(int n)
 	{
 		return new DropFlow.OfLong(this, n);
 	}
 
 	@Override
-	public AbstractLongFlow dropWhile(final LongPredicate predicate)
+	public AbstractLongFlow dropWhile(LongPredicate predicate)
 	{
 		return new DropwhileFlow.OfLong(this, predicate);
 	}
 
 	@Override
-	public AbstractLongFlow filter(final LongPredicate predicate)
+	public AbstractLongFlow filter(LongPredicate predicate)
 	{
 		return new FilteredFlow.OfLong(this, predicate);
 	}
 
 	@Override
-	public AbstractLongFlow append(final OfLong other)
+	public AbstractLongFlow append(OfLong other)
 	{
 		return new AppendFlow.OfLong(this, other);
 	}
 
 	@Override
-	public AbstractLongFlow append(final long... xs)
+	public AbstractLongFlow append(long... xs)
 	{
 		return append(Iter.overLongs(xs));
 	}
 
 	@Override
-	public AbstractLongFlow insert(final OfLong other)
+	public AbstractLongFlow insert(OfLong other)
 	{
 		return new InsertFlow.OfLong(this, other);
 	}
 
 	@Override
-	public AbstractLongFlow insert(final long... xs)
+	public AbstractLongFlow insert(long... xs)
 	{
 		return insert(Iter.overLongs(xs));
 	}
 
 	@Override
-	public AbstractLongFlow accumulate(final LongBinaryOperator accumulator)
+	public AbstractLongFlow scan(LongBinaryOperator accumulator)
 	{
 		return new AccumulationFlow.OfLong(this, accumulator);
 	}
 
 	@Override
-	public AbstractLongFlow accumulate(final long id, final LongBinaryOperator accumulator)
+	public AbstractLongFlow scan(long id, LongBinaryOperator accumulator)
 	{
 		return new AccumulationFlow.OfLong(this, id, accumulator);
 	}
@@ -194,7 +172,7 @@ public abstract class AbstractLongFlow extends AbstractOptionallySized implement
 	}
 
 	@Override
-	public long min(final long defaultValue)
+	public long min(long defaultValue)
 	{
 		return LongMinMaxConsumption.findMin(this, defaultValue);
 	}
@@ -206,7 +184,7 @@ public abstract class AbstractLongFlow extends AbstractOptionallySized implement
 	}
 
 	@Override
-	public long max(final long defaultValue)
+	public long max(long defaultValue)
 	{
 		return LongMinMaxConsumption.findMax(this, defaultValue);
 	}
@@ -218,27 +196,21 @@ public abstract class AbstractLongFlow extends AbstractOptionallySized implement
 	}
 
 	@Override
-	public boolean allMatch(final LongPredicate predicate)
+	public boolean allMatch(LongPredicate predicate)
 	{
 		return LongPredicateConsumption.allMatch(this, predicate);
 	}
 
 	@Override
-	public boolean anyMatch(final LongPredicate predicate)
+	public boolean anyMatch(LongPredicate predicate)
 	{
 		return LongPredicateConsumption.anyMatch(this, predicate);
 	}
 
 	@Override
-	public boolean noneMatch(final LongPredicate predicate)
+	public boolean noneMatch(LongPredicate predicate)
 	{
 		return LongPredicateConsumption.noneMatch(this, predicate);
-	}
-
-	@Override
-	public LongPredicatePartition partition(final LongPredicate predicate)
-	{
-		return LongPredicateConsumption.partition(this, predicate);
 	}
 
 	@Override
@@ -248,15 +220,21 @@ public abstract class AbstractLongFlow extends AbstractOptionallySized implement
 	}
 
 	@Override
-	public long fold(final long id, final LongBinaryOperator reducer)
+	public long fold(long id, LongBinaryOperator reducer)
 	{
-		return LongReductionConsumption.reduce(this, id, reducer);
+		return LongReductionConsumption.fold(this, id, reducer);
+	}
+	
+	@Override
+	public long fold(LongBinaryOperator reducer)
+	{
+		return LongReductionConsumption.fold(this, reducer);
 	}
 
 	@Override
-	public OptionalLong fold(final LongBinaryOperator reducer)
+	public OptionalLong foldOption(LongBinaryOperator reducer)
 	{
-		return LongReductionConsumption.reduce(this, reducer);
+		return LongReductionConsumption.foldOption(this, reducer);
 	}
 
 	@Override
@@ -266,13 +244,13 @@ public abstract class AbstractLongFlow extends AbstractOptionallySized implement
 	}
 
 	@Override
-	public <K, V> Map<K, V> toMap(final LongFunction<K> keyMapper, final LongFunction<V> valueMapper)
+	public <K, V> Map<K, V> toMap(LongFunction<K> keyMapper, LongFunction<V> valueMapper)
 	{
 		return LongCollectionConsumption.toMap(this, keyMapper, valueMapper);
 	}
 
 	@Override
-	public <K> Map<K, long[]> groupBy(final LongFunction<K> classifier)
+	public <K> Map<K, long[]> groupBy(LongFunction<K> classifier)
 	{
 		return LongCollectionConsumption.groupBy(this, classifier);
 	}

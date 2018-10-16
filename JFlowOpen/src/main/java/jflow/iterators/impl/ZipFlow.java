@@ -10,11 +10,8 @@ import jflow.iterators.AbstractFlow;
 import jflow.iterators.Flow;
 import jflow.iterators.misc.DoublePair;
 import jflow.iterators.misc.DoubleWith;
-import jflow.iterators.misc.DoubleWithLong;
 import jflow.iterators.misc.IntPair;
 import jflow.iterators.misc.IntWith;
-import jflow.iterators.misc.IntWithDouble;
-import jflow.iterators.misc.IntWithLong;
 import jflow.iterators.misc.LongPair;
 import jflow.iterators.misc.LongWith;
 import jflow.iterators.misc.Pair;
@@ -151,102 +148,6 @@ public final class ZipFlow
 		{
 			ImplUtils.skip(objectSource);
 			ImplUtils.skip(intSource);
-		}
-	}
-
-	public static class OfDoubleWithLong extends AbstractFlow<DoubleWithLong>
-	{
-		private final PrimitiveIterator.OfDouble doubleSource;
-		private final PrimitiveIterator.OfLong longSource;
-
-		public OfDoubleWithLong(final PrimitiveIterator.OfDouble doubleSource, final PrimitiveIterator.OfLong longSource)
-		{
-			super(ImplUtils.calculateNewSize(doubleSource, longSource));
-			this.doubleSource = doubleSource;
-			this.longSource = longSource;
-		}
-
-		@Override
-		public boolean hasNext()
-		{
-			return doubleSource.hasNext() && longSource.hasNext();
-		}
-
-		@Override
-		public DoubleWithLong next()
-		{
-			return DoubleWithLong.of(doubleSource.nextDouble(), longSource.nextLong());
-		}
-
-		@Override
-		public void skip()
-		{
-			ImplUtils.skip(doubleSource);
-			ImplUtils.skip(longSource);
-		}
-	}
-
-	public static class OfIntWithLong extends AbstractFlow<IntWithLong>
-	{
-		private final PrimitiveIterator.OfInt intSource;
-		private final PrimitiveIterator.OfLong longSource;
-
-		public OfIntWithLong(final PrimitiveIterator.OfInt intSource, final PrimitiveIterator.OfLong longSource)
-		{
-			super(ImplUtils.calculateNewSize(intSource, longSource));
-			this.intSource = intSource;
-			this.longSource = longSource;
-		}
-
-		@Override
-		public boolean hasNext()
-		{
-			return intSource.hasNext() && longSource.hasNext();
-		}
-
-		@Override
-		public IntWithLong next()
-		{
-			return IntWithLong.of(intSource.nextInt(), longSource.nextLong());
-		}
-
-		@Override
-		public void skip()
-		{
-			ImplUtils.skip(intSource);
-			ImplUtils.skip(longSource);
-		}
-	}
-
-	public static class OfIntWithDouble extends AbstractFlow<IntWithDouble>
-	{
-		private final PrimitiveIterator.OfInt intSource;
-		private final PrimitiveIterator.OfDouble doubleSource;
-
-		public OfIntWithDouble(final PrimitiveIterator.OfInt intSource, final PrimitiveIterator.OfDouble doubleSource)
-		{
-			super(ImplUtils.calculateNewSize(intSource, doubleSource));
-			this.intSource = intSource;
-			this.doubleSource = doubleSource;
-		}
-
-		@Override
-		public boolean hasNext()
-		{
-			return intSource.hasNext() && doubleSource.hasNext();
-		}
-
-		@Override
-		public IntWithDouble next()
-		{
-			return IntWithDouble.of(intSource.nextInt(), doubleSource.nextDouble());
-		}
-
-		@Override
-		public void skip()
-		{
-			ImplUtils.skip(intSource);
-			ImplUtils.skip(doubleSource);
 		}
 	}
 

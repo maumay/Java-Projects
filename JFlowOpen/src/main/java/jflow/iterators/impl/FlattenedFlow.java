@@ -1,5 +1,6 @@
 package jflow.iterators.impl;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.OptionalInt;
 import java.util.function.Function;
@@ -23,11 +24,11 @@ public final class FlattenedFlow
 	public static class OfObject<E, R> extends AbstractFlow<R>
 	{
 		private final Flow<E> src;
-		private final Function<? super E, ? extends Flow<R>> mapping;
+		private final Function<? super E, ? extends Iterator<? extends R>> mapping;
 
-		private Flow<? extends R> currentSubFlow;
+		private Iterator<? extends R> currentSubFlow;
 
-		public OfObject(final Flow<E> src, final Function<? super E, ? extends Flow<R>> mapping)
+		public OfObject(final Flow<E> src, final Function<? super E, ? extends Iterator<? extends R>> mapping)
 		{
 			super(OptionalInt.empty());
 			this.src = src;

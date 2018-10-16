@@ -32,8 +32,8 @@ class AbstractIntFlowSkipwileTest extends IteratorExampleProvider implements Ite
 
 		testData.stream().forEach(testCase ->
 		{
-			assertIntIteratorAsExpected(testCase.first(), createSkipwhileIteratorProviderFrom(populated, testCase.second()));
-			assertIntIteratorAsExpected(new int[] {}, createSkipwhileIteratorProviderFrom(empty, testCase.second()));
+			assertIntIteratorAsExpected(testCase._1(), createSkipwhileIteratorProviderFrom(populated, testCase._2()));
+			assertIntIteratorAsExpected(new int[] {}, createSkipwhileIteratorProviderFrom(empty, testCase._2()));
 		});
 	}
 

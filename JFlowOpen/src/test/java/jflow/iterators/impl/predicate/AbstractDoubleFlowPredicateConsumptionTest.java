@@ -15,7 +15,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import jflow.iterators.AbstractDoubleFlow;
-import jflow.iterators.misc.DoublePredicatePartition;
 import jflow.testutilities.IteratorExampleProvider;
 
 /**
@@ -110,25 +109,6 @@ class AbstractDoubleFlowPredicateConsumptionTest extends IteratorExampleProvider
 				Arguments.of(getDoubleTestIteratorProvider().iterator(), (DoublePredicate) x -> x > 3, Boolean.FALSE),
 				Arguments.of(getEmptyDoubleTestIteratorProvider().iterator(), (DoublePredicate) x -> x < 3, Boolean.TRUE),
 				Arguments.of(getEmptyDoubleTestIteratorProvider().iterator(), (DoublePredicate) x -> x > -1, Boolean.TRUE)
-				);
-	}
-
-	@ParameterizedTest
-	@MethodSource("predicatePartitioningTestDataProvider")
-	void testPredicatePartitioning(final AbstractDoubleFlow iterator, final DoublePredicate predicate, final DoublePredicatePartition expectedResult)
-	{
-		assertEquals(expectedResult, iterator.partition(predicate));
-	}
-
-	static Stream<Arguments> predicatePartitioningTestDataProvider()
-	{
-		return Stream.of(
-				Arguments.of(getDoubleTestIteratorProvider().iterator(), (DoublePredicate) x -> x < -1, new DoublePredicatePartition(new double[0], new double[] {0, 1, 2, 3, 4})),
-				Arguments.of(getDoubleTestIteratorProvider().iterator(), (DoublePredicate) x -> x > 2, new DoublePredicatePartition(new double[] {3, 4}, new double[] {0, 1, 2})),
-				Arguments.of(getDoubleTestIteratorProvider().iterator(), (DoublePredicate) x -> x > -1, new DoublePredicatePartition(new double[] {0, 1, 2, 3, 4}, new double[0])),
-				Arguments.of(getEmptyDoubleTestIteratorProvider().iterator(), (DoublePredicate) x -> x < -1, new DoublePredicatePartition(new double[0], new double[0])),
-				Arguments.of(getEmptyDoubleTestIteratorProvider().iterator(), (DoublePredicate) x -> x > 3, new DoublePredicatePartition(new double[0], new double[0])),
-				Arguments.of(getEmptyDoubleTestIteratorProvider().iterator(), (DoublePredicate) x -> x > -1, new DoublePredicatePartition(new double[0], new double[0]))
 				);
 	}
 }

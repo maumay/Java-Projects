@@ -32,7 +32,7 @@ class AbstractLongFlowAccumulationTest extends IteratorExampleProvider implement
 		return new AbstractIterableLongs() {
 			@Override
 			public AbstractLongFlow iterator() {
-				return source.iterator().accumulate(accumulator);
+				return source.iterator().scan(accumulator);
 			}
 		};
 	}
@@ -52,7 +52,7 @@ class AbstractLongFlowAccumulationTest extends IteratorExampleProvider implement
 		return new AbstractIterableLongs() {
 			@Override
 			public AbstractLongFlow iterator() {
-				return source.iterator().accumulate(id, accumulator);
+				return source.iterator().scan(id, accumulator);
 			}
 		};
 	}

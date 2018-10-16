@@ -3,6 +3,7 @@
  */
 package jflow.iterators.impl;
 
+import java.util.NoSuchElementException;
 import java.util.OptionalDouble;
 import java.util.PrimitiveIterator;
 import java.util.function.DoubleBinaryOperator;
@@ -16,7 +17,7 @@ public final class DoubleReductionConsumption
 {
 	private DoubleReductionConsumption() {}
 
-	public static OptionalDouble reduce(final PrimitiveIterator.OfDouble source, final DoubleBinaryOperator reducer)
+	public static OptionalDouble foldOption(PrimitiveIterator.OfDouble source, DoubleBinaryOperator reducer)
 	{
 		boolean reductionUninitialised = true;
 		double reduction = -1L;
@@ -31,8 +32,29 @@ public final class DoubleReductionConsumption
 		}
 		return reductionUninitialised ? OptionalDouble.empty() : OptionalDouble.of(reduction);
 	}
+	
+	public static double fold(PrimitiveIterator.OfDouble source, DoubleBinaryOperator reducer)
+	{
+		boolean reductionUninitialised = true;
+		double reduction = -1L;
+		while (source.hasNext()) {
+			if (reductionUninitialised) {
+				reduction = source.nextDouble();
+				reductionUninitialised = false;
+			}
+			else {
+				reduction = reducer.applyAsDouble(reduction, source.nextDouble());
+			}
+		}
+		if (reductionUninitialised) {
+			throw new NoSuchElementException("Attempted fold on empty iterator");
+		}
+		else {
+			return reduction;
+		}
+	}
 
-	public static double reduce(final PrimitiveIterator.OfDouble source, final double id, final DoubleBinaryOperator reducer)
+	public static double fold(PrimitiveIterator.OfDouble source, double id, DoubleBinaryOperator reducer)
 	{
 		double reduction = id;
 		while (source.hasNext()) {
@@ -41,9 +63,9 @@ public final class DoubleReductionConsumption
 		return reduction;
 	}
 
-	public static long count(final PrimitiveIterator.OfDouble source)
+	public static long count(PrimitiveIterator.OfDouble source)
 	{
-		final boolean sourceSkippable = source instanceof Skippable;
+		boolean sourceSkippable = source instanceof Skippable;
 		int count = 0;
 		while (source.hasNext()) {
 			if (sourceSkippable) {

@@ -32,8 +32,8 @@ class AbstractFlowSkipwhileTest extends IteratorExampleProvider implements Itera
 
 		testData.stream().forEach(testCase ->
 		{
-			assertObjectIteratorAsExpected(testCase.first(), createSkipwhileIteratorProviderFrom(populated, testCase.second()));
-			assertObjectIteratorAsExpected(asList(), createSkipwhileIteratorProviderFrom(empty, testCase.second()));
+			assertObjectIteratorAsExpected(testCase._1(), createSkipwhileIteratorProviderFrom(populated, testCase._2()));
+			assertObjectIteratorAsExpected(asList(), createSkipwhileIteratorProviderFrom(empty, testCase._2()));
 		});
 	}
 

@@ -6,37 +6,37 @@ package jflow.iterators.misc;
  */
 public final class DoubleWith<T>
 {
-	private final double doubleVal;
-	private final T element;
+	public final double _d;
+	public final T _o;
 
-	private DoubleWith(final double doubleval, final T element)
+	private DoubleWith(double doubleval, T element)
 	{
-		this.doubleVal = doubleval;
-		this.element = element;
+		this._d = doubleval;
+		this._o = element;
 	}
 
-	public static <T> DoubleWith<T> of(final double doubleVal, final T element)
+	public static <T> DoubleWith<T> of(double doubleVal, T element)
 	{
 		return new DoubleWith<>(doubleVal, element);
 	}
 
-	public double getDouble()
+	public double _d()
 	{
-		return doubleVal;
+		return _d;
 	}
 
-	public T getElement()
+	public T _o()
 	{
-		return element;
+		return _o;
 	}
 
 	@Override
 	public String toString()
 	{
 		return new StringBuilder("(")
-				.append(doubleVal)
+				.append(_d)
 				.append(", ")
-				.append(element.toString())
+				.append(_o.toString())
 				.append(")")
 				.toString();
 	}
@@ -44,17 +44,17 @@ public final class DoubleWith<T>
 	@Override
 	public int hashCode()
 	{
-		final int prime = 31;
+		int prime = 31;
 		int result = 1;
 		long temp;
-		temp = Double.doubleToLongBits(doubleVal);
+		temp = Double.doubleToLongBits(_d);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + ((element == null) ? 0 : element.hashCode());
+		result = prime * result + ((_o == null) ? 0 : _o.hashCode());
 		return result;
 	}
 
 	@Override
-	public boolean equals(final Object obj)
+	public boolean equals(Object obj)
 	{
 		if (this == obj)
 			return true;
@@ -63,14 +63,14 @@ public final class DoubleWith<T>
 		if (getClass() != obj.getClass())
 			return false;
 		@SuppressWarnings("rawtypes")
-		final DoubleWith other = (DoubleWith) obj;
-		if (Double.doubleToLongBits(doubleVal) != Double.doubleToLongBits(other.doubleVal))
+		DoubleWith other = (DoubleWith) obj;
+		if (Double.doubleToLongBits(_d) != Double.doubleToLongBits(other._d))
 			return false;
-		if (element == null) {
-			if (other.element != null)
+		if (this._o == null) {
+			if (other._o != null)
 				return false;
 		}
-		else if (!element.equals(other.element))
+		else if (!this._o.equals(other._o))
 			return false;
 		return true;
 	}

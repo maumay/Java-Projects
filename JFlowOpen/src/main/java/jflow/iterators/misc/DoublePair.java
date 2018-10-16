@@ -5,65 +5,67 @@ package jflow.iterators.misc;
 
 /**
  * @author t
- *
  */
 public final class DoublePair
 {
-	private final double first, second;
+	public final double _1, _2;
 
-	public DoublePair(final double first, final double second) {
-		this.first = first;
-		this.second = second;
+	public DoublePair(double first, double second) 
+	{
+		this._1 = first;
+		this._2 = second;
 	}
 
-	public static DoublePair of(final double first, final double second)
+	public static DoublePair of(double first, double second)
 	{
 		return new DoublePair(first, second);
 	}
 
-	public double first() {
-		return first;
+	public double _1() 
+	{
+		return _1;
 	}
 
-	public double second() {
-		return second;
+	public double _2() 
+	{
+		return _2;
 	}
 
 	@Override
 	public String toString()
 	{
 		return new StringBuilder("(")
-				.append(first)
+				.append(_1)
 				.append(", ")
-				.append(second)
+				.append(_2)
 				.append(")")
 				.toString();
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
+		int prime = 31;
 		int result = 1;
 		long temp;
-		temp = Double.doubleToLongBits(first);
+		temp = Double.doubleToLongBits(_1);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(second);
+		temp = Double.doubleToLongBits(_2);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
 
 	@Override
-	public boolean equals(final Object obj) {
+	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final DoublePair other = (DoublePair) obj;
-		if (Double.doubleToLongBits(first) != Double.doubleToLongBits(other.first))
+		DoublePair other = (DoublePair) obj;
+		if (Double.doubleToLongBits(_1) != Double.doubleToLongBits(other._1))
 			return false;
-		if (Double.doubleToLongBits(second) != Double.doubleToLongBits(other.second))
+		if (Double.doubleToLongBits(_2) != Double.doubleToLongBits(other._2))
 			return false;
 		return true;
 	}
