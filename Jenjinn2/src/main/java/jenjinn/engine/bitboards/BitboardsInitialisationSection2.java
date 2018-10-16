@@ -8,11 +8,11 @@ import static jflow.utilities.MapUtil.longMap;
 import java.util.ArrayList;
 import java.util.List;
 
-import jenjinn.engine.base.Square;
 import jenjinn.engine.base.Dir;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.pieces.PieceMovementDirections;
-import jflow.iterators.factories.IterRange;
 import jflow.iterators.factories.Iter;
+import jflow.iterators.factories.IterRange;
 
 /**
  * Second of three utility classes containing only static methods to initialise
@@ -27,7 +27,7 @@ final class BitboardsInitialisationSection2
 {
 	static long[][] generateAllBishopOccupancyVariations()
 	{
-		return Square.iterateAll()
+		return Square.ALL.flow()
 				.map(square -> calculateOccupancyVariations(square, PieceMovementDirections.BISHOP))
 				.toList()
 				.toArray(new long[64][]);
@@ -35,7 +35,7 @@ final class BitboardsInitialisationSection2
 
 	static long[][] generateAllRookOccupancyVariations()
 	{
-		return Square.iterateAll()
+		return Square.ALL.flow()
 				.map(square -> calculateOccupancyVariations(square, PieceMovementDirections.ROOK))
 				.toList()
 				.toArray(new long[64][]);

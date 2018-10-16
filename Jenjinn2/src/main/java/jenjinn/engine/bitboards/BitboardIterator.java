@@ -7,11 +7,11 @@ import static java.lang.Long.bitCount;
 import static jenjinn.engine.bitboards.BitboardUtils.bitboardsIntersect;
 
 import java.util.NoSuchElementException;
+import java.util.OptionalInt;
 
 import jenjinn.engine.base.Square;
 import jflow.iterators.AbstractFlow;
 import jflow.iterators.Flow;
-import jflow.utilities.Optionals;
 
 /**
  * @author ThomasB
@@ -24,7 +24,7 @@ public final class BitboardIterator extends AbstractFlow<Square>
 
 	public BitboardIterator(long source) 
 	{
-		super(Optionals.ofInt(bitCount(source)));
+		super(OptionalInt.of(bitCount(source)));
 		this.source = source;
 	}
 
