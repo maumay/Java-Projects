@@ -57,7 +57,7 @@ final class BitboardsInitialisationSection3
 	static long findControlSetFromOccupancyVariation(Square startSq, long occVar, List<Dir> movementDirections)
 	{
 		return bitwiseOr(Iter.over(movementDirections)
-				.map(direction -> startSq.getAllSquaresInDirections(direction, 8))
+				.map(direction -> startSq.getAllSquares(direction, 8))
 				.map(squares -> BitboardsInitialisationSection3.takeUntil(square -> bitboardsIntersect(occVar, square.asBitboard()), squares))
 				.flatten(Iter::over));
 	}

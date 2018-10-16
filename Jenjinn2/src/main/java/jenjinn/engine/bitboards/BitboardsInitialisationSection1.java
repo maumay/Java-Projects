@@ -42,7 +42,7 @@ final class BitboardsInitialisationSection1
 		return IterRange.to(15)
 				.map(i -> i < 8 ? i : 8*(i - 7) + 7)
 				.mapToObject(Square::of)
-				.map(square -> Iter.over(square.getAllSquaresInDirections(Dir.NE, 8)).insert(square))
+				.map(square -> Iter.over(square.getAllSquares(Dir.NE, 8)).insert(square))
 				.mapToLong(BitboardUtils::bitwiseOr)
 				.toArray();
 	}
@@ -52,7 +52,7 @@ final class BitboardsInitialisationSection1
 		return IterRange.to(15)
 				.map(i -> i < 8 ? 7 - i : 8*(i - 7))
 				.mapToObject(Square::of)
-				.map(square -> Iter.over(square.getAllSquaresInDirections(Dir.NW, 8)).insert(square))
+				.map(square -> Iter.over(square.getAllSquares(Dir.NW, 8)).insert(square))
 				.mapToLong(BitboardUtils::bitwiseOr)
 				.toArray();
 	}

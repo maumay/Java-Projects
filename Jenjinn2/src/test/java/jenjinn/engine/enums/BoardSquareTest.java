@@ -124,7 +124,7 @@ class BoardSquareTest
 			int j = i;
 			Dir.ALL.forEach(dir -> {
 				Seq<Square> expected = expsquares.get(dir).take(j);
-				Seq<Square> actual = startSquare.getAllSquaresInDirections(dir, j);
+				Seq<Square> actual = startSquare.getAllSquares(dir, j);
 				assertEquals(expected, actual);
 			});
 					

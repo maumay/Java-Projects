@@ -43,7 +43,7 @@ public final class StandardMove extends AbstractChessMove
 	{
 		Optional<Dir> dir = Dir.ofLineBetween(getSource(), getTarget());
 		if (dir.isPresent()) {
-			List<Square> squares = getSource().getAllSquaresInDirections(dir.get(), 10);
+			List<Square> squares = getSource().getAllSquares(dir.get(), 10);
 			return Iter.over(squares)
 					.takeWhile(sq -> sq != getTarget())
 					.insert(getSource())

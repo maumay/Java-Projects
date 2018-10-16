@@ -8,8 +8,8 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
-import jenjinn.engine.base.Square;
 import jenjinn.engine.base.Dir;
+import jenjinn.engine.base.Square;
 import jflow.iterators.factories.Iter;
 
 /**
@@ -23,8 +23,8 @@ class DirectionTest
 		final Square start = Square.E4;
 		final EnumSet<Square> visitedSquares = EnumSet.noneOf(Square.class);
 
-		Dir.iterateAll().forEach(dir -> {
-			for (final Square square : start.getAllSquares(dir, 8)) {
+		Dir.ALL.forEach(dir -> {
+			for (Square square : start.getAllSquares(dir, 8)) {
 				visitedSquares.add(square);
 				assertEquals(Optional.of(dir), Dir.ofLineBetween(start, square));
 			}

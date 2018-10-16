@@ -55,7 +55,7 @@ class BitboardsInitialisationSection1Test
 	void testRankBitboard()
 	{
 		final long[] expectedRanks = Iter.over(A1, A2, A3, A4, A5, A6, A7, A8)
-				.map(square -> Iter.over(square.getAllSquaresInDirections(Dir.E, 8)).insert(square))
+				.map(square -> Iter.over(square.getAllSquares(Dir.E, 8)).insert(square))
 				.mapToLong(BitboardUtils::bitwiseOr)
 				.toArray();
 
@@ -66,7 +66,7 @@ class BitboardsInitialisationSection1Test
 	void testFileBitboard()
 	{
 		final long[] expectedFiles = Iter.over(H1, G1, F1, E1, D1, C1, B1, A1)
-				.map(square -> Iter.over(square.getAllSquaresInDirections(Dir.N, 8)).insert(square))
+				.map(square -> Iter.over(square.getAllSquares(Dir.N, 8)).insert(square))
 				.mapToLong(BitboardUtils::bitwiseOr)
 				.toArray();
 
@@ -77,7 +77,7 @@ class BitboardsInitialisationSection1Test
 	void testDiagonalBitboard()
 	{
 		final long[] expectedDiagonals = Iter.over(asList(H1, G1, F1, E1, D1, C1, B1, A1, A2, A3, A4, A5, A6, A7, A8))
-				.map(square -> Iter.over(square.getAllSquaresInDirections(Dir.NE, 8)).insert(square))
+				.map(square -> Iter.over(square.getAllSquares(Dir.NE, 8)).insert(square))
 				.mapToLong(BitboardUtils::bitwiseOr)
 				.toArray();
 
@@ -88,7 +88,7 @@ class BitboardsInitialisationSection1Test
 	void testAntiDiagonalBitboard()
 	{
 		final long[] expectedDiagonals = Iter.over(asList(A1, B1, C1, D1, E1, F1, G1, H1, H2, H3, H4, H5, H6, H7, H8))
-				.map(square -> Iter.over(square.getAllSquaresInDirections(Dir.NW, 8)).insert(square))
+				.map(square -> Iter.over(square.getAllSquares(Dir.NW, 8)).insert(square))
 				.mapToLong(BitboardUtils::bitwiseOr)
 				.toArray();
 

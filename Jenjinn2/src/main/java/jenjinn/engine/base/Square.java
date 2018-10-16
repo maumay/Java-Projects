@@ -70,7 +70,7 @@ public enum Square
 		});
 	}
 
-	public Seq<Square> getAllSquaresInDirections(Dir direction, int maxDist)
+	public Seq<Square> getAllSquares(Dir direction, int maxDist)
 	{
 		return getAllSquares(asList(direction), maxDist);
 	}

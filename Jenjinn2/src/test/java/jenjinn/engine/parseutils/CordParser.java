@@ -50,7 +50,7 @@ public final class CordParser
 		Dir dir = Dir.ofLineBetween(start, end)
 				.orElseThrow(() -> new IllegalArgumentException(encodedCord));
 
-		return Iter.over(start.getAllSquaresInDirections(dir, 10))
+		return Iter.over(start.getAllSquares(dir, 10))
 				.takeWhile(sq -> sq != end)
 				.insert(start)
 				.append(end)
