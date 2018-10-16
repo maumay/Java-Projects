@@ -3,7 +3,7 @@
  */
 package jenjinn.engine.bitboards;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jflow.iterators.Flow;
 
 /**
@@ -27,17 +27,17 @@ public final class BitboardUtils
 		return result;
 	}
 
-	public static long bitwiseOr(Iterable<BoardSquare> args)
+	public static long bitwiseOr(Iterable<Square> args)
 	{
 		long result = 0L;
-		for (BoardSquare arg : args) {
+		for (Square arg : args) {
 			result |= arg.asBitboard();
 		}
 		return result;
 	}
 
-	public static long bitwiseOr(Flow<BoardSquare> args)
+	public static long bitwiseOr(Flow<Square> args)
 	{
-		return args.mapToLong(BoardSquare::asBitboard).fold(0L, (a, b) -> a | b);
+		return args.mapToLong(Square::asBitboard).fold(0L, (a, b) -> a | b);
 	}
 }

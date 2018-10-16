@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.base.CastleZone;
 
 /**
@@ -28,17 +28,17 @@ public final class MoveConstants {
 
 	static final Set<CastleZone> EMPTY_RIGHTS_SET = unmodifiableSet(EnumSet.noneOf(CastleZone.class));
 
-	static final Map<BoardSquare, Set<CastleZone>> STANDARDMOVE_RIGHTS_SETS;
+	static final Map<Square, Set<CastleZone>> STANDARDMOVE_RIGHTS_SETS;
 	static
 	{
-		final Map<BoardSquare, Set<CastleZone>> removalMap = new HashMap<>();
-		removalMap.put(BoardSquare.A1, unmodifiableSet(EnumSet.of(WHITE_QUEENSIDE)));
-		removalMap.put(BoardSquare.E1, unmodifiableSet(EnumSet.of(WHITE_QUEENSIDE, WHITE_KINGSIDE)));
-		removalMap.put(BoardSquare.H1, unmodifiableSet(EnumSet.of(WHITE_KINGSIDE)));
+		final Map<Square, Set<CastleZone>> removalMap = new HashMap<>();
+		removalMap.put(Square.A1, unmodifiableSet(EnumSet.of(WHITE_QUEENSIDE)));
+		removalMap.put(Square.E1, unmodifiableSet(EnumSet.of(WHITE_QUEENSIDE, WHITE_KINGSIDE)));
+		removalMap.put(Square.H1, unmodifiableSet(EnumSet.of(WHITE_KINGSIDE)));
 
-		removalMap.put(BoardSquare.A8, unmodifiableSet(EnumSet.of(BLACK_QUEENSIDE)));
-		removalMap.put(BoardSquare.E8, unmodifiableSet(EnumSet.of(BLACK_QUEENSIDE, BLACK_KINGSIDE)));
-		removalMap.put(BoardSquare.H8, unmodifiableSet(EnumSet.of(BLACK_KINGSIDE)));
+		removalMap.put(Square.A8, unmodifiableSet(EnumSet.of(BLACK_QUEENSIDE)));
+		removalMap.put(Square.E8, unmodifiableSet(EnumSet.of(BLACK_QUEENSIDE, BLACK_KINGSIDE)));
+		removalMap.put(Square.H8, unmodifiableSet(EnumSet.of(BLACK_KINGSIDE)));
 
 		STANDARDMOVE_RIGHTS_SETS = Collections.unmodifiableMap(removalMap);
 	}

@@ -4,7 +4,7 @@
 package jenjinn.engine.bitboards;
 
 import static java.util.Arrays.asList;
-import static jenjinn.engine.base.BoardSquare.*;
+import static jenjinn.engine.base.Square.*;
 import static jenjinn.engine.bitboards.Bitboards.antiDiagonalBitboard;
 import static jenjinn.engine.bitboards.Bitboards.diagonalBitboard;
 import static jenjinn.engine.bitboards.Bitboards.fileBitboard;
@@ -32,8 +32,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import jenjinn.engine.base.BoardSquare;
-import jenjinn.engine.base.Direction;
+import jenjinn.engine.base.Square;
+import jenjinn.engine.base.Dir;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.PieceMovementDirections;
 import jflow.iterators.factories.IterRange;
@@ -55,7 +55,7 @@ class BitboardsInitialisationSection1Test
 	void testRankBitboard()
 	{
 		final long[] expectedRanks = Iter.over(A1, A2, A3, A4, A5, A6, A7, A8)
-				.map(square -> Iter.over(square.getAllSquaresInDirections(Direction.E, 8)).insert(square))
+				.map(square -> Iter.over(square.getAllSquaresInDirections(Dir.E, 8)).insert(square))
 				.mapToLong(BitboardUtils::bitwiseOr)
 				.toArray();
 
@@ -66,7 +66,7 @@ class BitboardsInitialisationSection1Test
 	void testFileBitboard()
 	{
 		final long[] expectedFiles = Iter.over(H1, G1, F1, E1, D1, C1, B1, A1)
-				.map(square -> Iter.over(square.getAllSquaresInDirections(Direction.N, 8)).insert(square))
+				.map(square -> Iter.over(square.getAllSquaresInDirections(Dir.N, 8)).insert(square))
 				.mapToLong(BitboardUtils::bitwiseOr)
 				.toArray();
 
@@ -77,7 +77,7 @@ class BitboardsInitialisationSection1Test
 	void testDiagonalBitboard()
 	{
 		final long[] expectedDiagonals = Iter.over(asList(H1, G1, F1, E1, D1, C1, B1, A1, A2, A3, A4, A5, A6, A7, A8))
-				.map(square -> Iter.over(square.getAllSquaresInDirections(Direction.NE, 8)).insert(square))
+				.map(square -> Iter.over(square.getAllSquaresInDirections(Dir.NE, 8)).insert(square))
 				.mapToLong(BitboardUtils::bitwiseOr)
 				.toArray();
 
@@ -88,7 +88,7 @@ class BitboardsInitialisationSection1Test
 	void testAntiDiagonalBitboard()
 	{
 		final long[] expectedDiagonals = Iter.over(asList(A1, B1, C1, D1, E1, F1, G1, H1, H2, H3, H4, H5, H6, H7, H8))
-				.map(square -> Iter.over(square.getAllSquaresInDirections(Direction.NW, 8)).insert(square))
+				.map(square -> Iter.over(square.getAllSquaresInDirections(Dir.NW, 8)).insert(square))
 				.mapToLong(BitboardUtils::bitwiseOr)
 				.toArray();
 
@@ -97,7 +97,7 @@ class BitboardsInitialisationSection1Test
 
 	@ParameterizedTest
 	@MethodSource
-	void testEmptyBoardMovesetBitboard(final ChessPiece piece, final BoardSquare location, final List<BoardSquare> expectedMoveLocations)
+	void testEmptyBoardMovesetBitboard(final ChessPiece piece, final Square location, final List<Square> expectedMoveLocations)
 	{
 		assertEquals(BitboardUtils.bitwiseOr(expectedMoveLocations), Bitboards.emptyBoardMoveset(piece, location));
 	}
@@ -107,25 +107,25 @@ class BitboardsInitialisationSection1Test
 		return Stream.of(
 				Arguments.of(WHITE_PAWN, A2, asList(A3, A4)),
 				Arguments.of(WHITE_PAWN, B3, asList(B4)),
-				Arguments.of(WHITE_KNIGHT, C5, C5.getAllSquaresInDirections(PieceMovementDirections.KNIGHT, 1)),
-				Arguments.of(WHITE_BISHOP, F3, F3.getAllSquaresInDirections(PieceMovementDirections.BISHOP, 8)),
-				Arguments.of(WHITE_ROOK, B3, B3.getAllSquaresInDirections(PieceMovementDirections.ROOK, 8)),
-				Arguments.of(WHITE_QUEEN, H2, H2.getAllSquaresInDirections(PieceMovementDirections.QUEEN, 8)),
-				Arguments.of(WHITE_KING, E2, E2.getAllSquaresInDirections(PieceMovementDirections.KING, 1)),
+				Arguments.of(WHITE_KNIGHT, C5, C5.getAllSquares(PieceMovementDirections.KNIGHT, 1)),
+				Arguments.of(WHITE_BISHOP, F3, F3.getAllSquares(PieceMovementDirections.BISHOP, 8)),
+				Arguments.of(WHITE_ROOK, B3, B3.getAllSquares(PieceMovementDirections.ROOK, 8)),
+				Arguments.of(WHITE_QUEEN, H2, H2.getAllSquares(PieceMovementDirections.QUEEN, 8)),
+				Arguments.of(WHITE_KING, E2, E2.getAllSquares(PieceMovementDirections.KING, 1)),
 
 				Arguments.of(BLACK_PAWN, A2, asList(A1)),
 				Arguments.of(BLACK_PAWN, B7, asList(B6, B5)),
-				Arguments.of(BLACK_KNIGHT, C5, C5.getAllSquaresInDirections(PieceMovementDirections.KNIGHT, 1)),
-				Arguments.of(BLACK_BISHOP, F3, F3.getAllSquaresInDirections(PieceMovementDirections.BISHOP, 8)),
-				Arguments.of(BLACK_ROOK, B3, B3.getAllSquaresInDirections(PieceMovementDirections.ROOK, 8)),
-				Arguments.of(BLACK_QUEEN, H2, H2.getAllSquaresInDirections(PieceMovementDirections.QUEEN, 8)),
-				Arguments.of(BLACK_KING, E2, E2.getAllSquaresInDirections(PieceMovementDirections.KING, 1))
+				Arguments.of(BLACK_KNIGHT, C5, C5.getAllSquares(PieceMovementDirections.KNIGHT, 1)),
+				Arguments.of(BLACK_BISHOP, F3, F3.getAllSquares(PieceMovementDirections.BISHOP, 8)),
+				Arguments.of(BLACK_ROOK, B3, B3.getAllSquares(PieceMovementDirections.ROOK, 8)),
+				Arguments.of(BLACK_QUEEN, H2, H2.getAllSquares(PieceMovementDirections.QUEEN, 8)),
+				Arguments.of(BLACK_KING, E2, E2.getAllSquares(PieceMovementDirections.KING, 1))
 				);
 	}
 
 	@ParameterizedTest
 	@MethodSource
-	void testEmptyBoardAttacksetBitboard(final ChessPiece piece, final BoardSquare location, final List<BoardSquare> expectedMoveLocations)
+	void testEmptyBoardAttacksetBitboard(final ChessPiece piece, final Square location, final List<Square> expectedMoveLocations)
 	{
 		assertEquals(BitboardUtils.bitwiseOr(expectedMoveLocations), Bitboards.emptyBoardAttackset(piece, location));
 	}
@@ -136,20 +136,20 @@ class BitboardsInitialisationSection1Test
 				Arguments.of(WHITE_PAWN, A2, asList(B3)),
 				Arguments.of(WHITE_PAWN, B3, asList(C4, A4)),
 				Arguments.of(WHITE_PAWN, H5, asList(G6)),
-				Arguments.of(WHITE_KNIGHT, C5, C5.getAllSquaresInDirections(PieceMovementDirections.KNIGHT, 1)),
-				Arguments.of(WHITE_BISHOP, F3, F3.getAllSquaresInDirections(PieceMovementDirections.BISHOP, 8)),
-				Arguments.of(WHITE_ROOK, B3, B3.getAllSquaresInDirections(PieceMovementDirections.ROOK, 8)),
-				Arguments.of(WHITE_QUEEN, H2, H2.getAllSquaresInDirections(PieceMovementDirections.QUEEN, 8)),
-				Arguments.of(WHITE_KING, E2, E2.getAllSquaresInDirections(PieceMovementDirections.KING, 1)),
+				Arguments.of(WHITE_KNIGHT, C5, C5.getAllSquares(PieceMovementDirections.KNIGHT, 1)),
+				Arguments.of(WHITE_BISHOP, F3, F3.getAllSquares(PieceMovementDirections.BISHOP, 8)),
+				Arguments.of(WHITE_ROOK, B3, B3.getAllSquares(PieceMovementDirections.ROOK, 8)),
+				Arguments.of(WHITE_QUEEN, H2, H2.getAllSquares(PieceMovementDirections.QUEEN, 8)),
+				Arguments.of(WHITE_KING, E2, E2.getAllSquares(PieceMovementDirections.KING, 1)),
 
 				Arguments.of(BLACK_PAWN, A2, asList(B1)),
 				Arguments.of(BLACK_PAWN, B7, asList(C6, A6)),
 				Arguments.of(BLACK_PAWN, H4, asList(G3)),
-				Arguments.of(BLACK_KNIGHT, C5, C5.getAllSquaresInDirections(PieceMovementDirections.KNIGHT, 1)),
-				Arguments.of(BLACK_BISHOP, F3, F3.getAllSquaresInDirections(PieceMovementDirections.BISHOP, 8)),
-				Arguments.of(BLACK_ROOK, B3, B3.getAllSquaresInDirections(PieceMovementDirections.ROOK, 8)),
-				Arguments.of(BLACK_QUEEN, H2, H2.getAllSquaresInDirections(PieceMovementDirections.QUEEN, 8)),
-				Arguments.of(BLACK_KING, E2, E2.getAllSquaresInDirections(PieceMovementDirections.KING, 1))
+				Arguments.of(BLACK_KNIGHT, C5, C5.getAllSquares(PieceMovementDirections.KNIGHT, 1)),
+				Arguments.of(BLACK_BISHOP, F3, F3.getAllSquares(PieceMovementDirections.BISHOP, 8)),
+				Arguments.of(BLACK_ROOK, B3, B3.getAllSquares(PieceMovementDirections.ROOK, 8)),
+				Arguments.of(BLACK_QUEEN, H2, H2.getAllSquares(PieceMovementDirections.QUEEN, 8)),
+				Arguments.of(BLACK_KING, E2, E2.getAllSquares(PieceMovementDirections.KING, 1))
 				);
 	}
 }

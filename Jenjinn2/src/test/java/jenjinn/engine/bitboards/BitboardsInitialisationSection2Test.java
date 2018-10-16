@@ -16,8 +16,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import jenjinn.engine.base.BoardSquare;
-import jenjinn.engine.base.Direction;
+import jenjinn.engine.base.Square;
+import jenjinn.engine.base.Dir;
 import jflow.iterators.factories.Iter;
 
 /**
@@ -44,7 +44,7 @@ class BitboardsInitialisationSection2Test
 
 	@ParameterizedTest
 	@MethodSource
-	void testCalculateOccupancyVariations(final Set<Long> expectedResult, final BoardSquare startSquare, final List<Direction> movementDirections)
+	void testCalculateOccupancyVariations(final Set<Long> expectedResult, final Square startSquare, final List<Dir> movementDirections)
 	{
 		assertEquals(expectedResult, Iter.overLongs(calculateOccupancyVariations(startSquare, movementDirections)).mapToObject(i -> i).toSet());
 	}
@@ -53,14 +53,14 @@ class BitboardsInitialisationSection2Test
 	{
 		final Arguments firstCase = Arguments.of(
 				new HashSet<>(asList(0L, 0b1000000000L)),
-				BoardSquare.F2,
-				asList(Direction.E, Direction.S)
+				Square.F2,
+				asList(Dir.E, Dir.S)
 				);
 
 		final Arguments secondCase = Arguments.of(
 				new HashSet<>(asList(0L, 0b10L, 0b100L, 0b1000L, 0b110L, 0b1010L, 0b1100L, 0b1110L)),
-				BoardSquare.D1,
-				asList(Direction.E)
+				Square.D1,
+				asList(Dir.E)
 				);
 
 		return Stream.of(firstCase, secondCase);

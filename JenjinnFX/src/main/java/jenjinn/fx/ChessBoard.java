@@ -13,7 +13,7 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.base.Side;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.calculators.LegalMoves;
@@ -35,7 +35,7 @@ public final class ChessBoard
 
 	private BoardSquareLocations squareLocations = BoardSquareLocations.getDefault();
 	private Side boardPerspective = Side.WHITE;
-	private Optional<BoardSquare> selectedSquare = Optional.empty();
+	private Optional<Square> selectedSquare = Optional.empty();
 
 	public ChessBoard(ColorScheme colors, BoardState stateToWatch)
 	{
@@ -68,7 +68,7 @@ public final class ChessBoard
 		final double size = board.getBoardSize(), sqSize = size / 8;
 		final GraphicsContext gc = board.getBoardGC();
 		gc.clearRect(0, 0, size, size);
-		BoardSquare.iterateAll().forEach(square -> {
+		Square.iterateAll().forEach(square -> {
 			final Point2D c = squareLocations.get(square);
 			final boolean lightSquare = (square.ordinal() + square.rank()) % 2 == 0;
 			gc.setFill(lightSquare ? colors.lightSquares : colors.darkSquares);
@@ -82,7 +82,7 @@ public final class ChessBoard
 		final GraphicsContext gc = board.getMarkerGC();
 		gc.clearRect(0, 0, size, size);
 		if (selectedSquare.isPresent()) {
-			final BoardSquare sq = selectedSquare.get();
+			final Square sq = selectedSquare.get();
 			drawLocationMarker(sq, gc, sqSize);
 			final FList<ChessMove> legalMoves = LegalMoves.getAllMoves(state)
 					.filter(mv -> mv.getSource().equals(sq))
@@ -100,21 +100,21 @@ public final class ChessBoard
 		}
 	}
 
-	private void drawAttackMarker(BoardSquare square, GraphicsContext gc, double size)
+	private void drawAttackMarker(Square square, GraphicsContext gc, double size)
 	{
 		final Point2D loc = squareLocations.get(square);
 		final Bounds renderBounds = RenderUtils.getSquareBounds(loc, size, 1);
 		RenderUtils.strokeTarget(gc, renderBounds, colors.attackMarker);
 	}
 
-	private void drawMovementMarker(BoardSquare square, GraphicsContext gc, double size)
+	private void drawMovementMarker(Square square, GraphicsContext gc, double size)
 	{
 		final Point2D centre = squareLocations.get(square);
 		final Bounds locBounds = RenderUtils.getSquareBounds(centre, size, 0.9);
 		RenderUtils.strokeOval(gc, locBounds, size / 20, colors.moveMarker);
 	}
 
-	private void drawLocationMarker(BoardSquare square, GraphicsContext gc, double size)
+	private void drawLocationMarker(Square square, GraphicsContext gc, double size)
 	{
 		gc.setFill(colors.locationMarker);
 		final Point2D centre = squareLocations.get(square);
@@ -149,7 +149,7 @@ public final class ChessBoard
 	private BoardSquareLocations calculateBoardPoints(double width)
 	{
 		final double squareWidth = width / 8;
-		final BoardSquareLocations locs = BoardSquare.iterateAll()
+		final BoardSquareLocations locs = Square.iterateAll()
 				.map(sq -> Pair.of(sq, new Point2D((7.5 - sq.file()) * squareWidth, (7.5 - sq.rank()) * squareWidth)))
 				.build(BoardSquareLocations::new);
 
@@ -174,20 +174,20 @@ public final class ChessBoard
 		setPerspective(boardPerspective.otherSide());
 	}
 
-	public Optional<BoardSquare> getSelectedSquare()
+	public Optional<Square> getSelectedSquare()
 	{
 		return selectedSquare;
 	}
 
-	public void setSelectedSquare(Optional<BoardSquare> selectedSquare)
+	public void setSelectedSquare(Optional<Square> selectedSquare)
 	{
 		this.selectedSquare = selectedSquare;
 		Platform.runLater(this::redrawMarkers);
 	}
 
-	public BoardSquare getClosestSquare(Point2D query)
+	public Square getClosestSquare(Point2D query)
 	{
-		return BoardSquare.iterateAll().min(comparing(sq -> query.distance(squareLocations.get(sq)))).get();
+		return Square.iterateAll().min(comparing(sq -> query.distance(squareLocations.get(sq)))).get();
 	}
 
 	public VisualBoard getFxComponent()

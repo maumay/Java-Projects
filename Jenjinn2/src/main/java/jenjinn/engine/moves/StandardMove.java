@@ -13,10 +13,10 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.base.CastleZone;
 import jenjinn.engine.base.DevelopmentPiece;
-import jenjinn.engine.base.Direction;
+import jenjinn.engine.base.Dir;
 import jenjinn.engine.base.Side;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.MoveReversalData;
@@ -32,7 +32,7 @@ public final class StandardMove extends AbstractChessMove
 	private final Set<CastleZone> rightsRemovedByThisMove;
 	private final long inducedCord;
 
-	public StandardMove(BoardSquare start, BoardSquare target)
+	public StandardMove(Square start, Square target)
 	{
 		super(start, target);
 		rightsRemovedByThisMove = initRightsRemoved();
@@ -41,14 +41,14 @@ public final class StandardMove extends AbstractChessMove
 
 	private long initInducedCord()
 	{
-		Optional<Direction> dir = Direction.ofLineBetween(getSource(), getTarget());
+		Optional<Dir> dir = Dir.ofLineBetween(getSource(), getTarget());
 		if (dir.isPresent()) {
-			List<BoardSquare> squares = getSource().getAllSquaresInDirections(dir.get(), 10);
+			List<Square> squares = getSource().getAllSquaresInDirections(dir.get(), 10);
 			return Iter.over(squares)
 					.takeWhile(sq -> sq != getTarget())
 					.insert(getSource())
 					.append(getTarget())
-					.mapToLong(BoardSquare::asBitboard)
+					.mapToLong(Square::asBitboard)
 					.fold(0L, (a, b) -> a ^ b);
 		}
 		else {
@@ -58,7 +58,7 @@ public final class StandardMove extends AbstractChessMove
 
 	private Set<CastleZone> initRightsRemoved()
 	{
-		Map<BoardSquare, Set<CastleZone>> rightsSets = MoveConstants.STANDARDMOVE_RIGHTS_SETS;
+		Map<Square, Set<CastleZone>> rightsSets = MoveConstants.STANDARDMOVE_RIGHTS_SETS;
 
 		Predicate<Object> p = rightsSets::containsKey;
 		if (p.test(getSource()) || p.test(getTarget())) {
@@ -82,7 +82,7 @@ public final class StandardMove extends AbstractChessMove
 	@Override
 	void updatePieceLocations(BoardState state, MoveReversalData unmakeDataStore)
 	{
-		BoardSquare source = getSource(), target = getTarget();
+		Square source = getSource(), target = getTarget();
 		Side activeSide = state.getActiveSide(), passiveSide = activeSide.otherSide();
 		ChessPiece movingPiece = state.getPieceLocations().getPieceAt(source, activeSide);
 		ChessPiece removedPiece = state.getPieceLocations().getPieceAt(target, passiveSide);
@@ -104,7 +104,7 @@ public final class StandardMove extends AbstractChessMove
 		if (pawnWasMoved) {
 			int squareOrdinalDifference = target.ordinal() - source.ordinal();
 			if (abs(squareOrdinalDifference) == 16) {
-				BoardSquare newEnpassantSquare = BoardSquare.of(source.ordinal() + squareOrdinalDifference/2);
+				Square newEnpassantSquare = Square.of(source.ordinal() + squareOrdinalDifference/2);
 				state.setEnPassantSquare(newEnpassantSquare);
 			}
 		}

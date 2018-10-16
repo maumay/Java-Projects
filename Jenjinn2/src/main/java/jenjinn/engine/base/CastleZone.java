@@ -3,25 +3,23 @@
  */
 package jenjinn.engine.base;
 
-import static java.util.Arrays.asList;
-import static jenjinn.engine.base.BoardSquare.A1;
-import static jenjinn.engine.base.BoardSquare.A8;
-import static jenjinn.engine.base.BoardSquare.C1;
-import static jenjinn.engine.base.BoardSquare.C8;
-import static jenjinn.engine.base.BoardSquare.D1;
-import static jenjinn.engine.base.BoardSquare.D8;
-import static jenjinn.engine.base.BoardSquare.E1;
-import static jenjinn.engine.base.BoardSquare.E8;
-import static jenjinn.engine.base.BoardSquare.F1;
-import static jenjinn.engine.base.BoardSquare.F8;
-import static jenjinn.engine.base.BoardSquare.G1;
-import static jenjinn.engine.base.BoardSquare.G8;
-import static jenjinn.engine.base.BoardSquare.H1;
-import static jenjinn.engine.base.BoardSquare.H8;
+import static jenjinn.engine.base.Square.A1;
+import static jenjinn.engine.base.Square.A8;
+import static jenjinn.engine.base.Square.C1;
+import static jenjinn.engine.base.Square.C8;
+import static jenjinn.engine.base.Square.D1;
+import static jenjinn.engine.base.Square.D8;
+import static jenjinn.engine.base.Square.E1;
+import static jenjinn.engine.base.Square.E8;
+import static jenjinn.engine.base.Square.F1;
+import static jenjinn.engine.base.Square.F8;
+import static jenjinn.engine.base.Square.G1;
+import static jenjinn.engine.base.Square.G8;
+import static jenjinn.engine.base.Square.H1;
+import static jenjinn.engine.base.Square.H8;
 
 import jenjinn.engine.pgn.CommonRegex;
-import jflow.iterators.Flow;
-import jflow.iterators.factories.Iter;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -32,38 +30,19 @@ public enum CastleZone
 	// Don't change order
 	WHITE_KINGSIDE(E1, G1, H1, F1), 
 	WHITE_QUEENSIDE(E1, C1, A1, D1), 
-	BLACK_KINGSIDE(E8, G8, H8, F8), 
+	BLACK_KINGSIDE(E8, G8, H8, F8),
 	BLACK_QUEENSIDE(E8, C8, A8, D8);
+	
+	public static final Seq<CastleZone> ALL = Seq.of(values());
 
-	private final BoardSquare kingSource, kingTarget, rookSource, rookTarget;
+	public final Square kingSource, kingTarget, rookSource, rookTarget;
 
-	private CastleZone(BoardSquare kingSource, BoardSquare kingTarget, BoardSquare rookSource,
-			BoardSquare rookTarget)
+	private CastleZone(Square kingSource, Square kingTarget, Square rookSource, Square rookTarget)
 	{
 		this.kingSource = kingSource;
 		this.kingTarget = kingTarget;
 		this.rookSource = rookSource;
 		this.rookTarget = rookTarget;
-	}
-
-	public BoardSquare getKingSource()
-	{
-		return kingSource;
-	}
-
-	public BoardSquare getKingTarget()
-	{
-		return kingTarget;
-	}
-
-	public BoardSquare getRookSource()
-	{
-		return rookSource;
-	}
-
-	public BoardSquare getRookTarget()
-	{
-		return rookTarget;
 	}
 
 	public boolean isWhiteZone()
@@ -83,11 +62,11 @@ public enum CastleZone
 	public long getRequiredFreeSquares()
 	{
 		if (isKingsideZone()) {
-			long requiredFreeSquares = kingSource.asBitboard() >>> 1;
+			long requiredFreeSquares = kingSource.loc >>> 1;
 			requiredFreeSquares |= requiredFreeSquares >>> 1;
 			return requiredFreeSquares;
 		} else {
-			long requiredFreeSquares = kingSource.asBitboard() << 1;
+			long requiredFreeSquares = kingSource.loc << 1;
 			requiredFreeSquares |= requiredFreeSquares << 1;
 			requiredFreeSquares |= requiredFreeSquares << 1;
 			return requiredFreeSquares;
@@ -97,13 +76,13 @@ public enum CastleZone
 	public long getRequiredUncontrolledSquares()
 	{
 		if (isKingsideZone()) {
-			long requiredFreeSquares = kingSource.asBitboard();
+			long requiredFreeSquares = kingSource.loc;
 			requiredFreeSquares |= requiredFreeSquares >>> 1;
 			requiredFreeSquares |= requiredFreeSquares >>> 1;
 			return requiredFreeSquares;
 		}
 		else {
-			long requiredFreeSquares = kingSource.asBitboard();
+			long requiredFreeSquares = kingSource.loc;
 			requiredFreeSquares |= requiredFreeSquares << 1;
 			requiredFreeSquares |= requiredFreeSquares << 1;
 			return requiredFreeSquares;
@@ -120,14 +99,9 @@ public enum CastleZone
 	{
 		String id = identifier.trim().toLowerCase();
 		if (id.matches(CommonRegex.CASTLE_ZONE)) {
-			return iterateAll().filter(z -> z.getSimpleIdentifier().equals(id)).next();
+			return ALL.findFirst(z -> z.getSimpleIdentifier().equals(id)).get();
 		} else {
 			throw new IllegalArgumentException(identifier);
 		}
-	}
-
-	public static Flow<CastleZone> iterateAll()
-	{
-		return Iter.over(asList(values()));
 	}
 }

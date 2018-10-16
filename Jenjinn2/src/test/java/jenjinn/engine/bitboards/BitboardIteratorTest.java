@@ -15,7 +15,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 
 /**
  * @author ThomasB
@@ -24,9 +24,9 @@ class BitboardIteratorTest
 {
 	@ParameterizedTest
 	@MethodSource
-	void test(final List<BoardSquare> squareCollection)
+	void test(final List<Square> squareCollection)
 	{
-		final Set<BoardSquare> squareSet = new HashSet<>(squareCollection);
+		final Set<Square> squareSet = new HashSet<>(squareCollection);
 		final long bitboard = BitboardUtils.bitwiseOr(squareCollection);
 		assertEquals(squareSet, BitboardIterator.from(bitboard).toSet());
 	}
@@ -35,11 +35,11 @@ class BitboardIteratorTest
 	{
 		return Stream.of(
 				Arguments.of(Arrays.asList()),
-				Arguments.of(Arrays.asList(BoardSquare.H1)),
-				Arguments.of(Arrays.asList(BoardSquare.A8)),
-				Arguments.of(Arrays.asList(BoardSquare.H3, BoardSquare.C5)),
-				Arguments.of(Arrays.asList(BoardSquare.H3, BoardSquare.C5, BoardSquare.A8)),
-				Arguments.of(Arrays.asList(BoardSquare.H1, BoardSquare.C5, BoardSquare.A8))
+				Arguments.of(Arrays.asList(Square.H1)),
+				Arguments.of(Arrays.asList(Square.A8)),
+				Arguments.of(Arrays.asList(Square.H3, Square.C5)),
+				Arguments.of(Arrays.asList(Square.H3, Square.C5, Square.A8)),
+				Arguments.of(Arrays.asList(Square.H1, Square.C5, Square.A8))
 				);
 	}
 }

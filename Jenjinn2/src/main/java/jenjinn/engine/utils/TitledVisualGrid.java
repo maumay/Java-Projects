@@ -8,7 +8,7 @@ import static jflow.utilities.CollectionUtil.reverse;
 import java.util.List;
 import java.util.Map;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.bitboards.BitboardIterator;
 import jflow.iterators.factories.IterRange;
 
@@ -20,9 +20,9 @@ public final class TitledVisualGrid
 	private static final String UNTITLED = "Untitled";
 
 	private final String title;
-	private final Map<BoardSquare, CharPair> visualGrid;
+	private final Map<Square, CharPair> visualGrid;
 
-	public TitledVisualGrid(String title, final Map<BoardSquare, CharPair> visualGrid)
+	public TitledVisualGrid(String title, final Map<Square, CharPair> visualGrid)
 	{
 		title = title.trim().isEmpty()? UNTITLED : title.trim();
 		final int titleLengthDifference = CharGrid.BOARD_CHAR_WIDTH - title.length() - 2;
@@ -33,7 +33,7 @@ public final class TitledVisualGrid
 		this.visualGrid = visualGrid;
 	}
 
-	public TitledVisualGrid(final Map<BoardSquare, CharPair> visualGrid)
+	public TitledVisualGrid(final Map<Square, CharPair> visualGrid)
 	{
 		this("", visualGrid);
 	}
@@ -59,7 +59,7 @@ public final class TitledVisualGrid
 		return StringifyBoard.formatGrid(this);
 	}
 
-	public CharPair getEntryAt(final BoardSquare square)
+	public CharPair getEntryAt(final Square square)
 	{
 		return visualGrid.get(square);
 	}
@@ -83,7 +83,7 @@ public final class TitledVisualGrid
 	private char[] convertVisualGridToCharArray()
 	{
 		final char[] grid = CharGrid.getNewGrid();
-		BoardSquare.iterateAll().forEach(square -> {
+		Square.iterateAll().forEach(square -> {
 			final int gridIndex = CharGrid.mapToGridIndex(square);
 			final char[] entry = visualGrid.containsKey(square)? visualGrid.get(square).toArray() : new char[] {' ', ' '};
 			System.arraycopy(entry, 0, grid, gridIndex, 2);

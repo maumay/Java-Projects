@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Optional;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.base.CastleZone;
 import jenjinn.engine.base.FileUtils;
 import jenjinn.engine.moves.ChessMove;
@@ -70,8 +70,8 @@ public class OpeningDatabaseReader implements Closeable
 
 	private ChessMove decodeMove(String encodedMove)
 	{
-		FList<BoardSquare> squares = Strings.allMatches(encodedMove, ReaderRegex.SQUARE)
-				.map(BoardSquare::valueOf).toList();
+		FList<Square> squares = Strings.allMatches(encodedMove, ReaderRegex.SQUARE)
+				.map(Square::valueOf).toList();
 
 		if (encodedMove.matches(ReaderRegex.SMOVE)) {
 			return MoveCache.getMove(head(squares), last(squares));

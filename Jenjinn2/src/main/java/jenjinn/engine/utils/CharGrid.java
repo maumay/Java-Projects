@@ -5,7 +5,7 @@ package jenjinn.engine.utils;
 
 import java.util.Arrays;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jflow.iterators.factories.IterRange;
 
 /**
@@ -47,7 +47,7 @@ final class CharGrid
 		return line;
 	}
 
-	static int mapToGridIndex(final BoardSquare square)
+	static int mapToGridIndex(final Square square)
 	{
 		final int squareIndex = square.ordinal();
 		final int rankIndex = squareIndex / 8, fileIndex = squareIndex % 8;

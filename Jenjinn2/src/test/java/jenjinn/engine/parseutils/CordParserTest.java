@@ -9,7 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jflow.iterators.Flow;
 import jflow.iterators.factories.Iter;
 
@@ -22,7 +22,7 @@ class CordParserTest
 	@MethodSource
 	void test(String encodedCord, int[] expectedSquareIndices)
 	{
-		List<BoardSquare> squares = Iter.overInts(expectedSquareIndices).mapToObject(BoardSquare::of).toList();
+		List<Square> squares = Iter.overInts(expectedSquareIndices).mapToObject(Square::of).toList();
 		assertEquals(squares, CordParser.parse(encodedCord));
 	}
 

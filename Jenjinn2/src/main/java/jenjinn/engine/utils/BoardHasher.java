@@ -6,7 +6,7 @@ package jenjinn.engine.utils;
 import java.util.List;
 import java.util.Random;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.base.CastleZone;
 import jenjinn.engine.base.Side;
 import jenjinn.engine.boardstate.CastlingStatus;
@@ -35,7 +35,7 @@ public enum BoardHasher
 			throw new IllegalArgumentException();
 		}
 		final Random numberGenerator = new Random(seed);
-		boardSquareFeatures = BoardSquare.iterateAll().map(x -> randomArray(12, numberGenerator)).toList();
+		boardSquareFeatures = Square.iterateAll().map(x -> randomArray(12, numberGenerator)).toList();
 		castleRightsFeatures = randomArray(4, numberGenerator);
 		enpassantFileFeatures = randomArray(8, numberGenerator);
 		blackToMoveFeature = numberGenerator.nextLong();
@@ -52,7 +52,7 @@ public enum BoardHasher
 		return IterRange.to(length).mapToLong(i -> numberGenerator.nextLong()).toArray();
 	}
 
-	public long getSquarePieceFeature(final BoardSquare square, final ChessPiece piece)
+	public long getSquarePieceFeature(final Square square, final ChessPiece piece)
 	{
 		return boardSquareFeatures.get(square.ordinal())[piece.ordinal()];
 	}
@@ -62,7 +62,7 @@ public enum BoardHasher
 		return castleRightsFeatures[zone.ordinal()];
 	}
 
-	public long getEnpassantFileFeature(final BoardSquare enPassantSquare)
+	public long getEnpassantFileFeature(final Square enPassantSquare)
 	{
 		return enpassantFileFeatures[enPassantSquare.ordinal() % 8];
 	}
@@ -86,7 +86,7 @@ public enum BoardHasher
 		return hash;
 	}
 
-	public long hashNonPieceFeatures(final Side activeSide, final BoardSquare enpassantSquare, final CastlingStatus castlingStatus)
+	public long hashNonPieceFeatures(final Side activeSide, final Square enpassantSquare, final CastlingStatus castlingStatus)
 	{
 		long hash = activeSide.isWhite()? 0L : getBlackToMoveFeature();
 		hash ^= enpassantSquare == null? 0L : getEnpassantFileFeature(enpassantSquare);

@@ -3,11 +3,9 @@
  */
 package jenjinn.engine.base;
 
-import static java.util.Arrays.asList;
-
 import java.util.Map;
 
-import jflow.iterators.factories.Iter;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -15,31 +13,31 @@ import jflow.iterators.factories.Iter;
  */
 public enum DevelopmentPiece
 {
-	WHITE_KINGSIDE_KNIGHT(BoardSquare.G1),
-	WHITE_KINGSIDE_BISHOP(BoardSquare.F1),
-	WHITE_E_PAWN(BoardSquare.E2),
-	WHITE_D_PAWN(BoardSquare.D2),
-	WHITE_QUEENSIDE_BISHOP(BoardSquare.C1),
-	WHITE_QUEENSIDE_KNIGHT(BoardSquare.B1),
+	WHITE_KINGSIDE_KNIGHT(Square.G1),
+	WHITE_KINGSIDE_BISHOP(Square.F1),
+	WHITE_E_PAWN(Square.E2),
+	WHITE_D_PAWN(Square.D2),
+	WHITE_QUEENSIDE_BISHOP(Square.C1),
+	WHITE_QUEENSIDE_KNIGHT(Square.B1),
 
-	BLACK_KINGSIDE_KNIGHT(BoardSquare.G8),
-	BLACK_KINGSIDE_BISHOP(BoardSquare.F8),
-	BLACK_E_PAWN(BoardSquare.E7),
-	BLACK_D_PAWN(BoardSquare.D7),
-	BLACK_QUEENSIDE_BISHOP(BoardSquare.C8),
-	BLACK_QUEENSIDE_KNIGHT(BoardSquare.B8);
+	BLACK_KINGSIDE_KNIGHT(Square.G8),
+	BLACK_KINGSIDE_BISHOP(Square.F8),
+	BLACK_E_PAWN(Square.E7),
+	BLACK_D_PAWN(Square.D7),
+	BLACK_QUEENSIDE_BISHOP(Square.C8),
+	BLACK_QUEENSIDE_KNIGHT(Square.B8);
 
-	private final BoardSquare startSquare;
+	private final Square startSquare;
 
-	private DevelopmentPiece(BoardSquare startSquare)
+	private DevelopmentPiece(Square startSquare)
 	{
 		this.startSquare = startSquare;
 	}
 
-	private static final Map<BoardSquare, DevelopmentPiece> START_SQUARE_MAPPING =
-			Iter.over(asList(values())).toMap(x -> x.startSquare, x -> x);
+	private static final Map<Square, DevelopmentPiece> START_SQUARE_MAPPING =
+			Seq.of(values()).toMap(x -> x.startSquare, x -> x);
 
-	public static DevelopmentPiece fromStartSquare(BoardSquare startSquare)
+	public static DevelopmentPiece fromStartSquare(Square startSquare)
 	{
 		return START_SQUARE_MAPPING.get(startSquare);
 	}

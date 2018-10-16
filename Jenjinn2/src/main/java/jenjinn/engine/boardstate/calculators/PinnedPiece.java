@@ -3,7 +3,7 @@
  */
 package jenjinn.engine.boardstate.calculators;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 
 /**
  * Represents a piece at the given location whose movement area is constrained
@@ -13,16 +13,16 @@ import jenjinn.engine.base.BoardSquare;
  */
 public final class PinnedPiece {
 
-	private final BoardSquare location;
+	private final Square location;
 	private final long constrainedArea;
 
-	public PinnedPiece(final BoardSquare location, final long constrainedArea)
+	public PinnedPiece(final Square location, final long constrainedArea)
 	{
 		this.location = location;
 		this.constrainedArea = constrainedArea;
 	}
 
-	public BoardSquare getLocation()
+	public Square getLocation()
 	{
 		return location;
 	}

@@ -1,9 +1,9 @@
 package jenjinn.engine.parseutils;
 
 import static java.util.Arrays.asList;
-import static jenjinn.engine.base.BoardSquare.A1;
-import static jenjinn.engine.base.BoardSquare.A2;
-import static jenjinn.engine.base.BoardSquare.A3;
+import static jenjinn.engine.base.Square.A1;
+import static jenjinn.engine.base.Square.A2;
+import static jenjinn.engine.base.Square.A3;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

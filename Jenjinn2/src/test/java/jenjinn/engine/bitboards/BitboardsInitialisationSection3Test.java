@@ -16,8 +16,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import jenjinn.engine.base.BoardSquare;
-import jenjinn.engine.base.Direction;
+import jenjinn.engine.base.Square;
+import jenjinn.engine.base.Dir;
 
 /**
  * @author ThomasB
@@ -46,7 +46,7 @@ class BitboardsInitialisationSection3Test
 
 	@ParameterizedTest
 	@MethodSource
-	void testFindControlSetFromOccupancyVariation(final Long expectedResult, final BoardSquare startSq, final Long occVar, final List<Direction> movementDirections)
+	void testFindControlSetFromOccupancyVariation(final Long expectedResult, final Square startSq, final Long occVar, final List<Dir> movementDirections)
 	{
 		final long calculatedResult = findControlSetFromOccupancyVariation(startSq, occVar, movementDirections);
 		assertEquals(expectedResult.longValue(), calculatedResult, toBinaryString(expectedResult) + ", " + toBinaryString(calculatedResult));
@@ -54,15 +54,15 @@ class BitboardsInitialisationSection3Test
 
 	static Stream<Arguments> testFindControlSetFromOccupancyVariation()
 	{
-		final BoardSquare centralSquare = BoardSquare.F2;
-		final List<Direction> centralDirections = asList(Direction.E, Direction.S);
+		final Square centralSquare = Square.F2;
+		final List<Dir> centralDirections = asList(Dir.E, Dir.S);
 
 		final Arguments centralCaseOne = Arguments.of(0b1100000100L, centralSquare, 0L, centralDirections);
 		final Arguments centralCaseTwo = Arguments.of(0b1100000100L, centralSquare, 0b100000100L, centralDirections);
 		final Arguments centralCaseThree = Arguments.of(0b1000000100L, centralSquare, 0b1000000000L, centralDirections);
 
-		final BoardSquare edgeSquare = BoardSquare.D1;
-		final List<Direction> edgeDirections = asList(Direction.E, Direction.W, Direction.SE);
+		final Square edgeSquare = Square.D1;
+		final List<Dir> edgeDirections = asList(Dir.E, Dir.W, Dir.SE);
 
 		final Arguments edgeCaseOne = Arguments.of(0b11101000L, edgeSquare, 0b100001011L, edgeDirections);
 		final Arguments edgeCaseTwo = Arguments.of(0b00101000L, edgeSquare, 0b00101100L, edgeDirections);

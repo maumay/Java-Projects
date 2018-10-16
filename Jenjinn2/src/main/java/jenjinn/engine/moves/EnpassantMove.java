@@ -5,10 +5,10 @@ package jenjinn.engine.moves;
 
 import java.util.Set;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.base.CastleZone;
 import jenjinn.engine.base.DevelopmentPiece;
-import jenjinn.engine.base.Direction;
+import jenjinn.engine.base.Dir;
 import jenjinn.engine.base.Side;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.MoveReversalData;
@@ -21,12 +21,12 @@ import jenjinn.engine.pieces.ChessPieces;
  */
 public final class EnpassantMove extends AbstractChessMove
 {
-	private final BoardSquare enPassantSquare;
+	private final Square enPassantSquare;
 
-	public EnpassantMove(BoardSquare start, BoardSquare target)
+	public EnpassantMove(Square start, Square target)
 	{
 		super(start, target);
-		enPassantSquare = target.getNextSquareInDirection(start.ordinal() - target.ordinal() > 0? Direction.N : Direction.S);
+		enPassantSquare = target.getNextSquare(start.ordinal() - target.ordinal() > 0? Dir.N : Dir.S);
 	}
 
 	@Override

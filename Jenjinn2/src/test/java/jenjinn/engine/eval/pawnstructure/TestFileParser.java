@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.junit.jupiter.params.provider.Arguments;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.parseutils.AbstractTestFileParser;
 import jenjinn.engine.pgn.CommonRegex;
 import jflow.collections.FList;
@@ -88,8 +88,8 @@ final class TestFileParser extends AbstractTestFileParser
 		}
 		return Strings.allMatches(encodedLocs, sq)
 				.map(String::toUpperCase)
-				.map(BoardSquare::valueOf)
-				.mapToLong(BoardSquare::asBitboard)
+				.map(Square::valueOf)
+				.mapToLong(Square::asBitboard)
 				.fold(0L, (a, b) -> a | b);
 	}
 }

@@ -4,22 +4,22 @@
 package jenjinn.engine.enums.chesspiece;
 
 import static java.util.Arrays.asList;
-import static jenjinn.engine.base.Direction.E;
-import static jenjinn.engine.base.Direction.N;
-import static jenjinn.engine.base.Direction.NE;
-import static jenjinn.engine.base.Direction.NEE;
-import static jenjinn.engine.base.Direction.NNE;
-import static jenjinn.engine.base.Direction.NNW;
-import static jenjinn.engine.base.Direction.NW;
-import static jenjinn.engine.base.Direction.NWW;
-import static jenjinn.engine.base.Direction.S;
-import static jenjinn.engine.base.Direction.SE;
-import static jenjinn.engine.base.Direction.SEE;
-import static jenjinn.engine.base.Direction.SSE;
-import static jenjinn.engine.base.Direction.SSW;
-import static jenjinn.engine.base.Direction.SW;
-import static jenjinn.engine.base.Direction.SWW;
-import static jenjinn.engine.base.Direction.W;
+import static jenjinn.engine.base.Dir.E;
+import static jenjinn.engine.base.Dir.N;
+import static jenjinn.engine.base.Dir.NE;
+import static jenjinn.engine.base.Dir.NEE;
+import static jenjinn.engine.base.Dir.NNE;
+import static jenjinn.engine.base.Dir.NNW;
+import static jenjinn.engine.base.Dir.NW;
+import static jenjinn.engine.base.Dir.NWW;
+import static jenjinn.engine.base.Dir.S;
+import static jenjinn.engine.base.Dir.SE;
+import static jenjinn.engine.base.Dir.SEE;
+import static jenjinn.engine.base.Dir.SSE;
+import static jenjinn.engine.base.Dir.SSW;
+import static jenjinn.engine.base.Dir.SW;
+import static jenjinn.engine.base.Dir.SWW;
+import static jenjinn.engine.base.Dir.W;
 import static jenjinn.engine.bitboards.BitboardUtils.bitboardsIntersect;
 import static jenjinn.engine.bitboards.BitboardUtils.bitwiseOr;
 
@@ -27,8 +27,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import jenjinn.engine.base.BoardSquare;
-import jenjinn.engine.base.Direction;
+import jenjinn.engine.base.Square;
+import jenjinn.engine.base.Dir;
 import jenjinn.engine.pieces.Moveable;
 import jflow.iterators.Flow;
 import jflow.iterators.factories.Iter;
@@ -41,18 +41,18 @@ public enum TestChessPiece implements Moveable
 	WHITE_PAWN
 	{
 		@Override
-		public long getMoves(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getMoves(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
 			final long allPieces = whitePieces | blackPieces;
-			final List<BoardSquare> pushSquares = new ArrayList<>();
-			final BoardSquare firstPush = currentLocation.getNextSquareInDirection(N);
+			final List<Square> pushSquares = new ArrayList<>();
+			final Square firstPush = currentLocation.getNextSquare(N);
 			if (firstPush != null && !bitboardsIntersect(firstPush.asBitboard(), allPieces))
 			{
 				pushSquares.add(firstPush);
 				final int locIndex = currentLocation.ordinal();
 				if (7 < locIndex && locIndex < 16)
 				{
-					final BoardSquare secondPush = firstPush.getNextSquareInDirection(N);
+					final Square secondPush = firstPush.getNextSquare(N);
 					if (!bitboardsIntersect(secondPush.asBitboard(), allPieces))
 					{
 						pushSquares.add(secondPush);
@@ -63,59 +63,59 @@ public enum TestChessPiece implements Moveable
 		}
 
 		@Override
-		public long getAttacks(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getAttacks(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & blackPieces;
 		}
 
 		@Override
-		public long getSquaresOfControl(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getSquaresOfControl(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
-			final List<Direction> directions = asList(NE, NW);
-			return bitwiseOr(currentLocation.getAllSquaresInDirections(directions, 1));
+			final List<Dir> directions = asList(NE, NW);
+			return bitwiseOr(currentLocation.getAllSquares(directions, 1));
 		}
 	},
 
 	WHITE_KNIGHT
 	{
 		@Override
-		public long getMoves(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getMoves(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & (~whitePieces);
 		}
 
 		@Override
-		public long getAttacks(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getAttacks(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & blackPieces;
 		}
 
 		@Override
-		public long getSquaresOfControl(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getSquaresOfControl(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
-			final List<Direction> directions = asList(NNE, NEE, SEE, SSE, SSW, SWW, NWW, NNW);
-			return bitwiseOr(currentLocation.getAllSquaresInDirections(directions, 1));
+			final List<Dir> directions = asList(NNE, NEE, SEE, SSE, SSW, SWW, NWW, NNW);
+			return bitwiseOr(currentLocation.getAllSquares(directions, 1));
 		}
 	},
 
 	WHITE_BISHOP
 	{
 		@Override
-		public long getMoves(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getMoves(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & (~whitePieces);
 		}
 
 		@Override
-		public long getAttacks(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getAttacks(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & blackPieces;
 		}
 
 		@Override
-		public long getSquaresOfControl(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getSquaresOfControl(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
-			final List<Direction> directions = asList(NE, SE, SW, NW);
+			final List<Dir> directions = asList(NE, SE, SW, NW);
 			return getSlidingPieceSquaresOfControl(whitePieces | blackPieces, currentLocation, directions);
 		}
 	},
@@ -123,21 +123,21 @@ public enum TestChessPiece implements Moveable
 	WHITE_ROOK
 	{
 		@Override
-		public long getMoves(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getMoves(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & (~whitePieces);
 		}
 
 		@Override
-		public long getAttacks(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getAttacks(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & blackPieces;
 		}
 
 		@Override
-		public long getSquaresOfControl(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getSquaresOfControl(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
-			final List<Direction> directions = asList(Direction.N, Direction.S, Direction.W, Direction.E);
+			final List<Dir> directions = asList(Dir.N, Dir.S, Dir.W, Dir.E);
 			return getSlidingPieceSquaresOfControl(whitePieces | blackPieces, currentLocation, directions);
 		}
 	},
@@ -145,19 +145,19 @@ public enum TestChessPiece implements Moveable
 	WHITE_QUEEN
 	{
 		@Override
-		public long getMoves(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getMoves(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & (~whitePieces);
 		}
 
 		@Override
-		public long getAttacks(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getAttacks(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & blackPieces;
 		}
 
 		@Override
-		public long getSquaresOfControl(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getSquaresOfControl(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
 			return WHITE_BISHOP.getSquaresOfControl(currentLocation, whitePieces, blackPieces)
 					| WHITE_ROOK.getSquaresOfControl(currentLocation, whitePieces, blackPieces);
@@ -167,40 +167,40 @@ public enum TestChessPiece implements Moveable
 	WHITE_KING
 	{
 		@Override
-		public long getMoves(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getMoves(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & (~whitePieces);
 		}
 
 		@Override
-		public long getAttacks(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getAttacks(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & blackPieces;
 		}
 
 		@Override
-		public long getSquaresOfControl(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getSquaresOfControl(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
-			final List<Direction> directions = asList(N, NE, E, SE, S, SW, W, NW);
-			return bitwiseOr(currentLocation.getAllSquaresInDirections(directions, 1));
+			final List<Dir> directions = asList(N, NE, E, SE, S, SW, W, NW);
+			return bitwiseOr(currentLocation.getAllSquares(directions, 1));
 		}
 	},
 
 	BLACK_PAWN
 	{
 		@Override
-		public long getMoves(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getMoves(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
 			final long allPieces = whitePieces | blackPieces;
-			final List<BoardSquare> pushSquares = new ArrayList<>();
-			final BoardSquare firstPush = currentLocation.getNextSquareInDirection(Direction.S);
+			final List<Square> pushSquares = new ArrayList<>();
+			final Square firstPush = currentLocation.getNextSquare(Dir.S);
 			if (firstPush != null && !bitboardsIntersect(firstPush.asBitboard(), allPieces))
 			{
 				pushSquares.add(firstPush);
 				final int locIndex = currentLocation.ordinal();
 				if (47 < locIndex && locIndex < 56)
 				{
-					final BoardSquare secondPush = firstPush.getNextSquareInDirection(Direction.S);
+					final Square secondPush = firstPush.getNextSquare(Dir.S);
 					if (!bitboardsIntersect(secondPush.asBitboard(), allPieces))
 					{
 						pushSquares.add(secondPush);
@@ -211,59 +211,59 @@ public enum TestChessPiece implements Moveable
 		}
 
 		@Override
-		public long getAttacks(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getAttacks(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & whitePieces;
 		}
 
 		@Override
-		public long getSquaresOfControl(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getSquaresOfControl(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
-			final List<Direction> directions = asList(SE, SW);
-			return bitwiseOr(currentLocation.getAllSquaresInDirections(directions, 1));
+			final List<Dir> directions = asList(SE, SW);
+			return bitwiseOr(currentLocation.getAllSquares(directions, 1));
 		}
 	},
 
 	BLACK_KNIGHT
 	{
 		@Override
-		public long getMoves(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getMoves(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & (~blackPieces);
 		}
 
 		@Override
-		public long getAttacks(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getAttacks(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & whitePieces;
 		}
 
 		@Override
-		public long getSquaresOfControl(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getSquaresOfControl(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
-			final List<Direction> directions = asList(NNE, NEE, SEE, SSE, SSW, SWW, NWW, NNW);
-			return bitwiseOr(currentLocation.getAllSquaresInDirections(directions, 1));
+			final List<Dir> directions = asList(NNE, NEE, SEE, SSE, SSW, SWW, NWW, NNW);
+			return bitwiseOr(currentLocation.getAllSquares(directions, 1));
 		}
 	},
 
 	BLACK_BISHOP
 	{
 		@Override
-		public long getMoves(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getMoves(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & (~blackPieces);
 		}
 
 		@Override
-		public long getAttacks(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getAttacks(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & whitePieces;
 		}
 
 		@Override
-		public long getSquaresOfControl(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getSquaresOfControl(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
-			final List<Direction> directions = asList(NE, SE, SW, NW);
+			final List<Dir> directions = asList(NE, SE, SW, NW);
 			return getSlidingPieceSquaresOfControl(whitePieces | blackPieces, currentLocation, directions);
 		}
 	},
@@ -271,21 +271,21 @@ public enum TestChessPiece implements Moveable
 	BLACK_ROOK
 	{
 		@Override
-		public long getMoves(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getMoves(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & (~blackPieces);
 		}
 
 		@Override
-		public long getAttacks(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getAttacks(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & whitePieces;
 		}
 
 		@Override
-		public long getSquaresOfControl(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getSquaresOfControl(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
-			final List<Direction> directions = asList(N, E, S, W);
+			final List<Dir> directions = asList(N, E, S, W);
 			return getSlidingPieceSquaresOfControl(whitePieces | blackPieces, currentLocation, directions);
 		}
 	},
@@ -293,19 +293,19 @@ public enum TestChessPiece implements Moveable
 	BLACK_QUEEN
 	{
 		@Override
-		public long getMoves(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getMoves(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & (~blackPieces);
 		}
 
 		@Override
-		public long getAttacks(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getAttacks(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & whitePieces;
 		}
 
 		@Override
-		public long getSquaresOfControl(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getSquaresOfControl(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
 			return BLACK_BISHOP.getSquaresOfControl(currentLocation, whitePieces, blackPieces)
 					| BLACK_ROOK.getSquaresOfControl(currentLocation, whitePieces, blackPieces);
@@ -315,35 +315,35 @@ public enum TestChessPiece implements Moveable
 	BLACK_KING
 	{
 		@Override
-		public long getMoves(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getMoves(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & (~blackPieces);
 		}
 
 		@Override
-		public long getAttacks(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getAttacks(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & whitePieces;
 		}
 
 		@Override
-		public long getSquaresOfControl(final BoardSquare currentLocation, final long whitePieces, final long blackPieces)
+		public long getSquaresOfControl(final Square currentLocation, final long whitePieces, final long blackPieces)
 		{
-			final List<Direction> directions = asList(N, NE, E, SE, S, SW, W, NW);
-			return bitwiseOr(currentLocation.getAllSquaresInDirections(directions, 1));
+			final List<Dir> directions = asList(N, NE, E, SE, S, SW, W, NW);
+			return bitwiseOr(currentLocation.getAllSquares(directions, 1));
 		}
 	};
 
-	private static long getSlidingPieceSquaresOfControl(final long allPieces, final BoardSquare startSquare, final List<Direction> movementDirections)
+	private static long getSlidingPieceSquaresOfControl(final long allPieces, final Square startSquare, final List<Dir> movementDirections)
 	{
-		final List<BoardSquare> controlSquares = new ArrayList<>(64);
+		final List<Square> controlSquares = new ArrayList<>(64);
 		Iter.over(movementDirections).forEach(direction ->
 		{
-			BoardSquare current = startSquare.getNextSquareInDirection(direction);
+			Square current = startSquare.getNextSquare(direction);
 
 			while (current != null && !bitboardsIntersect(current.asBitboard(), allPieces)) {
 				controlSquares.add(current);
-				current = current.getNextSquareInDirection(direction);
+				current = current.getNextSquare(direction);
 			}
 			if (current != null) {
 				controlSquares.add(current);

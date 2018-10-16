@@ -3,7 +3,7 @@
  */
 package jenjinn.engine.utils;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.pieces.ChessPiece;
 
 /**
@@ -12,9 +12,9 @@ import jenjinn.engine.pieces.ChessPiece;
 public final class PieceSquarePair {
 
 	private final ChessPiece piece;
-	private final BoardSquare square;
+	private final Square square;
 
-	public PieceSquarePair(final ChessPiece piece, final BoardSquare square)
+	public PieceSquarePair(final ChessPiece piece, final Square square)
 	{
 		this.piece = piece;
 		this.square = square;
@@ -25,7 +25,7 @@ public final class PieceSquarePair {
 		return piece;
 	}
 
-	public BoardSquare getSquare()
+	public Square getSquare()
 	{
 		return square;
 	}

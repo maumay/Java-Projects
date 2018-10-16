@@ -14,7 +14,7 @@ import java.util.Set;
 
 import org.junit.jupiter.params.provider.Arguments;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.bitboards.BitboardUtils;
 import jenjinn.engine.parseutils.AbstractTestFileParser;
 import jenjinn.engine.parseutils.BoardParser;
@@ -59,9 +59,9 @@ final class TestFileParser extends AbstractTestFileParser
 			return 0L;
 		}
 		else if (ec.matches("((" + sqrx +"|" + cordrx + ") +)+")) {
-			Set<BoardSquare> squares = Strings.allMatches(ec, sqrx)
+			Set<Square> squares = Strings.allMatches(ec, sqrx)
 			.map(String::toUpperCase)
-			.map(BoardSquare::valueOf)
+			.map(Square::valueOf)
 			.toCollection(HashSet::new);
 
 			Strings.allMatches(ec, cordrx)

@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.bitboards.BitboardIterator;
 import jflow.iterators.AbstractFlow;
 import jflow.iterators.Flow;
@@ -20,15 +20,15 @@ import jflow.utilities.Optionals;
  * @author t
  *
  */
-public final class LocationTracker implements Iterable<BoardSquare>
+public final class LocationTracker implements Iterable<Square>
 {
-	private final Set<BoardSquare> locs = EnumSet.noneOf(BoardSquare.class);
+	private final Set<Square> locs = EnumSet.noneOf(Square.class);
 	private long allLocs;
 
-	public LocationTracker(Set<BoardSquare> locations)
+	public LocationTracker(Set<Square> locations)
 	{
 		locs.addAll(locations);
-		allLocs = iterator().mapToLong(BoardSquare::asBitboard).fold(0L, (a, b) -> a | b);
+		allLocs = iterator().mapToLong(Square::asBitboard).fold(0L, (a, b) -> a | b);
 	}
 
 	public LocationTracker(long locations)
@@ -41,7 +41,7 @@ public final class LocationTracker implements Iterable<BoardSquare>
 		return allLocs;
 	}
 
-	public boolean contains(BoardSquare location)
+	public boolean contains(Square location)
 	{
 		return bitboardsIntersect(allLocs, location.asBitboard());
 	}
@@ -51,14 +51,14 @@ public final class LocationTracker implements Iterable<BoardSquare>
 		return locs.size();
 	}
 
-	void addLoc(BoardSquare location)
+	void addLoc(Square location)
 	{
 		assert !bitboardsIntersect(allLocs, location.asBitboard());
 		allLocs ^= location.asBitboard();
 		locs.add(location);
 	}
 
-	void removeLoc(BoardSquare location)
+	void removeLoc(Square location)
 	{
 		assert bitboardsIntersect(allLocs, location.asBitboard());
 		allLocs ^= location.asBitboard();
@@ -70,16 +70,16 @@ public final class LocationTracker implements Iterable<BoardSquare>
 	 * which squares appear in the iteration.
 	 */
 	@Override
-	public Flow<BoardSquare> iterator()
+	public Flow<Square> iterator()
 	{
-		Iterator<BoardSquare> src = locs.iterator();
-		return new AbstractFlow<BoardSquare>(Optionals.ofInt(locs.size())) {
+		Iterator<Square> src = locs.iterator();
+		return new AbstractFlow<Square>(Optionals.ofInt(locs.size())) {
 			@Override
 			public boolean hasNext() {
 				return src.hasNext();
 			}
 			@Override
-			public BoardSquare next() {
+			public Square next() {
 				return src.next();
 			}
 			@Override

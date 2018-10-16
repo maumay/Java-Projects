@@ -10,16 +10,11 @@ public enum Side
 {
 	WHITE(6), BLACK(1);
 
-	private final int penultimatePawnRank;
+	public final int penultimatePawnRank;
 
 	private Side(int penultimatePawnRank)
 	{
 		this.penultimatePawnRank = penultimatePawnRank;
-	}
-
-	public int getPenultimatePawnRank()
-	{
-		return penultimatePawnRank;
 	}
 
 	public boolean isWhite()

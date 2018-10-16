@@ -4,8 +4,8 @@ import static jenjinn.engine.bitboards.Bitboards.singleOccupancyBitboard;
 
 import java.util.List;
 
-import jenjinn.engine.base.BoardSquare;
-import jenjinn.engine.base.Direction;
+import jenjinn.engine.base.Square;
+import jenjinn.engine.base.Dir;
 import jenjinn.engine.pieces.PieceMovementDirections;
 import jflow.iterators.factories.IterRange;
 import jflow.iterators.factories.Iter;
@@ -41,8 +41,8 @@ final class BitboardsInitialisationSection1
 	{
 		return IterRange.to(15)
 				.map(i -> i < 8 ? i : 8*(i - 7) + 7)
-				.mapToObject(BoardSquare::of)
-				.map(square -> Iter.over(square.getAllSquaresInDirections(Direction.NE, 8)).insert(square))
+				.mapToObject(Square::of)
+				.map(square -> Iter.over(square.getAllSquaresInDirections(Dir.NE, 8)).insert(square))
 				.mapToLong(BitboardUtils::bitwiseOr)
 				.toArray();
 	}
@@ -51,8 +51,8 @@ final class BitboardsInitialisationSection1
 	{
 		return IterRange.to(15)
 				.map(i -> i < 8 ? 7 - i : 8*(i - 7))
-				.mapToObject(BoardSquare::of)
-				.map(square -> Iter.over(square.getAllSquaresInDirections(Direction.NW, 8)).insert(square))
+				.mapToObject(Square::of)
+				.map(square -> Iter.over(square.getAllSquaresInDirections(Dir.NW, 8)).insert(square))
 				.mapToLong(BitboardUtils::bitwiseOr)
 				.toArray();
 	}
@@ -97,10 +97,10 @@ final class BitboardsInitialisationSection1
 		return moves;
 	}
 
-	private static long[] generateEmptyBoardBitboards(List<Direction> moveDirections, int lengthCap)
+	private static long[] generateEmptyBoardBitboards(List<Dir> moveDirections, int lengthCap)
 	{
-		return BoardSquare.iterateAll()
-				.map(square -> square.getAllSquaresInDirections(moveDirections, lengthCap))
+		return Square.iterateAll()
+				.map(square -> square.getAllSquares(moveDirections, lengthCap))
 				.mapToLong(BitboardUtils::bitwiseOr)
 				.toArray();
 	}

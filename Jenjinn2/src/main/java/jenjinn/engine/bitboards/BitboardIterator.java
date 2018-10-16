@@ -8,7 +8,7 @@ import static jenjinn.engine.bitboards.BitboardUtils.bitboardsIntersect;
 
 import java.util.NoSuchElementException;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jflow.iterators.AbstractFlow;
 import jflow.iterators.Flow;
 import jflow.utilities.Optionals;
@@ -17,7 +17,7 @@ import jflow.utilities.Optionals;
  * @author ThomasB
  *
  */
-public final class BitboardIterator extends AbstractFlow<BoardSquare>
+public final class BitboardIterator extends AbstractFlow<Square>
 {
 	private final long source;
 	private int cached = -1, elementsReturned = 0;
@@ -35,7 +35,7 @@ public final class BitboardIterator extends AbstractFlow<BoardSquare>
 	}
 
 	@Override
-	public BoardSquare next()
+	public Square next()
 	{
 		if (hasNext()) {
 			int loopStart = cached < 0 ? 0 : cached + 1;
@@ -43,7 +43,7 @@ public final class BitboardIterator extends AbstractFlow<BoardSquare>
 				if (bitboardsIntersect(1L << i, source)) {
 					cached = i;
 					elementsReturned++;
-					return BoardSquare.of(cached);
+					return Square.of(cached);
 				}
 			}
 			throw new AssertionError();
@@ -59,7 +59,7 @@ public final class BitboardIterator extends AbstractFlow<BoardSquare>
 		next();
 	}
 
-	public static Flow<BoardSquare> from(long bitboard)
+	public static Flow<Square> from(long bitboard)
 	{
 		return new BitboardIterator(bitboard);
 	}

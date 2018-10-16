@@ -6,7 +6,7 @@ package jenjinn.engine.boardstate;
 import java.util.EnumSet;
 import java.util.Set;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.base.CastleZone;
 import jenjinn.engine.base.DevelopmentPiece;
 import jenjinn.engine.pieces.ChessPiece;
@@ -29,7 +29,7 @@ public class MoveReversalData {
 	private Set<CastleZone> discardedCastlingRights = EnumSet.noneOf(CastleZone.class);
 	private ChessPiece pieceTaken;
 	private DevelopmentPiece pieceDeveloped;
-	private BoardSquare discardedEnpassantSquare;
+	private Square discardedEnpassantSquare;
 	private long discardedHash;
 	private int discardedHalfMoveClock;
 
@@ -87,12 +87,12 @@ public class MoveReversalData {
 		this.pieceDeveloped = pieceDeveloped;
 	}
 
-	public BoardSquare getDiscardedEnpassantSquare()
+	public Square getDiscardedEnpassantSquare()
 	{
 		return discardedEnpassantSquare;
 	}
 
-	public void setDiscardedEnpassantSquare(BoardSquare discardedEnpassantSquare)
+	public void setDiscardedEnpassantSquare(Square discardedEnpassantSquare)
 	{
 		this.discardedEnpassantSquare = discardedEnpassantSquare;
 	}

@@ -7,7 +7,7 @@ import static jenjinn.engine.bitboards.BitboardUtils.bitboardsIntersect;
 
 import java.util.List;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.base.Side;
 import jenjinn.engine.eval.piecesquaretables.PieceSquareTables;
 import jenjinn.engine.pieces.ChessPiece;
@@ -60,7 +60,7 @@ public final class DetailedPieceLocations
 				endgameTables);
 	}
 
-	public void addPieceAt(BoardSquare location, ChessPiece pieceToAdd)
+	public void addPieceAt(Square location, ChessPiece pieceToAdd)
 	{
 		squarePieceFeatureHash ^= BoardHasher.INSTANCE.getSquarePieceFeature(location, pieceToAdd);
 		midgameEval += midgameTables.getLocationValue(pieceToAdd, location);
@@ -75,7 +75,7 @@ public final class DetailedPieceLocations
 		}
 	}
 
-	public void removePieceAt(BoardSquare location, ChessPiece pieceToRemove)
+	public void removePieceAt(Square location, ChessPiece pieceToRemove)
 	{
 		squarePieceFeatureHash ^= BoardHasher.INSTANCE.getSquarePieceFeature(location, pieceToRemove);
 		midgameEval -= midgameTables.getLocationValue(pieceToRemove, location);
@@ -90,7 +90,7 @@ public final class DetailedPieceLocations
 		}
 	}
 
-	public ChessPiece getPieceAt(BoardSquare square)
+	public ChessPiece getPieceAt(Square square)
 	{
 		for (int i = 0; i < 12; i++) {
 			if (pieceLocations.get(i).contains(square)) {
@@ -110,7 +110,7 @@ public final class DetailedPieceLocations
 		return null;
 	}
 
-	public ChessPiece getPieceAt(BoardSquare square, Side side)
+	public ChessPiece getPieceAt(Square square, Side side)
 	{
 		int lowerBound = side.isWhite() ? 0 : 6, upperBound = lowerBound + 6;
 		for (int i = lowerBound; i < upperBound; i++) {
@@ -151,7 +151,7 @@ public final class DetailedPieceLocations
 		return pieceLocations.get(piece.ordinal()).pieceCount();
 	}
 
-	public Flow<BoardSquare> iterateLocs(ChessPiece piece)
+	public Flow<Square> iterateLocs(ChessPiece piece)
 	{
 		return pieceLocations.get(piece.ordinal()).iterator();
 	}

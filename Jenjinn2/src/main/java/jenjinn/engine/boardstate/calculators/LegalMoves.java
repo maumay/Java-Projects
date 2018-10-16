@@ -15,9 +15,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.base.CastleZone;
-import jenjinn.engine.base.Direction;
+import jenjinn.engine.base.Dir;
 import jenjinn.engine.base.Side;
 import jenjinn.engine.bitboards.BitboardIterator;
 import jenjinn.engine.bitboards.Bitboards;
@@ -39,8 +39,8 @@ import jflow.iterators.misc.PredicatePartition;
  */
 public final class LegalMoves
 {
-	private static final List<Direction> WHITE_EP_SEARCH_DIRS = asList(Direction.SW, Direction.SE);
-	private static final List<Direction> BLACK_EP_SEARCH_DIRS = asList(Direction.NW, Direction.NE);
+	private static final List<Dir> WHITE_EP_SEARCH_DIRS = asList(Dir.SW, Dir.SE);
+	private static final List<Dir> BLACK_EP_SEARCH_DIRS = asList(Dir.NW, Dir.NE);
 
 	private LegalMoves()
 	{
@@ -63,7 +63,7 @@ public final class LegalMoves
 		long passivePieceLocs = pieceLocs.getSideLocations(passive);
 		List<ChessPiece> activePieces = ChessPieces.ofSide(active);
 		ChessPiece activeKing = last(activePieces);
-		BoardSquare kingLoc = pieceLocs.iterateLocs(activeKing).next();
+		Square kingLoc = pieceLocs.iterateLocs(activeKing).next();
 		long passiveControl = SquareControl.calculate(state, passive);
 		PinnedPieceCollection pinnedPieces = PinnedPieces.in(state);
 
@@ -90,7 +90,7 @@ public final class LegalMoves
 			} else {
 				PieceSquarePair attacker = head(attackers);
 				allowedMoveArea &= getBlockingSquares(kingLoc, attacker);
-				BoardSquare ep = state.getEnPassantSquare(), attsq = attacker.getSquare();
+				Square ep = state.getEnPassantSquare(), attsq = attacker.getSquare();
 				if (ep != null && abs(ep.ordinal() - attsq.ordinal()) == 8) {
 					assert attacker.getPiece().isPawn();
 					moves = moves.append(getEnpassantCheckEscape(attacker, state, pinnedPieces));
@@ -125,7 +125,7 @@ public final class LegalMoves
 		return legalAvailableRights.map(MoveCache::getMove);
 	}
 
-	private static Flow<ChessMove> getMovesForKing(BoardState state, BoardSquare kingLoc,
+	private static Flow<ChessMove> getMovesForKing(BoardState state, Square kingLoc,
 			long areaConstraint)
 	{
 		DetailedPieceLocations pieceLocs = state.getPieceLocations();
@@ -149,7 +149,7 @@ public final class LegalMoves
 
 		DetailedPieceLocations pieceLocs = state.getPieceLocations();
 		long white = pieceLocs.getWhiteLocations(), black = pieceLocs.getBlackLocations();
-		PredicatePartition<BoardSquare> pinnedPartition = pieceLocs.iterateLocs(piece)
+		PredicatePartition<Square> pinnedPartition = pieceLocs.iterateLocs(piece)
 				.partition(pinnedPieces::containsLocation);
 
 		Flow<ChessMove> notPinnedContributions = pinnedPartition.getRejected().flatten(square -> {
@@ -165,10 +165,10 @@ public final class LegalMoves
 		Flow<ChessMove> allContributions = notPinnedContributions.append(pinnedContribution);
 
 		if (piece.isPawn() && state.hasEnpassantAvailable()) {
-			BoardSquare ep = state.getEnPassantSquare();
+			Square ep = state.getEnPassantSquare();
 			long plocs = pieceLocs.locationsOf(piece);
-			List<Direction> searchDirs = piece.isWhite() ? WHITE_EP_SEARCH_DIRS : BLACK_EP_SEARCH_DIRS;
-			Flow<ChessMove> epContribution = Iter.over(searchDirs).map(ep::getNextSquareInDirection)
+			List<Dir> searchDirs = piece.isWhite() ? WHITE_EP_SEARCH_DIRS : BLACK_EP_SEARCH_DIRS;
+			Flow<ChessMove> epContribution = Iter.over(searchDirs).map(ep::getNextSquare)
 					.filter(sq -> {
 						if (sq != null && bitboardsIntersect(plocs, sq.asBitboard())) {
 							if (pinnedPieces.containsLocation(sq)) {
@@ -195,7 +195,7 @@ public final class LegalMoves
 	static Flow<ChessMove> getEnpassantCheckEscape(PieceSquarePair attacker, BoardState state,
 			PinnedPieceCollection pinnedPieces)
 	{
-		BoardSquare attackerLoc = attacker.getSquare(), enpassantSquare = state.getEnPassantSquare();
+		Square attackerLoc = attacker.getSquare(), enpassantSquare = state.getEnPassantSquare();
 		assert enpassantSquare != null;
 		assert attacker.getPiece().isPawn();
 		assert Math.abs(attackerLoc.ordinal() - enpassantSquare.ordinal()) == 8;
@@ -203,9 +203,9 @@ public final class LegalMoves
 		Side active = state.getActiveSide();
 		ChessPiece activePawn = ChessPieces.pawn(active);
 		long activePawnLocs = state.getPieceLocations().locationsOf(activePawn);
-		List<Direction> searchDirs = active.isWhite() ? WHITE_EP_SEARCH_DIRS : BLACK_EP_SEARCH_DIRS;
+		List<Dir> searchDirs = active.isWhite() ? WHITE_EP_SEARCH_DIRS : BLACK_EP_SEARCH_DIRS;
 
-		return Iter.over(searchDirs).map(enpassantSquare::getNextSquareInDirection).filter(x -> x != null)
+		return Iter.over(searchDirs).map(enpassantSquare::getNextSquare).filter(x -> x != null)
 				.filter(square -> {
 					if (bitboardsIntersect(activePawnLocs, square.asBitboard())) {
 						if (pinnedPieces.containsLocation(square)) {
@@ -229,7 +229,7 @@ public final class LegalMoves
 	 * @return the squares (represented by a bitboard) which an active piece (not
 	 *         the king) could be moved to to remove the direct attack.
 	 */
-	private static long getBlockingSquares(BoardSquare activeKingLoc, PieceSquarePair attacker)
+	private static long getBlockingSquares(Square activeKingLoc, PieceSquarePair attacker)
 	{
 		if (attacker.getPiece().isSlidingPiece()) {
 			return MoveCache.getMove(attacker.getSquare(), activeKingLoc).getInducedCord() ^ activeKingLoc.asBitboard();
@@ -258,9 +258,9 @@ public final class LegalMoves
 
 		List<PieceSquarePair> attackers = new ArrayList<>(2);
 		PIECE_LOOP: for (ChessPiece potentialAttacker : ChessPieces.ofSide(active.otherSide())) {
-			Flow<BoardSquare> locs = pieceLocs.iterateLocs(potentialAttacker);
+			Flow<Square> locs = pieceLocs.iterateLocs(potentialAttacker);
 			while (locs.hasNext()) {
-				BoardSquare loc = locs.next();
+				Square loc = locs.next();
 				long attacks = potentialAttacker.getSquaresOfControl(loc, white, black);
 				if (bitboardsIntersect(attacks, kloc)) {
 					attackers.add(new PieceSquarePair(potentialAttacker, loc));
@@ -284,7 +284,7 @@ public final class LegalMoves
 	 * @return An iteration of moves from source to target for each target described
 	 *         by the parameter bitboard.
 	 */
-	static Flow<ChessMove> bitboard2moves(ChessPiece piece, BoardSquare source, long bitboard)
+	static Flow<ChessMove> bitboard2moves(ChessPiece piece, Square source, long bitboard)
 	{
 		if (piece.isPawn() && source.rank() == piece.getSide().getPenultimatePawnRank()) {
 			return BitboardIterator.from(bitboard)

@@ -5,7 +5,7 @@ package jenjinn.engine.eval.piecesquaretables;
 
 import java.util.List;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.boardstate.LocationTracker;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
@@ -30,7 +30,7 @@ public final class PieceSquareTables
 				.toList();
 	}
 
-	public int getLocationValue(final ChessPiece piece, final BoardSquare location)
+	public int getLocationValue(final ChessPiece piece, final Square location)
 	{
 		return tables.get(piece.ordinal()).getValueAt(location);
 	}

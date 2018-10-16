@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.base.CastleZone;
 import jenjinn.engine.base.DevelopmentPiece;
 import jenjinn.engine.base.Side;
@@ -59,7 +59,7 @@ public final class BoardParser
 		CastlingStatus castlingStatus = constructCastlingStatus(atts.get(3), atts.get(4), atts.get(5));
 		Set<DevelopmentPiece> developedPieces = constructDevelopedPieces(atts.get(6));
 		Side activeSide = constructActiveSide(atts.get(7));
-		BoardSquare enpassantSquare = constructEnpassantSquare(atts.get(8));
+		Square enpassantSquare = constructEnpassantSquare(atts.get(8));
 		long hashOfConstructedState = pieceLocations.getSquarePieceFeatureHash()
 				^ BoardHasher.INSTANCE.hashNonPieceFeatures(activeSide, enpassantSquare, castlingStatus);
 		HashCache hashCache = constructDummyHashCache(hashOfConstructedState, totalMoveCount);
@@ -75,11 +75,11 @@ public final class BoardParser
 		return new HashCache(cache, totalMoveCount);
 	}
 
-	private static BoardSquare constructEnpassantSquare(String enpassantSquare)
+	private static Square constructEnpassantSquare(String enpassantSquare)
 	{
 		assertTrue(enpassantSquare.trim().matches("^enpassant_square: *((none)|([a-h][1-8]))$"));
 		Optional<String> squareMatch = Strings.firstMatch(enpassantSquare, "[a-h][1-8]");
-		return squareMatch.isPresent()? BoardSquare.valueOf(squareMatch.get().toUpperCase()) : null;
+		return squareMatch.isPresent()? Square.valueOf(squareMatch.get().toUpperCase()) : null;
 	}
 
 	private static Side constructActiveSide(String activeSide)
@@ -93,7 +93,7 @@ public final class BoardParser
 	{
 		assertTrue(developedPieces.trim().matches("^developed_pieces:(( *none)|(( *[a-h][1-8])( +[a-h][1-8]){0,11}))$"), developedPieces);
 		List<String> squaresMatched = Strings.allMatches(developedPieces, "[a-h][1-8]").toList();
-		Set<BoardSquare> uniqueSquares = Iter.over(squaresMatched).map(String::toUpperCase).map(BoardSquare::valueOf).toSet();
+		Set<Square> uniqueSquares = Iter.over(squaresMatched).map(String::toUpperCase).map(Square::valueOf).toSet();
 		if (uniqueSquares.size() != squaresMatched.size()) {
 			throw new IllegalArgumentException(developedPieces);
 		}
@@ -146,7 +146,7 @@ public final class BoardParser
 		return allMatches(whiteLocs + blackLocs, groupedSquares)
 				.map(x -> allMatches(x, "[a-h][1-8]"))
 				.map(xs -> xs.map(String::toUpperCase))
-				.map(xs -> xs.map(BoardSquare::valueOf).toList())
+				.map(xs -> xs.map(Square::valueOf).toList())
 				.mapToLong(BitboardUtils::bitwiseOr)
 				.build(flow -> new DetailedPieceLocations(flow.toArray(), midTables, endTables));
 	}

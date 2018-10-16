@@ -9,7 +9,7 @@ import static jflow.utilities.Strings.lastMatch;
 
 import java.util.List;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.base.CastleZone;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.MoveReversalData;
@@ -20,9 +20,9 @@ import jflow.utilities.Strings;
  */
 public interface ChessMove
 {
-	BoardSquare getSource();
+	Square getSource();
 
-	BoardSquare getTarget();
+	Square getTarget();
 
 	String toCompactString();
 
@@ -81,8 +81,8 @@ public interface ChessMove
 
 		if (repr.matches(standardEnpassantRx)) {
 			List<String> squares = Strings.allMatches(repr, "[a-h][1-8]").toList();
-			BoardSquare source = BoardSquare.valueOf(head(squares).toUpperCase());
-			BoardSquare target = BoardSquare.valueOf(last(squares).toUpperCase());
+			Square source = Square.valueOf(head(squares).toUpperCase());
+			Square target = Square.valueOf(last(squares).toUpperCase());
 			char firstChar = repr.charAt(0);
 			switch (firstChar) {
 			case 'S':
@@ -94,8 +94,8 @@ public interface ChessMove
 			}
 		} else if (repr.matches(promotionRx)) {
 			List<String> squares = Strings.allMatches(repr, "[a-h][1-8]").toList();
-			BoardSquare source = BoardSquare.valueOf(head(squares).toUpperCase());
-			BoardSquare target = BoardSquare.valueOf(last(squares).toUpperCase());
+			Square source = Square.valueOf(head(squares).toUpperCase());
+			Square target = Square.valueOf(last(squares).toUpperCase());
 			PromotionResult result = PromotionResult.valueOf(lastMatch(repr, "[NBRQ]").get());
 			return new PromotionMove(source, target, result);
 		} else if (repr.matches(castleMoveRx)) {

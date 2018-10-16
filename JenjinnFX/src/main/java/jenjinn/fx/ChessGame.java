@@ -14,7 +14,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.base.GameTermination;
 import jenjinn.engine.base.Side;
 import jenjinn.engine.boardstate.BoardState;
@@ -42,7 +42,7 @@ public final class ChessGame
 	private final ChessBoard board;
 	private final FList<ChessMove> movesPlayed;
 
-	private Optional<BoardSquare> squareSelection;
+	private Optional<Square> squareSelection;
 
 	public ChessGame(Side humanSide, ColorScheme colors)
 	{
@@ -68,12 +68,12 @@ public final class ChessGame
 		}
 		else if (evt.getButton() == MouseButton.PRIMARY) {
 			Point2D clickTarget = new Point2D(evt.getX(), evt.getY());
-			BoardSquare correspondingSquare = board.getClosestSquare(clickTarget);
+			Square correspondingSquare = board.getClosestSquare(clickTarget);
 
 			if (bitboardsIntersect(correspondingSquare.asBitboard(), getActiveLocations())) {
 				setSelection(Optionals.of(correspondingSquare));
 			} else if (squareSelection.isPresent()) {
-				BoardSquare src = squareSelection.get();
+				Square src = squareSelection.get();
 				Optional<ChessMove> mv = LegalMoves.getAllMoves(stateOfPlay)
 						.filter(m -> m.getSource().equals(src) && m.getTarget().equals(correspondingSquare)).safeNext();
 
@@ -98,7 +98,7 @@ public final class ChessGame
 		}
 	}
 
-	private void setSelection(Optional<BoardSquare> selection)
+	private void setSelection(Optional<Square> selection)
 	{
 		squareSelection = selection;
 		board.setSelectedSquare(selection);

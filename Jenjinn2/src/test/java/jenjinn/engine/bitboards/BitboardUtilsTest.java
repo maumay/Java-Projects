@@ -4,9 +4,9 @@
 package jenjinn.engine.bitboards;
 
 import static java.util.Arrays.asList;
-import static jenjinn.engine.base.BoardSquare.C1;
-import static jenjinn.engine.base.BoardSquare.D2;
-import static jenjinn.engine.base.BoardSquare.H1;
+import static jenjinn.engine.base.Square.C1;
+import static jenjinn.engine.base.Square.D2;
+import static jenjinn.engine.base.Square.H1;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
@@ -16,7 +16,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jflow.iterators.factories.Iter;
 
 /**
@@ -59,14 +59,14 @@ class BitboardUtilsTest
 
 	@ParameterizedTest
 	@MethodSource
-	void testBitwiseOrOfBoardSquareList(final List<BoardSquare> squares, final Long expectedResult)
+	void testBitwiseOrOfBoardSquareList(final List<Square> squares, final Long expectedResult)
 	{
 		assertEquals(expectedResult.longValue(), BitboardUtils.bitwiseOr(squares));
 	}
 
 	@ParameterizedTest
 	@MethodSource("testBitwiseOrOfBoardSquareList")
-	void testBitwiseOrOfBoardSquareFlow(final List<BoardSquare> squares, final Long expectedResult)
+	void testBitwiseOrOfBoardSquareFlow(final List<Square> squares, final Long expectedResult)
 	{
 		assertEquals(expectedResult.longValue(), BitboardUtils.bitwiseOr(Iter.over(squares)));
 	}
@@ -81,7 +81,7 @@ class BitboardUtilsTest
 
 	@ParameterizedTest
 	@MethodSource
-	void testGetSetBitIndices(final List<BoardSquare> expectedSquares, final Long bitboard)
+	void testGetSetBitIndices(final List<Square> expectedSquares, final Long bitboard)
 	{
 		assertEquals(expectedSquares, BitboardIterator.from(bitboard.longValue()).toList());
 	}
@@ -90,8 +90,8 @@ class BitboardUtilsTest
 	{
 		return Stream.of(
 				Arguments.of(asList(), 0L),
-				Arguments.of(asList(BoardSquare.C1), 0b100000L),
-				Arguments.of(asList(BoardSquare.E1, BoardSquare.F2), 0b10000001000L)
+				Arguments.of(asList(Square.C1), 0b100000L),
+				Arguments.of(asList(Square.E1, Square.F2), 0b10000001000L)
 				);
 	}
 }

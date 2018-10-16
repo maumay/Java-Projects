@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.utils.BasicPieceLocations;
 import jflow.iterators.factories.IterRange;
 
@@ -72,8 +72,8 @@ public final class IntegrationTestDataWriter
 		if (sidePieceCount > 32 || sidePieceCount < 0) {
 			throw new IllegalArgumentException();
 		}
-		final List<BoardSquare> squares = new ArrayList<>(BoardSquare.valuesAsList());
-		final List<BoardSquare> whiteLocs = new ArrayList<>(), blackLocs = new ArrayList<>();
+		final List<Square> squares = new ArrayList<>(Square.valuesAsList());
+		final List<Square> whiteLocs = new ArrayList<>(), blackLocs = new ArrayList<>();
 
 		IterRange.to(sidePieceCount).forEach(i -> whiteLocs.add(squares.remove(numberGenerator.nextInt(squares.size()))));
 		IterRange.to(sidePieceCount).forEach(i -> blackLocs.add(squares.remove(numberGenerator.nextInt(squares.size()))));

@@ -12,7 +12,7 @@ import java.util.Set;
 
 import org.junit.jupiter.params.provider.Arguments;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.parseutils.AbstractTestFileParser;
 import jenjinn.engine.parseutils.BoardParser;
 import jenjinn.engine.pgn.CommonRegex;
@@ -30,7 +30,7 @@ final class TestFileParser extends AbstractTestFileParser
 		return Arguments.of(BoardParser.parse(take(9, lines)), parseSquareSequence(last(lines)));
 	}
 
-	private Set<BoardSquare> parseSquareSequence(String encodedSequence)
+	private Set<Square> parseSquareSequence(String encodedSequence)
 	{
 		String ec = encodedSequence.trim() + " ", sq = CommonRegex.SINGLE_SQUARE;
 		if (ec.matches("none ")) {
@@ -39,7 +39,7 @@ final class TestFileParser extends AbstractTestFileParser
 		else if (ec.matches("(" + sq + " +)+")) {
 			return Strings.allMatches(ec, sq)
 					.map(String::toUpperCase)
-					.map(BoardSquare::valueOf)
+					.map(Square::valueOf)
 					.toSet();
 		}
 		else {

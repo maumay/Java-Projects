@@ -5,7 +5,7 @@ package jenjinn.engine.eval.piecesquaretables;
 
 import java.util.Arrays;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
 import jflow.iterators.factories.IterRange;
@@ -33,7 +33,7 @@ public final class PieceSquareTable
 		return associatedPiece;
 	}
 
-	public int getValueAt(BoardSquare location)
+	public int getValueAt(Square location)
 	{
 		return locationValues[location.ordinal()];
 	}

@@ -5,7 +5,7 @@ package jenjinn.engine.moves;
 
 import java.util.Set;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.base.CastleZone;
 import jenjinn.engine.base.DevelopmentPiece;
 import jenjinn.engine.base.Side;
@@ -23,13 +23,13 @@ public final class PromotionMove extends AbstractChessMove
 {
 	private final PromotionResult promotionResult;
 
-	public PromotionMove(BoardSquare start, BoardSquare target, PromotionResult promotionResult)
+	public PromotionMove(Square start, Square target, PromotionResult promotionResult)
 	{
 		super(start, target);
 		this.promotionResult = promotionResult;
 	}
 
-	public static Flow<ChessMove> generateAllPossibilities(BoardSquare start, BoardSquare target)
+	public static Flow<ChessMove> generateAllPossibilities(Square start, Square target)
 	{
 		return Iter.over(PromotionResult.values()).map(res -> new PromotionMove(start, target, res));
 	}

@@ -4,7 +4,7 @@
 package jenjinn.engine.pieces;
 
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.base.Side;
 import jenjinn.engine.bitboards.Bitboards;
 
@@ -18,7 +18,7 @@ public enum ChessPiece implements Moveable
 	WHITE_PAWN
 	{
 		@Override
-		public long getMoves(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getMoves(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			int locationIndex = currentLocation.ordinal();
 			assert 7 < locationIndex && locationIndex < 56;
@@ -34,13 +34,13 @@ public enum ChessPiece implements Moveable
 		}
 
 		@Override
-		public long getAttacks(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getAttacks(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & blackPieces;
 		}
 
 		@Override
-		public long getSquaresOfControl(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getSquaresOfControl(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return Bitboards.emptyBoardAttackset(WHITE_PAWN, currentLocation);
 		}
@@ -49,19 +49,19 @@ public enum ChessPiece implements Moveable
 	WHITE_KNIGHT
 	{
 		@Override
-		public long getMoves(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getMoves(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & (~whitePieces);
 		}
 
 		@Override
-		public long getAttacks(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getAttacks(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & blackPieces;
 		}
 
 		@Override
-		public long getSquaresOfControl(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getSquaresOfControl(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return Bitboards.emptyBoardMoveset(WHITE_KNIGHT, currentLocation);
 		}
@@ -70,19 +70,19 @@ public enum ChessPiece implements Moveable
 	WHITE_BISHOP
 	{
 		@Override
-		public long getMoves(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getMoves(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & (~whitePieces);
 		}
 
 		@Override
-		public long getAttacks(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getAttacks(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & blackPieces;
 		}
 
 		@Override
-		public long getSquaresOfControl(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getSquaresOfControl(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			int magicIndex = getMagicMoveIndex(
 					whitePieces | blackPieces,
@@ -98,19 +98,19 @@ public enum ChessPiece implements Moveable
 	WHITE_ROOK
 	{
 		@Override
-		public long getMoves(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getMoves(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & (~whitePieces);
 		}
 
 		@Override
-		public long getAttacks(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getAttacks(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & blackPieces;
 		}
 
 		@Override
-		public long getSquaresOfControl(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getSquaresOfControl(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			int magicIndex = getMagicMoveIndex(
 					whitePieces | blackPieces,
@@ -126,19 +126,19 @@ public enum ChessPiece implements Moveable
 	WHITE_QUEEN
 	{
 		@Override
-		public long getMoves(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getMoves(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & (~whitePieces);
 		}
 
 		@Override
-		public long getAttacks(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getAttacks(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & blackPieces;
 		}
 
 		@Override
-		public long getSquaresOfControl(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getSquaresOfControl(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return WHITE_BISHOP.getSquaresOfControl(currentLocation, whitePieces, blackPieces)
 					| WHITE_ROOK.getSquaresOfControl(currentLocation, whitePieces, blackPieces);
@@ -148,19 +148,19 @@ public enum ChessPiece implements Moveable
 	WHITE_KING
 	{
 		@Override
-		public long getMoves(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getMoves(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & (~whitePieces);
 		}
 
 		@Override
-		public long getAttacks(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getAttacks(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & blackPieces;
 		}
 
 		@Override
-		public long getSquaresOfControl(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getSquaresOfControl(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return Bitboards.emptyBoardMoveset(WHITE_KING, currentLocation);
 		}
@@ -171,7 +171,7 @@ public enum ChessPiece implements Moveable
 	BLACK_PAWN
 	{
 		@Override
-		public long getMoves(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getMoves(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			int locationIndex = currentLocation.ordinal();
 			assert 7 < locationIndex && locationIndex < 56;
@@ -187,13 +187,13 @@ public enum ChessPiece implements Moveable
 		}
 
 		@Override
-		public long getAttacks(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getAttacks(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & whitePieces;
 		}
 
 		@Override
-		public long getSquaresOfControl(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getSquaresOfControl(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return Bitboards.emptyBoardAttackset(BLACK_PAWN, currentLocation);
 		}
@@ -202,19 +202,19 @@ public enum ChessPiece implements Moveable
 	BLACK_KNIGHT
 	{
 		@Override
-		public long getMoves(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getMoves(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & (~blackPieces);
 		}
 
 		@Override
-		public long getAttacks(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getAttacks(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & whitePieces;
 		}
 
 		@Override
-		public long getSquaresOfControl(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getSquaresOfControl(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return Bitboards.emptyBoardMoveset(BLACK_KNIGHT, currentLocation);
 		}
@@ -223,19 +223,19 @@ public enum ChessPiece implements Moveable
 	BLACK_BISHOP
 	{
 		@Override
-		public long getMoves(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getMoves(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & (~blackPieces);
 		}
 
 		@Override
-		public long getAttacks(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getAttacks(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & whitePieces;
 		}
 
 		@Override
-		public long getSquaresOfControl(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getSquaresOfControl(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			int magicIndex = getMagicMoveIndex(
 					whitePieces | blackPieces,
@@ -251,19 +251,19 @@ public enum ChessPiece implements Moveable
 	BLACK_ROOK
 	{
 		@Override
-		public long getMoves(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getMoves(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & (~blackPieces);
 		}
 
 		@Override
-		public long getAttacks(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getAttacks(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & whitePieces;
 		}
 
 		@Override
-		public long getSquaresOfControl(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getSquaresOfControl(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			int magicIndex = getMagicMoveIndex(
 					whitePieces | blackPieces,
@@ -279,19 +279,19 @@ public enum ChessPiece implements Moveable
 	BLACK_QUEEN
 	{
 		@Override
-		public long getMoves(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getMoves(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & (~blackPieces);
 		}
 
 		@Override
-		public long getAttacks(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getAttacks(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & whitePieces;
 		}
 
 		@Override
-		public long getSquaresOfControl(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getSquaresOfControl(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return BLACK_BISHOP.getSquaresOfControl(currentLocation, whitePieces, blackPieces)
 					| BLACK_ROOK.getSquaresOfControl(currentLocation, whitePieces, blackPieces);
@@ -301,19 +301,19 @@ public enum ChessPiece implements Moveable
 	BLACK_KING
 	{
 		@Override
-		public long getMoves(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getMoves(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & (~blackPieces);
 		}
 
 		@Override
-		public long getAttacks(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getAttacks(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return getSquaresOfControl(currentLocation, whitePieces, blackPieces) & whitePieces;
 		}
 
 		@Override
-		public long getSquaresOfControl(BoardSquare currentLocation, long whitePieces, long blackPieces)
+		public long getSquaresOfControl(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			return Bitboards.emptyBoardMoveset(BLACK_KING, currentLocation);
 		}

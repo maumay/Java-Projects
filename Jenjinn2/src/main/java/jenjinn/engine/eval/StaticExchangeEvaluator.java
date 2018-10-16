@@ -7,7 +7,7 @@ import static java.lang.Math.max;
 import static jenjinn.engine.bitboards.BitboardUtils.bitboardsIntersect;
 import static jenjinn.engine.bitboards.Bitboards.emptyBoardAttackset;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.base.Side;
 import jenjinn.engine.bitboards.BitboardIterator;
 import jenjinn.engine.boardstate.BoardState;
@@ -24,7 +24,7 @@ public class StaticExchangeEvaluator
 {
 	private long target, source, attadef, xrays;
 
-	public boolean isGoodExchange(BoardSquare sourceSquare, BoardSquare targetSquare, BoardState state)
+	public boolean isGoodExchange(Square sourceSquare, Square targetSquare, BoardState state)
 	{
 		// Make sure all instance variables set correctly first
 		DetailedPieceLocations pieceLocs = state.getPieceLocations();
@@ -66,10 +66,10 @@ public class StaticExchangeEvaluator
 	private void updateXrays(DetailedPieceLocations pieceLocs)
 	{
 		if (xrays != 0) {
-			Flow<BoardSquare> xrayLocs = BitboardIterator.from(xrays);
+			Flow<Square> xrayLocs = BitboardIterator.from(xrays);
 			long white = pieceLocs.getWhiteLocations(), black = pieceLocs.getBlackLocations();
 			while (xrayLocs.hasNext()) {
-				BoardSquare loc = xrayLocs.next();
+				Square loc = xrayLocs.next();
 				ChessPiece p = pieceLocs.getPieceAt(loc);
 				if (bitboardsIntersect(p.getSquaresOfControl(loc, white, black), target)) {
 					long locBitboard = loc.asBitboard();
@@ -88,9 +88,9 @@ public class StaticExchangeEvaluator
 		long black = locationProvider.getBlackLocations();
 
 		for (ChessPiece p : ChessPieces.all()) {
-			Flow<BoardSquare> locations = locationProvider.iterateLocs(p);
+			Flow<Square> locations = locationProvider.iterateLocs(p);
 			while (locations.hasNext()) {
-				BoardSquare loc = locations.next();
+				Square loc = locations.next();
 				long control = p.getSquaresOfControl(loc, white, black);
 				if (bitboardsIntersect(control, target)) {
 					attadef |= loc.asBitboard();

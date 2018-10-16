@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.base.CastleZone;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.DetailedPieceLocations;
@@ -76,13 +76,13 @@ public final class PgnMoveBuilder
 		String mc = moveCommand;
 		Supplier<BadPgnException> exSupplier = () -> new BadPgnException(moveCommand);
 
-		List<BoardSquare> encodedSquares = allMatches(mc, SQUARE)
+		List<Square> encodedSquares = allMatches(mc, SQUARE)
 				.map(String::toUpperCase)
-				.map(BoardSquare::valueOf)
+				.map(Square::valueOf)
 				.toList();
 
 		if (encodedSquares.size() == 1) {
-			BoardSquare target = last(encodedSquares);
+			Square target = last(encodedSquares);
 			List<String> files = allMatches(mc, FILE).toList(), ranks = allMatches(mc, RANK).toList();
 			char pieceIdentifier = firstMatch(mc, PIECE).orElse("P").charAt(0);
 			int pieceOrdinalMod6 = CHARACTER_PIECE_MAP.getOrDefault(pieceIdentifier, 0);
@@ -111,7 +111,7 @@ public final class PgnMoveBuilder
 			}
 		}
 		else if (encodedSquares.size() == 2) {
-			BoardSquare source = head(encodedSquares), target = last(encodedSquares);
+			Square source = head(encodedSquares), target = last(encodedSquares);
 			return Iter.over(legalMoves)
 					.filter(mv -> mv.getSource() == source && mv.getTarget() == target)
 					.safeNext().orElseThrow(exSupplier);
@@ -128,7 +128,7 @@ public final class PgnMoveBuilder
 
 		PromotionResult piece = PromotionResult.valueOf(Strings.lastMatch(mc, "[NBRQ]").get());
 		String encodedTarget = firstMatch(mc, SQUARE).orElseThrow(exSupplier);
-		BoardSquare target = BoardSquare.valueOf(encodedTarget.toUpperCase());
+		Square target = Square.valueOf(encodedTarget.toUpperCase());
 		List<PromotionMove> candidates = Iter.over(legalMoves)
 				.filterAndCastTo(PromotionMove.class)
 				.filter(mv -> mv.getTarget().equals(target) && mv.getPromotionResult().equals(piece))

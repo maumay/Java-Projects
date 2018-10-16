@@ -8,7 +8,7 @@ import static jflow.utilities.CollectionUtil.last;
 import static jflow.utilities.Strings.allMatches;
 import static jflow.utilities.Strings.firstMatch;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.pgn.CommonRegex;
 import jflow.collections.FList;
 
@@ -18,10 +18,10 @@ import jflow.collections.FList;
  */
 final class IndividualStateCase
 {
-	public final BoardSquare source, target;
+	public final Square source, target;
 	public final boolean isGoodExchange;
 
-	public IndividualStateCase(BoardSquare source, BoardSquare target, boolean isGoodExchange)
+	public IndividualStateCase(Square source, Square target, boolean isGoodExchange)
 	{
 		this.source = source;
 		this.target = target;
@@ -33,9 +33,9 @@ final class IndividualStateCase
 	{
 		String sq = CommonRegex.SINGLE_SQUARE, doubleSq = CommonRegex.DOUBLE_SQUARE;
 		if (encoded.matches("^" + doubleSq + " +(GOOD|BAD)$")) {
-			FList<BoardSquare> sqs = allMatches(encoded, sq)
+			FList<Square> sqs = allMatches(encoded, sq)
 					.map(String::toUpperCase)
-					.map(BoardSquare::valueOf)
+					.map(Square::valueOf)
 					.toList();
 			return new IndividualStateCase(head(sqs), last(sqs), firstMatch(encoded, "GOOD").isPresent());
 		}

@@ -8,7 +8,7 @@ import static jenjinn.engine.bitboards.BitboardUtils.bitboardsIntersect;
 import static jenjinn.engine.bitboards.Bitboards.emptyBoardAttackset;
 import static jenjinn.engine.moves.MoveCache.getMove;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.base.Side;
 import jenjinn.engine.bitboards.BitboardIterator;
 import jenjinn.engine.boardstate.BoardState;
@@ -43,7 +43,7 @@ public final class PinnedPieces
 		long activeLocs = pieceLocs.getSideLocations(active), allLocs = pieceLocs.getAllLocations();
 
 		ChessPiece activeKing = ChessPieces.king(active);
-		BoardSquare kingLoc = pieceLocs.iterateLocs(activeKing).next();
+		Square kingLoc = pieceLocs.iterateLocs(activeKing).next();
 		long kloc = kingLoc.asBitboard();
 
 		return Iter.over(ChessPieces.pinnersOn(passive))
@@ -62,7 +62,7 @@ public final class PinnedPieces
 				.filter(cord -> bitCount(cord & activeLocs) == 1 && bitCount(cord & allLocs) == 2)
 				/* This active piece must therefore be pinned. */
 				.mapToObject(cord -> {
-					BoardSquare pieceLoc = BitboardIterator.from(cord & activeLocs).next();
+					Square pieceLoc = BitboardIterator.from(cord & activeLocs).next();
 					return new PinnedPiece(pieceLoc, cord);
 				})
 				.build(PinnedPieceCollection::new);

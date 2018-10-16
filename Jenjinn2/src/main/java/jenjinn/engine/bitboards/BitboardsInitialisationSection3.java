@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-import jenjinn.engine.base.BoardSquare;
-import jenjinn.engine.base.Direction;
+import jenjinn.engine.base.Square;
+import jenjinn.engine.base.Dir;
 import jenjinn.engine.pieces.PieceMovementDirections;
 import jflow.iterators.factories.Iter;
 
@@ -36,7 +36,7 @@ final class BitboardsInitialisationSection3
 				PieceMovementDirections.BISHOP);
 	}
 
-	static long[][] generateMagicMoveDatabase(long[][] occupancyVariations, long[] magicNumbers, int[] magicBitshifts, List<Direction> movementDirections)
+	static long[][] generateMagicMoveDatabase(long[][] occupancyVariations, long[] magicNumbers, int[] magicBitshifts, List<Dir> movementDirections)
 	{
 		long[][] magicMoveDatabase = new long[64][];
 		for (byte i = 0; i < 64; i++) {
@@ -47,14 +47,14 @@ final class BitboardsInitialisationSection3
 
 			for (long occVar : singleSquareOccupancyVariations) {
 				int magicIndex = (int) ((occVar * magicNumber) >>> bitShift);
-				singleSquareMagicMoveDatabase[magicIndex] = findControlSetFromOccupancyVariation(BoardSquare.of(i), occVar, movementDirections);
+				singleSquareMagicMoveDatabase[magicIndex] = findControlSetFromOccupancyVariation(Square.of(i), occVar, movementDirections);
 			}
 			magicMoveDatabase[i] = singleSquareMagicMoveDatabase;
 		}
 		return magicMoveDatabase;
 	}
 
-	static long findControlSetFromOccupancyVariation(BoardSquare startSq, long occVar, List<Direction> movementDirections)
+	static long findControlSetFromOccupancyVariation(Square startSq, long occVar, List<Dir> movementDirections)
 	{
 		return bitwiseOr(Iter.over(movementDirections)
 				.map(direction -> startSq.getAllSquaresInDirections(direction, 8))

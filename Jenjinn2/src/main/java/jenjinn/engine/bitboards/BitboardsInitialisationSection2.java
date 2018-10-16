@@ -8,8 +8,8 @@ import static jflow.utilities.MapUtil.longMap;
 import java.util.ArrayList;
 import java.util.List;
 
-import jenjinn.engine.base.BoardSquare;
-import jenjinn.engine.base.Direction;
+import jenjinn.engine.base.Square;
+import jenjinn.engine.base.Dir;
 import jenjinn.engine.pieces.PieceMovementDirections;
 import jflow.iterators.factories.IterRange;
 import jflow.iterators.factories.Iter;
@@ -27,7 +27,7 @@ final class BitboardsInitialisationSection2
 {
 	static long[][] generateAllBishopOccupancyVariations()
 	{
-		return BoardSquare.iterateAll()
+		return Square.iterateAll()
 				.map(square -> calculateOccupancyVariations(square, PieceMovementDirections.BISHOP))
 				.toList()
 				.toArray(new long[64][]);
@@ -35,21 +35,21 @@ final class BitboardsInitialisationSection2
 
 	static long[][] generateAllRookOccupancyVariations()
 	{
-		return BoardSquare.iterateAll()
+		return Square.iterateAll()
 				.map(square -> calculateOccupancyVariations(square, PieceMovementDirections.ROOK))
 				.toList()
 				.toArray(new long[64][]);
 	}
 
-	static long[] calculateOccupancyVariations(BoardSquare startSq, List<Direction> movementDirections)
+	static long[] calculateOccupancyVariations(Square startSq, List<Dir> movementDirections)
 	{
-		List<BoardSquare> relevantSquares = new ArrayList<>();
-		for (Direction dir : movementDirections)
+		List<Square> relevantSquares = new ArrayList<>();
+		for (Dir dir : movementDirections)
 		{
-			int numOfSqsLeft = startSq.getNumberOfSquaresLeftInDirection(dir);
-			relevantSquares.addAll(startSq.getAllSquaresInDirections(asList(dir), numOfSqsLeft - 1));
+			int numOfSqsLeft = startSq.getNumberOfSquaresLeft(dir);
+			relevantSquares.addAll(startSq.getAllSquares(asList(dir), numOfSqsLeft - 1));
 		}
-		return BitboardsInitialisationSection2.bitwiseOrAllSetsInPowerset(longMap(BoardSquare::asBitboard, relevantSquares));
+		return BitboardsInitialisationSection2.bitwiseOrAllSetsInPowerset(longMap(Square::asBitboard, relevantSquares));
 	}
 
 	static long[] generateRookOccupancyMasks()

@@ -1,6 +1,6 @@
 package jenjinn.engine.bitboards;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.pieces.ChessPiece;
 
 /**
@@ -69,7 +69,7 @@ public final class Bitboards
 	 * Function which will return a bitboard representing the available move locations for
 	 * a given piece at a given square.
 	 */
-	public static long emptyBoardMoveset(ChessPiece piece, BoardSquare square)
+	public static long emptyBoardMoveset(ChessPiece piece, Square square)
 	{
 		int pieceOrdinalModSix = piece.ordinal() % 6;
 
@@ -85,7 +85,7 @@ public final class Bitboards
 	 * Function which will return a bitboard representing the available attack locations for
 	 * a given piece at a given square.
 	 */
-	public static long emptyBoardAttackset(ChessPiece piece, BoardSquare square)
+	public static long emptyBoardAttackset(ChessPiece piece, Square square)
 	{
 		int pieceOrdinalModSix = piece.ordinal() % 6;
 
@@ -105,7 +105,7 @@ public final class Bitboards
 	 * Bishop occupancy masks for each square. An bishop occupancy mask for square i
 	 * is the corresponding empty board bishop moveset & ~(border set).
 	 */
-	public static long bishopOccupancyMaskAt(BoardSquare square)
+	public static long bishopOccupancyMaskAt(Square square)
 	{
 		return BitboardsImpl.BISHOP_OCCUPANCY_MASKS[square.ordinal()];
 	}
@@ -116,7 +116,7 @@ public final class Bitboards
 	 * remove the end squares of the rook move path on an empty board and keep the
 	 * rest (except the square containing the rook).
 	 */
-	public static long rookOccupancyMaskAt(BoardSquare square)
+	public static long rookOccupancyMaskAt(Square square)
 	{
 		return BitboardsImpl.ROOK_OCCUPANCY_MASKS[square.ordinal()];
 	}
@@ -126,7 +126,7 @@ public final class Bitboards
 	 * square. A bov for square i is BOM[i] & (location of all pieces on the board).
 	 * There are 2^(Cardinality(BOM[i])) variations.
 	 */
-	public static long[] bishopOccupancyVariationAt(BoardSquare square)
+	public static long[] bishopOccupancyVariationAt(Square square)
 	{
 		return BitboardsImpl.BISHOP_OCCUPANCY_VARIATIONS[square.ordinal()];
 	}
@@ -136,7 +136,7 @@ public final class Bitboards
 	 * square. A rov for square i is ROM[i] & (location of all pieces on the board).
 	 * There are 2^(Cardinality(ROM[i])) variations.
 	 */
-	public static long[] rookOccupancyVariationAt(BoardSquare square)
+	public static long[] rookOccupancyVariationAt(Square square)
 	{
 		return BitboardsImpl.ROOK_OCCUPANCY_VARIATIONS[square.ordinal()];
 	}
@@ -146,7 +146,7 @@ public final class Bitboards
 	 * The magic bitshifts form part of the surjective mapping definition behind
 	 * magic bitboards
 	 */
-	public static int bishopMagicBitshiftAt(BoardSquare square)
+	public static int bishopMagicBitshiftAt(Square square)
 	{
 		return BitboardsImpl.BISHOP_MAGIC_BITSHIFTS[square.ordinal()];
 	}
@@ -156,7 +156,7 @@ public final class Bitboards
 	 * magic bitshifts form part of the surjective mapping definition behind magic
 	 * bitboards
 	 */
-	public static int rookMagicBitshiftAt(BoardSquare square)
+	public static int rookMagicBitshiftAt(Square square)
 	{
 		return BitboardsImpl.ROOK_MAGIC_BITSHIFTS[square.ordinal()];
 	}
@@ -165,7 +165,7 @@ public final class Bitboards
 	 * Bishop magic number values for each square. Used for defining the surjective
 	 * map definition used in magic bitboards.
 	 */
-	public static long bishopMagicNumberAt(BoardSquare square)
+	public static long bishopMagicNumberAt(Square square)
 	{
 		return BitboardsImpl.BISHOP_MAGIC_NUMBERS[square.ordinal()];
 	}
@@ -174,7 +174,7 @@ public final class Bitboards
 	 * Rook magic number values for each square. Used for defining the surjective
 	 * map definition used in magic bitboards.
 	 */
-	public static long rookMagicNumberAt(BoardSquare square)
+	public static long rookMagicNumberAt(Square square)
 	{
 		return BitboardsImpl.ROOK_MAGIC_NUMBERS[square.ordinal()];
 	}
@@ -187,7 +187,7 @@ public final class Bitboards
 	 * domain of the map is the set of all bishop occupancy variations and the
 	 * target of the map is this database.
 	 */
-	public static long bishopMagicMove(BoardSquare square, int magicIndex)
+	public static long bishopMagicMove(Square square, int magicIndex)
 	{
 		return BitboardsImpl.BISHOP_MAGIC_MOVES[square.ordinal()][magicIndex];
 	}
@@ -197,7 +197,7 @@ public final class Bitboards
 	 * domain of the map is the set of all rook occupancy variations and the target
 	 * of the map is this database.
 	 */
-	public static long rookMagicMove(BoardSquare square, int magicIndex)
+	public static long rookMagicMove(Square square, int magicIndex)
 	{
 		return BitboardsImpl.ROOK_MAGIC_MOVES[square.ordinal()][magicIndex];
 	}

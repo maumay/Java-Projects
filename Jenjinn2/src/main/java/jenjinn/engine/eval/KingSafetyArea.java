@@ -5,7 +5,7 @@ package jenjinn.engine.eval;
 
 import static jenjinn.engine.bitboards.Bitboards.emptyBoardAttackset;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.bitboards.BitboardIterator;
 import jenjinn.engine.pieces.ChessPiece;
 import jflow.collections.FList;
@@ -17,7 +17,7 @@ public final class KingSafetyArea
 {
 	private final long outer, inner, all;
 
-	private KingSafetyArea(BoardSquare src)
+	private KingSafetyArea(Square src)
 	{
 		final ChessPiece king = ChessPiece.WHITE_KING;
 		this.inner = emptyBoardAttackset(king, src);
@@ -43,9 +43,9 @@ public final class KingSafetyArea
 	}
 
 	private static final FList<KingSafetyArea> CACHE =
-			BoardSquare.iterateAll().map(KingSafetyArea::new).toList();
+			Square.iterateAll().map(KingSafetyArea::new).toList();
 
-	public static KingSafetyArea get(BoardSquare src)
+	public static KingSafetyArea get(Square src)
 	{
 		return CACHE.get(src.ordinal());
 	}

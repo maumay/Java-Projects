@@ -8,7 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.calculators.PinnedPieces;
 import jflow.iterators.Flow;
@@ -21,7 +21,7 @@ class PinnedPiecesTest
 {
 	@ParameterizedTest
 	@MethodSource
-	void test(final BoardState state, Set<BoardSquare> expectedPinnedPieces)
+	void test(final BoardState state, Set<Square> expectedPinnedPieces)
 	{
 		assertEquals(expectedPinnedPieces, PinnedPieces.in(state).getLocations());
 	}

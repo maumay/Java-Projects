@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.base.FileUtils;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
@@ -29,17 +29,17 @@ class MovementIntegrationTest
 	void testNonPawnMoves()
 	{
 		final List<ChessPiece> nonPawns = ChessPieces.iterate().filter(p -> !p.isPawn()).toList();
-		BoardSquare.iterateAll().forEach(square -> testMovesAgreeAtSquare(square, nonPawns));
+		Square.iterateAll().forEach(square -> testMovesAgreeAtSquare(square, nonPawns));
 	}
 
 	@Test
 	void testPawnMoves()
 	{
 		final List<ChessPiece> pawns = asList(ChessPiece.WHITE_PAWN, ChessPiece.BLACK_PAWN);
-		BoardSquare.iterateAll().drop(8).take(48).forEach(square -> testMovesAgreeAtSquare(square, pawns));
+		Square.iterateAll().drop(8).take(48).forEach(square -> testMovesAgreeAtSquare(square, pawns));
 	}
 
-	void testMovesAgreeAtSquare(final BoardSquare square, final List<ChessPiece> piecesToTest)
+	void testMovesAgreeAtSquare(final Square square, final List<ChessPiece> piecesToTest)
 	{
 		piecesToTest.stream().forEach(piece ->
 		{
@@ -49,7 +49,7 @@ class MovementIntegrationTest
 		});
 	}
 
-	void testMovesAreCorrect(final ChessPiece piece, final BoardSquare square, final BasicPieceLocations pieceLocations)
+	void testMovesAreCorrect(final ChessPiece piece, final Square square, final BasicPieceLocations pieceLocations)
 	{
 		final TestChessPiece constraintPiece = TestChessPiece.values()[piece.ordinal()];
 		final long white = pieceLocations.getWhite(), black = pieceLocations.getBlack();

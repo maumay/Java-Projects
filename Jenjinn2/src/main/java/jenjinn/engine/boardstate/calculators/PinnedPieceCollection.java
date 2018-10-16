@@ -9,7 +9,7 @@ import static java.util.function.Function.identity;
 import java.util.Map;
 import java.util.Set;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jflow.iterators.Flow;
 import jflow.iterators.factories.Iter;
 import jflow.iterators.iterables.FlowIterable;
@@ -20,7 +20,7 @@ import jflow.iterators.iterables.FlowIterable;
  */
 public final class PinnedPieceCollection implements FlowIterable<PinnedPiece>
 {
-	private final Map<BoardSquare, PinnedPiece> cache;
+	private final Map<Square, PinnedPiece> cache;
 
 	public PinnedPieceCollection(Flow<PinnedPiece> pinnedPieces)
 	{
@@ -33,17 +33,17 @@ public final class PinnedPieceCollection implements FlowIterable<PinnedPiece>
 		return Iter.over(cache.values());
 	}
 
-	public Set<BoardSquare> getLocations()
+	public Set<Square> getLocations()
 	{
 		return cache.keySet();
 	}
 
-	public boolean containsLocation(BoardSquare location)
+	public boolean containsLocation(Square location)
 	{
 		return cache.containsKey(location);
 	}
 
-	public long getConstraintAreaOfPieceAt(BoardSquare location)
+	public long getConstraintAreaOfPieceAt(Square location)
 	{
 		return cache.get(location).getConstrainedArea();
 	}

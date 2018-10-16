@@ -4,11 +4,9 @@ import static java.lang.Math.abs;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-import java.util.Arrays;
 import java.util.Optional;
 
-import jflow.iterators.Flow;
-import jflow.iterators.factories.Iter;
+import jflow.seq.Seq;
 
 /**
  * Enum representing all the different directions
@@ -16,34 +14,31 @@ import jflow.iterators.factories.Iter;
  *
  * @author t
  */
-public enum Direction
+public enum Dir
 {
 	N(1, 0), E(0, -1), S(-1, 0), W(0, 1),
 	NE(1, -1), SE(-1, -1), SW(-1, 1), NW(1, 1),
 	NNE(2, -1), NEE(1, -2), SEE(-1, -2), SSE(-2, -1),
 	SSW(-2, 1), SWW(-1, 2), NWW(1, 2), NNW(2, 1);
+	
+	public static final Seq<Dir> ALL = Seq.of(values());
 
 	public final int rankIndexChange;
 	public final int fileIndexChange;
 
-	private Direction(int rankIndexChange, int fileIndexChange)
+	private Dir(int rankIndexChange, int fileIndexChange)
 	{
 		this.rankIndexChange = rankIndexChange;
 		this.fileIndexChange = fileIndexChange;
 	}
 
-	public static Flow<Direction> iterateAll()
-	{
-		return Iter.over(Arrays.asList(values()));
-	}
-
-	public static Optional<Direction> ofLineBetween(BoardSquare start, BoardSquare end)
+	public static Optional<Dir> ofLineBetween(Square start, Square end)
 	{
 		if (start == end) {
 			return Optional.empty();
 		}
 
-		int rankChange = end.rank() - start.rank(), fileChange = end.file() - start.file();
+		int rankChange = end.rank - start.rank, fileChange = end.file - start.file;
 		int maxAbsChange = max(abs(rankChange), abs(fileChange)), minAbsChange = min(abs(rankChange), abs(fileChange));
 		int normaliser = minAbsChange == 0? maxAbsChange : minAbsChange;
 
@@ -52,7 +47,7 @@ public enum Direction
 		}
 		else {
 			int rankIndexChange = rankChange/normaliser, fileIndexChange = fileChange/normaliser;
-			return iterateAll().filter(dir -> dir.rankIndexChange == rankIndexChange && dir.fileIndexChange == fileIndexChange).safeNext();
+			return ALL.findFirst(dir -> dir.rankIndexChange == rankIndexChange && dir.fileIndexChange == fileIndexChange);
 		}
 	}
 }

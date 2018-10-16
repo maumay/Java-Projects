@@ -7,7 +7,7 @@ import static jenjinn.engine.bitboards.BitboardUtils.bitboardsIntersect;
 
 import java.util.Optional;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.base.GameTermination;
 import jenjinn.engine.base.Side;
 import jenjinn.engine.boardstate.BoardState;
@@ -136,7 +136,7 @@ public final class QuiescentSearcher
 			return standPat >= alpha - (PieceValues.MIDGAME.valueOfPawn() + deltaPruneSafetyMargin);
 		} else {
 			Side active = root.getActiveSide(), passive = active.otherSide();
-			BoardSquare source = move.getSource(), target = move.getTarget();
+			Square source = move.getSource(), target = move.getTarget();
 			int targVal = PieceValues.MIDGAME.valueOf(root.getPieceLocations().getPieceAt(target, passive));
 			return standPat >= alpha - (targVal + deltaPruneSafetyMargin) && see.isGoodExchange(source, target, root);
 		}

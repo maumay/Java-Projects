@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javafx.geometry.Point2D;
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jflow.iterators.Flow;
 import jflow.iterators.misc.Pair;
 
@@ -16,28 +16,28 @@ import jflow.iterators.misc.Pair;
  */
 public final class BoardSquareLocations
 {
-	private final Map<BoardSquare, Point2D> squareToPoint = new HashMap<>();
-	private final Map<Point2D, BoardSquare> pointToSquare = new HashMap<>();
+	private final Map<Square, Point2D> squareToPoint = new HashMap<>();
+	private final Map<Point2D, Square> pointToSquare = new HashMap<>();
 
-	public BoardSquareLocations(Flow<Pair<BoardSquare, Point2D>> src)
+	public BoardSquareLocations(Flow<Pair<Square, Point2D>> src)
 	{
 		src.forEach(pair -> put(pair.first(), pair.second()));
 	}
 
 	public static BoardSquareLocations getDefault()
 	{
-		return BoardSquare.iterateAll()
+		return Square.iterateAll()
 		.map(square -> Pair.of(square, new Point2D(7 - square.file(), 7 - square.rank())))
 		.build(BoardSquareLocations::new);
 	}
 
-	private void put(BoardSquare square, Point2D point)
+	private void put(Square square, Point2D point)
 	{
 		squareToPoint.put(square, point);
 		pointToSquare.put(point, square);
 	}
 
-	public Point2D get(BoardSquare square)
+	public Point2D get(Square square)
 	{
 		if (!squareToPoint.containsKey(square)) {
 			throw new IllegalStateException();
@@ -45,7 +45,7 @@ public final class BoardSquareLocations
 		return squareToPoint.get(square);
 	}
 
-	public BoardSquare get(Point2D point)
+	public Square get(Point2D point)
 	{
 		if (!pointToSquare.containsKey(point)) {
 			throw new IllegalStateException();
@@ -56,7 +56,7 @@ public final class BoardSquareLocations
 	public BoardSquareLocations rotate(double boardWidth)
 	{
 		final Point2D translation = new Point2D(boardWidth, boardWidth);
-		return BoardSquare.iterateAll()
+		return Square.iterateAll()
 				.map(sq -> Pair.of(sq, get(sq).multiply(-1).add(translation)))
 				.build(BoardSquareLocations::new);
 	}

@@ -15,7 +15,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.base.Side;
 import jenjinn.engine.eval.piecesquaretables.PieceSquareTables;
 import jenjinn.engine.pieces.ChessPiece;
@@ -32,7 +32,7 @@ class DetailedPieceLocationsTest
 	@Test
 	void testAddPieceAt()
 	{
-		final List<BoardSquare> locationsToAddPieceAt = getLocationSquares();
+		final List<Square> locationsToAddPieceAt = getLocationSquares();
 		final PieceSquareTables midTables = getMidgameTables(), endTables = getEndgameTables();
 		final DetailedPieceLocations locations = new DetailedPieceLocations(new long[12], midTables, endTables);
 
@@ -40,7 +40,7 @@ class DetailedPieceLocationsTest
 		long runningHash = locations.getSquarePieceFeatureHash();
 
 		for (final ChessPiece piece : ChessPieces.white()) {
-			final BoardSquare loc = locationsToAddPieceAt.get(piece.ordinal());
+			final Square loc = locationsToAddPieceAt.get(piece.ordinal());
 			locations.addPieceAt(loc, piece);
 			assertEquals(loc.asBitboard(), locations.locationsOf(piece));
 			assertEquals(bitwiseOr(take(piece.ordinal() + 1, locationsToAddPieceAt)), locations.getWhiteLocations());
@@ -55,7 +55,7 @@ class DetailedPieceLocationsTest
 		}
 
 		for (final ChessPiece piece : ChessPieces.black()) {
-			final BoardSquare loc = locationsToAddPieceAt.get(piece.ordinal());
+			final Square loc = locationsToAddPieceAt.get(piece.ordinal());
 			locations.addPieceAt(loc, piece);
 			assertEquals(loc.asBitboard(), locations.locationsOf(piece));
 			assertEquals(bitwiseOr(take(6, locationsToAddPieceAt)), locations.getWhiteLocations());
@@ -73,16 +73,16 @@ class DetailedPieceLocationsTest
 	@Test
 	void testRemovePieceAt()
 	{
-		final List<BoardSquare> locationsToAddPieceAt = getLocationSquares();
+		final List<Square> locationsToAddPieceAt = getLocationSquares();
 		final PieceSquareTables midTables = getMidgameTables(), endTables = getEndgameTables();
-		final long[] initialLocations = Iter.over(locationsToAddPieceAt).mapToLong(BoardSquare::asBitboard).toArray();
+		final long[] initialLocations = Iter.over(locationsToAddPieceAt).mapToLong(Square::asBitboard).toArray();
 		final DetailedPieceLocations locations = new DetailedPieceLocations(initialLocations, midTables, endTables);
 
 		int runningMidgameEval = locations.getMidgameEval(), runningEndgameEval = locations.getEndgameEval();
 		long runningHash = locations.getSquarePieceFeatureHash();
 
 		for (final ChessPiece piece : ChessPieces.white()) {
-			final BoardSquare loc = locationsToAddPieceAt.get(piece.ordinal());
+			final Square loc = locationsToAddPieceAt.get(piece.ordinal());
 			locations.removePieceAt(loc, piece);
 			assertEquals(0L, locations.locationsOf(piece));
 			assertEquals(bitwiseOr(locationsToAddPieceAt.subList(piece.ordinal() + 1, 6)), locations.getWhiteLocations());
@@ -97,7 +97,7 @@ class DetailedPieceLocationsTest
 		}
 
 		for (final ChessPiece piece : ChessPieces.black()) {
-			final BoardSquare loc = locationsToAddPieceAt.get(piece.ordinal());
+			final Square loc = locationsToAddPieceAt.get(piece.ordinal());
 			locations.removePieceAt(loc, piece);
 			assertEquals(0L, locations.locationsOf(piece));
 			assertEquals(0L, locations.getWhiteLocations());
@@ -115,25 +115,25 @@ class DetailedPieceLocationsTest
 	@Test
 	void testGetPieceAt()
 	{
-		final List<BoardSquare> locationsToAddPieceAt = getLocationSquares();
-		final long[] initialLocations = Iter.over(locationsToAddPieceAt).mapToLong(BoardSquare::asBitboard).toArray();
+		final List<Square> locationsToAddPieceAt = getLocationSquares();
+		final long[] initialLocations = Iter.over(locationsToAddPieceAt).mapToLong(Square::asBitboard).toArray();
 		final DetailedPieceLocations locations = new DetailedPieceLocations(initialLocations, getMidgameTables(), getEndgameTables());
 
 		for (final ChessPiece piece : ChessPieces.all()) {
-			final BoardSquare loc = locationsToAddPieceAt.get(piece.ordinal());
+			final Square loc = locationsToAddPieceAt.get(piece.ordinal());
 			assertEquals(piece, locations.getPieceAt(loc));
 			assertEquals(piece, locations.getPieceAt(loc, piece.getSide()));
 			assertNull(locations.getPieceAt(loc, piece.getSide().otherSide()), piece.name());
 		}
 
-		final BoardSquare emptySquare = BoardSquare.of(63);
+		final Square emptySquare = Square.of(63);
 		assertNull(locations.getPieceAt(emptySquare));
 		assertNull(locations.getPieceAt(emptySquare, Side.WHITE));
 		assertNull(locations.getPieceAt(emptySquare, Side.BLACK));
 	}
 
-	private List<BoardSquare> getLocationSquares()
+	private List<Square> getLocationSquares()
 	{
-		return IterRange.between(0, 64, 4).take(12).mapToObject(BoardSquare::of).toList();
+		return IterRange.between(0, 64, 4).take(12).mapToObject(Square::of).toList();
 	}
 }

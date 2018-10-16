@@ -11,7 +11,7 @@ import static jflow.utilities.Strings.allMatches;
 
 import java.util.List;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.base.CastleZone;
 import jenjinn.engine.moves.CastleMove;
 import jenjinn.engine.moves.ChessMove;
@@ -58,15 +58,15 @@ public final class ShorthandMoveParser
 	{
 		String mtarg = CommonRegex.MULTI_TARGET, cord = CommonRegex.CORD;
 		if (ec.matches("S\\[(" + mtarg + "|" + cord + ")\\]")) {
-			Pair<BoardSquare, Iterable<BoardSquare>> moves = parseMultiMove(ec.substring(2, ec.length() - 1));
+			Pair<Square, Iterable<Square>> moves = parseMultiMove(ec.substring(2, ec.length() - 1));
 			return Iterators.wrap(moves.second())
 					.map(target -> new StandardMove(moves.first(), target))
 					.filterAndCastTo(ChessMove.class)
 					.toList();
 		}
 		else if (ec.matches("S\\[(" + CommonRegex.DOUBLE_SQUARE + ")\\]")) {
-			List<BoardSquare> squares = Strings.allMatches(ec, CommonRegex.SINGLE_SQUARE)
-					.map(s -> BoardSquare.valueOf(s.toUpperCase()))
+			List<Square> squares = Strings.allMatches(ec, CommonRegex.SINGLE_SQUARE)
+					.map(s -> Square.valueOf(s.toUpperCase()))
 					.toList();
 
 			return asList(new StandardMove(head(squares), last(squares)));
@@ -76,16 +76,16 @@ public final class ShorthandMoveParser
 		}
 	}
 
-	private static Pair<BoardSquare, Iterable<BoardSquare>> parseMultiMove(String ec)
+	private static Pair<Square, Iterable<Square>> parseMultiMove(String ec)
 	{
 		if (ec.matches(CommonRegex.CORD)) {
-			List<BoardSquare> squares = CordParser.parse(ec);
+			List<Square> squares = CordParser.parse(ec);
 			return Pair.of(head(squares), drop(1, squares));
 		}
 		else if (ec.matches(CommonRegex.MULTI_TARGET)) {
-			List<BoardSquare> squares = allMatches(ec, CommonRegex.SINGLE_SQUARE)
+			List<Square> squares = allMatches(ec, CommonRegex.SINGLE_SQUARE)
 					.map(String::toUpperCase)
-					.map(BoardSquare::valueOf)
+					.map(Square::valueOf)
 					.toList();
 			return Pair.of(head(squares), drop(1, squares));
 		}
@@ -100,15 +100,15 @@ public final class ShorthandMoveParser
 		String result = Strings.lastMatch(ec, "[NBRQ]")
 				.orElseThrow(() -> new IllegalArgumentException(ec));
 		if (ec.matches("P\\[(" + mtarg + "|" + cord + ") " + result + "\\]")) {
-			Pair<BoardSquare, Iterable<BoardSquare>> moves = parseMultiMove(ec.substring(2, ec.length() - 3));
+			Pair<Square, Iterable<Square>> moves = parseMultiMove(ec.substring(2, ec.length() - 3));
 			return Iterators.wrap(moves.second())
 					.map(target -> new PromotionMove(moves.first(), target, PromotionResult.valueOf(result)))
 					.filterAndCastTo(ChessMove.class)
 					.toList();
 		}
 		else if (ec.matches("P\\[(" + CommonRegex.DOUBLE_SQUARE + ") " + result + "\\]")) {
-			List<BoardSquare> squares = Strings.allMatches(ec, CommonRegex.SINGLE_SQUARE)
-					.map(s -> BoardSquare.valueOf(s.toUpperCase()))
+			List<Square> squares = Strings.allMatches(ec, CommonRegex.SINGLE_SQUARE)
+					.map(s -> Square.valueOf(s.toUpperCase()))
 					.toList();
 
 			return asList(new PromotionMove(head(squares), last(squares), PromotionResult.valueOf(result)));
@@ -137,9 +137,9 @@ public final class ShorthandMoveParser
 	{
 		String sq = CommonRegex.SINGLE_SQUARE;
 		if (ec.matches("[eE]\\[ *" + sq + " +" + sq + " *\\]")) {
-			List<BoardSquare> sqMatches = allMatches(ec, sq)
+			List<Square> sqMatches = allMatches(ec, sq)
 					.map(String::toUpperCase)
-					.map(BoardSquare::valueOf)
+					.map(Square::valueOf)
 					.toList();
 			return new EnpassantMove(head(sqMatches), last(sqMatches));
 		}

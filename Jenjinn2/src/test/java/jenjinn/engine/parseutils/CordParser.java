@@ -9,8 +9,8 @@ import static jflow.utilities.Strings.allMatches;
 
 import java.util.List;
 
-import jenjinn.engine.base.BoardSquare;
-import jenjinn.engine.base.Direction;
+import jenjinn.engine.base.Square;
+import jenjinn.engine.base.Dir;
 import jenjinn.engine.pgn.CommonRegex;
 import jflow.iterators.factories.Iter;
 
@@ -34,20 +34,20 @@ public final class CordParser
 	 *         (inclusive).
 	 * @throws IllegalArgumentException If no cord connects the two squares.
 	 */
-	public static List<BoardSquare> parse(String encodedCord)
+	public static List<Square> parse(String encodedCord)
 	{
 		String ec = encodedCord.trim();
 		if (!ec.matches(CommonRegex.CORD)) {
 			throw new IllegalArgumentException(encodedCord);
 		}
 
-		List<BoardSquare> squares = allMatches(ec, CommonRegex.SINGLE_SQUARE)
+		List<Square> squares = allMatches(ec, CommonRegex.SINGLE_SQUARE)
 				.map(String::toUpperCase)
-				.map(BoardSquare::valueOf)
+				.map(Square::valueOf)
 				.toList();
 
-		BoardSquare start = head(squares), end = last(squares);
-		Direction dir = Direction.ofLineBetween(start, end)
+		Square start = head(squares), end = last(squares);
+		Dir dir = Dir.ofLineBetween(start, end)
 				.orElseThrow(() -> new IllegalArgumentException(encodedCord));
 
 		return Iter.over(start.getAllSquaresInDirections(dir, 10))

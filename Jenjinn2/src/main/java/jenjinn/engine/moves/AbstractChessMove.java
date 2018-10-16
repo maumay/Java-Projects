@@ -6,7 +6,7 @@ import static java.util.EnumSet.noneOf;
 import java.util.EnumSet;
 import java.util.Set;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.base.CastleZone;
 import jenjinn.engine.base.DevelopmentPiece;
 import jenjinn.engine.boardstate.BoardState;
@@ -19,9 +19,9 @@ import jenjinn.engine.boardstate.DetailedPieceLocations;
  */
 public abstract class AbstractChessMove implements ChessMove
 {
-	private final BoardSquare source, target;
+	private final Square source, target;
 
-	public AbstractChessMove(final BoardSquare start, final BoardSquare target)
+	public AbstractChessMove(final Square start, final Square target)
 	{
 		this.source = start;
 		this.target = target;
@@ -118,13 +118,13 @@ public abstract class AbstractChessMove implements ChessMove
 	}
 
 	@Override
-	public BoardSquare getSource()
+	public Square getSource()
 	{
 		return source;
 	}
 
 	@Override
-	public BoardSquare getTarget()
+	public Square getTarget()
 	{
 		return target;
 	}

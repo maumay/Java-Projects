@@ -6,7 +6,7 @@ package jenjinn.engine.boardstate;
 import java.util.EnumSet;
 import java.util.Set;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.base.DevelopmentPiece;
 import jenjinn.engine.base.Side;
 import jenjinn.engine.utils.BoardHasher;
@@ -24,7 +24,7 @@ public final class BoardState
 	private final Set<DevelopmentPiece> developedPieces;
 
 	private Side activeSide;
-	private BoardSquare enpassantSquare;
+	private Square enpassantSquare;
 
 	public BoardState(
 			HashCache hashCache,
@@ -33,7 +33,7 @@ public final class BoardState
 			CastlingStatus castlingStatus,
 			Set<DevelopmentPiece> developedPieces,
 			Side activeSide,
-			BoardSquare enPassantSquare)
+			Square enPassantSquare)
 	{
 		this.hashCache = hashCache;
 		this.pieceLocations = pieceLocations;
@@ -54,12 +54,12 @@ public final class BoardState
 		this.activeSide = activeSide.otherSide();
 	}
 
-	public BoardSquare getEnPassantSquare()
+	public Square getEnPassantSquare()
 	{
 		return enpassantSquare;
 	}
 
-	public void setEnPassantSquare(BoardSquare enPassantSquare)
+	public void setEnPassantSquare(Square enPassantSquare)
 	{
 		this.enpassantSquare = enPassantSquare;
 	}

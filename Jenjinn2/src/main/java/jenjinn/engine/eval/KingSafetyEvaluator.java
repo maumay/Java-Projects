@@ -5,7 +5,7 @@ package jenjinn.engine.eval;
 
 import static java.lang.Long.bitCount;
 
-import jenjinn.engine.base.BoardSquare;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.DetailedPieceLocations;
 import jenjinn.engine.pieces.ChessPiece;
@@ -33,12 +33,12 @@ public final class KingSafetyEvaluator implements EvaluationComponent
 		DetailedPieceLocations pieceLocs = state.getPieceLocations();
 		long white = pieceLocs.getWhiteLocations(), black = pieceLocs.getBlackLocations();
 
-		BoardSquare wKingLoc = pieceLocs.iterateLocs(ChessPiece.WHITE_KING).next();
+		Square wKingLoc = pieceLocs.iterateLocs(ChessPiece.WHITE_KING).next();
 		KingSafetyArea wSafetyArea = KingSafetyArea.get(wKingLoc);
 
 		int bAttackUnits = 0;
 		for (ChessPiece piece : WKING_ATTACKERS) {
-			Flow<BoardSquare> locs = pieceLocs.iterateLocs(piece);
+			Flow<Square> locs = pieceLocs.iterateLocs(piece);
 			while (locs.hasNext()) {
 				long control = piece.getSquaresOfControl(locs.next(), white, black);
 				bAttackUnits += bitCount(control & wSafetyArea.getOuterArea()) * kst.getOuterUnitValue(piece);
@@ -46,12 +46,12 @@ public final class KingSafetyEvaluator implements EvaluationComponent
 			}
 		}
 
-		BoardSquare bKingLoc = pieceLocs.iterateLocs(ChessPiece.BLACK_KING).next();
+		Square bKingLoc = pieceLocs.iterateLocs(ChessPiece.BLACK_KING).next();
 		KingSafetyArea bSafetyArea = KingSafetyArea.get(bKingLoc);
 
 		int wAttackUnits = 0;
 		for (ChessPiece piece : BKING_ATTACKERS) {
-			Flow<BoardSquare> locs = pieceLocs.iterateLocs(piece);
+			Flow<Square> locs = pieceLocs.iterateLocs(piece);
 			while (locs.hasNext()) {
 				long control = piece.getSquaresOfControl(locs.next(), white, black);
 				wAttackUnits += bitCount(control & bSafetyArea.getOuterArea()) * kst.getOuterUnitValue(piece);
