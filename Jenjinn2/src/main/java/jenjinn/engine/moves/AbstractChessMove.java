@@ -6,12 +6,12 @@ import static java.util.EnumSet.noneOf;
 import java.util.EnumSet;
 import java.util.Set;
 
-import jenjinn.engine.base.Square;
 import jenjinn.engine.base.CastleZone;
 import jenjinn.engine.base.DevelopmentPiece;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.boardstate.BoardState;
-import jenjinn.engine.boardstate.MoveReversalData;
 import jenjinn.engine.boardstate.DetailedPieceLocations;
+import jenjinn.engine.boardstate.MoveReversalData;
 
 /**
  * @author ThomasB
@@ -21,14 +21,14 @@ public abstract class AbstractChessMove implements ChessMove
 {
 	private final Square source, target;
 
-	public AbstractChessMove(final Square start, final Square target)
+	public AbstractChessMove(Square start, Square target)
 	{
 		this.source = start;
 		this.target = target;
 	}
 
 	@Override
-	public void makeMove(final BoardState state, final MoveReversalData unmakeDataStore)
+	public void makeMove(BoardState state, MoveReversalData unmakeDataStore)
 	{
 		assert unmakeDataStore.isConsumed();
 		updateCastlingStatus(state, unmakeDataStore);
@@ -39,30 +39,30 @@ public abstract class AbstractChessMove implements ChessMove
 		unmakeDataStore.setConsumed(false);
 	}
 
-	void updateCastlingStatus(final BoardState state, final MoveReversalData unmakeDataStore)
+	void updateCastlingStatus(BoardState state, MoveReversalData unmakeDataStore)
 	{
 		if (state.getCastlingStatus().getCastlingRights().size() > 0) {
-			final Set<CastleZone> toBeRemoved = getAllRightsToBeRemoved();
-			final Set<CastleZone> rightsRemoved = toBeRemoved.isEmpty() ? noneOf(CastleZone.class) : copyOf(toBeRemoved);
+			Set<CastleZone> toBeRemoved = getAllRightsToBeRemoved();
+			Set<CastleZone> rightsRemoved = toBeRemoved.isEmpty() ? noneOf(CastleZone.class) : copyOf(toBeRemoved);
 			rightsRemoved.retainAll(state.getCastlingStatus().getCastlingRights());
 			state.getCastlingStatus().getCastlingRights().removeAll(rightsRemoved);
 			unmakeDataStore.setDiscardedCastlingRights(rightsRemoved);
-		}
-		else if (unmakeDataStore.getDiscardedCastlingRights().size() > 0) {
+		} else if (unmakeDataStore.getDiscardedCastlingRights().size() > 0) {
 			unmakeDataStore.setDiscardedCastlingRights(EnumSet.noneOf(CastleZone.class));
 		}
 	}
 
 	/**
-	 * Responsible for updating the set of {@linkplain DevelopmentPiece} field in the parameter {@linkplain BoardState}
-	 * and updating the pieceDeveloped field in the {@linkplain MoveReversalData} parameter.
+	 * Responsible for updating the set of {@linkplain DevelopmentPiece} field in
+	 * the parameter {@linkplain BoardState} and updating the pieceDeveloped field
+	 * in the {@linkplain MoveReversalData} parameter.
 	 */
-	void updateDevelopedPieces(final BoardState state, final MoveReversalData unmakeDataStore)
+	void updateDevelopedPieces(BoardState state, MoveReversalData unmakeDataStore)
 	{
-		final Set<DevelopmentPiece> developedPieces = state.getDevelopedPieces();
+		Set<DevelopmentPiece> developedPieces = state.getDevelopedPieces();
 		unmakeDataStore.setPieceDeveloped(null);
 		if (developedPieces.size() < 12) {
-			final DevelopmentPiece potentialDevelopment = getPieceDeveloped();
+			DevelopmentPiece potentialDevelopment = getPieceDeveloped();
 			if (potentialDevelopment != null && !developedPieces.contains(potentialDevelopment)) {
 				developedPieces.add(potentialDevelopment);
 				unmakeDataStore.setPieceDeveloped(potentialDevelopment);
@@ -71,25 +71,28 @@ public abstract class AbstractChessMove implements ChessMove
 	}
 
 	/**
-	 * @return a set of {@linkplain CastleZone} which this move would remove if a state had all castling rights
-	 * enabled.
+	 * @return a set of {@linkplain CastleZone} which this move would remove if a
+	 *         state had all castling rights enabled.
 	 */
 	abstract Set<CastleZone> getAllRightsToBeRemoved();
 
 	/**
-	 * @return the piece which would be developed by this move assuming it has not already been developed.
+	 * @return the piece which would be developed by this move assuming it has not
+	 *         already been developed.
 	 */
 	abstract DevelopmentPiece getPieceDeveloped();
 
 	/**
-	 * Responsible for updating the {@linkplain DetailedPieceLocations} field in the parameter {@linkplain BoardState},
-	 * the enpassant square and also the half move clock. This means that it is responsible for updating the discardedPiece,
-	 * discardedEnpassantSquare, discardedHalfMoveClock fields in the {@linkplain MoveReversalData} parameter too.
+	 * Responsible for updating the {@linkplain DetailedPieceLocations} field in the
+	 * parameter {@linkplain BoardState}, the enpassant square and also the half
+	 * move clock. This means that it is responsible for updating the
+	 * discardedPiece, discardedEnpassantSquare, discardedHalfMoveClock fields in
+	 * the {@linkplain MoveReversalData} parameter too.
 	 */
-	abstract void updatePieceLocations(final BoardState state, final MoveReversalData unmakeDataStore);
+	abstract void updatePieceLocations(BoardState state, MoveReversalData unmakeDataStore);
 
 	@Override
-	public void reverseMove(final BoardState state, final MoveReversalData unmakeDataStore)
+	public void reverseMove(BoardState state, MoveReversalData unmakeDataStore)
 	{
 		assert !unmakeDataStore.isConsumed();
 		state.switchActiveSide();
@@ -102,8 +105,7 @@ public abstract class AbstractChessMove implements ChessMove
 		unmakeDataStore.setConsumed(true);
 	}
 
-	abstract void resetPieceLocations(final BoardState state, final MoveReversalData unmakeDataStore);
-
+	abstract void resetPieceLocations(BoardState state, MoveReversalData unmakeDataStore);
 
 	@Override
 	public String toString()
@@ -113,8 +115,7 @@ public abstract class AbstractChessMove implements ChessMove
 				.append(source.name().toLowerCase())
 				.append("|target=")
 				.append(target.name().toLowerCase())
-				.append("]")
-				.toString();
+				.append("]").toString();
 	}
 
 	@Override
@@ -132,7 +133,7 @@ public abstract class AbstractChessMove implements ChessMove
 	// Eclipse generated
 	@Override
 	public int hashCode() {
-		final int prime = 31;
+		int prime = 31;
 		int result = 1;
 		result = prime * result + ((source == null) ? 0 : source.hashCode());
 		result = prime * result + ((target == null) ? 0 : target.hashCode());
@@ -140,14 +141,14 @@ public abstract class AbstractChessMove implements ChessMove
 	}
 
 	@Override
-	public boolean equals(final Object obj) {
+	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final AbstractChessMove other = (AbstractChessMove) obj;
+		AbstractChessMove other = (AbstractChessMove) obj;
 		if (source != other.source)
 			return false;
 		if (target != other.target)

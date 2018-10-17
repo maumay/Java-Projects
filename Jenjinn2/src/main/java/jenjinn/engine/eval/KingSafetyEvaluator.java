@@ -10,8 +10,8 @@ import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.DetailedPieceLocations;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
-import jflow.collections.FList;
 import jflow.iterators.Flow;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -19,8 +19,8 @@ import jflow.iterators.Flow;
  */
 public final class KingSafetyEvaluator implements EvaluationComponent
 {
-	static final FList<ChessPiece> WKING_ATTACKERS = ChessPieces.black().drop(1).take(4).toList();
-	static final FList<ChessPiece> BKING_ATTACKERS = ChessPieces.white().drop(1).take(4).toList();
+	static final Seq<ChessPiece> WKING_ATTACKERS = ChessPieces.black().drop(1).take(4);
+	static final Seq<ChessPiece> BKING_ATTACKERS = ChessPieces.white().drop(1).take(4);
 
 	public KingSafetyEvaluator()
 	{

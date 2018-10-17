@@ -12,7 +12,7 @@ import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.StartStateGenerator;
 import jenjinn.engine.moves.ChessMove;
 import jenjinn.engine.utils.VisualGridGenerator;
-import jflow.utilities.Strings;
+import jflow.iterators.misc.Strings;
 
 /**
  * @author t

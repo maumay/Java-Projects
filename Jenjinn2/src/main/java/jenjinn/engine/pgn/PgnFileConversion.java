@@ -11,10 +11,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.function.Consumer;
 
-import jflow.collections.FList;
-import jflow.collections.Lists;
 import jflow.iterators.Flow;
 import jflow.iterators.factories.Iterators;
+import jflow.seq.Seq;
 
 /**
  * @author t
@@ -48,8 +47,8 @@ public class PgnFileConversion
 
 	public static void main(String[] args) throws IOException
 	{
-		FList<String> folderNames = Lists.build("modernkings", "classicalqueens", "modernqueens", "flankandunorthodox");
-		folderNames.filter(name -> !Files.isDirectory(Paths.get("/home", "t", "chesspgns", name))).safeNext().ifPresent(x -> {throw new RuntimeException();});
+		Seq<String> folderNames = Seq.of("modernkings", "classicalqueens", "modernqueens", "flankandunorthodox");
+		folderNames.findFirst(name -> !Files.isDirectory(Paths.get("/home", "t", "chesspgns", name))).ifPresent(x -> {throw new RuntimeException();});
 
 		for (String folderName : folderNames) {
 			System.out.println("---------------------------------------------------------------------");

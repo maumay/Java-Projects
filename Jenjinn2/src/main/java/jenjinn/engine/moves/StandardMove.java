@@ -7,21 +7,20 @@ import static java.lang.Math.abs;
 import static java.util.Collections.unmodifiableSet;
 
 import java.util.EnumSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import jenjinn.engine.base.Square;
 import jenjinn.engine.base.CastleZone;
 import jenjinn.engine.base.DevelopmentPiece;
 import jenjinn.engine.base.Dir;
 import jenjinn.engine.base.Side;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.MoveReversalData;
 import jenjinn.engine.pieces.ChessPiece;
-import jflow.iterators.factories.Iter;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -43,12 +42,12 @@ public final class StandardMove extends AbstractChessMove
 	{
 		Optional<Dir> dir = Dir.ofLineBetween(getSource(), getTarget());
 		if (dir.isPresent()) {
-			List<Square> squares = getSource().getAllSquares(dir.get(), 10);
-			return Iter.over(squares)
+			Seq<Square> squares = getSource().getAllSquares(dir.get(), 10);
+			return squares.flow()
 					.takeWhile(sq -> sq != getTarget())
 					.insert(getSource())
 					.append(getTarget())
-					.mapToLong(Square::asBitboard)
+					.mapToLong(sq -> sq.bitboard)
 					.fold(0L, (a, b) -> a ^ b);
 		}
 		else {

@@ -5,14 +5,14 @@ package jenjinn.engine.entity;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import jenjinn.engine.base.FileUtils;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.moves.ChessMove;
 import jenjinn.engine.movesearch.TreeSearcher;
-import jflow.collections.FList;
-import jflow.collections.Lists;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -20,15 +20,15 @@ import jflow.collections.Lists;
 public final class Jenjinn
 {
 	private final TreeSearcher treeSearcher = new TreeSearcher();
-	private final FList<String> openingFiles;
+	private final Seq<String> openingFiles;
 
 	private int openingCount = 0;
 
 	public Jenjinn()
 	{
-		FList<String> files = Lists.copyMutable(FileUtils.cacheResource(Jenjinn.class, "openingFileNames"));
+		List<String> files = FileUtils.cacheResource(Jenjinn.class, "openingFileNames").toList();
 		Collections.shuffle(files); // Different openings each time.
-		openingFiles = files.flow().toList();
+		openingFiles = Seq.copy(files);
 	}
 
 	public Optional<ChessMove> calculateBestMove(BoardState state, long timeLimit)

@@ -8,7 +8,7 @@ import static jenjinn.engine.bitboards.Bitboards.emptyBoardAttackset;
 import jenjinn.engine.base.Square;
 import jenjinn.engine.bitboards.BitboardIterator;
 import jenjinn.engine.pieces.ChessPiece;
-import jflow.collections.FList;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -23,7 +23,7 @@ public final class KingSafetyArea
 		this.inner = emptyBoardAttackset(king, src);
 		this.outer = BitboardIterator.from(inner)
 				.mapToLong(sq -> emptyBoardAttackset(king, sq))
-				.fold(0L, (a, b) -> a | b) & ~(src.asBitboard() | inner);
+				.fold(0L, (a, b) -> a | b) & ~(src.bitboard | inner);
 		this.all = outer | inner;
 	}
 
@@ -42,8 +42,7 @@ public final class KingSafetyArea
 		return all;
 	}
 
-	private static final FList<KingSafetyArea> CACHE =
-			Square.iterateAll().map(KingSafetyArea::new).toList();
+	private static final Seq<KingSafetyArea> CACHE = Square.ALL.map(KingSafetyArea::new);
 
 	public static KingSafetyArea get(Square src)
 	{

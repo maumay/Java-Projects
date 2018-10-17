@@ -5,7 +5,6 @@ package jenjinn.engine.pgn;
 
 import static java.lang.Long.toHexString;
 import static java.lang.Math.min;
-import static jflow.utilities.Strings.matchesAnywhere;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -24,6 +23,7 @@ import java.util.Set;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.StartStateGenerator;
 import jenjinn.engine.moves.ChessMove;
+import jflow.iterators.misc.Strings;
 
 /**
  * @author ThomasB
@@ -132,14 +132,14 @@ public final class PgnConverter implements Closeable
 			return Optional.empty();
 		} else {
 			String gameStart = PgnGameConverter.GAME_START, gameEnd = PgnGameConverter.GAME_TERMINATION;
-			while (!matchesAnywhere(nextLine, gameStart)) {
+			while (!Strings.matchesAnywhere(nextLine, gameStart)) {
 				nextLine = src.readLine();
 				if (nextLine == null) {
 					return Optional.empty();
 				}
 			}
 			StringBuilder game = new StringBuilder(nextLine).append(" ");
-			while (!matchesAnywhere(nextLine, gameEnd)) {
+			while (!Strings.matchesAnywhere(nextLine, gameEnd)) {
 				nextLine = src.readLine();
 				if (nextLine == null) {
 					return Optional.empty();

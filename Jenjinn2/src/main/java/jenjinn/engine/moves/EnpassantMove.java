@@ -5,11 +5,11 @@ package jenjinn.engine.moves;
 
 import java.util.Set;
 
-import jenjinn.engine.base.Square;
 import jenjinn.engine.base.CastleZone;
 import jenjinn.engine.base.DevelopmentPiece;
 import jenjinn.engine.base.Dir;
 import jenjinn.engine.base.Side;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.MoveReversalData;
 import jenjinn.engine.pieces.ChessPiece;
@@ -26,15 +26,15 @@ public final class EnpassantMove extends AbstractChessMove
 	public EnpassantMove(Square start, Square target)
 	{
 		super(start, target);
-		enPassantSquare = target.getNextSquare(start.ordinal() - target.ordinal() > 0? Dir.N : Dir.S);
+		enPassantSquare = target.getNextSquare(start.ordinal() - target.ordinal() > 0? Dir.N : Dir.S).get();
 	}
 
 	@Override
 	void updatePieceLocations(BoardState state, MoveReversalData unmakeDataStore)
 	{
 		Side activeSide = state.getActiveSide();
-		ChessPiece activePawn = ChessPieces.pawn(activeSide);
-		ChessPiece passivePawn = ChessPieces.pawn(activeSide.otherSide());
+		ChessPiece activePawn = ChessPieces.ofSide(activeSide).head();
+		ChessPiece passivePawn = ChessPieces.ofSide(activeSide.otherSide()).head();
 
 		state.getPieceLocations().removePieceAt(getSource(), activePawn);
 		state.getPieceLocations().addPieceAt(getTarget(), activePawn);
@@ -57,11 +57,11 @@ public final class EnpassantMove extends AbstractChessMove
 	void resetPieceLocations(BoardState state, MoveReversalData unmakeDataStore)
 	{
 		Side activeSide = state.getActiveSide();
-		ChessPiece activePawn = ChessPieces.pawn(activeSide);
+		ChessPiece activePawn = ChessPieces.ofSide(activeSide).head();
 		state.getPieceLocations().removePieceAt(getTarget(), activePawn);
 		state.getPieceLocations().addPieceAt(getSource(), activePawn);
 
-		ChessPiece passivePawn = ChessPieces.pawn(activeSide.otherSide());
+		ChessPiece passivePawn = ChessPieces.ofSide(activeSide.otherSide()).head();
 		state.getPieceLocations().addPieceAt(enPassantSquare, passivePawn);
 	}
 

@@ -4,19 +4,18 @@
 package jenjinn.engine.eval;
 
 import jenjinn.engine.boardstate.BoardState;
-import jflow.collections.FList;
-import jflow.collections.Lists;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
  */
 public class StateEvaluator
 {
-	private final FList<EvaluationComponent> components;
+	private final Seq<EvaluationComponent> components;
 
 	public StateEvaluator(int pawnTableSize)
 	{
-		components = Lists.build(
+		components = Seq.of(
 				new DevelopmentEvaluator(),
 				new KingSafetyEvaluator(),
 				new PieceLocationEvaluator(),
@@ -25,7 +24,7 @@ public class StateEvaluator
 
 	public int evaluate(BoardState state)
 	{
-		int signedScore = components.mapToInt(c -> c.evaluate(state)).fold(0, (a, b) -> a + b);
+		int signedScore = components.flow().mapToInt(c -> c.evaluate(state)).fold(0, (a, b) -> a + b);
 		return (state.getActiveSide().isWhite() ? 1 : -1) * signedScore;
 	}
 }

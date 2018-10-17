@@ -12,7 +12,6 @@ import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.DetailedPieceLocations;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
-import jflow.iterators.factories.Iter;
 
 /**
  * @author ThomasB
@@ -23,7 +22,7 @@ public final class SquareControl {
 
 	public static long calculate(BoardState state, Side side)
 	{
-		return Iter.over(ChessPieces.ofSide(side))
+		return ChessPieces.ofSide(side).flow()
 				.mapToLong(piece -> calculate(state, piece))
 				.fold(0L, (a, b) -> a | b);
 	}

@@ -3,23 +3,20 @@
  */
 package jenjinn.engine.entity;
 
-import static jflow.utilities.CollectionUtil.head;
-import static jflow.utilities.CollectionUtil.last;
-
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Optional;
 
-import jenjinn.engine.base.Square;
 import jenjinn.engine.base.CastleZone;
 import jenjinn.engine.base.FileUtils;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.moves.ChessMove;
 import jenjinn.engine.moves.EnpassantMove;
 import jenjinn.engine.moves.MoveCache;
-import jflow.collections.FList;
-import jflow.utilities.Strings;
+import jflow.iterators.misc.Strings;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -58,7 +55,7 @@ public class OpeningDatabaseReader implements Closeable
 
 	private Optional<ChessMove> extractMove(String line, long positionHash)
 	{
-		for ( String positionWithMove : Strings.allMatches(line, ReaderRegex.POS_AND_MOVE).toList()) {
+		for (String positionWithMove : Strings.allMatches(line, ReaderRegex.POS_AND_MOVE).toList()) {
 			String pos = Strings.firstMatch(positionWithMove, ReaderRegex.POSITION).get();
 			if (Long.parseUnsignedLong(pos, 16) == positionHash) {
 				String encodedMove = Strings.firstMatch(positionWithMove, ReaderRegex.MOVE).get();
@@ -70,14 +67,14 @@ public class OpeningDatabaseReader implements Closeable
 
 	private ChessMove decodeMove(String encodedMove)
 	{
-		FList<Square> squares = Strings.allMatches(encodedMove, ReaderRegex.SQUARE)
-				.map(Square::valueOf).toList();
+		Seq<Square> squares = Strings.allMatches(encodedMove, ReaderRegex.SQUARE)
+				.map(Square::valueOf).toSeq();
 
 		if (encodedMove.matches(ReaderRegex.SMOVE)) {
-			return MoveCache.getMove(head(squares), last(squares));
+			return MoveCache.getMove(squares.head(), squares.last());
 		}
 		else if (encodedMove.matches(ReaderRegex.EPMOVE)) {
-			return new EnpassantMove(head(squares), last(squares));
+			return new EnpassantMove(squares.head(), squares.last());
 		}
 		else if (encodedMove.matches(ReaderRegex.CASTLEMOVE)) {
 			return MoveCache.getMove(CastleZone.fromSimpleIdentifier(encodedMove));

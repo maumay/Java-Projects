@@ -5,12 +5,11 @@ package jenjinn.engine.moves;
 
 import static java.util.Arrays.asList;
 
-import java.util.List;
-
-import jenjinn.engine.base.Square;
 import jenjinn.engine.base.CastleZone;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.bitboards.BitboardIterator;
 import jenjinn.engine.pieces.ChessPiece;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -19,18 +18,18 @@ public final class MoveCache {
 
 	private MoveCache() {}
 
-	private static final List<CastleMove> CASTLE_MOVE_CACHE = CastleZone.iterateAll().map(CastleMove::new).toList();
-	private static final List<StandardMove[]> STANDARD_MOVE_CACHE = createStandardMoveCache();
+	private static final Seq<CastleMove> CASTLE_MOVE_CACHE = CastleZone.ALL.map(CastleMove::new);
+	private static final Seq<StandardMove[]> STANDARD_MOVE_CACHE = createStandardMoveCache();
 
-	static List<StandardMove[]> createStandardMoveCache()
+	static Seq<StandardMove[]> createStandardMoveCache()
 	{
-		List<StandardMove[]> moveCache = Square.iterateAll().map(i -> new StandardMove[64]).toList();
+		Seq<StandardMove[]> moveCache = Square.ALL.map(i -> new StandardMove[64]);
 
 		for (ChessPiece piece : asList(ChessPiece.WHITE_KNIGHT, ChessPiece.WHITE_QUEEN)) {
-			Square.iterateAll().forEach(square ->
+			Square.ALL.forEach(square ->
 			{
 				BitboardIterator.from(piece.getSquaresOfControl(square, 0L, 0L))
-				.forEach(loc -> moveCache.get(square.ordinal())[bitboard.ordinal()] = new StandardMove(square, bitboard));
+				.forEach(loc -> moveCache.get(square.ordinal())[loc.ordinal()] = new StandardMove(square, loc));
 			});
 		}
 		return moveCache;

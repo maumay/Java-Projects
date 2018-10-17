@@ -7,8 +7,8 @@ import static java.lang.Math.max;
 import static jenjinn.engine.bitboards.BitboardUtils.bitboardsIntersect;
 import static jenjinn.engine.bitboards.Bitboards.emptyBoardAttackset;
 
-import jenjinn.engine.base.Square;
 import jenjinn.engine.base.Side;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.bitboards.BitboardIterator;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.DetailedPieceLocations;
@@ -28,8 +28,8 @@ public class StaticExchangeEvaluator
 	{
 		// Make sure all instance variables set correctly first
 		DetailedPieceLocations pieceLocs = state.getPieceLocations();
-		source = sourceSquare.asBitboard();
-		target = targetSquare.asBitboard();
+		source = sourceSquare.bitboard;
+		target = targetSquare.bitboard;
 		generateAttackDefenseInfo(pieceLocs);
 		long knightLocs = pieceLocs.locationsOf(ChessPiece.WHITE_KNIGHT)
 				| pieceLocs.locationsOf(ChessPiece.BLACK_KNIGHT);
@@ -72,7 +72,7 @@ public class StaticExchangeEvaluator
 				Square loc = xrayLocs.next();
 				ChessPiece p = pieceLocs.getPieceAt(loc);
 				if (bitboardsIntersect(p.getSquaresOfControl(loc, white, black), target)) {
-					long locBitboard = loc.asBitboard();
+					long locBitboard = loc.bitboard;
 					xrays ^= locBitboard;
 					attadef ^= locBitboard;
 				}
@@ -93,10 +93,10 @@ public class StaticExchangeEvaluator
 				Square loc = locations.next();
 				long control = p.getSquaresOfControl(loc, white, black);
 				if (bitboardsIntersect(control, target)) {
-					attadef |= loc.asBitboard();
+					attadef |= loc.bitboard;
 				}
 				else if (p.isSlidingPiece() && bitboardsIntersect(emptyBoardAttackset(p, loc), target)) {
-					xrays |= loc.asBitboard();
+					xrays |= loc.bitboard;
 				}
 			}
 		}

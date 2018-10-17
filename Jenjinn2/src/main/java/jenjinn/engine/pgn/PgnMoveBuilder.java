@@ -3,18 +3,12 @@
  */
 package jenjinn.engine.pgn;
 
-import static jflow.utilities.CollectionUtil.head;
-import static jflow.utilities.CollectionUtil.last;
-import static jflow.utilities.Strings.allMatches;
-import static jflow.utilities.Strings.firstMatch;
-
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 
-import jenjinn.engine.base.Square;
 import jenjinn.engine.base.CastleZone;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.DetailedPieceLocations;
 import jenjinn.engine.boardstate.calculators.LegalMoves;
@@ -24,7 +18,8 @@ import jenjinn.engine.moves.PromotionMove;
 import jenjinn.engine.moves.PromotionResult;
 import jenjinn.engine.pieces.ChessPieces;
 import jflow.iterators.factories.Iter;
-import jflow.utilities.Strings;
+import jflow.iterators.misc.Strings;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -36,8 +31,8 @@ public final class PgnMoveBuilder
 	 * Maps PGN identifiers to piece ordinals mod 6.
 	 */
 	private static final Map<Character, Integer> CHARACTER_PIECE_MAP = Iter.overInts('N', 'B', 'R', 'Q', 'K')
-			.zipWith(Iter.over(ChessPieces.white()).drop(1))
-			.toMap(p -> Character.valueOf((char) p.getInt()), p -> p.getElement().ordinal());
+			.zipWith(ChessPieces.white().flow().drop(1))
+			.toMap(p -> Character.valueOf((char) p._i), p -> p._o.ordinal());
 
 
 	private static final String FILE = "([a-h])", RANK = "([1-8])";
@@ -76,45 +71,43 @@ public final class PgnMoveBuilder
 		String mc = moveCommand;
 		Supplier<BadPgnException> exSupplier = () -> new BadPgnException(moveCommand);
 
-		List<Square> encodedSquares = allMatches(mc, SQUARE)
+		Seq<Square> encodedSquares = Strings.allMatches(mc, SQUARE)
 				.map(String::toUpperCase)
 				.map(Square::valueOf)
-				.toList();
+				.toSeq();
 
 		if (encodedSquares.size() == 1) {
-			Square target = last(encodedSquares);
-			List<String> files = allMatches(mc, FILE).toList(), ranks = allMatches(mc, RANK).toList();
-			char pieceIdentifier = firstMatch(mc, PIECE).orElse("P").charAt(0);
+			Square target = encodedSquares.last();
+			Seq<String> files = Strings.allMatches(mc, FILE).toSeq(), ranks = Strings.allMatches(mc, RANK).toSeq();
+			char pieceIdentifier = Strings.firstMatch(mc, PIECE).orElse("P").charAt(0);
 			int pieceOrdinalMod6 = CHARACTER_PIECE_MAP.getOrDefault(pieceIdentifier, 0);
 			DetailedPieceLocations plocs = state.getPieceLocations();
-			List<ChessMove> candidates = Iter.over(legalMoves)
+			Seq<ChessMove> candidates = Iter.over(legalMoves)
 					.filter(mv -> mv.getTarget() == target && (plocs.getPieceAt(mv.getSource()).ordinal() % 6) == pieceOrdinalMod6)
-					.toList();
+					.toSeq();
 
 			if (candidates.size() == 1) {
-				return head(candidates);
+				return candidates.head();
 			}
 			else if (files.size() == 2) {
-				char sourceFile = head(files).toUpperCase().charAt(0);
-				return Iter.over(candidates)
-						.filter(mv -> mv.getSource().name().charAt(0) == sourceFile)
-						.safeNext().orElseThrow(() -> new BadPgnException(mc + ", " + sourceFile + ", " + candidates));
+				char sourceFile = files.head().toUpperCase().charAt(0);
+				return candidates.findFirst(mv -> mv.getSource().name().charAt(0) == sourceFile)
+						.orElseThrow(() -> new BadPgnException(mc + ", " + sourceFile + ", " + candidates));
 			}
 			else if (ranks.size() == 2) {
-				char sourceRank = head(ranks).charAt(0);
-				return Iter.over(candidates)
-						.filter(mv -> mv.getSource().name().charAt(1) == sourceRank)
-						.safeNext().orElseThrow(() -> new BadPgnException(mc + ", " + sourceRank + ", " + candidates));
+				char sourceRank = ranks.head().charAt(0);
+				return candidates.findFirst(mv -> mv.getSource().name().charAt(1) == sourceRank)
+						.orElseThrow(() -> new BadPgnException(mc + ", " + sourceRank + ", " + candidates));
 			}
 			else {
 				throw exSupplier.get();
 			}
 		}
 		else if (encodedSquares.size() == 2) {
-			Square source = head(encodedSquares), target = last(encodedSquares);
+			Square source = encodedSquares.head(), target = encodedSquares.last();
 			return Iter.over(legalMoves)
 					.filter(mv -> mv.getSource() == source && mv.getTarget() == target)
-					.safeNext().orElseThrow(exSupplier);
+					.nextOption().orElseThrow(exSupplier);
 		}
 		else {
 			throw exSupplier.get();
@@ -127,21 +120,20 @@ public final class PgnMoveBuilder
 		Supplier<BadPgnException> exSupplier = () -> new BadPgnException(moveCommand);
 
 		PromotionResult piece = PromotionResult.valueOf(Strings.lastMatch(mc, "[NBRQ]").get());
-		String encodedTarget = firstMatch(mc, SQUARE).orElseThrow(exSupplier);
+		String encodedTarget = Strings.firstMatch(mc, SQUARE).orElseThrow(exSupplier);
 		Square target = Square.valueOf(encodedTarget.toUpperCase());
-		List<PromotionMove> candidates = Iter.over(legalMoves)
-				.filterAndCastTo(PromotionMove.class)
+		Seq<PromotionMove> candidates = Iter.over(legalMoves)
+				.castTo(PromotionMove.class)
 				.filter(mv -> mv.getTarget().equals(target) && mv.getPromotionResult().equals(piece))
-				.toList();
+				.toSeq();
 
 		if (candidates.size() == 1) {
-			return head(candidates);
+			return candidates.head();
 		}
 		else if (candidates.size() == 2) {
 			char file = mc.toUpperCase().charAt(0);
-			return Iter.over(candidates)
-					.filter(mv -> mv.getSource().name().charAt(0) == file)
-					.safeNext().orElseThrow(exSupplier);
+			return candidates.findFirst(mv -> mv.getSource().name().charAt(0) == file)
+					.orElseThrow(exSupplier);
 		}
 		else {
 			throw exSupplier.get();

@@ -24,33 +24,33 @@ public final class CastleMove extends AbstractChessMove
 	private final CastleZone wrappedZone;
 	private final Set<CastleZone> rightsRemovedByThisMove;
 
-	public CastleMove(final CastleZone wrappedZone)
+	public CastleMove(CastleZone wrappedZone)
 	{
-		super(wrappedZone.getKingSource(), wrappedZone.getKingTarget());
+		super(wrappedZone.kingSource, wrappedZone.kingTarget);
 		this.wrappedZone = wrappedZone;
 		this.rightsRemovedByThisMove =
 				wrappedZone.isWhiteZone()? WHITE_CASTLE_REMOVALS : BLACK_CASTLE_REMOVALS;
 	}
 
 	@Override
-	void updateDevelopedPieces(final BoardState state, final MoveReversalData unmakeDataStore)
+	void updateDevelopedPieces(BoardState state, MoveReversalData unmakeDataStore)
 	{
 		unmakeDataStore.setPieceDeveloped(null);
 	}
 
 	@Override
-	void updatePieceLocations(final BoardState state, final MoveReversalData unmakeDataStore)
+	void updatePieceLocations(BoardState state, MoveReversalData unmakeDataStore)
 	{
-		final Side currentActiveSide = state.getActiveSide();
-		final boolean whiteActive = currentActiveSide.isWhite();
+		Side currentActiveSide = state.getActiveSide();
+		boolean whiteActive = currentActiveSide.isWhite();
 
-		final ChessPiece king = whiteActive ? ChessPiece.WHITE_KING : ChessPiece.BLACK_KING;
-		state.getPieceLocations().removePieceAt(wrappedZone.getKingSource(), king);
-		state.getPieceLocations().addPieceAt(wrappedZone.getKingTarget(), king);
+		ChessPiece king = whiteActive ? ChessPiece.WHITE_KING : ChessPiece.BLACK_KING;
+		state.getPieceLocations().removePieceAt(wrappedZone.kingSource, king);
+		state.getPieceLocations().addPieceAt(wrappedZone.kingTarget, king);
 
-		final ChessPiece rook = whiteActive ? ChessPiece.WHITE_ROOK : ChessPiece.BLACK_ROOK;
-		state.getPieceLocations().removePieceAt(wrappedZone.getRookSource(), rook);
-		state.getPieceLocations().addPieceAt(wrappedZone.getRookTarget(), rook);
+		ChessPiece rook = whiteActive ? ChessPiece.WHITE_ROOK : ChessPiece.BLACK_ROOK;
+		state.getPieceLocations().removePieceAt(wrappedZone.rookSource, rook);
+		state.getPieceLocations().addPieceAt(wrappedZone.rookTarget, rook);
 
 		unmakeDataStore.setPieceTaken(null);
 
@@ -63,30 +63,30 @@ public final class CastleMove extends AbstractChessMove
 	}
 
 	@Override
-	void updateCastlingStatus(final BoardState state, final MoveReversalData unmakeDataStore)
+	void updateCastlingStatus(BoardState state, MoveReversalData unmakeDataStore)
 	{
 		super.updateCastlingStatus(state, unmakeDataStore);
 		state.getCastlingStatus().setCastlingStatus(wrappedZone);
 	}
 
 	@Override
-	public void reverseMove(final BoardState state, final MoveReversalData unmakeDataStore)
+	public void reverseMove(BoardState state, MoveReversalData unmakeDataStore)
 	{
 		super.reverseMove(state, unmakeDataStore);
 		state.getCastlingStatus().removeCastlingStatus(wrappedZone);
 	}
 
 	@Override
-	void resetPieceLocations(final BoardState state, final MoveReversalData unmakeDataStore)
+	void resetPieceLocations(BoardState state, MoveReversalData unmakeDataStore)
 	{
-		final boolean whiteActive = state.getActiveSide().isWhite();
-		final ChessPiece king = whiteActive ? ChessPiece.WHITE_KING : ChessPiece.BLACK_KING;
-		state.getPieceLocations().removePieceAt(wrappedZone.getKingTarget(), king);
-		state.getPieceLocations().addPieceAt(wrappedZone.getKingSource(), king);
+		boolean whiteActive = state.getActiveSide().isWhite();
+		ChessPiece king = whiteActive ? ChessPiece.WHITE_KING : ChessPiece.BLACK_KING;
+		state.getPieceLocations().removePieceAt(wrappedZone.kingTarget, king);
+		state.getPieceLocations().addPieceAt(wrappedZone.kingSource, king);
 
-		final ChessPiece rook = whiteActive ? ChessPiece.WHITE_ROOK : ChessPiece.BLACK_ROOK;
-		state.getPieceLocations().removePieceAt(wrappedZone.getRookTarget(), rook);
-		state.getPieceLocations().addPieceAt(wrappedZone.getRookSource(), rook);
+		ChessPiece rook = whiteActive ? ChessPiece.WHITE_ROOK : ChessPiece.BLACK_ROOK;
+		state.getPieceLocations().removePieceAt(wrappedZone.rookTarget, rook);
+		state.getPieceLocations().addPieceAt(wrappedZone.rookSource, rook);
 	}
 
 	@Override

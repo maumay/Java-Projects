@@ -3,17 +3,13 @@
  */
 package jenjinn.engine.moves;
 
-import static jflow.utilities.CollectionUtil.head;
-import static jflow.utilities.CollectionUtil.last;
-import static jflow.utilities.Strings.lastMatch;
 
-import java.util.List;
-
-import jenjinn.engine.base.Square;
 import jenjinn.engine.base.CastleZone;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.MoveReversalData;
-import jflow.utilities.Strings;
+import jflow.iterators.misc.Strings;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -80,9 +76,9 @@ public interface ChessMove
 		String promotionRx = "^" + explicitPromotionRx + "|" + compactPromotionRx + "$";
 
 		if (repr.matches(standardEnpassantRx)) {
-			List<String> squares = Strings.allMatches(repr, "[a-h][1-8]").toList();
-			Square source = Square.valueOf(head(squares).toUpperCase());
-			Square target = Square.valueOf(last(squares).toUpperCase());
+			Seq<String> squares = Strings.allMatches(repr, "[a-h][1-8]").toSeq();
+			Square source = Square.valueOf(squares.head().toUpperCase());
+			Square target = Square.valueOf(squares.last().toUpperCase());
 			char firstChar = repr.charAt(0);
 			switch (firstChar) {
 			case 'S':
@@ -93,10 +89,10 @@ public interface ChessMove
 				throw new RuntimeException();
 			}
 		} else if (repr.matches(promotionRx)) {
-			List<String> squares = Strings.allMatches(repr, "[a-h][1-8]").toList();
-			Square source = Square.valueOf(head(squares).toUpperCase());
-			Square target = Square.valueOf(last(squares).toUpperCase());
-			PromotionResult result = PromotionResult.valueOf(lastMatch(repr, "[NBRQ]").get());
+			Seq<String> squares = Strings.allMatches(repr, "[a-h][1-8]").toSeq();
+			Square source = Square.valueOf(squares.head().toUpperCase());
+			Square target = Square.valueOf(squares.last().toUpperCase());
+			PromotionResult result = PromotionResult.valueOf(Strings.lastMatch(repr, "[NBRQ]").get());
 			return new PromotionMove(source, target, result);
 		} else if (repr.matches(castleMoveRx)) {
 			String zoneId = Strings.firstMatch(repr, "(wk)|(wq)|(bk)|(bq)").get();
