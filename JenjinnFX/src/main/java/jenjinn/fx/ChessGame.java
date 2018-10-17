@@ -3,7 +3,7 @@
  */
 package jenjinn.fx;
 
-import static jenjinn.engine.bitboards.BitboardUtils.bitboardsIntersect;
+import static jenjinn.bitboards.BitboardUtils.bitboardsIntersect;
 
 import java.util.Optional;
 
@@ -14,15 +14,15 @@ import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import jenjinn.engine.base.Square;
-import jenjinn.engine.base.GameTermination;
-import jenjinn.engine.base.Side;
-import jenjinn.engine.boardstate.BoardState;
-import jenjinn.engine.boardstate.StartStateGenerator;
-import jenjinn.engine.boardstate.calculators.LegalMoves;
-import jenjinn.engine.boardstate.calculators.TerminationState;
-import jenjinn.engine.entity.Jenjinn;
-import jenjinn.engine.moves.ChessMove;
+import jenjinn.base.GameTermination;
+import jenjinn.base.Side;
+import jenjinn.base.Square;
+import jenjinn.boardstate.BoardState;
+import jenjinn.boardstate.StartStateGenerator;
+import jenjinn.boardstate.calculators.LegalMoves;
+import jenjinn.boardstate.calculators.TerminationState;
+import jenjinn.entity.Jenjinn;
+import jenjinn.moves.ChessMove;
 import jflow.collections.FList;
 import jflow.collections.impl.FlowArrayList;
 import jflow.utilities.Optionals;

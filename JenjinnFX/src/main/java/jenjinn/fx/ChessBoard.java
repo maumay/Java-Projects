@@ -4,7 +4,7 @@
 package jenjinn.fx;
 
 import static java.util.Comparator.comparing;
-import static jenjinn.engine.bitboards.BitboardUtils.bitboardsIntersect;
+import static jenjinn.bitboards.BitboardUtils.bitboardsIntersect;
 
 import java.util.Optional;
 
@@ -13,13 +13,13 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import jenjinn.engine.base.Square;
-import jenjinn.engine.base.Side;
-import jenjinn.engine.boardstate.BoardState;
-import jenjinn.engine.boardstate.calculators.LegalMoves;
-import jenjinn.engine.moves.ChessMove;
-import jenjinn.engine.pieces.Piece;
-import jenjinn.engine.pieces.ChessPieces;
+import jenjinn.base.Side;
+import jenjinn.base.Square;
+import jenjinn.boardstate.BoardState;
+import jenjinn.boardstate.calculators.LegalMoves;
+import jenjinn.moves.ChessMove;
+import jenjinn.pieces.ChessPieces;
+import jenjinn.pieces.Piece;
 import jflow.collections.FList;
 import jflow.iterators.misc.Pair;
 

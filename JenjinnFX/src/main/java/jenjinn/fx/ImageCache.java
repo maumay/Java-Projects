@@ -6,9 +6,9 @@ package jenjinn.fx;
 import java.util.function.Function;
 
 import javafx.scene.image.Image;
-import jenjinn.engine.base.FileUtils;
-import jenjinn.engine.pieces.Piece;
-import jenjinn.engine.pieces.ChessPieces;
+import jenjinn.base.FileUtils;
+import jenjinn.pieces.ChessPieces;
+import jenjinn.pieces.Piece;
 import jflow.collections.FList;
 
 /**

@@ -14,8 +14,8 @@ import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Font;
-import jenjinn.engine.base.Side;
-import jenjinn.engine.pieces.Piece;
+import jenjinn.base.Side;
+import jenjinn.pieces.Piece;
 
 /**
  * @author ThomasB

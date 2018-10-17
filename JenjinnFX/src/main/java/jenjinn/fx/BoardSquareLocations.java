@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javafx.geometry.Point2D;
-import jenjinn.engine.base.Square;
+import jenjinn.base.Square;
 import jflow.iterators.Flow;
 import jflow.iterators.misc.Pair;
 
