@@ -3,7 +3,6 @@
  */
 package jenjinn.engine.boardstate;
 
-import static jflow.utilities.CollectionUtil.string;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Assertions;
@@ -13,8 +12,9 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import jflow.iterators.Flow;
-import jflow.iterators.factories.IterRange;
 import jflow.iterators.factories.Iter;
+import jflow.iterators.factories.IterRange;
+import jflow.iterators.misc.Strings;
 
 /**
  * @author t
@@ -49,7 +49,7 @@ class HashCacheTest
 			start.decrementHalfMoveCount(replacementHashes[i]);
 			final long[] expectedCache = IterRange.to(cacheSize - 1).mapToLong(x -> -1L).insert(replacementHashes[0]).toArray();
 			IterRange.between(1, i + 1).forEach(j -> expectedCache[cacheSize - j] = replacementHashes[j]);
-			Assertions.assertEquals(new HashCache(expectedCache, cacheSize - (i + 1)), start, string(i));
+			Assertions.assertEquals(new HashCache(expectedCache, cacheSize - (i + 1)), start, Strings.$(i));
 		}
 	}
 

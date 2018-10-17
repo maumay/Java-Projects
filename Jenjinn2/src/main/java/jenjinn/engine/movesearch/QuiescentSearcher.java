@@ -7,9 +7,9 @@ import static jenjinn.engine.bitboards.BitboardUtils.bitboardsIntersect;
 
 import java.util.Optional;
 
-import jenjinn.engine.base.Square;
 import jenjinn.engine.base.GameTermination;
 import jenjinn.engine.base.Side;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.DetailedPieceLocations;
 import jenjinn.engine.boardstate.MoveReversalData;
@@ -23,9 +23,9 @@ import jenjinn.engine.moves.ChessMove;
 import jenjinn.engine.moves.EnpassantMove;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
-import jflow.collections.FList;
 import jflow.iterators.Flow;
 import jflow.iterators.factories.IterRange;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -34,7 +34,7 @@ public final class QuiescentSearcher
 {
 	public static final int DEPTH_CAP = 20;
 
-	private final FList<MoveReversalData> moveReversers;
+	private final Seq<MoveReversalData> moveReversers;
 
 	private final int deltaPruneSafetyMargin  = 200;
 	private final int bigDelta                = calculateBigDelta();
@@ -43,7 +43,7 @@ public final class QuiescentSearcher
 
 	public QuiescentSearcher()
 	{
-		moveReversers = IterRange.to(DEPTH_CAP).mapToObject(i -> new MoveReversalData()).toList();
+		moveReversers = IterRange.to(DEPTH_CAP).mapToObject(i -> new MoveReversalData()).toSeq();
 	}
 
 	void resetMoveReversalData()
@@ -63,7 +63,7 @@ public final class QuiescentSearcher
 		}
 
 		Flow<ChessMove> movesToProbe = LegalMoves.getAllMoves(root);
-		Optional<ChessMove> firstMove = movesToProbe.safeNext();
+		Optional<ChessMove> firstMove = movesToProbe.nextOption();
 		GameTermination terminalState = TerminationState.of(root, firstMove.isPresent());
 
 		if (terminalState.isTerminal()) {
@@ -73,8 +73,8 @@ public final class QuiescentSearcher
 		DetailedPieceLocations pieceLocs = root.getPieceLocations();
 		long passiveControl = SquareControl.calculate(root, passive);
 
-		boolean inCheck = bitboardsIntersect(pieceLocs.locationsOf(ChessPieces.king(active)),
-				passiveControl);
+		long activeKingLoc = pieceLocs.locationsOf(ChessPieces.ofSide(active).last());
+		boolean inCheck = bitboardsIntersect(activeKingLoc, passiveControl);
 
 		if (inCheck) {
 			if (depth == 0) {

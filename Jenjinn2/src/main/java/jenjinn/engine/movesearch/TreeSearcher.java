@@ -15,8 +15,8 @@ import jenjinn.engine.boardstate.calculators.LegalMoves;
 import jenjinn.engine.boardstate.calculators.TerminationState;
 import jenjinn.engine.moves.ChessMove;
 import jenjinn.engine.movesearch.TranspositionTable.Entry;
-import jflow.collections.FList;
 import jflow.iterators.factories.IterRange;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -27,12 +27,12 @@ public final class TreeSearcher
 	private final TranspositionTable table = new TranspositionTable(15);
 	private final int maxDepth = 20;
 
-	private final FList<MoveReversalData> moveReversers;
+	private final Seq<MoveReversalData> moveReversers;
 	private int bestFirstMoveIndex = -1;
 
 	public TreeSearcher()
 	{
-		moveReversers = IterRange.to(maxDepth).mapToObject(i -> new MoveReversalData()).toList();
+		moveReversers = IterRange.to(maxDepth).mapToObject(i -> new MoveReversalData()).toSeq();
 	}
 
 	/**
@@ -52,7 +52,7 @@ public final class TreeSearcher
 	 */
 	public synchronized Optional<ChessMove> getBestMoveFrom(BoardState root, long timeLimit)
 	{
-		Optional<ChessMove> legalMoves = LegalMoves.getAllMoves(root).safeNext();
+		Optional<ChessMove> legalMoves = LegalMoves.getAllMoves(root).nextOption();
 		if (TerminationState.of(root, legalMoves.isPresent()).isTerminal()) {
 			return Optional.empty();
 		}
@@ -98,7 +98,7 @@ public final class TreeSearcher
 
 	private ChessMove getBestMoveFrom(BoardState root, int depth) throws InterruptedException
 	{
-		FList<ChessMove> legalMoves = LegalMoves.getAllMoves(root).toList();
+		Seq<ChessMove> legalMoves = LegalMoves.getAllMoves(root).toSeq();
 		int[] indices = IterRange.to(legalMoves.size()).toArray();
 		changeFirstIndex(indices, bestFirstMoveIndex);
 
@@ -124,7 +124,7 @@ public final class TreeSearcher
 			throw new InterruptedException();
 		}
 
-		Optional<ChessMove> firstMove = LegalMoves.getAllMoves(root).safeNext();
+		Optional<ChessMove> firstMove = LegalMoves.getAllMoves(root).nextOption();
 		GameTermination termination = TerminationState.of(root, firstMove.isPresent());
 		if (termination.isTerminal()) {
 			return -Math.abs(termination.value);
@@ -154,7 +154,7 @@ public final class TreeSearcher
 			recommendedFirstMoveIndex = tableEntry.notableMoveIndex;
 		}
 
-		FList<ChessMove> legalMoves = LegalMoves.getAllMoves(root).toList();
+		Seq<ChessMove> legalMoves = LegalMoves.getAllMoves(root).toSeq();
 		int[] moveIndices = IterRange.to(legalMoves.size()).toArray();
 		changeFirstIndex(moveIndices, recommendedFirstMoveIndex);
 

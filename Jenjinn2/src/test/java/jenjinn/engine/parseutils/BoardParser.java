@@ -5,21 +5,18 @@ package jenjinn.engine.parseutils;
 
 import static jenjinn.engine.eval.piecesquaretables.TestingPieceSquareTables.getEndgameTables;
 import static jenjinn.engine.eval.piecesquaretables.TestingPieceSquareTables.getMidgameTables;
-import static jflow.utilities.Strings.allMatches;
-import static jflow.utilities.Strings.firstMatch;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.EnumSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
-import jenjinn.engine.base.Square;
 import jenjinn.engine.base.CastleZone;
 import jenjinn.engine.base.DevelopmentPiece;
 import jenjinn.engine.base.Side;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.bitboards.BitboardUtils;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.CastlingStatus;
@@ -28,9 +25,10 @@ import jenjinn.engine.boardstate.HalfMoveCounter;
 import jenjinn.engine.boardstate.HashCache;
 import jenjinn.engine.eval.piecesquaretables.PieceSquareTables;
 import jenjinn.engine.utils.BoardHasher;
-import jflow.iterators.factories.IterRange;
 import jflow.iterators.factories.Iter;
-import jflow.utilities.Strings;
+import jflow.iterators.factories.IterRange;
+import jflow.iterators.misc.Strings;
+import jflow.seq.Seq;
 
 /**
  * Lets us construct {@linkplain BoardState} instances in an easy way via external files.
@@ -43,17 +41,17 @@ public final class BoardParser
 
 	private BoardParser() {}
 
-	public static BoardState parse(List<String> attributes)
+	public static BoardState parse(Seq<String> attributes)
 	{
 		return parse(attributes, DEFAULT_MOVE_COUNT);
 	}
 
-	public static BoardState parse(List<String> attributes, int totalMoveCount)
+	public static BoardState parse(Seq<String> attributes, int totalMoveCount)
 	{
 		if (attributes.size() != 9) {
 			throw new IllegalArgumentException();
 		}
-		List<String> atts = Iter.over(attributes).map(String::trim).map(String::toLowerCase).toList();
+		Seq<String> atts = attributes.map(String::trim).map(String::toLowerCase);
 		DetailedPieceLocations pieceLocations = constructPieceLocations(atts.get(0), atts.get(1));
 		HalfMoveCounter halfMoveCount = constructHalfMoveCounter(atts.get(2));
 		CastlingStatus castlingStatus = constructCastlingStatus(atts.get(3), atts.get(4), atts.get(5));
@@ -92,8 +90,8 @@ public final class BoardParser
 	private static Set<DevelopmentPiece> constructDevelopedPieces(String developedPieces)
 	{
 		assertTrue(developedPieces.trim().matches("^developed_pieces:(( *none)|(( *[a-h][1-8])( +[a-h][1-8]){0,11}))$"), developedPieces);
-		List<String> squaresMatched = Strings.allMatches(developedPieces, "[a-h][1-8]").toList();
-		Set<Square> uniqueSquares = Iter.over(squaresMatched).map(String::toUpperCase).map(Square::valueOf).toSet();
+		Seq<String> squaresMatched = Strings.allMatches(developedPieces, "[a-h][1-8]").toSeq();
+		Set<Square> uniqueSquares = squaresMatched.map(String::toUpperCase).map(Square::valueOf).toSet();
 		if (uniqueSquares.size() != squaresMatched.size()) {
 			throw new IllegalArgumentException(developedPieces);
 		}
@@ -103,11 +101,11 @@ public final class BoardParser
 
 	private static CastlingStatus constructCastlingStatus(String rights, String whiteStatus, String blackStatus)
 	{
-		assertTrue(rights.trim().matches("^castling_rights:( *wk)?( +wq)?( +bk)?( +bq)?$"));
+		assertTrue(rights.trim().matches("^castling_rights:( *wk)?( +wq)?( +bk)?( +bq)?.toSeq()$"));
 		assertTrue(whiteStatus.trim().matches("^white_castle_status: *(none|wk|wq|bk|bq)$"));
 		assertTrue(blackStatus.trim().matches("^black_castle_status: *(none|wk|wq|bk|bq)$"));
 
-		Map<String, CastleZone> regexMatchers = CastleZone.iterateAll().toMap(CastleZone::getSimpleIdentifier, Function.identity());
+		Map<String, CastleZone> regexMatchers = CastleZone.ALL.toMap(CastleZone::getSimpleIdentifier, Function.identity());
 
 		Set<CastleZone> rightSet = Iter.over(regexMatchers.keySet())
 				.filter(rx -> Strings.matchesAnywhere(rights, rx))
@@ -117,12 +115,12 @@ public final class BoardParser
 		CastleZone whiteCastleStatus = Iter.over(regexMatchers.keySet())
 				.filter(rx -> Strings.matchesAnywhere(whiteStatus, rx))
 				.map(regexMatchers::get)
-				.safeNext().orElse(null);
+				.nextOption().orElse(null);
 
 		CastleZone blackCastleStatus = Iter.over(regexMatchers.keySet())
 				.filter(rx -> Strings.matchesAnywhere(blackStatus, rx))
 				.map(regexMatchers::get)
-				.safeNext().orElse(null);
+				.nextOption().orElse(null);
 
 		return new CastlingStatus(rightSet, whiteCastleStatus, blackCastleStatus);
 	}
@@ -130,7 +128,7 @@ public final class BoardParser
 	private static HalfMoveCounter constructHalfMoveCounter(String clockString)
 	{
 		assertTrue(clockString.trim().matches("^half_move_clock: *[0-9]+$"));
-		return new HalfMoveCounter(Integer.parseInt(firstMatch(clockString, "[0-9]+").get()));
+		return new HalfMoveCounter(Integer.parseInt(Strings.firstMatch(clockString, "[0-9]+").get()));
 	}
 
 	private static DetailedPieceLocations constructPieceLocations(String whiteLocs, String blackLocs)
@@ -143,10 +141,10 @@ public final class BoardParser
 		assertTrue(blackLocs.trim().matches("^black_pieces:" + sixGroupedSquareSets + "$"));
 
 		PieceSquareTables midTables = getMidgameTables(), endTables = getEndgameTables();
-		return allMatches(whiteLocs + blackLocs, groupedSquares)
-				.map(x -> allMatches(x, "[a-h][1-8]"))
+		return Strings.allMatches(whiteLocs + blackLocs, groupedSquares)
+				.map(x -> Strings.allMatches(x, "[a-h][1-8]"))
 				.map(xs -> xs.map(String::toUpperCase))
-				.map(xs -> xs.map(Square::valueOf).toList())
+				.map(xs -> xs.map(Square::valueOf).toSeq())
 				.mapToLong(BitboardUtils::bitwiseOr)
 				.build(flow -> new DetailedPieceLocations(flow.toArray(), midTables, endTables));
 	}

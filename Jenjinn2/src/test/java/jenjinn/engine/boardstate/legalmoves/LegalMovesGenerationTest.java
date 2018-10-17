@@ -3,8 +3,6 @@
  */
 package jenjinn.engine.boardstate.legalmoves;
 
-import static jflow.utilities.CollectionUtil.sizeOf;
-import static jflow.utilities.CollectionUtil.string;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Comparator;
@@ -20,9 +18,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.calculators.LegalMoves;
 import jenjinn.engine.moves.ChessMove;
-import jflow.iterators.factories.IterRange;
 import jflow.iterators.factories.Iter;
+import jflow.iterators.factories.IterRange;
 import jflow.iterators.factories.Repeatedly;
+import jflow.iterators.misc.Strings;
 
 /**
  * @author ThomasB
@@ -31,29 +30,29 @@ class LegalMovesGenerationTest
 {
 	@ParameterizedTest
 	@MethodSource
-	void test(final BoardState state, final Set<ChessMove> expectedMoves, final Set<ChessMove> expectedAttacks)
+	void test(BoardState state, Set<ChessMove> expectedMoves, Set<ChessMove> expectedAttacks)
 	{
-		final Set<ChessMove> actualMoves = LegalMoves.getAllMoves(state).toSet();
+		Set<ChessMove> actualMoves = LegalMoves.getAllMoves(state).toSet();
 		assertEquals(expectedMoves, actualMoves, formatDifferences(expectedMoves, actualMoves));
 
-		final Set<ChessMove> actualAttacks = LegalMoves.getAttacks(state).toSet();
+		Set<ChessMove> actualAttacks = LegalMoves.getAttacks(state).toSet();
 		assertEquals(expectedAttacks, actualAttacks, formatDifferences(expectedAttacks, actualAttacks));
 	}
 
 	private String formatDifferences(Set<ChessMove> expectedMoves, Set<ChessMove> actualMoves)
 	{
-		final Set<ChessMove> expectedcpy = new HashSet<>(expectedMoves);
+		Set<ChessMove> expectedcpy = new HashSet<>(expectedMoves);
 		expectedcpy.removeAll(actualMoves);
-		final List<String> missingMoves = Iter.over(expectedcpy).map(ChessMove::toString).toMutableList();
+		List<String> missingMoves = Iter.over(expectedcpy).map(ChessMove::toString).toList();
 		missingMoves.sort(Comparator.naturalOrder());
 
-		final StringBuilder sb = new StringBuilder("Moves which should have been calculated:\n")
+		StringBuilder sb = new StringBuilder("Moves which should have been calculated:\n")
 				.append(missingMoves)
 				.append(System.lineSeparator());
 
-		final Set<ChessMove> actualcpy = new HashSet<>(actualMoves);
+		Set<ChessMove> actualcpy = new HashSet<>(actualMoves);
 		actualcpy.removeAll(expectedMoves);
-		final List<String> addedMoves = Iter.over(actualcpy).map(ChessMove::toString).toMutableList();
+		List<String> addedMoves = Iter.over(actualcpy).map(ChessMove::toString).toList();
 		addedMoves.sort(Comparator.naturalOrder());
 
 		return sb.append("Moves which should not have been calculated:\n")
@@ -68,10 +67,10 @@ class LegalMovesGenerationTest
 		return IterRange.between(1, 11).mapToObject(i -> "case" + pad(i)).map(parser::parse);
 	}
 
-	static String pad(final int caseNumber) {
-		final String caseString = string(caseNumber);
+	static String pad(int caseNumber) {
+		String caseString = Strings.$(caseNumber);
 		return Repeatedly.cycle("0")
-				.take(3 - sizeOf(caseString))
+				.take(3 - caseString.length())
 				.append(caseString)
 				.fold("", (a, b) -> a + b);
 	}
