@@ -25,22 +25,22 @@ public final class VisualGridGenerator
 	private VisualGridGenerator() {
 	}
 
-	public static String from(final String title, final Map<Square, ChessPiece> locations)
+	public static String from(String title, Map<Square, ChessPiece> locations)
 	{
 		return StringifyBoard.formatGrid(
 				new TitledVisualGrid(title, Iter.over(locations.keySet()).toMap(x -> x, x -> CharPair.from(locations.get(x))))
 				);
 	}
 
-	public static String from(final DetailedPieceLocations locations)
+	public static String from(DetailedPieceLocations locations)
 	{
-		final Map<Square, CharPair> pieceMapping = new HashMap<>();
-		ChessPieces.iterate().forEach(piece -> {
+		Map<Square, CharPair> pieceMapping = new HashMap<>();
+		ChessPieces.all().forEach(piece -> {
 			BitboardIterator.from(locations.locationsOf(piece))
 			.forEach(square -> pieceMapping.put(square, CharPair.from(piece)));
 		});
 
-		final List<TitledVisualGrid> grids = asList(
+		List<TitledVisualGrid> grids = asList(
 				new TitledVisualGrid("Pieces", pieceMapping),
 				TitledVisualGrid.from("White pieces", locations.getWhiteLocations()),
 				TitledVisualGrid.from("Black pieces", locations.getBlackLocations())
@@ -49,24 +49,24 @@ public final class VisualGridGenerator
 		return StringifyBoard.formatGrids(grids);
 	}
 
-	public static String from(final String title, final long bitboard)
+	public static String from(String title, long bitboard)
 	{
 		return StringifyBoard.formatGrid(TitledVisualGrid.from(title, bitboard));
 	}
 
-	public static String from(final long... bitboards)
+	public static String from(long... bitboards)
 	{
 		return StringifyBoard.formatGrids(Iter.overLongs(bitboards).mapToObject(TitledVisualGrid::from).toList());
 	}
 
-	public static TitledVisualGrid from(final String title, final BasicPieceLocations locations)
+	public static TitledVisualGrid from(String title, BasicPieceLocations locations)
 	{
-		final Map<Square, CharPair> locs = BitboardIterator.from(locations.getWhite()).toMap(x -> x, i -> new CharPair('X', 'W'));
+		Map<Square, CharPair> locs = BitboardIterator.from(locations.getWhite()).toMap(x -> x, i -> new CharPair('X', 'W'));
 		locs.putAll(BitboardIterator.from(locations.getBlack()).toMap(x -> x, i -> new CharPair('X', 'B')));
 		return new TitledVisualGrid(title, locs);
 	}
 
-	public static TitledVisualGrid fromPieceLocations(final BasicPieceLocations locations)
+	public static TitledVisualGrid fromPieceLocations(BasicPieceLocations locations)
 	{
 		return from("", locations);
 	}

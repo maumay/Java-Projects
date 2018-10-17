@@ -3,14 +3,13 @@
  */
 package jenjinn.engine.utils;
 
-import static jflow.utilities.CollectionUtil.reverse;
-
 import java.util.List;
 import java.util.Map;
 
 import jenjinn.engine.base.Square;
 import jenjinn.engine.bitboards.BitboardIterator;
 import jflow.iterators.factories.IterRange;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -22,28 +21,28 @@ public final class TitledVisualGrid
 	private final String title;
 	private final Map<Square, CharPair> visualGrid;
 
-	public TitledVisualGrid(String title, final Map<Square, CharPair> visualGrid)
+	public TitledVisualGrid(String title, Map<Square, CharPair> visualGrid)
 	{
 		title = title.trim().isEmpty()? UNTITLED : title.trim();
-		final int titleLengthDifference = CharGrid.BOARD_CHAR_WIDTH - title.length() - 2;
+		int titleLengthDifference = CharGrid.BOARD_CHAR_WIDTH - title.length() - 2;
 		if (titleLengthDifference < 0) {
 			throw new IllegalArgumentException("title too long.");
 		}
-		this.title = "  " + title + IterRange.to(titleLengthDifference).mapToObject(i -> " ").reduce((s1, s2) -> s1 + s2).get();
+		this.title = "  " + title + IterRange.to(titleLengthDifference).mapToObject(i -> " ").fold((s1, s2) -> s1 + s2);
 		this.visualGrid = visualGrid;
 	}
 
-	public TitledVisualGrid(final Map<Square, CharPair> visualGrid)
+	public TitledVisualGrid(Map<Square, CharPair> visualGrid)
 	{
 		this("", visualGrid);
 	}
 
-	public static TitledVisualGrid from(final String title, final long bitboard)
+	public static TitledVisualGrid from(String title, long bitboard)
 	{
 		return new TitledVisualGrid(title, BitboardIterator.from(bitboard).toMap(x -> x, x -> new CharPair('X', 'X')));
 	}
 
-	public static TitledVisualGrid from(final long bitboard)
+	public static TitledVisualGrid from(long bitboard)
 	{
 		return from("", bitboard);
 	}
@@ -59,33 +58,33 @@ public final class TitledVisualGrid
 		return StringifyBoard.formatGrid(this);
 	}
 
-	public CharPair getEntryAt(final Square square)
+	public CharPair getEntryAt(Square square)
 	{
 		return visualGrid.get(square);
 	}
 
 	public List<String> getGridLines()
 	{
-		final char[] grid = convertVisualGridToCharArray();
-		final int w = CharGrid.BOARD_CHAR_WIDTH, h = CharGrid.BOARD_LINE_HEIGHT;
+		char[] grid = convertVisualGridToCharArray();
+		int w = CharGrid.BOARD_CHAR_WIDTH, h = CharGrid.BOARD_LINE_HEIGHT;
 
-		final List<String> lines = IterRange.to(h).mapToObject(i ->
+		Seq<String> lines = IterRange.to(h).mapToObject(i ->
 		{
-			final StringBuilder sb = new StringBuilder();
-			final int lineStart = i*w;
+			StringBuilder sb = new StringBuilder();
+			int lineStart = i*w;
 			IterRange.to(w).forEach(j -> sb.append(grid[lineStart + j]));
 			return sb.reverse().toString();
-		}).append(title).toList();
+		}).append(title).toSeq();
 
-		return reverse(lines);
+		return lines.rflow().toList();
 	}
 
 	private char[] convertVisualGridToCharArray()
 	{
-		final char[] grid = CharGrid.getNewGrid();
-		Square.iterateAll().forEach(square -> {
-			final int gridIndex = CharGrid.mapToGridIndex(square);
-			final char[] entry = visualGrid.containsKey(square)? visualGrid.get(square).toArray() : new char[] {' ', ' '};
+		char[] grid = CharGrid.getNewGrid();
+		Square.ALL.forEach(square -> {
+			int gridIndex = CharGrid.mapToGridIndex(square);
+			char[] entry = visualGrid.containsKey(square)? visualGrid.get(square).toArray() : new char[] {' ', ' '};
 			System.arraycopy(entry, 0, grid, gridIndex, 2);
 		});
 		return grid;

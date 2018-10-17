@@ -6,15 +6,16 @@ package jenjinn.engine.utils;
 import java.util.List;
 import java.util.Random;
 
-import jenjinn.engine.base.Square;
 import jenjinn.engine.base.CastleZone;
 import jenjinn.engine.base.Side;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.boardstate.CastlingStatus;
 import jenjinn.engine.boardstate.LocationTracker;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
-import jflow.iterators.factories.IterRange;
 import jflow.iterators.factories.Iter;
+import jflow.iterators.factories.IterRange;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -24,7 +25,7 @@ public enum BoardHasher
 {
 	INSTANCE(0x110894L);
 
-	private final List<long[]> boardSquareFeatures;
+	private final Seq<long[]> boardSquareFeatures;
 	private final long[] castleRightsFeatures;
 	private final long[] enpassantFileFeatures;
 	private final long blackToMoveFeature;
@@ -35,7 +36,7 @@ public enum BoardHasher
 			throw new IllegalArgumentException();
 		}
 		final Random numberGenerator = new Random(seed);
-		boardSquareFeatures = Square.iterateAll().map(x -> randomArray(12, numberGenerator)).toList();
+		boardSquareFeatures = Square.ALL.map(x -> randomArray(12, numberGenerator));
 		castleRightsFeatures = randomArray(4, numberGenerator);
 		enpassantFileFeatures = randomArray(8, numberGenerator);
 		blackToMoveFeature = numberGenerator.nextLong();
