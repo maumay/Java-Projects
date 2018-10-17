@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-import jenjinn.engine.base.Square;
 import jenjinn.engine.base.Dir;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.pieces.PieceMovementDirections;
 import jflow.iterators.factories.Iter;
 
@@ -36,20 +36,21 @@ final class BitboardsInitialisationSection3
 				PieceMovementDirections.BISHOP);
 	}
 
-	static long[][] generateMagicMoveDatabase(long[][] occupancyVariations, long[] magicNumbers, int[] magicBitshifts, List<Dir> movementDirections)
+	static long[][] generateMagicMoveDatabase(long[][] occupancyVariations, long[] magicNumbers, 
+			int[] magicBitshifts, List<Dir> moveDirs)
 	{
 		long[][] magicMoveDatabase = new long[64][];
 		for (byte i = 0; i < 64; i++) {
 			long[] singleSquareOccupancyVariations = occupancyVariations[i];
 			long magicNumber = magicNumbers[i];
 			int bitShift = magicBitshifts[i];
-			long[] singleSquareMagicMoveDatabase = new long[singleSquareOccupancyVariations.length];
+			long[] singleSquareDatabase = new long[singleSquareOccupancyVariations.length];
 
 			for (long occVar : singleSquareOccupancyVariations) {
 				int magicIndex = (int) ((occVar * magicNumber) >>> bitShift);
-				singleSquareMagicMoveDatabase[magicIndex] = findControlSetFromOccupancyVariation(Square.of(i), occVar, movementDirections);
+				singleSquareDatabase[magicIndex] = findControlSetFromOccupancyVariation(Square.of(i), occVar, moveDirs);
 			}
-			magicMoveDatabase[i] = singleSquareMagicMoveDatabase;
+			magicMoveDatabase[i] = singleSquareDatabase;
 		}
 		return magicMoveDatabase;
 	}
@@ -57,9 +58,9 @@ final class BitboardsInitialisationSection3
 	static long findControlSetFromOccupancyVariation(Square startSq, long occVar, List<Dir> movementDirections)
 	{
 		return bitwiseOr(Iter.over(movementDirections)
-				.map(direction -> startSq.getAllSquares(direction, 8))
-				.map(squares -> BitboardsInitialisationSection3.takeUntil(square -> bitboardsIntersect(occVar, square.asBitboard()), squares))
-				.flatten(Iter::over));
+				.map(direction -> startSq.getAllSquares(direction, 8).toList())
+				.map(squares -> takeUntil(sq -> bitboardsIntersect(occVar, sq.loc), squares))
+				.flatMap(Iter::over));
 	}
 
 	/**

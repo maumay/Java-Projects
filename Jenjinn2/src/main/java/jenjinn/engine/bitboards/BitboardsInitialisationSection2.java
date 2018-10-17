@@ -1,9 +1,7 @@
 package jenjinn.engine.bitboards;
 
+import static java.lang.Math.max;
 import static java.util.Arrays.asList;
-import static jflow.utilities.CollectionUtil.last;
-import static jflow.utilities.CollectionUtil.take;
-import static jflow.utilities.MapUtil.longMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +11,7 @@ import jenjinn.engine.base.Square;
 import jenjinn.engine.pieces.PieceMovementDirections;
 import jflow.iterators.factories.Iter;
 import jflow.iterators.factories.IterRange;
+import jflow.iterators.misc.ArrayUtils;
 
 /**
  * Second of three utility classes containing only static methods to initialise
@@ -44,61 +43,49 @@ final class BitboardsInitialisationSection2
 	static long[] calculateOccupancyVariations(Square startSq, List<Dir> movementDirections)
 	{
 		List<Square> relevantSquares = new ArrayList<>();
-		for (Dir dir : movementDirections)
-		{
+		for (Dir dir : movementDirections) {
 			int numOfSqsLeft = startSq.getNumberOfSquaresLeft(dir);
-			relevantSquares.addAll(startSq.getAllSquares(asList(dir), numOfSqsLeft - 1));
+			relevantSquares.addAll(startSq.getAllSquares(asList(dir), max(numOfSqsLeft - 1, 0)).toList());
 		}
-		return BitboardsInitialisationSection2.bitwiseOrAllSetsInPowerset(longMap(Square::asBitboard, relevantSquares));
+		return foldedPowerset(ArrayUtils.longMap(s -> s.loc, relevantSquares));
+	}
+	
+	static long[] foldedPowerset(long[] src)
+	{
+		if (src.length == 0) 
+			return new long[] {0L};
+		else {
+			long head = src[0];
+			long[] recursed = foldedPowerset(ArrayUtils.drop(1, src));
+			return Iter.overLongs(recursed)
+					.append(Iter.overLongs(recursed).map(x -> x | head))
+					.toArray();
+		}
 	}
 
 	static long[] generateRookOccupancyMasks()
 	{
-		return IterRange.to(64).mapToLong(i -> last(BitboardsImpl.ROOK_OCCUPANCY_VARIATIONS[i])).toArray();
+		long[][] rov = generateAllRookOccupancyVariations();
+		return IterRange.to(64).mapToLong(i -> rov[i][rov[i].length - 1]).toArray();
 	}
 
 	static long[] generateBishopOccupancyMasks()
 	{
-		return IterRange.to(64).mapToLong(i -> last(BitboardsImpl.BISHOP_OCCUPANCY_VARIATIONS[i])).toArray();
+		long[][] bov = generateAllBishopOccupancyVariations();
+		return IterRange.to(64).mapToLong(i -> bov[i][bov[i].length - 1]).toArray();
 	}
 
 	static int[] generateRookMagicBitshifts()
 	{
-		return Iter.overLongs(BitboardsImpl.ROOK_OCCUPANCY_MASKS).mapToInt(x -> 64 - Long.bitCount(x)).toArray();
+		return Iter.overLongs(generateRookOccupancyMasks())
+				.mapToInt(x -> 64 - Long.bitCount(x))
+				.toArray();
 	}
 
 	static int[] generateBishopMagicBitshifts()
 	{
-		return Iter.overLongs(BitboardsImpl.BISHOP_OCCUPANCY_MASKS).mapToInt(x -> 64 - Long.bitCount(x)).toArray();
-	}
-
-	/**
-	 * Recursive method to calculate and return all possible bitboards arising from
-	 * performing bitwise | operation on each element of each subset of the powerset
-	 * of the given array. The size of the returned array is 2^(array.length).
-	 */
-	static long[] bitwiseOrAllSetsInPowerset(long[] array)
-	{
-		int length = array.length;
-		if (length == 0) {
-			return new long[0];
-		}
-		else if (length == 1) {
-			return new long[] { 0L, array[0] };
-		}
-		else {
-			long[] ans = new long[(int) Math.pow(2.0, length)];
-			long[] recursiveAns = bitwiseOrAllSetsInPowerset(take(length - 1, array));
-			int ansIndexCounter = 0;
-			int recursiveAnsIndexCounter = 0;
-			for (int j = 0; j < recursiveAns.length; j++) {
-				for (long i = 0; i < 2; i++) {
-					ans[ansIndexCounter] = recursiveAns[recursiveAnsIndexCounter] | (array[length - 1] * i);
-					ansIndexCounter++;
-				}
-				recursiveAnsIndexCounter++;
-			}
-			return ans;
-		}
+		return Iter.overLongs(generateBishopOccupancyMasks())
+				.mapToInt(x -> 64 - Long.bitCount(x))
+				.toArray();
 	}
 }

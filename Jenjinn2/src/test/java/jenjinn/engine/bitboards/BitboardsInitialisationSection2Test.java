@@ -16,8 +16,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import jenjinn.engine.base.Square;
 import jenjinn.engine.base.Dir;
+import jenjinn.engine.base.Square;
 import jflow.iterators.factories.Iter;
 
 /**
@@ -27,15 +27,15 @@ class BitboardsInitialisationSection2Test
 {
 	@ParameterizedTest
 	@MethodSource
-	void testFindAllPossibleOrCombos(final long[] input, final Set<Long> expectedResult)
+	void testFindAllPossibleOrCombos(long[] input, Set<Long> expectedResult)
 	{
-		assertEquals(expectedResult, Iter.overLongs(BitboardsInitialisationSection2.bitwiseOrAllSetsInPowerset(input)).mapToObject(x -> x).toSet());
+		assertEquals(expectedResult, Iter.overLongs(BitboardsInitialisationSection2.foldedPowerset(input)).boxed().toSet());
 	}
 
 	static Stream<Arguments> testFindAllPossibleOrCombos()
 	{
 		return Stream.of(
-				Arguments.of(new long[0], new HashSet<Long>()),
+				Arguments.of(new long[0], new HashSet<>(asList(0L))),
 				Arguments.of(new long[] {4L}, new HashSet<>(asList(0L, 4L))),
 				Arguments.of(new long[] {0b1L, 0b1010L}, new HashSet<>(asList(0L, 0b1L, 0b1010L, 0b1011L)))
 				);
@@ -44,20 +44,20 @@ class BitboardsInitialisationSection2Test
 
 	@ParameterizedTest
 	@MethodSource
-	void testCalculateOccupancyVariations(final Set<Long> expectedResult, final Square startSquare, final List<Dir> movementDirections)
+	void testCalculateOccupancyVariations(Set<Long> expectedResult, Square startSquare, List<Dir> movementDirections)
 	{
 		assertEquals(expectedResult, Iter.overLongs(calculateOccupancyVariations(startSquare, movementDirections)).mapToObject(i -> i).toSet());
 	}
 
 	static Stream<Arguments> testCalculateOccupancyVariations()
 	{
-		final Arguments firstCase = Arguments.of(
+		Arguments firstCase = Arguments.of(
 				new HashSet<>(asList(0L, 0b1000000000L)),
 				Square.F2,
 				asList(Dir.E, Dir.S)
 				);
 
-		final Arguments secondCase = Arguments.of(
+		Arguments secondCase = Arguments.of(
 				new HashSet<>(asList(0L, 0b10L, 0b100L, 0b1000L, 0b110L, 0b1010L, 0b1100L, 0b1110L)),
 				Square.D1,
 				asList(Dir.E)

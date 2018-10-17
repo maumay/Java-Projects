@@ -31,13 +31,13 @@ public final class BitboardUtils
 	{
 		long result = 0L;
 		for (Square arg : args) {
-			result |= arg.asBitboard();
+			result |= arg.loc;
 		}
 		return result;
 	}
 
 	public static long bitwiseOr(Flow<Square> args)
 	{
-		return args.mapToLong(Square::asBitboard).fold(0L, (a, b) -> a | b);
+		return args.mapToLong(sq -> sq.loc).fold(0L, (a, b) -> a | b);
 	}
 }

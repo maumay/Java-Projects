@@ -5,6 +5,7 @@ import static java.util.Arrays.asList;
 import java.util.Optional;
 
 import jflow.iterators.factories.Repeatedly;
+import jflow.iterators.misc.Exceptions;
 import jflow.seq.Seq;
 
 /**
@@ -61,6 +62,7 @@ public enum Square
 
 	public Seq<Square> getAllSquares(Iterable<Dir> directions, int maxDist)
 	{
+		Exceptions.requireArgument(maxDist >= 0);
 		return Seq.copy(directions).flatMap(dir -> {
 			return Repeatedly.apply(sq -> sq.flatMap(x -> x.getNextSquare(dir)), Optional.of(this))
 					.drop(1)
