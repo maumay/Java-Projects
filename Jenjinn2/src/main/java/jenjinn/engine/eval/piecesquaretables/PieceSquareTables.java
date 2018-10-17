@@ -9,8 +9,8 @@ import jenjinn.engine.base.Square;
 import jenjinn.engine.boardstate.LocationTracker;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
-import jflow.iterators.factories.IterRange;
 import jflow.iterators.factories.Iter;
+import jflow.iterators.factories.IterRange;
 
 /**
  * @author ThomasB
@@ -20,7 +20,7 @@ public final class PieceSquareTables
 {
 	private final List<PieceSquareTable> tables;
 
-	public PieceSquareTables(final List<PieceSquareTable> whiteTables)
+	public PieceSquareTables(List<PieceSquareTable> whiteTables)
 	{
 		if (whiteTables.size() != 6 || IterRange.to(6).anyMatch(i -> whiteTables.get(i).getAssociatedPiece().ordinal() != i)) {
 			throw new IllegalArgumentException();
@@ -30,12 +30,12 @@ public final class PieceSquareTables
 				.toList();
 	}
 
-	public int getLocationValue(final ChessPiece piece, final Square location)
+	public int getLocationValue(ChessPiece piece, Square location)
 	{
 		return tables.get(piece.ordinal()).getValueAt(location);
 	}
 
-	public int evaluateLocations(final List<LocationTracker> pieceLocations)
+	public int evaluateLocations(List<LocationTracker> pieceLocations)
 	{
 		if (pieceLocations.size() != 12) {
 			throw new IllegalArgumentException();
@@ -52,21 +52,21 @@ public final class PieceSquareTables
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
+		int prime = 31;
 		int result = 1;
 		result = prime * result + ((tables == null) ? 0 : tables.hashCode());
 		return result;
 	}
 
 	@Override
-	public boolean equals(final Object obj) {
+	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final PieceSquareTables other = (PieceSquareTables) obj;
+		PieceSquareTables other = (PieceSquareTables) obj;
 		if (tables == null) {
 			if (other.tables != null)
 				return false;
@@ -78,7 +78,7 @@ public final class PieceSquareTables
 	public static PieceSquareTables endgame()
 	{
 		return new PieceSquareTables(
-				Iter.over(ChessPieces.white())
+				ChessPieces.white()
 				.map(p -> TableParser.parseFile(p, p.name().substring(6).toLowerCase() + "-endgame"))
 				.toList());
 	}
@@ -86,7 +86,7 @@ public final class PieceSquareTables
 	public static PieceSquareTables midgame()
 	{
 		return new PieceSquareTables(
-				Iter.over(ChessPieces.white())
+				ChessPieces.white()
 				.map(p -> TableParser.parseFile(p, p.name().substring(6).toLowerCase() + "-midgame"))
 				.toList());
 	}

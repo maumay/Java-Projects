@@ -14,7 +14,7 @@ import jenjinn.engine.base.Square;
 import jenjinn.engine.bitboards.BitboardIterator;
 import jflow.iterators.AbstractFlow;
 import jflow.iterators.Flow;
-import jflow.utilities.Optionals;
+import jflow.iterators.misc.Optionals;
 
 /**
  * @author t
@@ -28,7 +28,7 @@ public final class LocationTracker implements Iterable<Square>
 	public LocationTracker(Set<Square> locations)
 	{
 		locs.addAll(locations);
-		allLocs = iterator().mapToLong(Square::asBitboard).fold(0L, (a, b) -> a | b);
+		allLocs = iterator().mapToLong(sq -> sq.bitboard).fold(0L, (a, b) -> a | b);
 	}
 
 	public LocationTracker(long locations)
@@ -43,7 +43,7 @@ public final class LocationTracker implements Iterable<Square>
 
 	public boolean contains(Square location)
 	{
-		return bitboardsIntersect(allLocs, location.asBitboard());
+		return bitboardsIntersect(allLocs, location.bitboard);
 	}
 
 	public int pieceCount()
@@ -53,15 +53,15 @@ public final class LocationTracker implements Iterable<Square>
 
 	void addLoc(Square location)
 	{
-		assert !bitboardsIntersect(allLocs, location.asBitboard());
-		allLocs ^= location.asBitboard();
+		assert !bitboardsIntersect(allLocs, location.bitboard);
+		allLocs ^= location.bitboard;
 		locs.add(location);
 	}
 
 	void removeLoc(Square location)
 	{
-		assert bitboardsIntersect(allLocs, location.asBitboard());
-		allLocs ^= location.asBitboard();
+		assert bitboardsIntersect(allLocs, location.bitboard);
+		allLocs ^= location.bitboard;
 		locs.remove(location);
 	}
 

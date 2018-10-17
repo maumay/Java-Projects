@@ -7,8 +7,8 @@ import static jenjinn.engine.bitboards.BitboardUtils.bitboardsIntersect;
 
 import java.util.List;
 
-import jenjinn.engine.base.Square;
 import jenjinn.engine.base.Side;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.eval.piecesquaretables.PieceSquareTables;
 import jenjinn.engine.pieces.ChessPiece;
 import jenjinn.engine.pieces.ChessPieces;
@@ -66,12 +66,11 @@ public final class DetailedPieceLocations
 		midgameEval += midgameTables.getLocationValue(pieceToAdd, location);
 		endgameEval += endgameTables.getLocationValue(pieceToAdd, location);
 		pieceLocations.get(pieceToAdd.ordinal()).addLoc(location);
-		long newLocation = location.asBitboard();
 		if (pieceToAdd.isWhite()) {
-			whiteLocations |= newLocation;
+			whiteLocations |= location.bitboard;
 		}
 		else {
-			blackLocations |= newLocation;
+			blackLocations |= location.bitboard;
 		}
 	}
 
@@ -81,12 +80,11 @@ public final class DetailedPieceLocations
 		midgameEval -= midgameTables.getLocationValue(pieceToRemove, location);
 		endgameEval -= endgameTables.getLocationValue(pieceToRemove, location);
 		pieceLocations.get(pieceToRemove.ordinal()).removeLoc(location);
-		long newLocation = location.asBitboard();
 		if (pieceToRemove.isWhite()) {
-			whiteLocations ^= newLocation;
+			whiteLocations ^= location.bitboard;
 		}
 		else {
-			blackLocations ^= newLocation;
+			blackLocations ^= location.bitboard;
 		}
 	}
 

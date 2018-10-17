@@ -192,7 +192,7 @@ class BoardSquareTest
 	@Test
 	void testAsBitboard()
 	{
-		IterRange.to(64).forEach(i -> assertEquals(1L << i, Square.values()[i].loc));
+		IterRange.to(64).forEach(i -> assertEquals(1L << i, Square.values()[i].bitboard));
 	}
 
 	@Test

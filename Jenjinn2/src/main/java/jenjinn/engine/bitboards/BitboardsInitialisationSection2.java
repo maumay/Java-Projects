@@ -47,7 +47,7 @@ final class BitboardsInitialisationSection2
 			int numOfSqsLeft = startSq.getNumberOfSquaresLeft(dir);
 			relevantSquares.addAll(startSq.getAllSquares(asList(dir), max(numOfSqsLeft - 1, 0)).toList());
 		}
-		return foldedPowerset(ArrayUtils.longMap(s -> s.loc, relevantSquares));
+		return foldedPowerset(ArrayUtils.longMap(s -> s.bitboard, relevantSquares));
 	}
 	
 	static long[] foldedPowerset(long[] src)

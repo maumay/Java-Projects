@@ -3,14 +3,8 @@
  */
 package jenjinn.engine.pieces;
 
-import static jflow.utilities.CollectionUtil.head;
-import static jflow.utilities.CollectionUtil.last;
-
 import jenjinn.engine.base.Side;
-import jflow.collections.FList;
-import jflow.collections.Lists;
-import jflow.iterators.Flow;
-import jflow.iterators.factories.Iter;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -20,64 +14,64 @@ public final class ChessPieces
 {
 	private ChessPieces() {}
 
-	private static final FList<ChessPiece> ALL_PIECES = Lists.build(ChessPiece.values());
-	private static final FList<ChessPiece> WHITE_PIECES = Iter.over(ALL_PIECES).take(6).toList();
-	private static final FList<ChessPiece> BLACK_PIECES = Iter.over(ALL_PIECES).drop(6).toList();
-	private static final FList<ChessPiece> WHITE_PINNING_PIECES = Lists.build(ChessPiece.WHITE_QUEEN, ChessPiece.WHITE_ROOK, ChessPiece.WHITE_BISHOP);
-	private static final FList<ChessPiece> BLACK_PINNING_PIECES = Lists.build(ChessPiece.BLACK_QUEEN, ChessPiece.BLACK_ROOK, ChessPiece.BLACK_BISHOP);
+	private static final Seq<ChessPiece> ALL_PIECES = Seq.of(ChessPiece.values());
+	private static final Seq<ChessPiece> WHITE_PIECES = ALL_PIECES.take(6);
+	private static final Seq<ChessPiece> BLACK_PIECES = ALL_PIECES.drop(6);
+	private static final Seq<ChessPiece> WHITE_PINNING_PIECES = Seq.of(ChessPiece.WHITE_QUEEN, ChessPiece.WHITE_ROOK, ChessPiece.WHITE_BISHOP);
+	private static final Seq<ChessPiece> BLACK_PINNING_PIECES = Seq.of(ChessPiece.BLACK_QUEEN, ChessPiece.BLACK_ROOK, ChessPiece.BLACK_BISHOP);
 
-	public static FList<ChessPiece> all()
+	public static Seq<ChessPiece> all()
 	{
 		return ALL_PIECES;
 	}
 
-	public static FList<ChessPiece> white()
+	public static Seq<ChessPiece> white()
 	{
 		return WHITE_PIECES;
 	}
 
-	public static FList<ChessPiece> black()
+	public static Seq<ChessPiece> black()
 	{
 		return BLACK_PIECES;
 	}
 
-	public static FList<ChessPiece> whitePinningPieces()
+	public static Seq<ChessPiece> whitePinningPieces()
 	{
 		return WHITE_PINNING_PIECES;
 	}
 
-	public static FList<ChessPiece> blackPinningPieces()
+	public static Seq<ChessPiece> blackPinningPieces()
 	{
 		return BLACK_PINNING_PIECES;
 	}
 
-	public static FList<ChessPiece> pinnersOn(Side side)
+	public static Seq<ChessPiece> pinnersOn(Side side)
 	{
 		return side.isWhite()? WHITE_PINNING_PIECES : BLACK_PINNING_PIECES;
 	}
 
-	public static FList<ChessPiece> ofSide(Side side)
+	public static Seq<ChessPiece> ofSide(Side side)
 	{
 		return side.isWhite()? white() : black();
 	}
 
-	public static Flow<ChessPiece> iterate()
-	{
-		return Iter.over(all());
-	}
+//	public static Flow<ChessPiece> iterate()
+//	{
+//		return Iter.over(all());
+//	}
 
 	public static ChessPiece fromIndex(int index)
 	{
 		return ChessPiece.values()[index];
 	}
 
-	public static ChessPiece king(Side side)
-	{
-		return side.isWhite()? last(white()) : last(black());
-	}
-
-	public static ChessPiece pawn(Side side)
-	{
-		return side.isWhite()? head(white()) : head(black());
-	}
+//	public static ChessPiece king(Side side)
+//	{
+//		return side.isWhite()? last(white()) : last(black());
+//	}
+//
+//	public static ChessPiece pawn(Side side)
+//	{
+//		return side.isWhite()? head(white()) : head(black());
+//	}
 }

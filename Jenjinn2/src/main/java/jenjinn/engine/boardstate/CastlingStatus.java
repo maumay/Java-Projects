@@ -3,13 +3,12 @@
  */
 package jenjinn.engine.boardstate;
 
-import static jflow.utilities.CollectionUtil.string;
-
 import java.util.EnumSet;
 import java.util.Set;
 
 import jenjinn.engine.base.CastleZone;
 import jenjinn.engine.base.Side;
+import jflow.iterators.misc.Strings;
 
 /**
  * @author ThomasB
@@ -74,15 +73,15 @@ public final class CastlingStatus
 	public String toString()
 	{
 		return new StringBuilder("CastlingStatus[Castling rights: ")
-				.append(string(castlingRights))
+				.append(Strings.$(castlingRights))
 				.append(", White status: ")
-				.append(string(whiteCastlingStatus))
+				.append(Strings.$(whiteCastlingStatus))
 				.append(", Black status: ")
-				.append(string(blackCastlingStatus))
+				.append(Strings.$(blackCastlingStatus))
 				.append("]")
 				.toString();
 	}
-
+	
 	public CastlingStatus copy()
 	{
 		return new CastlingStatus(EnumSet.copyOf(castlingRights), whiteCastlingStatus, blackCastlingStatus);

@@ -30,7 +30,7 @@ public final class MoveCache {
 			Square.iterateAll().forEach(square ->
 			{
 				BitboardIterator.from(piece.getSquaresOfControl(square, 0L, 0L))
-				.forEach(loc -> moveCache.get(square.ordinal())[loc.ordinal()] = new StandardMove(square, loc));
+				.forEach(loc -> moveCache.get(square.ordinal())[bitboard.ordinal()] = new StandardMove(square, bitboard));
 			});
 		}
 		return moveCache;

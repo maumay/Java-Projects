@@ -59,7 +59,7 @@ final class BitboardsInitialisationSection3
 	{
 		return bitwiseOr(Iter.over(movementDirections)
 				.map(direction -> startSq.getAllSquares(direction, 8).toList())
-				.map(squares -> takeUntil(sq -> bitboardsIntersect(occVar, sq.loc), squares))
+				.map(squares -> takeUntil(sq -> bitboardsIntersect(occVar, sq.bitboard), squares))
 				.flatMap(Iter::over));
 	}
 

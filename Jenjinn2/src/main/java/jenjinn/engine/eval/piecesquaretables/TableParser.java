@@ -3,15 +3,14 @@
  */
 package jenjinn.engine.eval.piecesquaretables;
 
-import static jflow.utilities.Strings.allMatches;
-
-import java.util.List;
 
 import jenjinn.engine.base.FileUtils;
 import jenjinn.engine.eval.PieceValues;
 import jenjinn.engine.pieces.ChessPiece;
 import jflow.iterators.factories.Iter;
-import jflow.utilities.MapUtil;
+import jflow.iterators.misc.ArrayUtils;
+import jflow.iterators.misc.Strings;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -40,13 +39,13 @@ public final class TableParser
 		PieceValues pvalues = fle.endsWith("midgame") ? PieceValues.MIDGAME
 				: fle.endsWith("endgame") ? PieceValues.ENDGAME : PieceValues.TESTING;
 
-		List<String> lines = FileUtils.cacheResource(packageProvider, filename);
+		Seq<String> lines = FileUtils.cacheResource(packageProvider, filename);
 
 		if (lines.size() == 8) {
-			int[] locationValues = Iter.overReversed(lines)
-					.map(line -> allMatches(line, NUMBER_PATTERN).toList())
-					.map(matches -> MapUtil.intMap(Integer::parseInt, matches))
-					.flattenToInts(Iter::overReversedInts)
+			int[] locationValues = lines.rflow()
+					.map(line -> Strings.allMatches(line, NUMBER_PATTERN).toList())
+					.map(matches -> ArrayUtils.intMap(Integer::parseInt, matches))
+					.flatMapToInt(Iter::overReversedInts)
 					.toArray();
 
 			return new PieceSquareTable(piece, pvalues.valueOf(piece), locationValues);

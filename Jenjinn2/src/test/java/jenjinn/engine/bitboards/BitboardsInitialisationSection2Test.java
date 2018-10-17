@@ -46,7 +46,7 @@ class BitboardsInitialisationSection2Test
 	@MethodSource
 	void testCalculateOccupancyVariations(Set<Long> expectedResult, Square startSquare, List<Dir> movementDirections)
 	{
-		assertEquals(expectedResult, Iter.overLongs(calculateOccupancyVariations(startSquare, movementDirections)).mapToObject(i -> i).toSet());
+		assertEquals(expectedResult, Iter.overLongs(calculateOccupancyVariations(startSquare, movementDirections)).boxed().toSet());
 	}
 
 	static Stream<Arguments> testCalculateOccupancyVariations()

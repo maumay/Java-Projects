@@ -31,13 +31,13 @@ public enum Square
 	public static final Seq<Square> ALL = Seq.of(values());
 	
 	public final int rank, file;
-	public final long loc;
+	public final long bitboard;
 	
 	private Square()
 	{
 		rank = ordinal() / 8;
 		file = ordinal() % 8;
-		loc = 1L << ordinal();
+		bitboard = 1L << ordinal();
 	}
 
 	public int getNumberOfSquaresLeft(Dir direction)

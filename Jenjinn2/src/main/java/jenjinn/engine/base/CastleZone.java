@@ -62,11 +62,11 @@ public enum CastleZone
 	public long getRequiredFreeSquares()
 	{
 		if (isKingsideZone()) {
-			long requiredFreeSquares = kingSource.loc >>> 1;
+			long requiredFreeSquares = kingSource.bitboard >>> 1;
 			requiredFreeSquares |= requiredFreeSquares >>> 1;
 			return requiredFreeSquares;
 		} else {
-			long requiredFreeSquares = kingSource.loc << 1;
+			long requiredFreeSquares = kingSource.bitboard << 1;
 			requiredFreeSquares |= requiredFreeSquares << 1;
 			requiredFreeSquares |= requiredFreeSquares << 1;
 			return requiredFreeSquares;
@@ -76,13 +76,13 @@ public enum CastleZone
 	public long getRequiredUncontrolledSquares()
 	{
 		if (isKingsideZone()) {
-			long requiredFreeSquares = kingSource.loc;
+			long requiredFreeSquares = kingSource.bitboard;
 			requiredFreeSquares |= requiredFreeSquares >>> 1;
 			requiredFreeSquares |= requiredFreeSquares >>> 1;
 			return requiredFreeSquares;
 		}
 		else {
-			long requiredFreeSquares = kingSource.loc;
+			long requiredFreeSquares = kingSource.bitboard;
 			requiredFreeSquares |= requiredFreeSquares << 1;
 			requiredFreeSquares |= requiredFreeSquares << 1;
 			return requiredFreeSquares;
