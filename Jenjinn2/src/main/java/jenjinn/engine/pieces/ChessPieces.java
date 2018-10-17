@@ -3,6 +3,13 @@
  */
 package jenjinn.engine.pieces;
 
+import static jenjinn.engine.pieces.Piece.BLACK_BISHOP;
+import static jenjinn.engine.pieces.Piece.BLACK_QUEEN;
+import static jenjinn.engine.pieces.Piece.BLACK_ROOK;
+import static jenjinn.engine.pieces.Piece.WHITE_BISHOP;
+import static jenjinn.engine.pieces.Piece.WHITE_QUEEN;
+import static jenjinn.engine.pieces.Piece.WHITE_ROOK;
+
 import jenjinn.engine.base.Side;
 import jflow.seq.Seq;
 
@@ -14,64 +21,35 @@ public final class ChessPieces
 {
 	private ChessPieces() {}
 
-	private static final Seq<ChessPiece> ALL_PIECES = Seq.of(ChessPiece.values());
-	private static final Seq<ChessPiece> WHITE_PIECES = ALL_PIECES.take(6);
-	private static final Seq<ChessPiece> BLACK_PIECES = ALL_PIECES.drop(6);
-	private static final Seq<ChessPiece> WHITE_PINNING_PIECES = Seq.of(ChessPiece.WHITE_QUEEN, ChessPiece.WHITE_ROOK, ChessPiece.WHITE_BISHOP);
-	private static final Seq<ChessPiece> BLACK_PINNING_PIECES = Seq.of(ChessPiece.BLACK_QUEEN, ChessPiece.BLACK_ROOK, ChessPiece.BLACK_BISHOP);
+	public static final Seq<Piece> ALL = Seq.of(Piece.values());
+	public static final Seq<Piece> WHITE = ALL.take(6);
+	public static final Seq<Piece> BLACK = ALL.drop(6);
+	
+	private static final Seq<Piece> WHITE_PINNING_PIECES = Seq.of(WHITE_QUEEN, WHITE_ROOK, WHITE_BISHOP);
+	private static final Seq<Piece> BLACK_PINNING_PIECES = Seq.of(BLACK_QUEEN, BLACK_ROOK, BLACK_BISHOP);
 
-	public static Seq<ChessPiece> all()
-	{
-		return ALL_PIECES;
-	}
-
-	public static Seq<ChessPiece> white()
-	{
-		return WHITE_PIECES;
-	}
-
-	public static Seq<ChessPiece> black()
-	{
-		return BLACK_PIECES;
-	}
-
-	public static Seq<ChessPiece> whitePinningPieces()
+	public static Seq<Piece> whitePinners()
 	{
 		return WHITE_PINNING_PIECES;
 	}
 
-	public static Seq<ChessPiece> blackPinningPieces()
+	public static Seq<Piece> blackPinners()
 	{
 		return BLACK_PINNING_PIECES;
 	}
 
-	public static Seq<ChessPiece> pinnersOn(Side side)
+	public static Seq<Piece> pinnersOn(Side side)
 	{
 		return side.isWhite()? WHITE_PINNING_PIECES : BLACK_PINNING_PIECES;
 	}
 
-	public static Seq<ChessPiece> ofSide(Side side)
+	public static Seq<Piece> of(Side side)
 	{
-		return side.isWhite()? white() : black();
+		return side.isWhite()? WHITE : BLACK;
 	}
 
-//	public static Flow<ChessPiece> iterate()
-//	{
-//		return Iter.over(all());
-//	}
-
-	public static ChessPiece fromIndex(int index)
+	public static Piece fromIndex(int index)
 	{
-		return ChessPiece.values()[index];
+		return Piece.values()[index];
 	}
-
-//	public static ChessPiece king(Side side)
-//	{
-//		return side.isWhite()? last(white()) : last(black());
-//	}
-//
-//	public static ChessPiece pawn(Side side)
-//	{
-//		return side.isWhite()? head(white()) : head(black());
-//	}
 }

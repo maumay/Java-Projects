@@ -3,7 +3,7 @@
  */
 package jenjinn.engine.eval;
 
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jflow.iterators.factories.Iter;
 
 /**
@@ -22,7 +22,7 @@ public enum PieceValues
 		this.values = Iter.overInts(values).map(i -> (int) 3.5 * i).toArray();
 	}
 
-	public int valueOf(ChessPiece piece)
+	public int valueOf(Piece piece)
 	{
 		return values[piece.ordinal() % 6];
 	}

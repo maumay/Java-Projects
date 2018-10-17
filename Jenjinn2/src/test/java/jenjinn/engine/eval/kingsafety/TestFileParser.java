@@ -16,7 +16,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import jenjinn.engine.eval.KingSafetyTable;
 import jenjinn.engine.parseutils.AbstractTestFileParser;
 import jenjinn.engine.parseutils.BoardParser;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.pieces.ChessPieces;
 import jflow.iterators.misc.Pair;
 
@@ -40,7 +40,7 @@ final class TestFileParser extends AbstractTestFileParser
 
 		List<String> whiteAttackers = take(6, attackerInfo);
 		int whiteAttackUnits = 0, whiteAttackCount = 0;
-		for (Pair<ChessPiece, String> x : ChessPieces.iterate().zipWith(whiteAttackers).toList()) {
+		for (Pair<Piece, String> x : ChessPieces.iterate().zipWith(whiteAttackers).toList()) {
 			List<Integer> decoded = allMatches(x.second(), "[0-9]").map(Integer::parseInt).toList();
 			if (decoded.size() != 3) {
 				throw new IllegalArgumentException(attackerInfo.toString());
@@ -53,7 +53,7 @@ final class TestFileParser extends AbstractTestFileParser
 
 		List<String> blackAttackers = drop(6, attackerInfo);
 		int blackAttackUnits = 0, blackAttackCount = 0;
-		for (Pair<ChessPiece, String> x : ChessPieces.iterate().drop(6).zipWith(blackAttackers).toList()) {
+		for (Pair<Piece, String> x : ChessPieces.iterate().drop(6).zipWith(blackAttackers).toList()) {
 			List<Integer> decoded = allMatches(x.second(), "[0-9]").map(Integer::parseInt).toList();
 			if (decoded.size() != 3) {
 				throw new IllegalArgumentException(attackerInfo.toString());

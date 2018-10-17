@@ -8,7 +8,7 @@ import static java.lang.Long.bitCount;
 import jenjinn.engine.base.Square;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.DetailedPieceLocations;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.pieces.ChessPieces;
 import jflow.iterators.Flow;
 import jflow.seq.Seq;
@@ -19,8 +19,8 @@ import jflow.seq.Seq;
  */
 public final class KingSafetyEvaluator implements EvaluationComponent
 {
-	static final Seq<ChessPiece> WKING_ATTACKERS = ChessPieces.black().drop(1).take(4);
-	static final Seq<ChessPiece> BKING_ATTACKERS = ChessPieces.white().drop(1).take(4);
+	static final Seq<Piece> WKING_ATTACKERS = ChessPieces.BLACK.drop(1).take(4);
+	static final Seq<Piece> BKING_ATTACKERS = ChessPieces.WHITE.drop(1).take(4);
 
 	public KingSafetyEvaluator()
 	{
@@ -33,11 +33,11 @@ public final class KingSafetyEvaluator implements EvaluationComponent
 		DetailedPieceLocations pieceLocs = state.getPieceLocations();
 		long white = pieceLocs.getWhiteLocations(), black = pieceLocs.getBlackLocations();
 
-		Square wKingLoc = pieceLocs.iterateLocs(ChessPiece.WHITE_KING).next();
+		Square wKingLoc = pieceLocs.iterateLocs(Piece.WHITE_KING).next();
 		KingSafetyArea wSafetyArea = KingSafetyArea.get(wKingLoc);
 
 		int bAttackUnits = 0;
-		for (ChessPiece piece : WKING_ATTACKERS) {
+		for (Piece piece : WKING_ATTACKERS) {
 			Flow<Square> locs = pieceLocs.iterateLocs(piece);
 			while (locs.hasNext()) {
 				long control = piece.getSquaresOfControl(locs.next(), white, black);
@@ -46,11 +46,11 @@ public final class KingSafetyEvaluator implements EvaluationComponent
 			}
 		}
 
-		Square bKingLoc = pieceLocs.iterateLocs(ChessPiece.BLACK_KING).next();
+		Square bKingLoc = pieceLocs.iterateLocs(Piece.BLACK_KING).next();
 		KingSafetyArea bSafetyArea = KingSafetyArea.get(bKingLoc);
 
 		int wAttackUnits = 0;
-		for (ChessPiece piece : BKING_ATTACKERS) {
+		for (Piece piece : BKING_ATTACKERS) {
 			Flow<Square> locs = pieceLocs.iterateLocs(piece);
 			while (locs.hasNext()) {
 				long control = piece.getSquaresOfControl(locs.next(), white, black);

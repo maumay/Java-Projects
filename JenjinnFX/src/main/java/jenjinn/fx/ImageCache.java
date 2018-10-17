@@ -7,7 +7,7 @@ import java.util.function.Function;
 
 import javafx.scene.image.Image;
 import jenjinn.engine.base.FileUtils;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.pieces.ChessPieces;
 import jflow.collections.FList;
 
@@ -22,7 +22,7 @@ public enum ImageCache
 
 	private ImageCache()
 	{
-		Function<ChessPiece, String> nameMap = piece -> {
+		Function<Piece, String> nameMap = piece -> {
 			String[] xs = piece.name().split("_");
 			char[] chars = {xs[0].charAt(0), piece.isKnight()? 'N' : xs[1].charAt(0)};
 			return new String(chars) + "64.png";
@@ -35,7 +35,7 @@ public enum ImageCache
 				.toList();
 	}
 
-	public Image getImageOf(ChessPiece piece)
+	public Image getImageOf(Piece piece)
 	{
 		return pieceImages.get(piece.ordinal());
 	}

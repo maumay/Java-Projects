@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import jenjinn.engine.eval.PieceValues;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jflow.iterators.factories.IterRange;
 
 /**
@@ -19,7 +19,7 @@ class TableParseTest
 	@Test
 	void test()
 	{
-		final ChessPiece p = ChessPiece.WHITE_BISHOP;
+		final Piece p = Piece.WHITE_BISHOP;
 		final PieceSquareTable expected = new PieceSquareTable(
 				p,
 				PieceValues.TESTING.valueOf(p),

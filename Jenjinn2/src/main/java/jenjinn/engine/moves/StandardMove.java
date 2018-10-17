@@ -19,7 +19,7 @@ import jenjinn.engine.base.Side;
 import jenjinn.engine.base.Square;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.MoveReversalData;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jflow.seq.Seq;
 
 /**
@@ -83,8 +83,8 @@ public final class StandardMove extends AbstractChessMove
 	{
 		Square source = getSource(), target = getTarget();
 		Side activeSide = state.getActiveSide(), passiveSide = activeSide.otherSide();
-		ChessPiece movingPiece = state.getPieceLocations().getPieceAt(source, activeSide);
-		ChessPiece removedPiece = state.getPieceLocations().getPieceAt(target, passiveSide);
+		Piece movingPiece = state.getPieceLocations().getPieceAt(source, activeSide);
+		Piece removedPiece = state.getPieceLocations().getPieceAt(target, passiveSide);
 		boolean pieceWasRemoved = removedPiece != null;
 
 		// Update locations
@@ -122,11 +122,11 @@ public final class StandardMove extends AbstractChessMove
 	void resetPieceLocations(BoardState state, MoveReversalData unmakeDataStore)
 	{
 		// Reset locations
-		ChessPiece previouslyMovedPiece = state.getPieceLocations().getPieceAt(getTarget(), state.getActiveSide());
+		Piece previouslyMovedPiece = state.getPieceLocations().getPieceAt(getTarget(), state.getActiveSide());
 		state.getPieceLocations().removePieceAt(getTarget(), previouslyMovedPiece);
 		state.getPieceLocations().addPieceAt(getSource(), previouslyMovedPiece);
 
-		ChessPiece previouslyRemovedPiece = unmakeDataStore.getPieceTaken();
+		Piece previouslyRemovedPiece = unmakeDataStore.getPieceTaken();
 		if (previouslyRemovedPiece != null) {
 			state.getPieceLocations().addPieceAt(getTarget(), previouslyRemovedPiece);
 		}

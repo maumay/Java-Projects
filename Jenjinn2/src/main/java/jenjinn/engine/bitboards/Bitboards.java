@@ -1,7 +1,7 @@
 package jenjinn.engine.bitboards;
 
 import jenjinn.engine.base.Square;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 
 /**
  * Exposes API methods for accessing cached bitboards.
@@ -69,7 +69,7 @@ public final class Bitboards
 	 * Function which will return a bitboard representing the available move locations for
 	 * a given piece at a given square.
 	 */
-	public static long emptyBoardMoveset(ChessPiece piece, Square square)
+	public static long emptyBoardMoveset(Piece piece, Square square)
 	{
 		int pieceOrdinalModSix = piece.ordinal() % 6;
 
@@ -85,7 +85,7 @@ public final class Bitboards
 	 * Function which will return a bitboard representing the available attack locations for
 	 * a given piece at a given square.
 	 */
-	public static long emptyBoardAttackset(ChessPiece piece, Square square)
+	public static long emptyBoardAttackset(Piece piece, Square square)
 	{
 		int pieceOrdinalModSix = piece.ordinal() % 6;
 

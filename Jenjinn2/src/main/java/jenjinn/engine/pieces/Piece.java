@@ -12,7 +12,7 @@ import jenjinn.engine.bitboards.Bitboards;
 /**
  * @author ThomasB
  */
-public enum ChessPiece implements Moveable
+public enum Piece implements Moveable
 {
 	// DON'T CHANGE ORDER
 	WHITE_PAWN

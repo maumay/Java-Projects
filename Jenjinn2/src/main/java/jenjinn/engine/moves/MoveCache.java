@@ -8,7 +8,7 @@ import static java.util.Arrays.asList;
 import jenjinn.engine.base.CastleZone;
 import jenjinn.engine.base.Square;
 import jenjinn.engine.bitboards.BitboardIterator;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jflow.seq.Seq;
 
 /**
@@ -25,7 +25,7 @@ public final class MoveCache {
 	{
 		Seq<StandardMove[]> moveCache = Square.ALL.map(i -> new StandardMove[64]);
 
-		for (ChessPiece piece : asList(ChessPiece.WHITE_KNIGHT, ChessPiece.WHITE_QUEEN)) {
+		for (Piece piece : asList(Piece.WHITE_KNIGHT, Piece.WHITE_QUEEN)) {
 			Square.ALL.forEach(square ->
 			{
 				BitboardIterator.from(piece.getSquaresOfControl(square, 0L, 0L))

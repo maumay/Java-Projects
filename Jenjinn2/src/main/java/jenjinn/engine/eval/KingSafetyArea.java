@@ -7,7 +7,7 @@ import static jenjinn.engine.bitboards.Bitboards.emptyBoardAttackset;
 
 import jenjinn.engine.base.Square;
 import jenjinn.engine.bitboards.BitboardIterator;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jflow.seq.Seq;
 
 /**
@@ -19,7 +19,7 @@ public final class KingSafetyArea
 
 	private KingSafetyArea(Square src)
 	{
-		final ChessPiece king = ChessPiece.WHITE_KING;
+		final Piece king = Piece.WHITE_KING;
 		this.inner = emptyBoardAttackset(king, src);
 		this.outer = BitboardIterator.from(inner)
 				.mapToLong(sq -> emptyBoardAttackset(king, sq))

@@ -13,7 +13,7 @@ import jenjinn.engine.base.Square;
 import jenjinn.engine.bitboards.BitboardIterator;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.DetailedPieceLocations;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.pieces.ChessPieces;
 
 /**
@@ -41,7 +41,7 @@ public final class PinnedPieces
 		DetailedPieceLocations pieceLocs = state.getPieceLocations();
 		long activeLocs = pieceLocs.getSideLocations(active), allLocs = pieceLocs.getAllLocations();
 
-		ChessPiece activeKing = ChessPieces.ofSide(active).last();
+		Piece activeKing = ChessPieces.of(active).last();
 		Square kingLoc = pieceLocs.iterateLocs(activeKing).next();
 		long kloc = kingLoc.bitboard;
 

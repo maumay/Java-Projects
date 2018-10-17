@@ -10,7 +10,7 @@ import java.util.List;
 import jenjinn.engine.base.Side;
 import jenjinn.engine.base.Square;
 import jenjinn.engine.eval.piecesquaretables.PieceSquareTables;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.pieces.ChessPieces;
 import jenjinn.engine.utils.BoardHasher;
 import jflow.iterators.Flow;
@@ -60,7 +60,7 @@ public final class DetailedPieceLocations
 				endgameTables);
 	}
 
-	public void addPieceAt(Square location, ChessPiece pieceToAdd)
+	public void addPieceAt(Square location, Piece pieceToAdd)
 	{
 		squarePieceFeatureHash ^= BoardHasher.INSTANCE.getSquarePieceFeature(location, pieceToAdd);
 		midgameEval += midgameTables.getLocationValue(pieceToAdd, location);
@@ -74,7 +74,7 @@ public final class DetailedPieceLocations
 		}
 	}
 
-	public void removePieceAt(Square location, ChessPiece pieceToRemove)
+	public void removePieceAt(Square location, Piece pieceToRemove)
 	{
 		squarePieceFeatureHash ^= BoardHasher.INSTANCE.getSquarePieceFeature(location, pieceToRemove);
 		midgameEval -= midgameTables.getLocationValue(pieceToRemove, location);
@@ -88,7 +88,7 @@ public final class DetailedPieceLocations
 		}
 	}
 
-	public ChessPiece getPieceAt(Square square)
+	public Piece getPieceAt(Square square)
 	{
 		for (int i = 0; i < 12; i++) {
 			if (pieceLocations.get(i).contains(square)) {
@@ -98,7 +98,7 @@ public final class DetailedPieceLocations
 		return null;
 	}
 
-	public ChessPiece getPieceAt(long bitboard)
+	public Piece getPieceAt(long bitboard)
 	{
 		for (int i = 0; i < 12; i++) {
 			if (bitboardsIntersect(pieceLocations.get(i).allLocs(), bitboard)) {
@@ -108,7 +108,7 @@ public final class DetailedPieceLocations
 		return null;
 	}
 
-	public ChessPiece getPieceAt(Square square, Side side)
+	public Piece getPieceAt(Square square, Side side)
 	{
 		int lowerBound = side.isWhite() ? 0 : 6, upperBound = lowerBound + 6;
 		for (int i = lowerBound; i < upperBound; i++) {
@@ -139,17 +139,17 @@ public final class DetailedPieceLocations
 		return whiteLocations | blackLocations;
 	}
 
-	public long locationsOf(ChessPiece piece)
+	public long locationsOf(Piece piece)
 	{
 		return pieceLocations.get(piece.ordinal()).allLocs();
 	}
 
-	public int pieceCountOf(ChessPiece piece)
+	public int pieceCountOf(Piece piece)
 	{
 		return pieceLocations.get(piece.ordinal()).pieceCount();
 	}
 
-	public Flow<Square> iterateLocs(ChessPiece piece)
+	public Flow<Square> iterateLocs(Piece piece)
 	{
 		return pieceLocations.get(piece.ordinal()).iterator();
 	}

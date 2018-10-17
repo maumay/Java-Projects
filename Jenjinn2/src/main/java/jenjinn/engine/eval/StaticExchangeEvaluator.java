@@ -12,7 +12,7 @@ import jenjinn.engine.base.Square;
 import jenjinn.engine.bitboards.BitboardIterator;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.DetailedPieceLocations;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.pieces.ChessPieces;
 import jflow.iterators.Flow;
 
@@ -31,13 +31,13 @@ public class StaticExchangeEvaluator
 		source = sourceSquare.bitboard;
 		target = targetSquare.bitboard;
 		generateAttackDefenseInfo(pieceLocs);
-		long knightLocs = pieceLocs.locationsOf(ChessPiece.WHITE_KNIGHT)
-				| pieceLocs.locationsOf(ChessPiece.BLACK_KNIGHT);
+		long knightLocs = pieceLocs.locationsOf(Piece.WHITE_KNIGHT)
+				| pieceLocs.locationsOf(Piece.BLACK_KNIGHT);
 
 		int d = 0;
 		int[] gain = new int[32];
 		gain[d] = PieceValues.MIDGAME.valueOf(pieceLocs.getPieceAt(targetSquare));
-		ChessPiece attPiece = pieceLocs.getPieceAt(source);
+		Piece attPiece = pieceLocs.getPieceAt(source);
 
 		Side activeSide = state.getActiveSide();
 		do {
@@ -70,7 +70,7 @@ public class StaticExchangeEvaluator
 			long white = pieceLocs.getWhiteLocations(), black = pieceLocs.getBlackLocations();
 			while (xrayLocs.hasNext()) {
 				Square loc = xrayLocs.next();
-				ChessPiece p = pieceLocs.getPieceAt(loc);
+				Piece p = pieceLocs.getPieceAt(loc);
 				if (bitboardsIntersect(p.getSquaresOfControl(loc, white, black), target)) {
 					long locBitboard = loc.bitboard;
 					xrays ^= locBitboard;
@@ -87,7 +87,7 @@ public class StaticExchangeEvaluator
 		long white = locationProvider.getWhiteLocations();
 		long black = locationProvider.getBlackLocations();
 
-		for (ChessPiece p : ChessPieces.all()) {
+		for (Piece p : ChessPieces.all()) {
 			Flow<Square> locations = locationProvider.iterateLocs(p);
 			while (locations.hasNext()) {
 				Square loc = locations.next();
@@ -104,7 +104,7 @@ public class StaticExchangeEvaluator
 
 	private long getLeastValuablePiece(DetailedPieceLocations locationProvider, Side fromSide)
 	{
-		for (ChessPiece p : ChessPieces.ofSide(fromSide)) {
+		for (Piece p : ChessPieces.of(fromSide)) {
 			long intersection = attadef & locationProvider.locationsOf(p);
 			if (intersection != 0) {
 				return (intersection & -intersection);

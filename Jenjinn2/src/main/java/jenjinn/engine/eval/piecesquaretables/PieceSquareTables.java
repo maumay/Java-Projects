@@ -7,7 +7,7 @@ import java.util.List;
 
 import jenjinn.engine.base.Square;
 import jenjinn.engine.boardstate.LocationTracker;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.pieces.ChessPieces;
 import jflow.iterators.factories.Iter;
 import jflow.iterators.factories.IterRange;
@@ -30,7 +30,7 @@ public final class PieceSquareTables
 				.toList();
 	}
 
-	public int getLocationValue(ChessPiece piece, Square location)
+	public int getLocationValue(Piece piece, Square location)
 	{
 		return tables.get(piece.ordinal()).getValueAt(location);
 	}

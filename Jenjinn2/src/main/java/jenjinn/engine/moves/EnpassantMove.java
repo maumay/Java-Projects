@@ -12,7 +12,7 @@ import jenjinn.engine.base.Side;
 import jenjinn.engine.base.Square;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.MoveReversalData;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.pieces.ChessPieces;
 
 /**
@@ -33,8 +33,8 @@ public final class EnpassantMove extends AbstractChessMove
 	void updatePieceLocations(BoardState state, MoveReversalData unmakeDataStore)
 	{
 		Side activeSide = state.getActiveSide();
-		ChessPiece activePawn = ChessPieces.ofSide(activeSide).head();
-		ChessPiece passivePawn = ChessPieces.ofSide(activeSide.otherSide()).head();
+		Piece activePawn = ChessPieces.of(activeSide).head();
+		Piece passivePawn = ChessPieces.of(activeSide.otherSide()).head();
 
 		state.getPieceLocations().removePieceAt(getSource(), activePawn);
 		state.getPieceLocations().addPieceAt(getTarget(), activePawn);
@@ -57,11 +57,11 @@ public final class EnpassantMove extends AbstractChessMove
 	void resetPieceLocations(BoardState state, MoveReversalData unmakeDataStore)
 	{
 		Side activeSide = state.getActiveSide();
-		ChessPiece activePawn = ChessPieces.ofSide(activeSide).head();
+		Piece activePawn = ChessPieces.of(activeSide).head();
 		state.getPieceLocations().removePieceAt(getTarget(), activePawn);
 		state.getPieceLocations().addPieceAt(getSource(), activePawn);
 
-		ChessPiece passivePawn = ChessPieces.ofSide(activeSide.otherSide()).head();
+		Piece passivePawn = ChessPieces.of(activeSide.otherSide()).head();
 		state.getPieceLocations().addPieceAt(enPassantSquare, passivePawn);
 	}
 

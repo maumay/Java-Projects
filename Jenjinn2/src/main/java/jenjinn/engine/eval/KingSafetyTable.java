@@ -5,7 +5,7 @@ package jenjinn.engine.eval;
 
 import static java.lang.Math.min;
 
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jflow.iterators.factories.IterRange;
 
 /**
@@ -29,12 +29,12 @@ public enum KingSafetyTable
 		IterRange.to(safetyTable.length).forEach(i -> safetyTable[i] *= scale);
 	}
 
-	public int getOuterUnitValue(ChessPiece piece)
+	public int getOuterUnitValue(Piece piece)
 	{
 		return outerUnits[piece.ordinal() % 6];
 	}
 
-	public int getInnerUnitValue(ChessPiece piece)
+	public int getInnerUnitValue(Piece piece)
 	{
 		return innerUnits[piece.ordinal() % 6];
 	}

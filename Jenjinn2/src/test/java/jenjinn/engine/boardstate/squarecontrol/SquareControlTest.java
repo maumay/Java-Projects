@@ -14,7 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import jenjinn.engine.base.Side;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.calculators.SquareControl;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.pieces.ChessPieces;
 import jenjinn.engine.utils.VisualGridGenerator;
 import jflow.iterators.Flow;
@@ -27,15 +27,15 @@ class SquareControlTest
 {
 	@ParameterizedTest
 	@MethodSource
-	void test(BoardState state, Map<ChessPiece, Long> expectedControl)
+	void test(BoardState state, Map<Piece, Long> expectedControl)
 	{
-		for (ChessPiece p : ChessPieces.all()) {
+		for (Piece p : ChessPieces.all()) {
 			long expected = expectedControl.get(p), actual = SquareControl.calculate(state, p);
 			assertEquals(expected, actual, p.name() + System.lineSeparator() + VisualGridGenerator.from(expected, actual));
 		}
 
 
-		long expectedWhitecontrol = ChessPieces.iterate().take(6)
+		long expectedWhitecontrol = ChessPieces.all().flow().take(6)
 				.mapToLong(expectedControl::get)
 				.fold(0L, (a, b) -> a | b);
 

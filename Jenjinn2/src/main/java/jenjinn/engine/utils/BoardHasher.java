@@ -11,7 +11,7 @@ import jenjinn.engine.base.Side;
 import jenjinn.engine.base.Square;
 import jenjinn.engine.boardstate.CastlingStatus;
 import jenjinn.engine.boardstate.LocationTracker;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.pieces.ChessPieces;
 import jflow.iterators.factories.Iter;
 import jflow.iterators.factories.IterRange;
@@ -53,7 +53,7 @@ public enum BoardHasher
 		return IterRange.to(length).mapToLong(i -> numberGenerator.nextLong()).toArray();
 	}
 
-	public long getSquarePieceFeature(final Square square, final ChessPiece piece)
+	public long getSquarePieceFeature(final Square square, final Piece piece)
 	{
 		return boardSquareFeatures.get(square.ordinal())[piece.ordinal()];
 	}
@@ -79,7 +79,7 @@ public enum BoardHasher
 			throw new IllegalArgumentException();
 		}
 		long hash = 0L;
-		for (final ChessPiece piece : ChessPieces.all()) {
+		for (final Piece piece : ChessPieces.all()) {
 			hash ^= pieceLocations.get(piece.ordinal()).iterator()
 					.mapToLong(loc -> getSquarePieceFeature(loc, piece))
 					.fold(0L, (a, b) -> a ^ b);

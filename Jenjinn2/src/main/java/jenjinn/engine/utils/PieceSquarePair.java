@@ -4,23 +4,23 @@
 package jenjinn.engine.utils;
 
 import jenjinn.engine.base.Square;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 
 /**
  * @author ThomasB
  */
 public final class PieceSquarePair {
 
-	private final ChessPiece piece;
+	private final Piece piece;
 	private final Square square;
 
-	public PieceSquarePair(final ChessPiece piece, final Square square)
+	public PieceSquarePair(final Piece piece, final Square square)
 	{
 		this.piece = piece;
 		this.square = square;
 	}
 
-	public ChessPiece getPiece()
+	public Piece getPiece()
 	{
 		return piece;
 	}

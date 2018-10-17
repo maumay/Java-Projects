@@ -5,7 +5,7 @@ package jenjinn.engine.eval;
 
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.DetailedPieceLocations;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.pieces.ChessPieces;
 
 /**
@@ -40,7 +40,7 @@ public class PieceLocationEvaluator implements EvaluationComponent
 	{
 		int piecePhase = 24;
 		for (int i = 1; i < 5; i++) {
-			ChessPiece wp = ChessPieces.fromIndex(i), bp = ChessPieces.fromIndex(i + 6);
+			Piece wp = ChessPieces.fromIndex(i), bp = ChessPieces.fromIndex(i + 6);
 			int totalPieces = plocs.pieceCountOf(wp) + plocs.pieceCountOf(bp);
 			piecePhase -= totalPieces * PIECE_PHASE_VALUES[i];
 		}

@@ -42,18 +42,18 @@ import static jenjinn.engine.bitboards.Bitboards.diagonalBitboard;
 import static jenjinn.engine.bitboards.Bitboards.fileBitboard;
 import static jenjinn.engine.bitboards.Bitboards.rankBitboard;
 import static jenjinn.engine.bitboards.Bitboards.singleOccupancyBitboard;
-import static jenjinn.engine.pieces.ChessPiece.BLACK_BISHOP;
-import static jenjinn.engine.pieces.ChessPiece.BLACK_KING;
-import static jenjinn.engine.pieces.ChessPiece.BLACK_KNIGHT;
-import static jenjinn.engine.pieces.ChessPiece.BLACK_PAWN;
-import static jenjinn.engine.pieces.ChessPiece.BLACK_QUEEN;
-import static jenjinn.engine.pieces.ChessPiece.BLACK_ROOK;
-import static jenjinn.engine.pieces.ChessPiece.WHITE_BISHOP;
-import static jenjinn.engine.pieces.ChessPiece.WHITE_KING;
-import static jenjinn.engine.pieces.ChessPiece.WHITE_KNIGHT;
-import static jenjinn.engine.pieces.ChessPiece.WHITE_PAWN;
-import static jenjinn.engine.pieces.ChessPiece.WHITE_QUEEN;
-import static jenjinn.engine.pieces.ChessPiece.WHITE_ROOK;
+import static jenjinn.engine.pieces.Piece.BLACK_BISHOP;
+import static jenjinn.engine.pieces.Piece.BLACK_KING;
+import static jenjinn.engine.pieces.Piece.BLACK_KNIGHT;
+import static jenjinn.engine.pieces.Piece.BLACK_PAWN;
+import static jenjinn.engine.pieces.Piece.BLACK_QUEEN;
+import static jenjinn.engine.pieces.Piece.BLACK_ROOK;
+import static jenjinn.engine.pieces.Piece.WHITE_BISHOP;
+import static jenjinn.engine.pieces.Piece.WHITE_KING;
+import static jenjinn.engine.pieces.Piece.WHITE_KNIGHT;
+import static jenjinn.engine.pieces.Piece.WHITE_PAWN;
+import static jenjinn.engine.pieces.Piece.WHITE_QUEEN;
+import static jenjinn.engine.pieces.Piece.WHITE_ROOK;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.stream.Stream;
@@ -65,7 +65,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import jenjinn.engine.base.Dir;
 import jenjinn.engine.base.Square;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.pieces.PieceMovementDirections;
 import jflow.iterators.factories.IterRange;
 import jflow.seq.Seq;
@@ -124,7 +124,7 @@ class BitboardsInitialisationSection1Test
 
 	@ParameterizedTest
 	@MethodSource
-	void testEmptyBoardMovesetBitboard(ChessPiece piece, Square location, Seq<Square> expectedMoveLocations)
+	void testEmptyBoardMovesetBitboard(Piece piece, Square location, Seq<Square> expectedMoveLocations)
 	{
 		assertEquals(BitboardUtils.bitwiseOr(expectedMoveLocations), Bitboards.emptyBoardMoveset(piece, location));
 	}
@@ -152,7 +152,7 @@ class BitboardsInitialisationSection1Test
 
 	@ParameterizedTest
 	@MethodSource
-	void testEmptyBoardAttacksetBitboard(ChessPiece piece, Square location, Seq<Square> expectedMoveLocations)
+	void testEmptyBoardAttacksetBitboard(Piece piece, Square location, Seq<Square> expectedMoveLocations)
 	{
 		assertEquals(BitboardUtils.bitwiseOr(expectedMoveLocations), Bitboards.emptyBoardAttackset(piece, location));
 	}

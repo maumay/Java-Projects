@@ -20,7 +20,7 @@ import jenjinn.engine.parseutils.AbstractTestFileParser;
 import jenjinn.engine.parseutils.BoardParser;
 import jenjinn.engine.parseutils.CordParser;
 import jenjinn.engine.pgn.CommonRegex;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.pieces.ChessPieces;
 import jflow.iterators.factories.Iter;
 import jflow.iterators.misc.Pair;
@@ -39,7 +39,7 @@ final class TestFileParser extends AbstractTestFileParser
 		return Arguments.of(BoardParser.parse(take(9, lines)), parseSquaresOfControl(drop(9, lines)));
 	}
 
-	private Map<ChessPiece, Long> parseSquaresOfControl(List<String> squaresOfControl)
+	private Map<Piece, Long> parseSquaresOfControl(List<String> squaresOfControl)
 	{
 		if (sizeOf(squaresOfControl) != 12) {
 			throw new IllegalArgumentException(

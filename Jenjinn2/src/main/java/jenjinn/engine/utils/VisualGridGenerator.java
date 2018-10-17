@@ -12,7 +12,7 @@ import java.util.Map;
 import jenjinn.engine.base.Square;
 import jenjinn.engine.bitboards.BitboardIterator;
 import jenjinn.engine.boardstate.DetailedPieceLocations;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.pieces.ChessPieces;
 import jflow.iterators.factories.Iter;
 
@@ -25,7 +25,7 @@ public final class VisualGridGenerator
 	private VisualGridGenerator() {
 	}
 
-	public static String from(String title, Map<Square, ChessPiece> locations)
+	public static String from(String title, Map<Square, Piece> locations)
 	{
 		return StringifyBoard.formatGrid(
 				new TitledVisualGrid(title, Iter.over(locations.keySet()).toMap(x -> x, x -> CharPair.from(locations.get(x))))

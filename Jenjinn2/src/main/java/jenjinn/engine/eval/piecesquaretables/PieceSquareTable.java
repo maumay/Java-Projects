@@ -6,7 +6,7 @@ package jenjinn.engine.eval.piecesquaretables;
 import java.util.Arrays;
 
 import jenjinn.engine.base.Square;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.pieces.ChessPieces;
 import jflow.iterators.factories.IterRange;
 import jflow.iterators.factories.Iter;
@@ -16,10 +16,10 @@ import jflow.iterators.factories.Iter;
  */
 public final class PieceSquareTable
 {
-	private final ChessPiece associatedPiece;
+	private final Piece associatedPiece;
 	private final int[] locationValues;
 
-	public PieceSquareTable(ChessPiece associatedPiece, int pieceValue, int[] locationValues)
+	public PieceSquareTable(Piece associatedPiece, int pieceValue, int[] locationValues)
 	{
 		if (associatedPiece == null || locationValues.length != 64) {
 			throw new IllegalArgumentException();
@@ -28,7 +28,7 @@ public final class PieceSquareTable
 		this.locationValues = Iter.overInts(locationValues).map(n -> n + pieceValue).toArray();
 	}
 
-	public ChessPiece getAssociatedPiece()
+	public Piece getAssociatedPiece()
 	{
 		return associatedPiece;
 	}

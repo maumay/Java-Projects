@@ -6,7 +6,7 @@ package jenjinn.engine.eval.piecesquaretables;
 
 import jenjinn.engine.base.FileUtils;
 import jenjinn.engine.eval.PieceValues;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jflow.iterators.factories.Iter;
 import jflow.iterators.misc.ArrayUtils;
 import jflow.iterators.misc.Strings;
@@ -24,12 +24,12 @@ public final class TableParser
 	{
 	}
 
-	public static PieceSquareTable parseFile(ChessPiece piece, String filename)
+	public static PieceSquareTable parseFile(Piece piece, String filename)
 	{
 		return parseFile(piece, TableParser.class, filename);
 	}
 
-	public static PieceSquareTable parseFile(ChessPiece piece, Class<?> packageProvider, String filename)
+	public static PieceSquareTable parseFile(Piece piece, Class<?> packageProvider, String filename)
 	{
 		String fle = filename;
 		if (!piece.isWhite() || !(fle.endsWith("midgame") || fle.endsWith("endgame") || fle.endsWith("testing"))) {

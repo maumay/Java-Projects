@@ -11,7 +11,7 @@ import jenjinn.engine.base.DevelopmentPiece;
 import jenjinn.engine.base.Side;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.MoveReversalData;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jflow.iterators.Flow;
 import jflow.iterators.factories.Iter;
 
@@ -43,10 +43,10 @@ public final class PromotionMove extends AbstractChessMove
 	void updatePieceLocations(BoardState state, MoveReversalData unmakeDataStore)
 	{
 		Side activeSide = state.getActiveSide();
-		state.getPieceLocations().removePieceAt(getSource(), activeSide.isWhite() ? ChessPiece.WHITE_PAWN : ChessPiece.BLACK_PAWN);
+		state.getPieceLocations().removePieceAt(getSource(), activeSide.isWhite() ? Piece.WHITE_PAWN : Piece.BLACK_PAWN);
 		state.getPieceLocations().addPieceAt(getTarget(), promotionResult.toPiece(activeSide));
 
-		ChessPiece removedPiece = state.getPieceLocations().getPieceAt(getTarget(), activeSide.otherSide());
+		Piece removedPiece = state.getPieceLocations().getPieceAt(getTarget(), activeSide.otherSide());
 		if (removedPiece != null) {
 			state.getPieceLocations().removePieceAt(getTarget(), removedPiece);
 			unmakeDataStore.setPieceTaken(removedPiece);
@@ -66,9 +66,9 @@ public final class PromotionMove extends AbstractChessMove
 	{
 		Side activeSide = state.getActiveSide();
 		state.getPieceLocations().removePieceAt(getTarget(), promotionResult.toPiece(activeSide));
-		state.getPieceLocations().addPieceAt(getSource(), activeSide.isWhite() ? ChessPiece.WHITE_PAWN : ChessPiece.BLACK_PAWN);
+		state.getPieceLocations().addPieceAt(getSource(), activeSide.isWhite() ? Piece.WHITE_PAWN : Piece.BLACK_PAWN);
 
-		ChessPiece pieceToReplace = unmakeDataStore.getPieceTaken();
+		Piece pieceToReplace = unmakeDataStore.getPieceTaken();
 		if (pieceToReplace != null) {
 			state.getPieceLocations().addPieceAt(getTarget(), pieceToReplace);
 		}

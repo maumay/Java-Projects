@@ -13,7 +13,7 @@ import jenjinn.engine.base.DevelopmentPiece;
 import jenjinn.engine.base.Side;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.MoveReversalData;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 
 /**
  * @author ThomasB
@@ -44,11 +44,11 @@ public final class CastleMove extends AbstractChessMove
 		Side currentActiveSide = state.getActiveSide();
 		boolean whiteActive = currentActiveSide.isWhite();
 
-		ChessPiece king = whiteActive ? ChessPiece.WHITE_KING : ChessPiece.BLACK_KING;
+		Piece king = whiteActive ? Piece.WHITE_KING : Piece.BLACK_KING;
 		state.getPieceLocations().removePieceAt(wrappedZone.kingSource, king);
 		state.getPieceLocations().addPieceAt(wrappedZone.kingTarget, king);
 
-		ChessPiece rook = whiteActive ? ChessPiece.WHITE_ROOK : ChessPiece.BLACK_ROOK;
+		Piece rook = whiteActive ? Piece.WHITE_ROOK : Piece.BLACK_ROOK;
 		state.getPieceLocations().removePieceAt(wrappedZone.rookSource, rook);
 		state.getPieceLocations().addPieceAt(wrappedZone.rookTarget, rook);
 
@@ -80,11 +80,11 @@ public final class CastleMove extends AbstractChessMove
 	void resetPieceLocations(BoardState state, MoveReversalData unmakeDataStore)
 	{
 		boolean whiteActive = state.getActiveSide().isWhite();
-		ChessPiece king = whiteActive ? ChessPiece.WHITE_KING : ChessPiece.BLACK_KING;
+		Piece king = whiteActive ? Piece.WHITE_KING : Piece.BLACK_KING;
 		state.getPieceLocations().removePieceAt(wrappedZone.kingTarget, king);
 		state.getPieceLocations().addPieceAt(wrappedZone.kingSource, king);
 
-		ChessPiece rook = whiteActive ? ChessPiece.WHITE_ROOK : ChessPiece.BLACK_ROOK;
+		Piece rook = whiteActive ? Piece.WHITE_ROOK : Piece.BLACK_ROOK;
 		state.getPieceLocations().removePieceAt(wrappedZone.rookTarget, rook);
 		state.getPieceLocations().addPieceAt(wrappedZone.rookSource, rook);
 	}

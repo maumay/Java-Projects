@@ -15,7 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Font;
 import jenjinn.engine.base.Side;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 
 /**
  * @author ThomasB
@@ -92,7 +92,7 @@ public final class GameWrapper extends Region
 
 	private Button createSideSelectionButton(Side side)
 	{
-		ChessPiece toDisplay = side.isWhite() ? ChessPiece.WHITE_QUEEN : ChessPiece.BLACK_QUEEN;
+		Piece toDisplay = side.isWhite() ? Piece.WHITE_QUEEN : Piece.BLACK_QUEEN;
 		Button button = new Button();
 		button.setStyle(CSS_STYLE);
 		button.setGraphic(new ImageView(ImageCache.INSTANCE.getImageOf(toDisplay)));

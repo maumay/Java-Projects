@@ -4,7 +4,7 @@
 package jenjinn.engine.moves;
 
 import jenjinn.engine.base.Side;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 
 /**
  * @author t
@@ -14,35 +14,35 @@ public enum PromotionResult
 {
 	N {
 		@Override
-		public ChessPiece toPiece(Side side)
+		public Piece toPiece(Side side)
 		{
-			return side.isWhite()? ChessPiece.WHITE_KNIGHT : ChessPiece.BLACK_KNIGHT;
+			return side.isWhite()? Piece.WHITE_KNIGHT : Piece.BLACK_KNIGHT;
 		}
 	},
 
 	B {
 		@Override
-		public ChessPiece toPiece(Side side)
+		public Piece toPiece(Side side)
 		{
-			return side.isWhite()? ChessPiece.WHITE_BISHOP : ChessPiece.BLACK_BISHOP;
+			return side.isWhite()? Piece.WHITE_BISHOP : Piece.BLACK_BISHOP;
 		}
 	},
 
 	R {
 		@Override
-		public ChessPiece toPiece(Side side)
+		public Piece toPiece(Side side)
 		{
-			return side.isWhite()? ChessPiece.WHITE_ROOK : ChessPiece.BLACK_ROOK;
+			return side.isWhite()? Piece.WHITE_ROOK : Piece.BLACK_ROOK;
 		}
 	},
 
 	Q {
 		@Override
-		public ChessPiece toPiece(Side side)
+		public Piece toPiece(Side side)
 		{
-			return side.isWhite()? ChessPiece.WHITE_QUEEN : ChessPiece.BLACK_QUEEN;
+			return side.isWhite()? Piece.WHITE_QUEEN : Piece.BLACK_QUEEN;
 		}
 	};
 
-	public abstract ChessPiece toPiece(Side side);
+	public abstract Piece toPiece(Side side);
 }

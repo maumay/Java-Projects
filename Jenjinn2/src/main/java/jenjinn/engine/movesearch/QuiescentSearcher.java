@@ -21,7 +21,7 @@ import jenjinn.engine.eval.StateEvaluator;
 import jenjinn.engine.eval.StaticExchangeEvaluator;
 import jenjinn.engine.moves.ChessMove;
 import jenjinn.engine.moves.EnpassantMove;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.pieces.ChessPieces;
 import jflow.iterators.Flow;
 import jflow.iterators.factories.IterRange;
@@ -73,7 +73,7 @@ public final class QuiescentSearcher
 		DetailedPieceLocations pieceLocs = root.getPieceLocations();
 		long passiveControl = SquareControl.calculate(root, passive);
 
-		long activeKingLoc = pieceLocs.locationsOf(ChessPieces.ofSide(active).last());
+		long activeKingLoc = pieceLocs.locationsOf(ChessPieces.of(active).last());
 		boolean inCheck = bitboardsIntersect(activeKingLoc, passiveControl);
 
 		if (inCheck) {
@@ -144,8 +144,8 @@ public final class QuiescentSearcher
 
 	private int calculateBigDelta()
 	{
-		int leastValuable = PieceValues.MIDGAME.valueOf(ChessPiece.WHITE_PAWN);
-		int mostValuable = PieceValues.MIDGAME.valueOf(ChessPiece.WHITE_QUEEN);
+		int leastValuable = PieceValues.MIDGAME.valueOf(Piece.WHITE_PAWN);
+		int mostValuable = PieceValues.MIDGAME.valueOf(Piece.WHITE_QUEEN);
 		return 2 * mostValuable - leastValuable;
 	}
 }

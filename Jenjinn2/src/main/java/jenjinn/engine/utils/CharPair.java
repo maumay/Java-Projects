@@ -3,7 +3,7 @@
  */
 package jenjinn.engine.utils;
 
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 
 /**
  * @author ThomasB
@@ -24,12 +24,12 @@ public final class CharPair
 		return new CharPair(first, second);
 	}
 
-	public static CharPair from(final ChessPiece piece)
+	public static CharPair from(final Piece piece)
 	{
-		if (piece == ChessPiece.WHITE_KNIGHT) {
+		if (piece == Piece.WHITE_KNIGHT) {
 			return of('N', 'W');
 		}
-		else if (piece == ChessPiece.BLACK_KNIGHT) {
+		else if (piece == Piece.BLACK_KNIGHT) {
 			return of('N', 'B');
 		}
 		else {

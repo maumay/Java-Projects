@@ -10,7 +10,7 @@ import static jenjinn.engine.bitboards.Bitboards.rankBitboard;
 import jenjinn.engine.base.Side;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.DetailedPieceLocations;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.pieces.ChessPieces;
 
 /**
@@ -22,12 +22,12 @@ public final class SquareControl {
 
 	public static long calculate(BoardState state, Side side)
 	{
-		return ChessPieces.ofSide(side).flow()
+		return ChessPieces.of(side).flow()
 				.mapToLong(piece -> calculate(state, piece))
 				.fold(0L, (a, b) -> a | b);
 	}
 
-	public static long calculate(BoardState state, ChessPiece piece)
+	public static long calculate(BoardState state, Piece piece)
 	{
 		if (piece.isPawn()) {
 			return calculatePawn(state, piece);
@@ -41,7 +41,7 @@ public final class SquareControl {
 		}
 	}
 
-	private static long calculatePawn(BoardState state, ChessPiece piece)
+	private static long calculatePawn(BoardState state, Piece piece)
 	{
 		assert piece.isPawn();
 		long pawnLocs = state.getPieceLocations().locationsOf(piece);

@@ -42,7 +42,7 @@ public final class TerminationState
 		} else {
 			Side active = state.getActiveSide(), passive = active.otherSide();
 			long passiveControl = SquareControl.calculate(state, passive);
-			long kingLoc = state.getPieceLocations().locationsOf(ChessPieces.ofSide(active).last());
+			long kingLoc = state.getPieceLocations().locationsOf(ChessPieces.of(active).last());
 			boolean inCheck = BitboardUtils.bitboardsIntersect(passiveControl, kingLoc);
 			return inCheck ? GameTermination.getWinFor(passive) : GameTermination.DRAW;
 		}

@@ -18,7 +18,7 @@ import jenjinn.engine.base.Side;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.calculators.LegalMoves;
 import jenjinn.engine.moves.ChessMove;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.pieces.ChessPieces;
 import jflow.collections.FList;
 import jflow.iterators.misc.Pair;
@@ -128,7 +128,7 @@ public final class ChessBoard
 		final GraphicsContext gc = board.getPieceGC();
 		gc.clearRect(0, 0, size, size);
 
-		for (final ChessPiece piece : ChessPieces.all()) {
+		for (final Piece piece : ChessPieces.all()) {
 			final Image image = ImageCache.INSTANCE.getImageOf(piece);
 			state.getPieceLocations().iterateLocs(piece).forEach(sq -> {
 				final Point2D loc = squareLocations.get(sq);

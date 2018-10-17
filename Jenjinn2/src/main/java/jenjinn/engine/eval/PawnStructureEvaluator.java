@@ -12,7 +12,7 @@ import jenjinn.engine.bitboards.BitboardIterator;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.DetailedPieceLocations;
 import jenjinn.engine.eval.PawnTable.Entry;
-import jenjinn.engine.pieces.ChessPiece;
+import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.utils.BoardHasher;
 
 /**
@@ -42,8 +42,8 @@ public final class PawnStructureEvaluator implements EvaluationComponent
 	public int evaluate(BoardState state)
 	{
 		DetailedPieceLocations pieceLocs = state.getPieceLocations();
-		long wpawns = pieceLocs.locationsOf(ChessPiece.WHITE_PAWN);
-		long bpawns = pieceLocs.locationsOf(ChessPiece.BLACK_PAWN);
+		long wpawns = pieceLocs.locationsOf(Piece.WHITE_PAWN);
+		long bpawns = pieceLocs.locationsOf(Piece.BLACK_PAWN);
 		long pawnHash = calculatePawnPositionHash(wpawns, bpawns);
 
 		PawnTable.Entry cached = cachedEvaluations.get(pawnHash);
@@ -76,7 +76,7 @@ public final class PawnStructureEvaluator implements EvaluationComponent
 
 	private long calculatePawnPositionHash(long wpawns, long bpawns)
 	{
-		ChessPiece wp = ChessPiece.WHITE_PAWN, bp = ChessPiece.BLACK_PAWN;
+		Piece wp = Piece.WHITE_PAWN, bp = Piece.BLACK_PAWN;
 
 		long whash = BitboardIterator.from(wpawns)
 				.mapToLong(sq -> BoardHasher.INSTANCE.getSquarePieceFeature(sq, wp))
