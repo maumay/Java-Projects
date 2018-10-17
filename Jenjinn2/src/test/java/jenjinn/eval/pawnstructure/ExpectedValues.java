@@ -3,8 +3,8 @@
  */
 package jenjinn.eval.pawnstructure;
 
-import jflow.collections.FList;
 import jflow.iterators.misc.IntPair;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -17,8 +17,8 @@ public final class ExpectedValues
 	private final int chainLinkCountDifference;
 	private final int backwardCountDifference;
 	private final IntPair isolatedPawnCountDifferences;
-	private final FList<Integer> whitePhalanxSizes;
-	private final FList<Integer> blackPhalanxSizes;
+	private final Seq<Integer> whitePhalanxSizes;
+	private final Seq<Integer> blackPhalanxSizes;
 
 	public ExpectedValues(
 			int doubledPawnCountDifference,
@@ -26,8 +26,8 @@ public final class ExpectedValues
 			int chainLinkCountDifference,
 			int backwardCountDifference,
 			IntPair isolatedPawnCountDifferences,
-			FList<Integer> whitePhalanxSizes,
-			FList<Integer> blackPhalanxSizes)
+			Seq<Integer> whitePhalanxSizes,
+			Seq<Integer> blackPhalanxSizes)
 	{
 		this.doubledPawnCountDifference = doubledPawnCountDifference;
 		this.passedPawnCountDifference = passedPawnCountDifference;
@@ -63,12 +63,12 @@ public final class ExpectedValues
 		return isolatedPawnCountDifferences;
 	}
 
-	public FList<Integer> getWhitePhalanxSizes()
+	public Seq<Integer> getWhitePhalanxSizes()
 	{
 		return whitePhalanxSizes;
 	}
 
-	public FList<Integer> getBlackPhalanxSizes()
+	public Seq<Integer> getBlackPhalanxSizes()
 	{
 		return blackPhalanxSizes;
 	}

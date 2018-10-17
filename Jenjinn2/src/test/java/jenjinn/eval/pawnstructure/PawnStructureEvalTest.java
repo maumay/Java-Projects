@@ -35,32 +35,32 @@ class PawnStructureEvalTest
 	@MethodSource
 	void test(Long whitePawnLocs, Long blackPawnLocs, ExpectedValues expectedValues)
 	{
-		final long w = whitePawnLocs, b = blackPawnLocs;
-		final int doubledDifference = expectedValues.getDoubledPawnCountDifference();
+		long w = whitePawnLocs, b = blackPawnLocs;
+		int doubledDifference = expectedValues.getDoubledPawnCountDifference();
 		assertEquals(-doubledDifference*DOUBLED_PENALTY, evaluateDoubledPawns(w, b));
 
-		final int passedDifference = expectedValues.getPassedPawnCountDifference();
+		int passedDifference = expectedValues.getPassedPawnCountDifference();
 		assertEquals(passedDifference*PASSED_BONUS, evaluatePassedPawns(w, b));
 
-		final int chainLinkDifference = expectedValues.getChainLinkCountDifference();
+		int chainLinkDifference = expectedValues.getChainLinkCountDifference();
 		assertEquals(chainLinkDifference*CHAIN_BONUS, evaluatePawnChains(w, b));
 
-		final int backwardCountDifference = expectedValues.getBackwardCountDifference();
+		int backwardCountDifference = expectedValues.getBackwardCountDifference();
 		assertEquals(-backwardCountDifference*BACKWARD_PENALTY, evaluateBackwardPawns(w, b));
 
-		final IntPair isolatedDifferences = expectedValues.getIsolatedPawnCountDifferences();
-		final int expectedEval = -isolatedDifferences.first() * ISOLATED_PENALTY
-				- isolatedDifferences.second() * (ISOLATED_PENALTY + SEMIOPEN_FILE_BONUS);
+		IntPair isolatedDifferences = expectedValues.getIsolatedPawnCountDifferences();
+		int expectedEval = -isolatedDifferences._1 * ISOLATED_PENALTY
+				- isolatedDifferences._2 * (ISOLATED_PENALTY + SEMIOPEN_FILE_BONUS);
 		assertEquals(expectedEval, evaluateIsolatedPawns(w, b));
 
-		final int expectedWhitePhalanxScore = expectedValues
-				.getWhitePhalanxSizes()
+		int expectedWhitePhalanxScore = expectedValues
+				.getWhitePhalanxSizes().flow()
 				.mapToInt(i -> PawnStructureEvaluator.PHALANX_BONUSES[i])
 				.fold(0, (x, y) -> x + y);
 		assertEquals(expectedWhitePhalanxScore, evaluatePhalanxFormations(w));
 
-		final int expectedBlackPhalanxScore = expectedValues
-				.getBlackPhalanxSizes()
+		int expectedBlackPhalanxScore = expectedValues
+				.getBlackPhalanxSizes().flow()
 				.mapToInt(i -> PawnStructureEvaluator.PHALANX_BONUSES[i])
 				.fold(0, (x, y) -> x + y);
 		assertEquals(expectedBlackPhalanxScore, evaluatePhalanxFormations(b));

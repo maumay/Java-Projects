@@ -3,14 +3,6 @@
  */
 package jenjinn.eval.kingsafety;
 
-import static jflow.utilities.CollectionUtil.drop;
-import static jflow.utilities.CollectionUtil.head;
-import static jflow.utilities.CollectionUtil.last;
-import static jflow.utilities.CollectionUtil.take;
-import static jflow.utilities.Strings.allMatches;
-
-import java.util.List;
-
 import org.junit.jupiter.params.provider.Arguments;
 
 import jenjinn.eval.KingSafetyTable;
@@ -19,6 +11,8 @@ import jenjinn.parseutils.BoardParser;
 import jenjinn.pieces.ChessPieces;
 import jenjinn.pieces.Piece;
 import jflow.iterators.misc.Pair;
+import jflow.iterators.misc.Strings;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -28,40 +22,40 @@ final class TestFileParser extends AbstractTestFileParser
 	@Override
 	public Arguments parse(String fileName)
 	{
-		List<String> lines = loadFile(fileName);
-		return Arguments.of(BoardParser.parse(take(9, lines)), parseConstraintEvaluation(drop(9, lines)));
+		Seq<String> lines = loadFile(fileName);
+		return Arguments.of(BoardParser.parse(lines.take(9)), parseConstraintEvaluation(lines.drop(9)));
 	}
 
-	private Integer parseConstraintEvaluation(List<String> attackerInfo)
+	private Integer parseConstraintEvaluation(Seq<String> attackerInfo)
 	{
 		if (attackerInfo.size() != 12) {
 			throw new IllegalArgumentException(attackerInfo.toString());
 		}
 
-		List<String> whiteAttackers = take(6, attackerInfo);
+		Seq<String> whiteAttackers = attackerInfo.take(6);
 		int whiteAttackUnits = 0, whiteAttackCount = 0;
-		for (Pair<Piece, String> x : ChessPieces.iterate().zipWith(whiteAttackers).toList()) {
-			List<Integer> decoded = allMatches(x.second(), "[0-9]").map(Integer::parseInt).toList();
+		for (Pair<Piece, String> x : ChessPieces.ALL.flow().zipWith(whiteAttackers).toList()) {
+			Seq<Integer> decoded = Strings.allMatches(x._2, "[0-9]").map(Integer::parseInt).toSeq();
 			if (decoded.size() != 3) {
 				throw new IllegalArgumentException(attackerInfo.toString());
 			}
-			int outerAttack = head(decoded), innerAttack = decoded.get(1);
-			whiteAttackUnits += outerAttack * KingSafetyTable.INSTANCE.getOuterUnitValue(x.first());
-			whiteAttackUnits += innerAttack * KingSafetyTable.INSTANCE.getInnerUnitValue(x.first());
-			whiteAttackCount += last(decoded);
+			int outerAttack = decoded.head(), innerAttack = decoded.get(1);
+			whiteAttackUnits += outerAttack * KingSafetyTable.INSTANCE.getOuterUnitValue(x._1);
+			whiteAttackUnits += innerAttack * KingSafetyTable.INSTANCE.getInnerUnitValue(x._1);
+			whiteAttackCount += decoded.last();
 		}
 
-		List<String> blackAttackers = drop(6, attackerInfo);
+		Seq<String> blackAttackers = attackerInfo.drop(6);
 		int blackAttackUnits = 0, blackAttackCount = 0;
-		for (Pair<Piece, String> x : ChessPieces.iterate().drop(6).zipWith(blackAttackers).toList()) {
-			List<Integer> decoded = allMatches(x.second(), "[0-9]").map(Integer::parseInt).toList();
+		for (Pair<Piece, String> x : ChessPieces.ALL.flow().drop(6).zipWith(blackAttackers).toSeq()) {
+			Seq<Integer> decoded = Strings.allMatches(x._2, "[0-9]").map(Integer::parseInt).toSeq();
 			if (decoded.size() != 3) {
 				throw new IllegalArgumentException(attackerInfo.toString());
 			}
-			int outerAttack = head(decoded), innerAttack = decoded.get(1);
-			blackAttackUnits += outerAttack * KingSafetyTable.INSTANCE.getOuterUnitValue(x.first());
-			blackAttackUnits += innerAttack * KingSafetyTable.INSTANCE.getInnerUnitValue(x.first());
-			blackAttackCount += last(decoded);
+			int outerAttack = decoded.head(), innerAttack = decoded.get(1);
+			blackAttackUnits += outerAttack * KingSafetyTable.INSTANCE.getOuterUnitValue(x._1);
+			blackAttackUnits += innerAttack * KingSafetyTable.INSTANCE.getInnerUnitValue(x._1);
+			blackAttackCount += decoded.last();
 		}
 
 		int whiteDivisor = whiteAttackCount > 1? 1 : 2, blackDivisor = blackAttackCount > 1? 1 : 2;

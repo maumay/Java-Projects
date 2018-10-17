@@ -3,19 +3,14 @@
  */
 package jenjinn.eval.pawnstructure;
 
-import static jflow.utilities.CollectionUtil.head;
-import static jflow.utilities.CollectionUtil.last;
-
-import java.util.List;
-
 import org.junit.jupiter.params.provider.Arguments;
 
 import jenjinn.base.Square;
 import jenjinn.parseutils.AbstractTestFileParser;
 import jenjinn.pgn.CommonRegex;
-import jflow.collections.FList;
 import jflow.iterators.misc.IntPair;
-import jflow.utilities.Strings;
+import jflow.iterators.misc.Strings;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -25,10 +20,10 @@ final class TestFileParser extends AbstractTestFileParser
 	@Override
 	public Arguments parse(String filename)
 	{
-		List<String> lines = loadFile(filename);
+		Seq<String> lines = loadFile(filename);
 
 		if (lines.size() == 9) {
-			String encodedWhiteLocs = head(lines), encodedBlackLocs = lines.get(1);
+			String encodedWhiteLocs = lines.head(), encodedBlackLocs = lines.get(1);
 			Long whiteLocs = decodeLocations(encodedWhiteLocs);
 			Long blackLocs = decodeLocations(encodedBlackLocs);
 
@@ -36,13 +31,13 @@ final class TestFileParser extends AbstractTestFileParser
 			IntPair passedPawnCounts = decodeIntegerPair(lines.get(3));
 			IntPair chainLinkCounts = decodeIntegerPair(lines.get(4));
 			IntPair backwardCounts = decodeIntegerPair(lines.get(5));
-			FList<Integer> isolatedPawnCounts = decodeIntegerSequence(lines.get(6));
+			Seq<Integer> isolatedPawnCounts = decodeIntegerSequence(lines.get(6));
 
 			ExpectedValues expected = new ExpectedValues(
-					doubledPawnCounts.first() - doubledPawnCounts.second(),
-					passedPawnCounts.first() - passedPawnCounts.second(),
-					chainLinkCounts.first() - chainLinkCounts.second(),
-					backwardCounts.first() - backwardCounts.second(),
+					doubledPawnCounts._1 - doubledPawnCounts._2,
+					passedPawnCounts._1 - passedPawnCounts._2,
+					chainLinkCounts._1 - chainLinkCounts._2,
+					backwardCounts._1 - backwardCounts._2,
 					IntPair.of(
 							isolatedPawnCounts.get(0) - isolatedPawnCounts.get(2),
 							isolatedPawnCounts.get(1) - isolatedPawnCounts.get(3)),
@@ -56,7 +51,7 @@ final class TestFileParser extends AbstractTestFileParser
 		}
 	}
 
-	private FList<Integer> decodeIntegerSequence(String encodedSequence)
+	private Seq<Integer> decodeIntegerSequence(String encodedSequence)
 	{
 		String num = "([0-9]+)";
 		if (!encodedSequence.matches("^" + num + "( " + num + ")+$")) {
@@ -64,7 +59,7 @@ final class TestFileParser extends AbstractTestFileParser
 		}
 		return Strings.allMatches(encodedSequence, num)
 				.map(Integer::parseInt)
-				.toList();
+				.toSeq();
 	}
 
 	private IntPair decodeIntegerPair(String encodedPair)
@@ -73,11 +68,11 @@ final class TestFileParser extends AbstractTestFileParser
 		if (!encodedPair.matches("^" + num + " +" + num + "$")) {
 			throw new IllegalArgumentException(encodedPair);
 		}
-		FList<Integer> decoded = Strings.allMatches(encodedPair, num)
+		Seq<Integer> decoded = Strings.allMatches(encodedPair, num)
 				.map(Integer::parseInt)
-				.toList();
+				.toSeq();
 
-		return IntPair.of(head(decoded), last(decoded));
+		return IntPair.of(decoded.head(), decoded.last());
 	}
 
 	private Long decodeLocations(String encodedLocs)
@@ -89,7 +84,7 @@ final class TestFileParser extends AbstractTestFileParser
 		return Strings.allMatches(encodedLocs, sq)
 				.map(String::toUpperCase)
 				.map(Square::valueOf)
-				.mapToLong(Square::asBitboard)
+				.mapToLong(s -> s.bitboard)
 				.fold(0L, (a, b) -> a | b);
 	}
 }

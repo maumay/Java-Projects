@@ -9,9 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import jenjinn.eval.piecesquaretables.PieceSquareTable;
-import jflow.iterators.factories.IterRange;
 import jflow.iterators.factories.Iter;
+import jflow.iterators.factories.IterRange;
 
 /**
  * @author t
@@ -27,7 +26,7 @@ class PieceSquareTableInversionTest
 		final int[] expectedInvertedLocs = IterRange.between(7, -1, -1)
 				.map(i -> 8*i)
 				.mapToObject(i -> IterRange.between(i, i + 8).toArray())
-				.flattenToInts(Iter::overInts)
+				.flatMapToInt(Iter::overInts)
 				.toArray();
 
 		final PieceSquareTable expectedInversion = new PieceSquareTable(BLACK_KNIGHT, -500, expectedInvertedLocs);

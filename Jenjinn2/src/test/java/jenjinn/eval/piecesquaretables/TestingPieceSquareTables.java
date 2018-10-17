@@ -3,13 +3,9 @@
  */
 package jenjinn.eval.piecesquaretables;
 
-import java.util.List;
-
-import jenjinn.eval.piecesquaretables.PieceSquareTable;
-import jenjinn.eval.piecesquaretables.PieceSquareTables;
 import jenjinn.pieces.ChessPieces;
 import jflow.iterators.factories.IterRange;
-import jflow.iterators.factories.Iter;
+import jflow.seq.Seq;
 
 /**
  * @author t
@@ -23,18 +19,16 @@ public final class TestingPieceSquareTables
 
 	private static PieceSquareTables initMidgameTables()
 	{
-		final List<PieceSquareTable> whiteTables = Iter.over(ChessPieces.white())
-				.map(piece -> new PieceSquareTable(piece, 0, IterRange.to(64).map(i -> i + 100*piece.ordinal()).toArray()))
-				.toList();
+		Seq<PieceSquareTable> whiteTables = ChessPieces.WHITE
+				.map(piece -> new PieceSquareTable(piece, 0, IterRange.to(64).map(i -> i + 100*piece.ordinal()).toArray()));
 
 		return new PieceSquareTables(whiteTables);
 	}
 
 	private static PieceSquareTables initEndgameTables()
 	{
-		final List<PieceSquareTable> whiteTables = Iter.over(ChessPieces.white())
-				.map(piece -> new PieceSquareTable(piece, 0, IterRange.to(64).map(i -> i + 1000*piece.ordinal()).toArray()))
-				.toList();
+		Seq<PieceSquareTable> whiteTables = ChessPieces.WHITE
+				.map(piece -> new PieceSquareTable(piece, 0, IterRange.to(64).map(i -> i + 1000*piece.ordinal()).toArray()));
 
 		return new PieceSquareTables(whiteTables);
 	}
