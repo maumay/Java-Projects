@@ -8,6 +8,7 @@ import static jenjinn.engine.bitboards.BitboardUtils.bitboardsIntersect;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -28,6 +29,7 @@ import jenjinn.engine.pieces.ChessPieces;
 import jenjinn.engine.utils.PieceSquarePair;
 import jflow.iterators.Flow;
 import jflow.iterators.factories.Iter;
+import jflow.iterators.misc.Pair;
 import jflow.seq.Seq;
 
 /**
@@ -145,16 +147,16 @@ public final class LegalMoves
 
 		DetailedPieceLocations pieceLocs = state.getPieceLocations();
 		long white = pieceLocs.getWhiteLocations(), black = pieceLocs.getBlackLocations();
-		PredicatePartition<Square> pinnedPartition = pieceLocs.iterateLocs(piece)
+		Pair<Seq<Square>, Seq<Square>> pinnedPartition = pieceLocs.iterateLocs(piece).toSeq()
 				.partition(pinnedPieces::containsLocation);
-
-		Flow<ChessMove> notPinnedContributions = pinnedPartition.getRejected().flatten(square -> {
-			long areaCons = overallAreaConstraint;
+		
+		Flow<ChessMove> pinnedContribution = pinnedPartition._1.flow().flatMap(square -> {
+			long areaCons = pinnedPieces.getConstraintAreaOfPieceAt(square) & overallAreaConstraint;
 			return bitboard2moves(piece, square, piece.getMoves(square, white, black) & areaCons);
 		});
 
-		Flow<ChessMove> pinnedContribution = pinnedPartition.getAccepted().flatten(square -> {
-			long areaCons = pinnedPieces.getConstraintAreaOfPieceAt(square) & overallAreaConstraint;
+		Flow<ChessMove> notPinnedContributions = pinnedPartition._2.flow().flatMap(square -> {
+			long areaCons = overallAreaConstraint;
 			return bitboard2moves(piece, square, piece.getMoves(square, white, black) & areaCons);
 		});
 
@@ -163,18 +165,16 @@ public final class LegalMoves
 		if (piece.isPawn() && state.hasEnpassantAvailable()) {
 			Square ep = state.getEnPassantSquare();
 			long plocs = pieceLocs.locationsOf(piece);
-			List<Dir> searchDirs = piece.isWhite() ? WHITE_EP_SEARCH_DIRS : BLACK_EP_SEARCH_DIRS;
-			Flow<ChessMove> epContribution = Iter.over(searchDirs).map(ep::getNextSquare)
+			Seq<Dir> searchDirs = piece.isWhite() ? WHITE_EP_SEARCH_DIRS : BLACK_EP_SEARCH_DIRS;
+			Flow<ChessMove> epContribution = searchDirs.flow().map(ep::getNextSquare)
+					.filter(Optional::isPresent)
+					.map(Optional::get)
 					.filter(sq -> {
-						if (sq != null && bitboardsIntersect(plocs, sq.bitboard)) {
-							if (pinnedPieces.containsLocation(sq)) {
-								long areaCons = pinnedPieces.getConstraintAreaOfPieceAt(sq);
-								return bitboardsIntersect(areaCons, ep.bitboard);
-							} else {
-								return true;
-							}
+						if (bitboardsIntersect(plocs, sq.bitboard) && pinnedPieces.containsLocation(sq)) {
+							long areaCons = pinnedPieces.getConstraintAreaOfPieceAt(sq);
+							return bitboardsIntersect(areaCons, ep.bitboard);
 						} else {
-							return false;
+							return true;
 						}
 					}).map(sq -> new EnpassantMove(sq, ep));
 			return allContributions.append(epContribution);
@@ -197,11 +197,13 @@ public final class LegalMoves
 		assert Math.abs(attackerLoc.ordinal() - enpassantSquare.ordinal()) == 8;
 
 		Side active = state.getActiveSide();
-		ChessPiece activePawn = ChessPieces.pawn(active);
+		ChessPiece activePawn = ChessPieces.ofSide(active).head();
 		long activePawnLocs = state.getPieceLocations().locationsOf(activePawn);
-		List<Dir> searchDirs = active.isWhite() ? WHITE_EP_SEARCH_DIRS : BLACK_EP_SEARCH_DIRS;
+		Seq<Dir> searchDirs = active.isWhite() ? WHITE_EP_SEARCH_DIRS : BLACK_EP_SEARCH_DIRS;
 
-		return Iter.over(searchDirs).map(enpassantSquare::getNextSquare).filter(x -> x != null)
+		return searchDirs.flow().map(enpassantSquare::getNextSquare)
+				.filter(Optional::isPresent)
+				.map(Optional::get)
 				.filter(square -> {
 					if (bitboardsIntersect(activePawnLocs, square.bitboard)) {
 						if (pinnedPieces.containsLocation(square)) {
@@ -282,9 +284,9 @@ public final class LegalMoves
 	 */
 	static Flow<ChessMove> bitboard2moves(ChessPiece piece, Square source, long bitboard)
 	{
-		if (piece.isPawn() && source.rank() == piece.getSide().getPenultimatePawnRank()) {
+		if (piece.isPawn() && source.rank == piece.getSide().penultimatePawnRank) {
 			return BitboardIterator.from(bitboard)
-					.flatten(target -> PromotionMove.generateAllPossibilities(source, target));
+					.flatMap(target -> PromotionMove.generateAllPossibilities(source, target));
 		} else {
 			return BitboardIterator.from(bitboard).map(target -> MoveCache.getMove(source, target));
 		}

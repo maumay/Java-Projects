@@ -7,14 +7,12 @@ import static jenjinn.engine.bitboards.BitboardUtils.bitboardsIntersect;
 
 import java.util.EnumSet;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 import jenjinn.engine.base.Square;
 import jenjinn.engine.bitboards.BitboardIterator;
-import jflow.iterators.AbstractFlow;
 import jflow.iterators.Flow;
-import jflow.iterators.misc.Optionals;
+import jflow.iterators.factories.Iter;
 
 /**
  * @author t
@@ -72,21 +70,7 @@ public final class LocationTracker implements Iterable<Square>
 	@Override
 	public Flow<Square> iterator()
 	{
-		Iterator<Square> src = locs.iterator();
-		return new AbstractFlow<Square>(Optionals.ofInt(locs.size())) {
-			@Override
-			public boolean hasNext() {
-				return src.hasNext();
-			}
-			@Override
-			public Square next() {
-				return src.next();
-			}
-			@Override
-			public void skip() {
-				next();
-			}
-		};
+		return Iter.over(locs);
 	}
 
 	public LocationTracker copy()
