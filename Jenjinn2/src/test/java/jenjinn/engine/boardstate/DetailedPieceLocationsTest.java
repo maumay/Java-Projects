@@ -16,8 +16,8 @@ import org.junit.jupiter.api.Test;
 import jenjinn.engine.base.Side;
 import jenjinn.engine.base.Square;
 import jenjinn.engine.eval.piecesquaretables.PieceSquareTables;
-import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.pieces.ChessPieces;
+import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.utils.BoardHasher;
 import jflow.iterators.factories.Iter;
 import jflow.iterators.factories.IterRange;
@@ -37,7 +37,7 @@ class DetailedPieceLocationsTest
 		int runningMidgameEval = locations.getMidgameEval(), runningEndgameEval = locations.getEndgameEval();
 		long runningHash = locations.getSquarePieceFeatureHash();
 
-		for (Piece piece : ChessPieces.white()) {
+		for (Piece piece : ChessPieces.WHITE) {
 			Square loc = locationsToAddPieceAt.get(piece.ordinal());
 			locations.addPieceAt(loc, piece);
 			assertEquals(loc.bitboard, locations.locationsOf(piece));
@@ -52,7 +52,7 @@ class DetailedPieceLocationsTest
 			assertEquals(runningHash, locations.getSquarePieceFeatureHash());
 		}
 
-		for (Piece piece : ChessPieces.black()) {
+		for (Piece piece : ChessPieces.BLACK) {
 			Square loc = locationsToAddPieceAt.get(piece.ordinal());
 			locations.addPieceAt(loc, piece);
 			assertEquals(loc.bitboard, locations.locationsOf(piece));
@@ -80,7 +80,7 @@ class DetailedPieceLocationsTest
 		int runningMidgameEval = locations.getMidgameEval(), runningEndgameEval = locations.getEndgameEval();
 		long runningHash = locations.getSquarePieceFeatureHash();
 
-		for (Piece piece : ChessPieces.white()) {
+		for (Piece piece : ChessPieces.WHITE) {
 			Square loc = locationsToAddPieceAt.get(piece.ordinal());
 			locations.removePieceAt(loc, piece);
 			assertEquals(0L, locations.locationsOf(piece));
@@ -95,7 +95,7 @@ class DetailedPieceLocationsTest
 			assertEquals(runningHash, locations.getSquarePieceFeatureHash());
 		}
 
-		for (Piece piece : ChessPieces.black()) {
+		for (Piece piece : ChessPieces.BLACK) {
 			Square loc = locationsToAddPieceAt.get(piece.ordinal());
 			locations.removePieceAt(loc, piece);
 			assertEquals(0L, locations.locationsOf(piece));
@@ -118,7 +118,7 @@ class DetailedPieceLocationsTest
 		long[] initialLocations = Iter.over(locationsToAddPieceAt).mapToLong(s -> s.bitboard).toArray();
 		DetailedPieceLocations locations = new DetailedPieceLocations(initialLocations, getMidgameTables(), getEndgameTables());
 
-		for (Piece piece : ChessPieces.all()) {
+		for (Piece piece : ChessPieces.ALL) {
 			Square loc = locationsToAddPieceAt.get(piece.ordinal());
 			assertEquals(piece, locations.getPieceAt(loc));
 			assertEquals(piece, locations.getPieceAt(loc, piece.getSide()));

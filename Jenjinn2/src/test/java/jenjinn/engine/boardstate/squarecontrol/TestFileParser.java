@@ -3,12 +3,7 @@
  */
 package jenjinn.engine.boardstate.squarecontrol;
 
-import static jflow.utilities.CollectionUtil.drop;
-import static jflow.utilities.CollectionUtil.sizeOf;
-import static jflow.utilities.CollectionUtil.take;
-
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,11 +15,12 @@ import jenjinn.engine.parseutils.AbstractTestFileParser;
 import jenjinn.engine.parseutils.BoardParser;
 import jenjinn.engine.parseutils.CordParser;
 import jenjinn.engine.pgn.CommonRegex;
-import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.pieces.ChessPieces;
+import jenjinn.engine.pieces.Piece;
 import jflow.iterators.factories.Iter;
 import jflow.iterators.misc.Pair;
-import jflow.utilities.Strings;
+import jflow.iterators.misc.Strings;
+import jflow.seq.Seq;
 
 
 /**
@@ -35,19 +31,19 @@ final class TestFileParser extends AbstractTestFileParser
 	@Override
 	public Arguments parse(String fileName)
 	{
-		List<String> lines = loadFile(fileName);
-		return Arguments.of(BoardParser.parse(take(9, lines)), parseSquaresOfControl(drop(9, lines)));
+		Seq<String> lines = loadFile(fileName);
+		return Arguments.of(BoardParser.parse(lines.take(9)), parseSquaresOfControl(lines.drop(9)));
 	}
 
-	private Map<Piece, Long> parseSquaresOfControl(List<String> squaresOfControl)
+	private Map<Piece, Long> parseSquaresOfControl(Seq<String> squaresOfControl)
 	{
-		if (sizeOf(squaresOfControl) != 12) {
+		if (squaresOfControl.size() != 12) {
 			throw new IllegalArgumentException(
-					"Only passed squares of control for " + sizeOf(squaresOfControl) + " pieces");
+					"Only passed squares of control for " + squaresOfControl.size() + " pieces");
 		}
-		return ChessPieces.iterate()
+		return ChessPieces.ALL.flow()
 				.zipWith(squaresOfControl.iterator())
-				.toMap(Pair::first, p -> parseSinglePieceSquaresOfControl(p.second()));
+				.toMap(Pair::_1, p -> parseSinglePieceSquaresOfControl(p._2));
 	}
 
 	private Long parseSinglePieceSquaresOfControl(String encoded)
@@ -66,7 +62,7 @@ final class TestFileParser extends AbstractTestFileParser
 
 			Strings.allMatches(ec, cordrx)
 			.map(CordParser::parse)
-			.flatten(Iter::over)
+			.flatMap(Iter::over)
 			.forEach(squares::add);
 
 			return BitboardUtils.bitwiseOr(squares);

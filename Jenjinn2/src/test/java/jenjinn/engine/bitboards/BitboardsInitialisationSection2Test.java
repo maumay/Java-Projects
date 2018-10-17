@@ -8,7 +8,6 @@ import static jenjinn.engine.bitboards.BitboardsInitialisationSection2.calculate
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -19,6 +18,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import jenjinn.engine.base.Dir;
 import jenjinn.engine.base.Square;
 import jflow.iterators.factories.Iter;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -44,7 +44,7 @@ class BitboardsInitialisationSection2Test
 
 	@ParameterizedTest
 	@MethodSource
-	void testCalculateOccupancyVariations(Set<Long> expectedResult, Square startSquare, List<Dir> movementDirections)
+	void testCalculateOccupancyVariations(Set<Long> expectedResult, Square startSquare, Seq<Dir> movementDirections)
 	{
 		assertEquals(expectedResult, Iter.overLongs(calculateOccupancyVariations(startSquare, movementDirections)).boxed().toSet());
 	}
@@ -54,13 +54,13 @@ class BitboardsInitialisationSection2Test
 		Arguments firstCase = Arguments.of(
 				new HashSet<>(asList(0L, 0b1000000000L)),
 				Square.F2,
-				asList(Dir.E, Dir.S)
+				Seq.of(Dir.E, Dir.S)
 				);
 
 		Arguments secondCase = Arguments.of(
 				new HashSet<>(asList(0L, 0b10L, 0b100L, 0b1000L, 0b110L, 0b1010L, 0b1100L, 0b1110L)),
 				Square.D1,
-				asList(Dir.E)
+				Seq.of(Dir.E)
 				);
 
 		return Stream.of(firstCase, secondCase);
