@@ -3,18 +3,16 @@
  */
 package jenjinn.engine.enums.chesspiece;
 
-import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import jenjinn.engine.base.Square;
 import jenjinn.engine.base.FileUtils;
-import jenjinn.engine.pieces.Piece;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.pieces.ChessPieces;
+import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.utils.BasicPieceLocations;
+import jflow.seq.Seq;
 
 /**
  * For each
@@ -28,18 +26,18 @@ class MovementIntegrationTest
 	@Test
 	void testNonPawnMoves()
 	{
-		final List<Piece> nonPawns = ChessPieces.iterate().filter(p -> !p.isPawn()).toList();
-		Square.iterateAll().forEach(square -> testMovesAgreeAtSquare(square, nonPawns));
+		Seq<Piece> nonPawns = ChessPieces.ALL.filter(p -> !p.isPawn());
+		Square.ALL.forEach(square -> testMovesAgreeAtSquare(square, nonPawns));
 	}
 
 	@Test
 	void testPawnMoves()
 	{
-		final List<Piece> pawns = asList(Piece.WHITE_PAWN, Piece.BLACK_PAWN);
-		Square.iterateAll().drop(8).take(48).forEach(square -> testMovesAgreeAtSquare(square, pawns));
+		Seq<Piece> pawns = Seq.of(Piece.WHITE_PAWN, Piece.BLACK_PAWN);
+		Square.ALL.drop(8).take(48).forEach(square -> testMovesAgreeAtSquare(square, pawns));
 	}
 
-	void testMovesAgreeAtSquare(final Square square, final List<Piece> piecesToTest)
+	void testMovesAgreeAtSquare(Square square, Seq<Piece> piecesToTest)
 	{
 		piecesToTest.stream().forEach(piece ->
 		{
@@ -49,10 +47,10 @@ class MovementIntegrationTest
 		});
 	}
 
-	void testMovesAreCorrect(final Piece piece, final Square square, final BasicPieceLocations pieceLocations)
+	void testMovesAreCorrect(Piece piece, Square square, BasicPieceLocations pieceLocations)
 	{
-		final TestChessPiece constraintPiece = TestChessPiece.values()[piece.ordinal()];
-		final long white = pieceLocations.getWhite(), black = pieceLocations.getBlack();
+		TestChessPiece constraintPiece = TestChessPiece.values()[piece.ordinal()];
+		long white = pieceLocations.getWhite(), black = pieceLocations.getBlack();
 
 		assertEquals(
 				constraintPiece.getSquaresOfControl(square, white, black),

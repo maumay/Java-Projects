@@ -43,17 +43,17 @@ public final class IntegrationTestDataWriter
 		}
 	}
 
-	static List<String> createRandomPieceLocations(final int locationCount, final int sidePieceCount)
+	static List<String> createRandomPieceLocations(int locationCount, int sidePieceCount)
 	{
-		final Random random = new Random(0x110894L);
+		Random random = new Random(0x110894L);
 
-		final Set<BasicPieceLocations> createdLocations = new HashSet<>(locationCount);
+		Set<BasicPieceLocations> createdLocations = new HashSet<>(locationCount);
 
 		IterRange.to(locationCount).forEach(i ->
 		{
-			final int oldSize = createdLocations.size();
+			int oldSize = createdLocations.size();
 			while (createdLocations.size() == oldSize) {
-				final BasicPieceLocations newLocations = generateRandomBoard(random, sidePieceCount);
+				BasicPieceLocations newLocations = generateRandomBoard(random, sidePieceCount);
 				if (!createdLocations.contains(newLocations)) {
 					createdLocations.add(newLocations);
 				}
@@ -72,8 +72,8 @@ public final class IntegrationTestDataWriter
 		if (sidePieceCount > 32 || sidePieceCount < 0) {
 			throw new IllegalArgumentException();
 		}
-		final List<Square> squares = new ArrayList<>(Square.valuesAsList());
-		final List<Square> whiteLocs = new ArrayList<>(), blackLocs = new ArrayList<>();
+		List<Square> squares = Square.ALL.toList();
+		List<Square> whiteLocs = new ArrayList<>(), blackLocs = new ArrayList<>();
 
 		IterRange.to(sidePieceCount).forEach(i -> whiteLocs.add(squares.remove(numberGenerator.nextInt(squares.size()))));
 		IterRange.to(sidePieceCount).forEach(i -> blackLocs.add(squares.remove(numberGenerator.nextInt(squares.size()))));
@@ -84,7 +84,7 @@ public final class IntegrationTestDataWriter
 	//	/**
 	//	 * @param args
 	//	 */
-	//	public static void main(final String[] args)
+	//	public static void main(String[] args)
 	//	{
 	//		writeTestData(Paths.get("/home/t/git/Jenjinn2/src/test/resources/movementIntegrationTestData"), 500);
 	//	}
