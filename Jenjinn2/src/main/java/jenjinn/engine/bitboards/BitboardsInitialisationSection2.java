@@ -8,7 +8,7 @@ import java.util.List;
 
 import jenjinn.engine.base.Dir;
 import jenjinn.engine.base.Square;
-import jenjinn.engine.pieces.PieceMovementDirections;
+import jenjinn.engine.pieces.PieceMovementDirs;
 import jflow.iterators.factories.Iter;
 import jflow.iterators.factories.IterRange;
 import jflow.iterators.misc.ArrayUtils;
@@ -27,7 +27,7 @@ final class BitboardsInitialisationSection2
 	static long[][] generateAllBishopOccupancyVariations()
 	{
 		return Square.ALL.flow()
-				.map(square -> calculateOccupancyVariations(square, PieceMovementDirections.BISHOP))
+				.map(square -> calculateOccupancyVariations(square, PieceMovementDirs.BISHOP))
 				.toList()
 				.toArray(new long[64][]);
 	}
@@ -35,7 +35,7 @@ final class BitboardsInitialisationSection2
 	static long[][] generateAllRookOccupancyVariations()
 	{
 		return Square.ALL.flow()
-				.map(square -> calculateOccupancyVariations(square, PieceMovementDirections.ROOK))
+				.map(square -> calculateOccupancyVariations(square, PieceMovementDirs.ROOK))
 				.toList()
 				.toArray(new long[64][]);
 	}

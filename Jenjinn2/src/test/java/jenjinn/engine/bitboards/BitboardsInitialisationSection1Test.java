@@ -66,7 +66,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import jenjinn.engine.base.Dir;
 import jenjinn.engine.base.Square;
 import jenjinn.engine.pieces.Piece;
-import jenjinn.engine.pieces.PieceMovementDirections;
+import jenjinn.engine.pieces.PieceMovementDirs;
 import jflow.iterators.factories.IterRange;
 import jflow.seq.Seq;
 
@@ -134,19 +134,19 @@ class BitboardsInitialisationSection1Test
 		return Stream.of(
 				Arguments.of(WHITE_PAWN, A2, Seq.of(A3, A4)),
 				Arguments.of(WHITE_PAWN, B3, Seq.of(B4)),
-				Arguments.of(WHITE_KNIGHT, C5, C5.getAllSquares(PieceMovementDirections.KNIGHT, 1)),
-				Arguments.of(WHITE_BISHOP, F3, F3.getAllSquares(PieceMovementDirections.BISHOP, 8)),
-				Arguments.of(WHITE_ROOK, B3, B3.getAllSquares(PieceMovementDirections.ROOK, 8)),
-				Arguments.of(WHITE_QUEEN, H2, H2.getAllSquares(PieceMovementDirections.QUEEN, 8)),
-				Arguments.of(WHITE_KING, E2, E2.getAllSquares(PieceMovementDirections.KING, 1)),
+				Arguments.of(WHITE_KNIGHT, C5, C5.getAllSquares(PieceMovementDirs.KNIGHT, 1)),
+				Arguments.of(WHITE_BISHOP, F3, F3.getAllSquares(PieceMovementDirs.BISHOP, 8)),
+				Arguments.of(WHITE_ROOK, B3, B3.getAllSquares(PieceMovementDirs.ROOK, 8)),
+				Arguments.of(WHITE_QUEEN, H2, H2.getAllSquares(PieceMovementDirs.QUEEN, 8)),
+				Arguments.of(WHITE_KING, E2, E2.getAllSquares(PieceMovementDirs.KING, 1)),
 
 				Arguments.of(BLACK_PAWN, A2, Seq.of(A1)),
 				Arguments.of(BLACK_PAWN, B7, Seq.of(B6, B5)),
-				Arguments.of(BLACK_KNIGHT, C5, C5.getAllSquares(PieceMovementDirections.KNIGHT, 1)),
-				Arguments.of(BLACK_BISHOP, F3, F3.getAllSquares(PieceMovementDirections.BISHOP, 8)),
-				Arguments.of(BLACK_ROOK, B3, B3.getAllSquares(PieceMovementDirections.ROOK, 8)),
-				Arguments.of(BLACK_QUEEN, H2, H2.getAllSquares(PieceMovementDirections.QUEEN, 8)),
-				Arguments.of(BLACK_KING, E2, E2.getAllSquares(PieceMovementDirections.KING, 1))
+				Arguments.of(BLACK_KNIGHT, C5, C5.getAllSquares(PieceMovementDirs.KNIGHT, 1)),
+				Arguments.of(BLACK_BISHOP, F3, F3.getAllSquares(PieceMovementDirs.BISHOP, 8)),
+				Arguments.of(BLACK_ROOK, B3, B3.getAllSquares(PieceMovementDirs.ROOK, 8)),
+				Arguments.of(BLACK_QUEEN, H2, H2.getAllSquares(PieceMovementDirs.QUEEN, 8)),
+				Arguments.of(BLACK_KING, E2, E2.getAllSquares(PieceMovementDirs.KING, 1))
 				);
 	}
 
@@ -163,20 +163,20 @@ class BitboardsInitialisationSection1Test
 				Arguments.of(WHITE_PAWN, A2, Seq.of(B3)),
 				Arguments.of(WHITE_PAWN, B3, Seq.of(C4, A4)),
 				Arguments.of(WHITE_PAWN, H5, Seq.of(G6)),
-				Arguments.of(WHITE_KNIGHT, C5, C5.getAllSquares(PieceMovementDirections.KNIGHT, 1)),
-				Arguments.of(WHITE_BISHOP, F3, F3.getAllSquares(PieceMovementDirections.BISHOP, 8)),
-				Arguments.of(WHITE_ROOK, B3, B3.getAllSquares(PieceMovementDirections.ROOK, 8)),
-				Arguments.of(WHITE_QUEEN, H2, H2.getAllSquares(PieceMovementDirections.QUEEN, 8)),
-				Arguments.of(WHITE_KING, E2, E2.getAllSquares(PieceMovementDirections.KING, 1)),
+				Arguments.of(WHITE_KNIGHT, C5, C5.getAllSquares(PieceMovementDirs.KNIGHT, 1)),
+				Arguments.of(WHITE_BISHOP, F3, F3.getAllSquares(PieceMovementDirs.BISHOP, 8)),
+				Arguments.of(WHITE_ROOK, B3, B3.getAllSquares(PieceMovementDirs.ROOK, 8)),
+				Arguments.of(WHITE_QUEEN, H2, H2.getAllSquares(PieceMovementDirs.QUEEN, 8)),
+				Arguments.of(WHITE_KING, E2, E2.getAllSquares(PieceMovementDirs.KING, 1)),
 
 				Arguments.of(BLACK_PAWN, A2, Seq.of(B1)),
 				Arguments.of(BLACK_PAWN, B7, Seq.of(C6, A6)),
 				Arguments.of(BLACK_PAWN, H4, Seq.of(G3)),
-				Arguments.of(BLACK_KNIGHT, C5, C5.getAllSquares(PieceMovementDirections.KNIGHT, 1)),
-				Arguments.of(BLACK_BISHOP, F3, F3.getAllSquares(PieceMovementDirections.BISHOP, 8)),
-				Arguments.of(BLACK_ROOK, B3, B3.getAllSquares(PieceMovementDirections.ROOK, 8)),
-				Arguments.of(BLACK_QUEEN, H2, H2.getAllSquares(PieceMovementDirections.QUEEN, 8)),
-				Arguments.of(BLACK_KING, E2, E2.getAllSquares(PieceMovementDirections.KING, 1))
+				Arguments.of(BLACK_KNIGHT, C5, C5.getAllSquares(PieceMovementDirs.KNIGHT, 1)),
+				Arguments.of(BLACK_BISHOP, F3, F3.getAllSquares(PieceMovementDirs.BISHOP, 8)),
+				Arguments.of(BLACK_ROOK, B3, B3.getAllSquares(PieceMovementDirs.ROOK, 8)),
+				Arguments.of(BLACK_QUEEN, H2, H2.getAllSquares(PieceMovementDirs.QUEEN, 8)),
+				Arguments.of(BLACK_KING, E2, E2.getAllSquares(PieceMovementDirs.KING, 1))
 				);
 	}
 }

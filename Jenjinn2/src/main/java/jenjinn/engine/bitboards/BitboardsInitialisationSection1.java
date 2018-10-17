@@ -6,7 +6,7 @@ import java.util.List;
 
 import jenjinn.engine.base.Dir;
 import jenjinn.engine.base.Square;
-import jenjinn.engine.pieces.PieceMovementDirections;
+import jenjinn.engine.pieces.PieceMovementDirs;
 import jflow.iterators.factories.IterRange;
 
 /**
@@ -61,37 +61,37 @@ final class BitboardsInitialisationSection1
 		return new long[][] {
 			generateWhitePawnMovementBitboards(),
 			generateBlackPawnMovementBitboards(),
-			generateEmptyBoardBitboards(PieceMovementDirections.KNIGHT, 1),
-			generateEmptyBoardBitboards(PieceMovementDirections.BISHOP, 8),
-			generateEmptyBoardBitboards(PieceMovementDirections.ROOK, 8),
-			generateEmptyBoardBitboards(PieceMovementDirections.QUEEN, 8),
-			generateEmptyBoardBitboards(PieceMovementDirections.KING, 1)
+			generateEmptyBoardBitboards(PieceMovementDirs.KNIGHT, 1),
+			generateEmptyBoardBitboards(PieceMovementDirs.BISHOP, 8),
+			generateEmptyBoardBitboards(PieceMovementDirs.ROOK, 8),
+			generateEmptyBoardBitboards(PieceMovementDirs.QUEEN, 8),
+			generateEmptyBoardBitboards(PieceMovementDirs.KING, 1)
 		};
 	}
 
 	static long[][] generateAllEmptyBoardPieceAttackBitboards()
 	{
 		return new long[][] {
-			generateEmptyBoardBitboards(PieceMovementDirections.WHITE_PAWN_ATTACK, 1),
-			generateEmptyBoardBitboards(PieceMovementDirections.BLACK_PAWN_ATTACK, 1),
-			generateEmptyBoardBitboards(PieceMovementDirections.KNIGHT, 1),
-			generateEmptyBoardBitboards(PieceMovementDirections.BISHOP, 8),
-			generateEmptyBoardBitboards(PieceMovementDirections.ROOK, 8),
-			generateEmptyBoardBitboards(PieceMovementDirections.QUEEN, 8),
-			generateEmptyBoardBitboards(PieceMovementDirections.KING, 1)
+			generateEmptyBoardBitboards(PieceMovementDirs.WHITE_PAWN_ATTACK, 1),
+			generateEmptyBoardBitboards(PieceMovementDirs.BLACK_PAWN_ATTACK, 1),
+			generateEmptyBoardBitboards(PieceMovementDirs.KNIGHT, 1),
+			generateEmptyBoardBitboards(PieceMovementDirs.BISHOP, 8),
+			generateEmptyBoardBitboards(PieceMovementDirs.ROOK, 8),
+			generateEmptyBoardBitboards(PieceMovementDirs.QUEEN, 8),
+			generateEmptyBoardBitboards(PieceMovementDirs.KING, 1)
 		};
 	}
 
 	private static long[] generateWhitePawnMovementBitboards()
 	{
-		long[] moves = generateEmptyBoardBitboards(PieceMovementDirections.WHITE_PAWN_MOVE, 1);
+		long[] moves = generateEmptyBoardBitboards(PieceMovementDirs.WHITE_PAWN_MOVE, 1);
 		IterRange.between(8, 16).forEach(i -> moves[i] |= singleOccupancyBitboard(i + 16));
 		return moves;
 	}
 
 	private static long[] generateBlackPawnMovementBitboards()
 	{
-		long[] moves = generateEmptyBoardBitboards(PieceMovementDirections.BLACK_PAWN_MOVE, 1);
+		long[] moves = generateEmptyBoardBitboards(PieceMovementDirs.BLACK_PAWN_MOVE, 1);
 		IterRange.between(48, 56).forEach(i -> moves[i] |= singleOccupancyBitboard(i - 16));
 		return moves;
 	}

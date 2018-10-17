@@ -9,7 +9,7 @@ import java.util.function.Predicate;
 
 import jenjinn.engine.base.Dir;
 import jenjinn.engine.base.Square;
-import jenjinn.engine.pieces.PieceMovementDirections;
+import jenjinn.engine.pieces.PieceMovementDirs;
 import jflow.iterators.factories.Iter;
 
 /**
@@ -24,7 +24,7 @@ final class BitboardsInitialisationSection3
 				BitboardsImpl.ROOK_OCCUPANCY_VARIATIONS,
 				BitboardsImpl.ROOK_MAGIC_NUMBERS,
 				BitboardsImpl.ROOK_MAGIC_BITSHIFTS,
-				PieceMovementDirections.ROOK);
+				PieceMovementDirs.ROOK);
 	}
 
 	static long[][] generateBishopMagicMoveDatabase()
@@ -33,7 +33,7 @@ final class BitboardsInitialisationSection3
 				BitboardsImpl.BISHOP_OCCUPANCY_VARIATIONS,
 				BitboardsImpl.BISHOP_MAGIC_NUMBERS,
 				BitboardsImpl.BISHOP_MAGIC_BITSHIFTS,
-				PieceMovementDirections.BISHOP);
+				PieceMovementDirs.BISHOP);
 	}
 
 	static long[][] generateMagicMoveDatabase(long[][] occupancyVariations, long[] magicNumbers, 
