@@ -4,21 +4,17 @@
 package jenjinn.engine.boardstate.calculators;
 
 import static java.lang.Math.abs;
-import static java.util.Arrays.asList;
 import static jenjinn.engine.bitboards.BitboardUtils.bitboardsIntersect;
-import static jflow.utilities.CollectionUtil.head;
-import static jflow.utilities.CollectionUtil.last;
-import static jflow.utilities.CollectionUtil.sizeOf;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import jenjinn.engine.base.Square;
 import jenjinn.engine.base.CastleZone;
 import jenjinn.engine.base.Dir;
 import jenjinn.engine.base.Side;
+import jenjinn.engine.base.Square;
 import jenjinn.engine.bitboards.BitboardIterator;
 import jenjinn.engine.bitboards.Bitboards;
 import jenjinn.engine.boardstate.BoardState;
@@ -32,15 +28,15 @@ import jenjinn.engine.pieces.ChessPieces;
 import jenjinn.engine.utils.PieceSquarePair;
 import jflow.iterators.Flow;
 import jflow.iterators.factories.Iter;
-import jflow.iterators.misc.PredicatePartition;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
  */
 public final class LegalMoves
 {
-	private static final List<Dir> WHITE_EP_SEARCH_DIRS = asList(Dir.SW, Dir.SE);
-	private static final List<Dir> BLACK_EP_SEARCH_DIRS = asList(Dir.NW, Dir.NE);
+	private static final Seq<Dir> WHITE_EP_SEARCH_DIRS = Seq.of(Dir.SW, Dir.SE);
+	private static final Seq<Dir> BLACK_EP_SEARCH_DIRS = Seq.of(Dir.NW, Dir.NE);
 
 	private LegalMoves()
 	{
@@ -61,13 +57,13 @@ public final class LegalMoves
 		Side active = state.getActiveSide(), passive = active.otherSide();
 		DetailedPieceLocations pieceLocs = state.getPieceLocations();
 		long passivePieceLocs = pieceLocs.getSideLocations(passive);
-		List<ChessPiece> activePieces = ChessPieces.ofSide(active);
-		ChessPiece activeKing = last(activePieces);
+		Seq<ChessPiece> activePieces = ChessPieces.ofSide(active);
+		ChessPiece activeKing = activePieces.last();
 		Square kingLoc = pieceLocs.iterateLocs(activeKing).next();
 		long passiveControl = SquareControl.calculate(state, passive);
 		PinnedPieceCollection pinnedPieces = PinnedPieces.in(state);
 
-		boolean inCheck = bitboardsIntersect(passiveControl, kingLoc.asBitboard());
+		boolean inCheck = bitboardsIntersect(passiveControl, kingLoc.bitboard);
 		boolean castlingAllowed = !inCheck && !forceAttacks
 				&& state.getCastlingStatus().getStatusFor(active) == null;
 		Flow<ChessMove> moves = castlingAllowed ? getCastlingMoves(state, passiveControl) : Iter.empty();
@@ -79,16 +75,16 @@ public final class LegalMoves
 				ChessPiece piece = attacker.getPiece();
 				if (piece.isSlidingPiece()) {
 					boolean whiteAttack = piece.isWhite();
-					long kloc = kingLoc.asBitboard();
+					long kloc = kingLoc.bitboard;
 					long white = whiteAttack ? pieceLocs.getWhiteLocations() : pieceLocs.getWhiteLocations() ^ kloc;
 					long black = whiteAttack ? pieceLocs.getBlackLocations() ^ kloc : pieceLocs.getBlackLocations();
 					passiveControl |= piece.getSquaresOfControl(attacker.getSquare(), white, black);
 				}
 			}
-			if (sizeOf(attackers) > 1) {
+			if (attackers.size() > 1) {
 				allowedMoveArea = 0L;
 			} else {
-				PieceSquarePair attacker = head(attackers);
+				PieceSquarePair attacker = attackers.get(0);
 				allowedMoveArea &= getBlockingSquares(kingLoc, attacker);
 				Square ep = state.getEnPassantSquare(), attsq = attacker.getSquare();
 				if (ep != null && abs(ep.ordinal() - attsq.ordinal()) == 8) {
@@ -101,7 +97,7 @@ public final class LegalMoves
 		// Add moves from non king pieces
 		long faa = allowedMoveArea;
 		moves = moves.append(
-				Iter.overReversed(activePieces).drop(1).flatten(p -> getNonKingMoves(state, p, pinnedPieces, faa)));
+				activePieces.flow().drop(1).flatMap(p -> getNonKingMoves(state, p, pinnedPieces, faa)));
 
 		// Add king moves
 		long kingConstraint = forceAttacks ? ~passiveControl & passivePieceLocs : ~passiveControl;
@@ -130,7 +126,7 @@ public final class LegalMoves
 	{
 		DetailedPieceLocations pieceLocs = state.getPieceLocations();
 		long white = pieceLocs.getWhiteLocations(), black = pieceLocs.getBlackLocations();
-		ChessPiece activeKing = ChessPieces.king(state.getActiveSide());
+		ChessPiece activeKing = ChessPieces.ofSide(state.getActiveSide()).last();
 		long kingMoves = activeKing.getMoves(kingLoc, white, black) & areaConstraint;
 		return bitboard2moves(activeKing, kingLoc, kingMoves);
 	}
@@ -170,10 +166,10 @@ public final class LegalMoves
 			List<Dir> searchDirs = piece.isWhite() ? WHITE_EP_SEARCH_DIRS : BLACK_EP_SEARCH_DIRS;
 			Flow<ChessMove> epContribution = Iter.over(searchDirs).map(ep::getNextSquare)
 					.filter(sq -> {
-						if (sq != null && bitboardsIntersect(plocs, sq.asBitboard())) {
+						if (sq != null && bitboardsIntersect(plocs, sq.bitboard)) {
 							if (pinnedPieces.containsLocation(sq)) {
 								long areaCons = pinnedPieces.getConstraintAreaOfPieceAt(sq);
-								return bitboardsIntersect(areaCons, ep.asBitboard());
+								return bitboardsIntersect(areaCons, ep.bitboard);
 							} else {
 								return true;
 							}
@@ -207,10 +203,10 @@ public final class LegalMoves
 
 		return Iter.over(searchDirs).map(enpassantSquare::getNextSquare).filter(x -> x != null)
 				.filter(square -> {
-					if (bitboardsIntersect(activePawnLocs, square.asBitboard())) {
+					if (bitboardsIntersect(activePawnLocs, square.bitboard)) {
 						if (pinnedPieces.containsLocation(square)) {
 							return bitboardsIntersect(pinnedPieces.getConstraintAreaOfPieceAt(square),
-									enpassantSquare.asBitboard());
+									enpassantSquare.bitboard);
 						} else {
 							return true;
 						}
@@ -232,9 +228,9 @@ public final class LegalMoves
 	private static long getBlockingSquares(Square activeKingLoc, PieceSquarePair attacker)
 	{
 		if (attacker.getPiece().isSlidingPiece()) {
-			return MoveCache.getMove(attacker.getSquare(), activeKingLoc).getInducedCord() ^ activeKingLoc.asBitboard();
+			return MoveCache.getMove(attacker.getSquare(), activeKingLoc).getInducedCord() ^ activeKingLoc.bitboard;
 		} else {
-			return attacker.getSquare().asBitboard();
+			return attacker.getSquare().bitboard;
 		}
 	}
 
@@ -251,7 +247,7 @@ public final class LegalMoves
 	{
 		Side active = state.getActiveSide();
 		DetailedPieceLocations pieceLocs = state.getPieceLocations();
-		ChessPiece activeKing = ChessPieces.king(active);
+		ChessPiece activeKing = ChessPieces.ofSide(active).last();
 
 		long white = pieceLocs.getWhiteLocations(), black = pieceLocs.getBlackLocations();
 		long kloc = pieceLocs.locationsOf(activeKing);
