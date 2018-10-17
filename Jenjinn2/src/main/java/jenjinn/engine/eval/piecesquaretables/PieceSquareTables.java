@@ -3,14 +3,12 @@
  */
 package jenjinn.engine.eval.piecesquaretables;
 
-import java.util.List;
-
 import jenjinn.engine.base.Square;
 import jenjinn.engine.boardstate.LocationTracker;
-import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.pieces.ChessPieces;
-import jflow.iterators.factories.Iter;
+import jenjinn.engine.pieces.Piece;
 import jflow.iterators.factories.IterRange;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -18,16 +16,14 @@ import jflow.iterators.factories.IterRange;
  */
 public final class PieceSquareTables
 {
-	private final List<PieceSquareTable> tables;
+	private final Seq<PieceSquareTable> tables;
 
-	public PieceSquareTables(List<PieceSquareTable> whiteTables)
+	public PieceSquareTables(Seq<PieceSquareTable> whiteTables)
 	{
 		if (whiteTables.size() != 6 || IterRange.to(6).anyMatch(i -> whiteTables.get(i).getAssociatedPiece().ordinal() != i)) {
 			throw new IllegalArgumentException();
 		}
-		this.tables = Iter.over(whiteTables)
-				.append(Iter.over(whiteTables).map(PieceSquareTable::invertValues))
-				.toList();
+		this.tables = whiteTables.append(whiteTables.map(PieceSquareTable::invertValues));
 	}
 
 	public int getLocationValue(Piece piece, Square location)
@@ -35,7 +31,7 @@ public final class PieceSquareTables
 		return tables.get(piece.ordinal()).getValueAt(location);
 	}
 
-	public int evaluateLocations(List<LocationTracker> pieceLocations)
+	public int evaluateLocations(Seq<LocationTracker> pieceLocations)
 	{
 		if (pieceLocations.size() != 12) {
 			throw new IllegalArgumentException();
@@ -78,16 +74,16 @@ public final class PieceSquareTables
 	public static PieceSquareTables endgame()
 	{
 		return new PieceSquareTables(
-				ChessPieces.white()
+				ChessPieces.WHITE
 				.map(p -> TableParser.parseFile(p, p.name().substring(6).toLowerCase() + "-endgame"))
-				.toList());
+				);
 	}
 
 	public static PieceSquareTables midgame()
 	{
 		return new PieceSquareTables(
-				ChessPieces.white()
+				ChessPieces.WHITE
 				.map(p -> TableParser.parseFile(p, p.name().substring(6).toLowerCase() + "-midgame"))
-				.toList());
+				);
 	}
 }

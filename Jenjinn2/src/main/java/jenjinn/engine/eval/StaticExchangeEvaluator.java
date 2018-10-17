@@ -12,8 +12,8 @@ import jenjinn.engine.base.Square;
 import jenjinn.engine.bitboards.BitboardIterator;
 import jenjinn.engine.boardstate.BoardState;
 import jenjinn.engine.boardstate.DetailedPieceLocations;
-import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.pieces.ChessPieces;
+import jenjinn.engine.pieces.Piece;
 import jflow.iterators.Flow;
 
 /**
@@ -87,7 +87,7 @@ public class StaticExchangeEvaluator
 		long white = locationProvider.getWhiteLocations();
 		long black = locationProvider.getBlackLocations();
 
-		for (Piece p : ChessPieces.all()) {
+		for (Piece p : ChessPieces.ALL) {
 			Flow<Square> locations = locationProvider.iterateLocs(p);
 			while (locations.hasNext()) {
 				Square loc = locations.next();

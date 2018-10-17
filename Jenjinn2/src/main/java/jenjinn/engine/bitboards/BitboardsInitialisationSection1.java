@@ -2,12 +2,11 @@ package jenjinn.engine.bitboards;
 
 import static jenjinn.engine.bitboards.Bitboards.singleOccupancyBitboard;
 
-import java.util.List;
-
 import jenjinn.engine.base.Dir;
 import jenjinn.engine.base.Square;
 import jenjinn.engine.pieces.PieceMovementDirs;
 import jflow.iterators.factories.IterRange;
+import jflow.seq.Seq;
 
 /**
  * @author Tom
@@ -96,7 +95,7 @@ final class BitboardsInitialisationSection1
 		return moves;
 	}
 
-	private static long[] generateEmptyBoardBitboards(List<Dir> moveDirections, int lengthCap)
+	private static long[] generateEmptyBoardBitboards(Seq<Dir> moveDirections, int lengthCap)
 	{
 		return Square.ALL.flow()
 				.map(square -> square.getAllSquares(moveDirections, lengthCap))

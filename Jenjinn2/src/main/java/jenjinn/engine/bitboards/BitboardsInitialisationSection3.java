@@ -11,6 +11,7 @@ import jenjinn.engine.base.Dir;
 import jenjinn.engine.base.Square;
 import jenjinn.engine.pieces.PieceMovementDirs;
 import jflow.iterators.factories.Iter;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -37,7 +38,7 @@ final class BitboardsInitialisationSection3
 	}
 
 	static long[][] generateMagicMoveDatabase(long[][] occupancyVariations, long[] magicNumbers, 
-			int[] magicBitshifts, List<Dir> moveDirs)
+			int[] magicBitshifts, Seq<Dir> moveDirs)
 	{
 		long[][] magicMoveDatabase = new long[64][];
 		for (byte i = 0; i < 64; i++) {
@@ -55,7 +56,7 @@ final class BitboardsInitialisationSection3
 		return magicMoveDatabase;
 	}
 
-	static long findControlSetFromOccupancyVariation(Square startSq, long occVar, List<Dir> movementDirections)
+	static long findControlSetFromOccupancyVariation(Square startSq, long occVar, Seq<Dir> movementDirections)
 	{
 		return bitwiseOr(Iter.over(movementDirections)
 				.map(direction -> startSq.getAllSquares(direction, 8).toList())

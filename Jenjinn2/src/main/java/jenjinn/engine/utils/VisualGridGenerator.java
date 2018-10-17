@@ -12,8 +12,8 @@ import java.util.Map;
 import jenjinn.engine.base.Square;
 import jenjinn.engine.bitboards.BitboardIterator;
 import jenjinn.engine.boardstate.DetailedPieceLocations;
-import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.pieces.ChessPieces;
+import jenjinn.engine.pieces.Piece;
 import jflow.iterators.factories.Iter;
 
 /**
@@ -35,7 +35,7 @@ public final class VisualGridGenerator
 	public static String from(DetailedPieceLocations locations)
 	{
 		Map<Square, CharPair> pieceMapping = new HashMap<>();
-		ChessPieces.all().forEach(piece -> {
+		ChessPieces.ALL.forEach(piece -> {
 			BitboardIterator.from(locations.locationsOf(piece))
 			.forEach(square -> pieceMapping.put(square, CharPair.from(piece)));
 		});

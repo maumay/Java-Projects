@@ -12,6 +12,7 @@ import jenjinn.engine.pieces.PieceMovementDirs;
 import jflow.iterators.factories.Iter;
 import jflow.iterators.factories.IterRange;
 import jflow.iterators.misc.ArrayUtils;
+import jflow.seq.Seq;
 
 /**
  * Second of three utility classes containing only static methods to initialise
@@ -40,7 +41,7 @@ final class BitboardsInitialisationSection2
 				.toArray(new long[64][]);
 	}
 
-	static long[] calculateOccupancyVariations(Square startSq, List<Dir> movementDirections)
+	static long[] calculateOccupancyVariations(Square startSq, Seq<Dir> movementDirections)
 	{
 		List<Square> relevantSquares = new ArrayList<>();
 		for (Dir dir : movementDirections) {

@@ -3,7 +3,6 @@
  */
 package jenjinn.engine.utils;
 
-import java.util.List;
 import java.util.Random;
 
 import jenjinn.engine.base.CastleZone;
@@ -11,8 +10,8 @@ import jenjinn.engine.base.Side;
 import jenjinn.engine.base.Square;
 import jenjinn.engine.boardstate.CastlingStatus;
 import jenjinn.engine.boardstate.LocationTracker;
-import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.pieces.ChessPieces;
+import jenjinn.engine.pieces.Piece;
 import jflow.iterators.factories.Iter;
 import jflow.iterators.factories.IterRange;
 import jflow.seq.Seq;
@@ -42,28 +41,28 @@ public enum BoardHasher
 		blackToMoveFeature = numberGenerator.nextLong();
 	}
 
-	private boolean seedIsValid(final long seed)
+	private boolean seedIsValid(long seed)
 	{
-		final Random r = new Random(seed);
+		Random r = new Random(seed);
 		return IterRange.to(800).mapToObject(i -> r.nextLong()).toSet().size() == 800;
 	}
 
-	private long[] randomArray(final int length, final Random numberGenerator)
+	private long[] randomArray(int length, Random numberGenerator)
 	{
 		return IterRange.to(length).mapToLong(i -> numberGenerator.nextLong()).toArray();
 	}
 
-	public long getSquarePieceFeature(final Square square, final Piece piece)
+	public long getSquarePieceFeature(Square square, Piece piece)
 	{
 		return boardSquareFeatures.get(square.ordinal())[piece.ordinal()];
 	}
 
-	public long getCastleRightsFeature(final CastleZone zone)
+	public long getCastleRightsFeature(CastleZone zone)
 	{
 		return castleRightsFeatures[zone.ordinal()];
 	}
 
-	public long getEnpassantFileFeature(final Square enPassantSquare)
+	public long getEnpassantFileFeature(Square enPassantSquare)
 	{
 		return enpassantFileFeatures[enPassantSquare.ordinal() % 8];
 	}
@@ -73,13 +72,13 @@ public enum BoardHasher
 		return blackToMoveFeature;
 	}
 
-	public long hashPieceLocations(final List<LocationTracker> pieceLocations)
+	public long hashPieceLocations(Seq<LocationTracker> pieceLocations)
 	{
 		if (pieceLocations.size() != 12) {
 			throw new IllegalArgumentException();
 		}
 		long hash = 0L;
-		for (final Piece piece : ChessPieces.all()) {
+		for (Piece piece : ChessPieces.ALL) {
 			hash ^= pieceLocations.get(piece.ordinal()).iterator()
 					.mapToLong(loc -> getSquarePieceFeature(loc, piece))
 					.fold(0L, (a, b) -> a ^ b);
@@ -87,7 +86,7 @@ public enum BoardHasher
 		return hash;
 	}
 
-	public long hashNonPieceFeatures(final Side activeSide, final Square enpassantSquare, final CastlingStatus castlingStatus)
+	public long hashNonPieceFeatures(Side activeSide, Square enpassantSquare, CastlingStatus castlingStatus)
 	{
 		long hash = activeSide.isWhite()? 0L : getBlackToMoveFeature();
 		hash ^= enpassantSquare == null? 0L : getEnpassantFileFeature(enpassantSquare);

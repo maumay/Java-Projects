@@ -5,16 +5,15 @@ package jenjinn.engine.boardstate;
 
 import static jenjinn.engine.bitboards.BitboardUtils.bitboardsIntersect;
 
-import java.util.List;
-
 import jenjinn.engine.base.Side;
 import jenjinn.engine.base.Square;
 import jenjinn.engine.eval.piecesquaretables.PieceSquareTables;
-import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.pieces.ChessPieces;
+import jenjinn.engine.pieces.Piece;
 import jenjinn.engine.utils.BoardHasher;
 import jflow.iterators.Flow;
 import jflow.iterators.factories.Iter;
+import jflow.seq.Seq;
 
 /**
  * Handles piece locations as well as tracking the positional evaluation and hash arising
@@ -26,14 +25,14 @@ public final class DetailedPieceLocations
 {
 	private long squarePieceFeatureHash;
 
-	private final List<LocationTracker> pieceLocations;
+	private final Seq<LocationTracker> pieceLocations;
 	private long whiteLocations, blackLocations;
 
 	private final PieceSquareTables midgameTables, endgameTables;
 	private int midgameEval = 0, endgameEval = 0;
 
 	public DetailedPieceLocations(
-			List<LocationTracker> pieceLocations,
+			Seq<LocationTracker> pieceLocations,
 			PieceSquareTables midgameTables,
 			PieceSquareTables endgameTables)
 	{
@@ -41,8 +40,8 @@ public final class DetailedPieceLocations
 			throw new IllegalArgumentException();
 		}
 		this.pieceLocations = pieceLocations;
-		this.whiteLocations = Iter.over(pieceLocations).take(6).mapToLong(x -> x.allLocs()).fold(0L, (a, b) -> a | b);
-		this.blackLocations = Iter.over(pieceLocations).drop(6).mapToLong(x -> x.allLocs()).fold(0L, (a, b) -> a | b);
+		this.whiteLocations = pieceLocations.flow().take(6).mapToLong(x -> x.allLocs()).fold(0L, (a, b) -> a | b);
+		this.blackLocations = pieceLocations.flow().drop(6).mapToLong(x -> x.allLocs()).fold(0L, (a, b) -> a | b);
 		this.midgameTables = midgameTables;
 		this.endgameTables = endgameTables;
 		this.midgameEval = midgameTables.evaluateLocations(pieceLocations);
@@ -55,7 +54,7 @@ public final class DetailedPieceLocations
 			PieceSquareTables midgameTables,
 			PieceSquareTables endgameTables)
 	{
-		this (Iter.overLongs(pieceLocations).mapToObject(LocationTracker::new).toList(),
+		this (Iter.overLongs(pieceLocations).mapToObject(LocationTracker::new).toSeq(),
 				midgameTables,
 				endgameTables);
 	}
@@ -171,7 +170,7 @@ public final class DetailedPieceLocations
 
 	public DetailedPieceLocations copy()
 	{
-		List<LocationTracker> locTrackerCopy = Iter.over(pieceLocations).map(LocationTracker::copy).toList();
+		Seq<LocationTracker> locTrackerCopy = pieceLocations.map(LocationTracker::copy);
 		return new DetailedPieceLocations(locTrackerCopy, midgameTables, endgameTables);
 	}
 
