@@ -22,13 +22,13 @@ public final class PinnedPieceCollection implements FlowIterable<PinnedPiece>
 {
 	private final Map<Square, PinnedPiece> cache;
 
-	public PinnedPieceCollection(Flow<PinnedPiece> pinnedPieces)
+	public PinnedPieceCollection(Flow<? extends PinnedPiece> pinnedPieces)
 	{
 		cache = unmodifiableMap(pinnedPieces.toMap(PinnedPiece::getLocation, identity()));
 	}
 
 	@Override
-	public Flow<PinnedPiece> iterator()
+	public Flow<PinnedPiece> flow()
 	{
 		return Iter.over(cache.values());
 	}
