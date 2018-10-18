@@ -30,7 +30,7 @@ class PgnGameConversionIntegrationTest extends AbstractBoardStateTest
 	/**
 	 * How many games from each file we will test.
 	 */
-	private final int nGames = 50;
+	private final int nGames = 100;
 
 	@Test
 	void test()
