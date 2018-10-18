@@ -5,6 +5,8 @@ package jenjinn.fx;
 
 import static jenjinn.bitboards.BitboardUtils.bitboardsIntersect;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javafx.application.Platform;
@@ -23,9 +25,7 @@ import jenjinn.boardstate.calculators.LegalMoves;
 import jenjinn.boardstate.calculators.TerminationState;
 import jenjinn.entity.Jenjinn;
 import jenjinn.moves.ChessMove;
-import jflow.collections.FList;
-import jflow.collections.impl.FlowArrayList;
-import jflow.utilities.Optionals;
+import jflow.iterators.misc.Optionals;
 
 /**
  * @author ThomasB
@@ -40,7 +40,7 @@ public final class ChessGame
 	private final Jenjinn jenjinn;
 	private final BoardState stateOfPlay;
 	private final ChessBoard board;
-	private final FList<ChessMove> movesPlayed;
+	private final List<ChessMove> movesPlayed;
 
 	private Optional<Square> squareSelection;
 
@@ -49,7 +49,7 @@ public final class ChessGame
 		jenjinn = new Jenjinn();
 		stateOfPlay = StartStateGenerator.createStartBoard();
 		board = new ChessBoard(colors, stateOfPlay);
-		movesPlayed = new FlowArrayList<>();
+		movesPlayed = new ArrayList<>();
 		squareSelection = Optional.empty();
 		board.getFxComponent().setMouseClickInteractionProcedure(this::handleMouseClicks);
 		board.getFxComponent().setInteractionEnabled();
@@ -70,12 +70,12 @@ public final class ChessGame
 			Point2D clickTarget = new Point2D(evt.getX(), evt.getY());
 			Square correspondingSquare = board.getClosestSquare(clickTarget);
 
-			if (bitboardsIntersect(correspondingSquare.asBitboard(), getActiveLocations())) {
+			if (bitboardsIntersect(correspondingSquare.bitboard, getActiveLocations())) {
 				setSelection(Optionals.of(correspondingSquare));
 			} else if (squareSelection.isPresent()) {
 				Square src = squareSelection.get();
 				Optional<ChessMove> mv = LegalMoves.getAllMoves(stateOfPlay)
-						.filter(m -> m.getSource().equals(src) && m.getTarget().equals(correspondingSquare)).safeNext();
+						.filter(m -> m.getSource().equals(src) && m.getTarget().equals(correspondingSquare)).nextOption();
 
 				setSelection(Optional.empty());
 				if (mv.isPresent()) {
@@ -113,7 +113,7 @@ public final class ChessGame
 	 */
 	private boolean terminalStateReached()
 	{
-		Optional<ChessMove> mv = LegalMoves.getAllMoves(stateOfPlay).safeNext();
+		Optional<ChessMove> mv = LegalMoves.getAllMoves(stateOfPlay).nextOption();
 		GameTermination termState = TerminationState.of(stateOfPlay, mv.isPresent());
 		if (termState.isTerminal()) {
 			Platform.runLater(board.getFxComponent()::setInteractionDisabled);

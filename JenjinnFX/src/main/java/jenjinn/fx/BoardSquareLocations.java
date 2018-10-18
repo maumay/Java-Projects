@@ -19,15 +19,15 @@ public final class BoardSquareLocations
 	private final Map<Square, Point2D> squareToPoint = new HashMap<>();
 	private final Map<Point2D, Square> pointToSquare = new HashMap<>();
 
-	public BoardSquareLocations(Flow<Pair<Square, Point2D>> src)
+	public BoardSquareLocations(Flow<? extends Pair<Square, Point2D>> src)
 	{
-		src.forEach(pair -> put(pair.first(), pair.second()));
+		src.forEach(pair -> put(pair._1, pair._2));
 	}
 
 	public static BoardSquareLocations getDefault()
 	{
-		return Square.iterateAll()
-		.map(square -> Pair.of(square, new Point2D(7 - square.file(), 7 - square.rank())))
+		return Square.ALL.flow()
+		.map(square -> Pair.of(square, new Point2D(7 - square.file, 7 - square.rank)))
 		.build(BoardSquareLocations::new);
 	}
 
@@ -56,7 +56,7 @@ public final class BoardSquareLocations
 	public BoardSquareLocations rotate(double boardWidth)
 	{
 		final Point2D translation = new Point2D(boardWidth, boardWidth);
-		return Square.iterateAll()
+		return Square.ALL.flow()
 				.map(sq -> Pair.of(sq, get(sq).multiply(-1).add(translation)))
 				.build(BoardSquareLocations::new);
 	}

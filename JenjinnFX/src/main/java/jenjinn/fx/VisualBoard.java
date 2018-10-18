@@ -9,8 +9,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
-import jflow.collections.FList;
-import jflow.collections.Lists;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -24,13 +23,13 @@ public final class VisualBoard extends Region
 	private final Canvas pieceCanvas = new ResizableCanvas();
 	private final Canvas interactionLayer = new ResizableCanvas();
 
-	private final FList<Canvas> boardCanvasStack = Lists.build(
+	private final Seq<Canvas> boardCanvasStack = Seq.of(
 			boardCanvas, markerCanvas, pieceCanvas, interactionLayer);
 
 	public VisualBoard()
 	{
 		getChildren().add(backingCanvas);
-		getChildren().addAll(boardCanvasStack);
+		getChildren().addAll(boardCanvasStack.toList());
 	}
 
 	@Override

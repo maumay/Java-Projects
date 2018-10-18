@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
 import jenjinn.base.FileUtils;
 import jenjinn.pieces.ChessPieces;
 import jenjinn.pieces.Piece;
-import jflow.collections.FList;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -18,7 +18,7 @@ public enum ImageCache
 {
 	INSTANCE;
 
-	private final FList<Image> pieceImages;
+	private final Seq<Image> pieceImages;
 
 	private ImageCache()
 	{
@@ -28,11 +28,11 @@ public enum ImageCache
 			return new String(chars) + "64.png";
 		};
 
-		pieceImages = ChessPieces.iterate()
+		pieceImages = ChessPieces.ALL.flow()
 				.map(p -> FileUtils.absoluteName(getClass(), nameMap.apply(p)))
 				.map(getClass()::getResourceAsStream)
 				.map(Image::new)
-				.toList();
+				.toSeq();
 	}
 
 	public Image getImageOf(Piece piece)
