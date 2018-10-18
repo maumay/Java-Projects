@@ -3,13 +3,12 @@
  */
 package jenjinn.integrationtests;
 
+import static java.util.Comparator.naturalOrder;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -21,9 +20,7 @@ import jenjinn.moves.AbstractBoardStateTest;
 import jenjinn.moves.ChessMove;
 import jenjinn.pgn.BadPgnException;
 import jenjinn.pgn.PgnGameConverter;
-import jflow.collections.FList;
-import jflow.collections.Lists;
-import jflow.iterators.factories.Iter;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -38,8 +35,7 @@ class PgnGameConversionIntegrationTest extends AbstractBoardStateTest
 	@Test
 	void test()
 	{
-		List<String> files = Lists.copyMutable(FileUtils.cacheResource(getClass(), "integrationtestpgns"));
-		Collections.sort(files);
+		Seq<String> files = FileUtils.cacheResource(getClass(), "integrationtestpgns").sorted(naturalOrder());
 
 		for (String filename : files) {
 			String resourceLoc = FileUtils.absoluteName(getClass(), filename);
@@ -48,11 +44,11 @@ class PgnGameConversionIntegrationTest extends AbstractBoardStateTest
 			try (BufferedReader reader = FileUtils.loadResource(getClass(), filename)) {
 				reader.lines().limit(nGames).forEach(pgn -> {
 					try {
-						List<ChessMove> mvs = PgnGameConverter.parse(pgn.trim());
+						Seq<ChessMove> mvs = PgnGameConverter.parse(pgn.trim());
 						BoardState state = StartStateGenerator.createStartBoard();
-						FList<MoveReversalData> reversalData = Iter.over(mvs).map(x -> new MoveReversalData()).toList();
-						reversalData.flow().zipWith(mvs).forEach(p -> p.second().makeMove(state, p.first()));
-						reversalData.rflow().zipWith(Iter.overReversed(mvs)).forEach(p -> p.second().reverseMove(state, p.first()));
+						Seq<MoveReversalData> reversalData = mvs.map(x -> new MoveReversalData());
+						reversalData.flow().zipWith(mvs).forEach(p -> p._2.makeMove(state, p._1));
+						reversalData.rflow().zipWith(mvs.rflow()).forEach(p -> p._2.reverseMove(state, p._1));
 						assertBoardStatesAreEqual(StartStateGenerator.createStartBoard(), state);
 					} catch (BadPgnException e) {
 						e.printStackTrace();

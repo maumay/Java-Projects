@@ -7,7 +7,6 @@ import static jenjinn.base.Square.A3;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -34,8 +33,8 @@ class ShorthandMoveParserTest
 	@MethodSource
 	void testMoveConstruction(String encodedMove, List<StandardMove> expectedMoves)
 	{
-		Set<ChessMove> upcast = Iter.over(expectedMoves).filterAndCastTo(ChessMove.class).toSet();
-		assertEquals(upcast, new HashSet<>(ShorthandMoveParser.parse(encodedMove)));
+		Set<ChessMove> upcast = Iter.over(expectedMoves).castTo(ChessMove.class).toSet();
+		assertEquals(upcast, ShorthandMoveParser.parse(encodedMove).toSet());
 	}
 
 	static Flow<Arguments> testMoveConstruction()

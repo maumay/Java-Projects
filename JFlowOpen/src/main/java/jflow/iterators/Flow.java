@@ -729,10 +729,18 @@ public interface Flow<E> extends PrototypeFlow<E>
 	{
 		return append(Iter.over(e));
 	}
-	
+
+	/**
+	 * Convenience method for appending an optional element onto the end of this
+	 * Flow.
+	 *
+	 * @param e The element to append
+	 * @return A Flow consisting of the elements of this source Flow followed by the
+	 *         parameter element if it is present, this flow otherwise.
+	 */
 	default Flow<E> append(Optional<? extends E> e)
 	{
-		return e.isPresent()? append(e.get()) : this;
+		return e.isPresent() ? append(e.get()) : this;
 	}
 
 	/**
@@ -747,17 +755,24 @@ public interface Flow<E> extends PrototypeFlow<E>
 	{
 		return insert(Iter.over(e));
 	}
-	
+
+	/**
+	 * Convenience method for inserting an optional element at the beginning of this
+	 * Flow.
+	 *
+	 * @param e The element to insert
+	 * @return A Flow consisting of the parameter element followed by the elements
+	 *         of the source flow if the parameter is present, this flow otherwise.
+	 */
 	default Flow<E> insert(Optional<? extends E> e)
 	{
-		return e.isPresent()? insert(e.get()) : this;
+		return e.isPresent() ? insert(e.get()) : this;
 	}
 
 	/**
 	 * Convenience method which delegates to {@link Flow#zipWith(Iterator)}.
 	 *
-	 * @param other
-	 *            Some iterable object.
+	 * @param other Some iterable object.
 	 * @return the result of zipping this Flow with an iterator created from the
 	 *         parameter iterable.
 	 */

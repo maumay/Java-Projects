@@ -221,6 +221,11 @@ public interface Seq<E> extends FlowIterable<E>
 		return flow().mapToLong(mappingFunction).toArray();
 	}
 	
+	default boolean isEmpty()
+	{
+		return size() == 0;
+	}
+	
 	/**
 	 * @return An empty sequence
 	 */

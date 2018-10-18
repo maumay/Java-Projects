@@ -3,9 +3,6 @@
  */
 package jenjinn.moves;
 
-import static jflow.utilities.CollectionUtil.sizeOf;
-import static jflow.utilities.CollectionUtil.string;
-
 import java.util.Iterator;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,9 +11,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import jenjinn.boardstate.BoardState;
 import jenjinn.boardstate.MoveReversalData;
-import jenjinn.moves.ChessMove;
 import jflow.iterators.factories.IterRange;
 import jflow.iterators.factories.Repeatedly;
+import jflow.iterators.misc.Strings;
 
 /**
  * @author ThomasB
@@ -44,9 +41,9 @@ class MoveTest extends AbstractBoardStateTest
 	}
 
 	static String pad(int caseNumber) {
-		String caseString = string(caseNumber);
+		String caseString = Strings.$(caseNumber);
 		return Repeatedly.cycle("0")
-				.take(3 - sizeOf(caseString))
+				.take(3 - caseString.length())
 				.append(caseString)
 				.fold("", (a, b) -> a + b);
 	}

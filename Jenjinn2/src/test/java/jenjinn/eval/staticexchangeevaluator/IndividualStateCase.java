@@ -3,14 +3,10 @@
  */
 package jenjinn.eval.staticexchangeevaluator;
 
-import static jflow.utilities.CollectionUtil.head;
-import static jflow.utilities.CollectionUtil.last;
-import static jflow.utilities.Strings.allMatches;
-import static jflow.utilities.Strings.firstMatch;
-
 import jenjinn.base.Square;
 import jenjinn.pgn.CommonRegex;
-import jflow.collections.FList;
+import jflow.iterators.misc.Strings;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -33,11 +29,11 @@ final class IndividualStateCase
 	{
 		String sq = CommonRegex.SINGLE_SQUARE, doubleSq = CommonRegex.DOUBLE_SQUARE;
 		if (encoded.matches("^" + doubleSq + " +(GOOD|BAD)$")) {
-			FList<Square> sqs = allMatches(encoded, sq)
+			Seq<Square> sqs = Strings.allMatches(encoded, sq)
 					.map(String::toUpperCase)
 					.map(Square::valueOf)
-					.toList();
-			return new IndividualStateCase(head(sqs), last(sqs), firstMatch(encoded, "GOOD").isPresent());
+					.toSeq();
+			return new IndividualStateCase(sqs.head(), sqs.last(), Strings.firstMatch(encoded, "GOOD").isPresent());
 		}
 		else {
 			throw new IllegalArgumentException(encoded);

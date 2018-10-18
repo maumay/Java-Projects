@@ -11,7 +11,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import jenjinn.base.FileUtils;
 import jenjinn.moves.ChessMove;
 import jenjinn.pgn.CommonRegex;
-import jflow.iterators.factories.Iter;
 import jflow.iterators.misc.Strings;
 import jflow.seq.Seq;
 
@@ -55,7 +54,7 @@ public abstract class AbstractTestFileParser
 			String mv = CommonRegex.SHORTHAND_MOVE;
 			return lines.flow()
 					.flatMap(line -> Strings.allMatches(line, mv))
-					.flatMap(shortmv -> Iter.over(ShorthandMoveParser.parse(shortmv)))
+					.flatMap(shortmv -> ShorthandMoveParser.parse(shortmv).flow())
 					.toSet();
 		}
 	}

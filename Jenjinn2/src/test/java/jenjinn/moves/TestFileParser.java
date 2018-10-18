@@ -3,18 +3,15 @@
  */
 package jenjinn.moves;
 
-import static jflow.utilities.CollectionUtil.head;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.List;
 
 import org.junit.jupiter.params.provider.Arguments;
 
 import jenjinn.boardstate.BoardState;
 import jenjinn.boardstate.HashCache;
-import jenjinn.moves.ChessMove;
 import jenjinn.parseutils.AbstractTestFileParser;
 import jenjinn.parseutils.BoardParser;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -39,16 +36,16 @@ final class TestFileParser extends AbstractTestFileParser
 	@Override
 	public Arguments parse(String fileName)
 	{
-		List<String> lines = loadFile(fileName);
+		Seq<String> lines = loadFile(fileName);
 
 		if (lines.size() != 19) {
 			throw new IllegalArgumentException();
 		}
 
-		ChessMove reconstructedMove = ChessMove.decode(head(lines));
-		BoardState startState = BoardParser.parse(lines.subList(1, 10), STARTING_MOVE_COUNT);
+		ChessMove reconstructedMove = ChessMove.decode(lines.head());
+		BoardState startState = BoardParser.parse(lines.drop(1).take(9), STARTING_MOVE_COUNT);
 		long expectedOldHash = startState.calculateHash();
-		BoardState expectedEvolutionResult = BoardParser.parse(lines.subList(10, 19), STARTING_MOVE_COUNT + 1);
+		BoardState expectedEvolutionResult = BoardParser.parse(lines.drop(10).take(9), STARTING_MOVE_COUNT + 1);
 		BoardState updatedExpected = insertPreviousHash(expectedEvolutionResult, expectedOldHash);
 		return Arguments.of(reconstructedMove, startState, updatedExpected);
 	}

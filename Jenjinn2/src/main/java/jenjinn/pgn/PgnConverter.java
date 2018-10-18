@@ -24,6 +24,7 @@ import jenjinn.boardstate.BoardState;
 import jenjinn.boardstate.StartStateGenerator;
 import jenjinn.moves.ChessMove;
 import jflow.iterators.misc.Strings;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -84,7 +85,7 @@ public final class PgnConverter implements Closeable
 			int gameDepthCap) throws IOException
 	{
 		try {
-			List<ChessMove> moves = PgnGameConverter.parse(gameString);
+			Seq<ChessMove> moves = PgnGameConverter.parse(gameString);
 			BoardState state = StartStateGenerator.createStartBoard();
 			for (int i = 0; i < min(gameDepthCap, moves.size()); i++) {
 				ChessMove ithMove = moves.get(i);

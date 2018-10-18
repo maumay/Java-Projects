@@ -3,8 +3,6 @@
  */
 package jenjinn.movesearch.quiescent;
 
-import static jflow.utilities.CollectionUtil.sizeOf;
-import static jflow.utilities.CollectionUtil.string;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -19,6 +17,7 @@ import jenjinn.boardstate.BoardState;
 import jenjinn.movesearch.QuiescentSearcher;
 import jflow.iterators.factories.IterRange;
 import jflow.iterators.factories.Repeatedly;
+import jflow.iterators.misc.Strings;
 
 /**
  * @author ThomasB
@@ -51,9 +50,9 @@ class QuiescentSearchTest
 
 	static String pad(int caseNumber)
 	{
-		String caseString = string(caseNumber);
+		String caseString = Strings.$(caseNumber);
 		return Repeatedly.cycle("0")
-				.take(3 - sizeOf(caseString))
+				.take(3 - caseString.length())
 				.append(caseString)
 				.fold("", (a, b) -> a + b);
 	}

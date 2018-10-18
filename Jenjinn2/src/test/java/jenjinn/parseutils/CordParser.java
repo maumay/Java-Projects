@@ -3,16 +3,11 @@
  */
 package jenjinn.parseutils;
 
-import static jflow.utilities.CollectionUtil.head;
-import static jflow.utilities.CollectionUtil.last;
-import static jflow.utilities.Strings.allMatches;
-
-import java.util.List;
-
 import jenjinn.base.Dir;
 import jenjinn.base.Square;
 import jenjinn.pgn.CommonRegex;
-import jflow.iterators.factories.Iter;
+import jflow.iterators.misc.Strings;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -34,26 +29,26 @@ public final class CordParser
 	 *         (inclusive).
 	 * @throws IllegalArgumentException If no cord connects the two squares.
 	 */
-	public static List<Square> parse(String encodedCord)
+	public static Seq<Square> parse(String encodedCord)
 	{
 		String ec = encodedCord.trim();
 		if (!ec.matches(CommonRegex.CORD)) {
 			throw new IllegalArgumentException(encodedCord);
 		}
 
-		List<Square> squares = allMatches(ec, CommonRegex.SINGLE_SQUARE)
+		Seq<Square> squares = Strings.allMatches(ec, CommonRegex.SINGLE_SQUARE)
 				.map(String::toUpperCase)
 				.map(Square::valueOf)
-				.toList();
+				.toSeq();
 
-		Square start = head(squares), end = last(squares);
+		Square start = squares.head(), end = squares.last();
 		Dir dir = Dir.ofLineBetween(start, end)
 				.orElseThrow(() -> new IllegalArgumentException(encodedCord));
 
-		return Iter.over(start.getAllSquares(dir, 10))
+		return start.getAllSquares(dir, 10).flow()
 				.takeWhile(sq -> sq != end)
 				.insert(start)
 				.append(end)
-				.toList();
+				.toSeq();
 	}
 }
