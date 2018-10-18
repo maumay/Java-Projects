@@ -3,8 +3,6 @@ package jenjinn.parseutils;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.List;
-
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -12,6 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import jenjinn.base.Square;
 import jflow.iterators.Flow;
 import jflow.iterators.factories.Iter;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -22,7 +21,7 @@ class CordParserTest
 	@MethodSource
 	void test(String encodedCord, int[] expectedSquareIndices)
 	{
-		List<Square> squares = Iter.overInts(expectedSquareIndices).mapToObject(Square::of).toList();
+		Seq<Square> squares = Iter.overInts(expectedSquareIndices).mapToObject(Square::of).toSeq();
 		assertEquals(squares, CordParser.parse(encodedCord));
 	}
 

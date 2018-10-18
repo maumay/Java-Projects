@@ -99,7 +99,7 @@ public final class LegalMoves
 		// Add moves from non king pieces
 		long faa = allowedMoveArea;
 		moves = moves.append(
-				activePieces.flow().drop(1).flatMap(p -> getNonKingMoves(state, p, pinnedPieces, faa)));
+				activePieces.flow().take(5).flatMap(p -> getNonKingMoves(state, p, pinnedPieces, faa)));
 
 		// Add king moves
 		long kingConstraint = forceAttacks ? ~passiveControl & passivePieceLocs : ~passiveControl;
@@ -170,11 +170,17 @@ public final class LegalMoves
 					.filter(Optional::isPresent)
 					.map(Optional::get)
 					.filter(sq -> {
-						if (bitboardsIntersect(plocs, sq.bitboard) && pinnedPieces.containsLocation(sq)) {
-							long areaCons = pinnedPieces.getConstraintAreaOfPieceAt(sq);
-							return bitboardsIntersect(areaCons, ep.bitboard);
-						} else {
-							return true;
+						if (bitboardsIntersect(plocs, sq.bitboard)) {
+							if (pinnedPieces.containsLocation(sq)) {
+								long areaCons = pinnedPieces.getConstraintAreaOfPieceAt(sq);
+								return bitboardsIntersect(areaCons, ep.bitboard);
+							}
+							else {
+								return true;
+							}
+						}
+						else {
+							return false;
 						}
 					}).map(sq -> new EnpassantMove(sq, ep));
 			return allContributions.append(epContribution);

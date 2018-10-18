@@ -5,7 +5,6 @@ package jenjinn.parseutils;
 
 import static jenjinn.eval.piecesquaretables.TestingPieceSquareTables.getEndgameTables;
 import static jenjinn.eval.piecesquaretables.TestingPieceSquareTables.getMidgameTables;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.EnumSet;
 import java.util.Map;
@@ -27,6 +26,7 @@ import jenjinn.eval.piecesquaretables.PieceSquareTables;
 import jenjinn.utils.BoardHasher;
 import jflow.iterators.factories.Iter;
 import jflow.iterators.factories.IterRange;
+import jflow.iterators.misc.Exceptions;
 import jflow.iterators.misc.Strings;
 import jflow.seq.Seq;
 
@@ -75,21 +75,21 @@ public final class BoardParser
 
 	private static Square constructEnpassantSquare(String enpassantSquare)
 	{
-		assertTrue(enpassantSquare.trim().matches("^enpassant_square: *((none)|([a-h][1-8]))$"));
+		Exceptions.require(enpassantSquare.trim().matches("^enpassant_square: *((none)|([a-h][1-8]))$"));
 		Optional<String> squareMatch = Strings.firstMatch(enpassantSquare, "[a-h][1-8]");
 		return squareMatch.isPresent()? Square.valueOf(squareMatch.get().toUpperCase()) : null;
 	}
 
 	private static Side constructActiveSide(String activeSide)
 	{
-		assertTrue(activeSide.trim().matches("^active_side: *(white|black)$"));
+		Exceptions.require(activeSide.trim().matches("^active_side: *(white|black)$"));
 		Optional<String> whiteMatch = Strings.firstMatch(activeSide, "white");
 		return whiteMatch.isPresent()? Side.WHITE : Side.BLACK;
 	}
 
 	private static Set<DevelopmentPiece> constructDevelopedPieces(String developedPieces)
 	{
-		assertTrue(developedPieces.trim().matches("^developed_pieces:(( *none)|(( *[a-h][1-8])( +[a-h][1-8]){0,11}))$"), developedPieces);
+		Exceptions.require(developedPieces.trim().matches("^developed_pieces:(( *none)|(( *[a-h][1-8])( +[a-h][1-8]){0,11}))$"), developedPieces);
 		Seq<String> squaresMatched = Strings.allMatches(developedPieces, "[a-h][1-8]").toSeq();
 		Set<Square> uniqueSquares = squaresMatched.map(String::toUpperCase).map(Square::valueOf).toSet();
 		if (uniqueSquares.size() != squaresMatched.size()) {
@@ -101,9 +101,9 @@ public final class BoardParser
 
 	private static CastlingStatus constructCastlingStatus(String rights, String whiteStatus, String blackStatus)
 	{
-		assertTrue(rights.trim().matches("^castling_rights:( *wk)?( +wq)?( +bk)?( +bq)?.toSeq()$"));
-		assertTrue(whiteStatus.trim().matches("^white_castle_status: *(none|wk|wq|bk|bq)$"));
-		assertTrue(blackStatus.trim().matches("^black_castle_status: *(none|wk|wq|bk|bq)$"));
+		Exceptions.require(rights.trim().matches("^castling_rights:( *wk)?( +wq)?( +bk)?( +bq)?$"));
+		Exceptions.require(whiteStatus.trim().matches("^white_castle_status: *(none|wk|wq|bk|bq)$"));
+		Exceptions.require(blackStatus.trim().matches("^black_castle_status: *(none|wk|wq|bk|bq)$"));
 
 		Map<String, CastleZone> regexMatchers = CastleZone.ALL.toMap(CastleZone::getSimpleIdentifier, Function.identity());
 
@@ -127,7 +127,7 @@ public final class BoardParser
 
 	private static HalfMoveCounter constructHalfMoveCounter(String clockString)
 	{
-		assertTrue(clockString.trim().matches("^half_move_clock: *[0-9]+$"));
+		Exceptions.require(clockString.trim().matches("^half_move_clock: *[0-9]+$"));
 		return new HalfMoveCounter(Integer.parseInt(Strings.firstMatch(clockString, "[0-9]+").get()));
 	}
 
@@ -137,8 +137,8 @@ public final class BoardParser
 		String groupedSquares = "\\( *([a-h][1-8] *)?( +[a-h][1-8])* *\\)";
 		String sixGroupedSquareSets = IterRange.to(6).mapToObject(i -> groupedSquares).fold(" *", (a, b) -> a + " +" + b);
 
-		assertTrue(whiteLocs.trim().matches("^white_pieces:" + sixGroupedSquareSets + "$"));
-		assertTrue(blackLocs.trim().matches("^black_pieces:" + sixGroupedSquareSets + "$"));
+		Exceptions.require(whiteLocs.trim().matches("^white_pieces:" + sixGroupedSquareSets + "$"));
+		Exceptions.require(blackLocs.trim().matches("^black_pieces:" + sixGroupedSquareSets + "$"));
 
 		PieceSquareTables midTables = getMidgameTables(), endTables = getEndgameTables();
 		return Strings.allMatches(whiteLocs + blackLocs, groupedSquares)
