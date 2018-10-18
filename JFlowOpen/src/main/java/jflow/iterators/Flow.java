@@ -729,6 +729,11 @@ public interface Flow<E> extends PrototypeFlow<E>
 	{
 		return append(Iter.over(e));
 	}
+	
+	default Flow<E> append(Optional<? extends E> e)
+	{
+		return e.isPresent()? append(e.get()) : this;
+	}
 
 	/**
 	 * Convenience method for inserting a single element into the beginning of this
@@ -741,6 +746,11 @@ public interface Flow<E> extends PrototypeFlow<E>
 	default Flow<E> insert(E e)
 	{
 		return insert(Iter.over(e));
+	}
+	
+	default Flow<E> insert(Optional<? extends E> e)
+	{
+		return e.isPresent()? insert(e.get()) : this;
 	}
 
 	/**

@@ -23,15 +23,19 @@ import static jenjinn.base.Dir.W;
 import static jenjinn.bitboards.BitboardUtils.bitboardsIntersect;
 import static jenjinn.bitboards.BitboardUtils.bitwiseOr;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 import jenjinn.base.Dir;
 import jenjinn.base.Square;
 import jenjinn.pieces.Moveable;
 import jflow.iterators.Flow;
 import jflow.iterators.factories.Iter;
+import jflow.iterators.misc.Pair;
+import jflow.seq.Seq;
 
 /**
  * @author ThomasB
@@ -44,22 +48,25 @@ public enum TestChessPiece implements Moveable
 		public long getMoves(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			long allPieces = whitePieces | blackPieces;
-			List<Square> pushSquares = new ArrayList<>();
-			Square firstPush = currentLocation.getNextSquare(N);
-			if (firstPush != null && !bitboardsIntersect(firstPush.asBitboard(), allPieces))
-			{
-				pushSquares.add(firstPush);
-				int locIndex = currentLocation.ordinal();
-				if (7 < locIndex && locIndex < 16)
-				{
-					Square secondPush = firstPush.getNextSquare(N);
-					if (!bitboardsIntersect(secondPush.asBitboard(), allPieces))
-					{
-						pushSquares.add(secondPush);
-					}
-				}
-			}
-			return bitwiseOr(pushSquares) | getAttacks(currentLocation, whitePieces, blackPieces);
+			Predicate<Square> isStartSquare = sq -> 7 < sq.index && sq.index < 16;
+			Predicate<Square> isClearSquare = sq -> !bitboardsIntersect(allPieces, sq.bitboard);
+			Function<Square, Optional<Square>> nextSquare = sq -> sq.getNextSquare(N);
+			
+			Optional<Square> firstpush = nextSquare.apply(currentLocation).filter(isClearSquare);
+			
+			Optional<Square> secondpush = Optional.of(currentLocation)
+					.filter(isStartSquare)
+					.flatMap(nextSquare)
+					.filter(isClearSquare)
+					.flatMap(nextSquare)
+					.filter(isClearSquare);
+			
+			long moves = Iter.over(firstpush, secondpush)
+					.filter(Optional::isPresent)
+					.mapToLong(x -> x.get().bitboard)
+					.fold(0L, (a, b) -> a | b);
+			
+			return moves | getAttacks(currentLocation, whitePieces, blackPieces);
 		}
 
 		@Override
@@ -192,22 +199,25 @@ public enum TestChessPiece implements Moveable
 		public long getMoves(Square currentLocation, long whitePieces, long blackPieces)
 		{
 			long allPieces = whitePieces | blackPieces;
-			List<Square> pushSquares = new ArrayList<>();
-			Square firstPush = currentLocation.getNextSquare(Dir.S);
-			if (firstPush != null && !bitboardsIntersect(firstPush.asBitboard(), allPieces))
-			{
-				pushSquares.add(firstPush);
-				int locIndex = currentLocation.ordinal();
-				if (47 < locIndex && locIndex < 56)
-				{
-					Square secondPush = firstPush.getNextSquare(Dir.S);
-					if (!bitboardsIntersect(secondPush.asBitboard(), allPieces))
-					{
-						pushSquares.add(secondPush);
-					}
-				}
-			}
-			return bitwiseOr(pushSquares) | getAttacks(currentLocation, whitePieces, blackPieces);
+			Predicate<Square> isStartSquare = sq -> 47 < sq.index && sq.index < 56;
+			Predicate<Square> isClearSquare = sq -> !bitboardsIntersect(allPieces, sq.bitboard);
+			Function<Square, Optional<Square>> nextSquare = sq -> sq.getNextSquare(S);
+			
+			Optional<Square> firstpush = nextSquare.apply(currentLocation).filter(isClearSquare);
+			
+			Optional<Square> secondpush = Optional.of(currentLocation)
+					.filter(isStartSquare)
+					.flatMap(nextSquare)
+					.filter(isClearSquare)
+					.flatMap(nextSquare)
+					.filter(isClearSquare);
+			
+			long moves = Iter.over(firstpush, secondpush)
+					.filter(Optional::isPresent)
+					.mapToLong(x -> x.get().bitboard)
+					.fold(0L, (a, b) -> a | b);
+			
+			return moves | getAttacks(currentLocation, whitePieces, blackPieces);
 		}
 
 		@Override
@@ -336,20 +346,13 @@ public enum TestChessPiece implements Moveable
 
 	private static long getSlidingPieceSquaresOfControl(long allPieces, Square startSquare, List<Dir> movementDirections)
 	{
-		List<Square> controlSquares = new ArrayList<>(64);
-		Iter.over(movementDirections).forEach(direction ->
-		{
-			Square current = startSquare.getNextSquare(direction);
-
-			while (current != null && !bitboardsIntersect(current.asBitboard(), allPieces)) {
-				controlSquares.add(current);
-				current = current.getNextSquare(direction);
-			}
-			if (current != null) {
-				controlSquares.add(current);
-			}
-		});
-		return bitwiseOr(controlSquares);
+		Predicate<Square> isClearSquare = sq -> !bitboardsIntersect(allPieces, sq.bitboard);
+		
+		return Iter.over(movementDirections).flatMap(dir -> {
+			Seq<Square> allSquares = startSquare.getAllSquares(dir, 8);
+			Pair<Seq<Square>, Seq<Square>> spanned = allSquares.span(isClearSquare);
+			return spanned._1.flow().append(spanned._2.headOption());
+		}).map(sq -> sq.bitboard).fold((a, b) -> a | b);
 	}
 
 	public static List<TestChessPiece> valuesAsList()

@@ -30,11 +30,12 @@ public enum Square
 	
 	public static final Seq<Square> ALL = Seq.of(values());
 	
-	public final int rank, file;
+	public final int index, rank, file;
 	public final long bitboard;
 	
 	private Square()
 	{
+		index = ordinal();
 		rank = ordinal() / 8;
 		file = ordinal() % 8;
 		bitboard = 1L << ordinal();

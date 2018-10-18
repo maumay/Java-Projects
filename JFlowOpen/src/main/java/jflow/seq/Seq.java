@@ -142,7 +142,7 @@ public interface Seq<E> extends FlowIterable<E>
 	Seq<E> dropWhile(Predicate<? super E> predicate);
 	
 	/**
-	 * @return A pair of sequences whose first element is the result of
+	 * @return A pair whose first element is the result of
 	 *         {@link Seq#takeWhile(Predicate)} and whose second element is a
 	 *         sequence of all elements who were not included in the first sequence.
 	 */
