@@ -5,7 +5,7 @@ package jenjinn.bitboards;
 
 import static java.lang.Long.toBinaryString;
 import static java.util.Arrays.asList;
-import static jenjinn.bitboards.BitboardsInitialisationSection3.findControlSetFromOccupancyVariation;
+import static jenjinn.bitboards.BitboardsInit3.findControlSetFromOccupancyVariation;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
@@ -18,19 +18,19 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import jenjinn.base.Dir;
 import jenjinn.base.Square;
-import jenjinn.bitboards.BitboardsInitialisationSection3;
+import jenjinn.bitboards.BitboardsInit3;
 import jflow.seq.Seq;
 
 /**
  * @author ThomasB
  */
-class BitboardsInitialisationSection3Test
+class BitboardsInit3Test
 {
 	@ParameterizedTest
 	@MethodSource
 	void testTakeUntil(List<String> source, Predicate<String> predicate, List<String> expectedOutput)
 	{
-		assertEquals(expectedOutput, BitboardsInitialisationSection3.takeUntil(predicate, source));
+		assertEquals(expectedOutput, BitboardsInit3.takeUntil(predicate, source));
 	}
 
 	static Stream<Arguments> testTakeUntil()

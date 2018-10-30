@@ -76,7 +76,7 @@ import jflow.seq.Seq;
  * @author ThomasB
  *
  */
-class BitboardsInitialisationSection1Test
+class BitboardsInit1Test
 {
 	@Test
 	void testSingleOccupancyBitboard()
