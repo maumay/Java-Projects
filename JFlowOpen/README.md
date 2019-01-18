@@ -1,15 +1,10 @@
 # A functional iterator library for Java
 
-Provides support for a multitude of sequence manipulation 
-features for both objects and primitives using sequential 
-lazy evaluating iterators inspired by Java streams, Python generators 
-and Scala collections. Enhanced `List` and `Set` interfaces (`FlowList` and `FlowSet` respectively)
-are included which provide a selection of convenient default methods (for mapping, filtering etc) by delegating
-to these iterators.
+Provides support for a multitude of sequence manipulation features for both objects and primitives using sequential lazy evaluating iterators inspired by Java streams, Python generators and Scala collections. An compact, immutable `List` alternative (`Seq`) is also provided which comes with lots of convenience methods for piping data using the aforementioned iterators. Since immutability is guaranteed a `Seq` can also contruct the 'perfect' spliterator for parallel streams.
 
 #### Why use this library?
 
-Let me make it clear that the introduction of streams and lambdas in Java 8 was a **significant** improvement to the Java programming language. There was understandably a large focus on parallelism and how it could be exploited to improve performance. It is also clear, however, that attempting to parallelise every operation on every collection of data no matter the size or operation is silly. In my experience programming, operating sequentially on a collection of data is often appropriate. I feel that the syntax of very common operations has been stunted by this focus on parallelism and I wanted to have a go at writing a companion library to rectify these syntactical issues. This is a library built for **sequential** operations on collections of data which builds on the existing Java `Iterator` interface with an API roughly aligned with that of the stream library. Therefore this is not a library designed to replace streams, but one to complement them and toegther encourage better (and more enjoyable) programming practices.
+Let me make it clear that the introduction of streams and lambdas in Java 8 was a **significant** improvement to the Java programming language. However I feel that the syntax of transforming streams to concrete collections is far too verbose and makes streams really frustrating to use. This is a library built for *sequential* operations on collections of data which builds on the existing Java `Iterator` interface with an API roughly aligned with that of the stream library. Therefore this is not a library designed to replace streams, but one to complement them and together encourage better (and more enjoyable) programming practices. 
 
 I've spent a large amount of time working with streams and found myself writing variants of the following code an awful lot:
 
@@ -27,70 +22,69 @@ List<String> dataNames = dataCollection.map(MyObject::toString).toList();
 ```
 well I definitely think so.
 
-Is using all the implementation machinery for parallelising operations in a sequential context efficient? Does use of streams naturally lead to encouraging the use of immutable collections? Well I need to do some benchmarking for the first question but I can quite safely say that the answer to the second question is no. It seems that encouraging use of higher order functions is good but encouraging one of the fundamental tenets of FP - immutability - isn't worth it. Immutability and null-safety are the default approaches here.  
+I also have some gripes with the decision (made long ago) to make mutability the default choice for the `Collection` interface. Clearly immutable should be the default choice and then you can introduce mutable collections separately (as in Scala). Using streams means using mutable collections and so I introduced the `Seq` interface which is essentially a read-only view onto an array which comes with some nice functionality.
 
+Finally the constraints on consuming streams in a custom way can sometimes be prohibitively restrictive for even very simple use cases, an example is drawing a polygon represented by a stream of points onto a JavaFX canvas **without caching the points first**. This is a trivial task with the polygon represented by an *iterator* of points since we can easily apply custom logic in the consumption of the iterator. No such luck with a stream.
 
-The constraints on consuming streams in a custom way can be prohibitively restrictive for even very simple use cases, an example is drawing a polygon represented by a stream of points onto a JavaFX canvas **without caching the points first**. This is a trivial task with the polygon represented by an **iterator** of points since we can easily apply custom logic in the consumption of the iterator. No such luck with a stream.
-
-
-To conclude, this library adds functionality in the style of Streams with some tweaks to the API in a way optimised for sequential operations. At a deeper level it trades potential parallelism for flexibility in custom consumption (e.g. for use in algorithms). To this end it should be seen as a lightweight complement to Steams, not a replacement.
+To conclude, this library adds functionality in the style of Streams with some tweaks to the API in a way optimised for sequential operations. At a deeper level it trades potential parallelism for convenience, immutability and flexibility in custom consumption. It should be seen as a lightweight complement to Steams, not a replacement.
 
 #### API examples
 
 ###### Mapping
 
 ``` 
-Iterate.over("a", "b", "c").map(x -> x + x).toList();  ==> ["aa", "bb", "cc"]
+Iter.over("a", "b", "c").map(x -> x + x).toList();           ==> ["aa", "bb", "cc"]
 ```
 
 ###### Filtering
 
 ```
-Iterate.over(1, 2, 3).filter(x -> (x % 2) == 0).toArray(); ==> [2]
+Iter.overInts(1, 2, 3).filter(x -> (x % 2) == 0).toArray();  ==> [2]
 ```
 
 ###### Take, takeWhile, drop, dropWhile
 
 ```
-FList<String> someStrings = Lists.build("0", "1", "2", "3");
+Seq<String> someStrings = Seq.of("0", "1", "2", "3");
 
-someStrings.take(2).toSet(); ==> {"0", "1"}
-someStrings.drop(2).toMutableSet(); ==> {"3", "2"}
+someStrings.take(2).toSet();                                 ==> {"0", "1"}
+someStrings.drop(2).toMutableSet();                          ==> {"3", "2"}
 
-Predicate<String> lessThanTwo = x -> parseInt(x) < 2;
-someStrings.takeWhile(lessThanTwo).toList(); ==> ["0", "1"]
-someStrings.dropWhile(lessThanTwo).toMutableList(); ==> ["2", "3"]
+someStrings.takeWhile(x -> x < "2").toList();                ==> ["0", "1"]
+someStrings.dropWhile(x -> x < "2");                         ==> Seq["2", "3"]
 ```
 
-###### Building integer ranges
+###### Building primitive ranges
 
 ```
-IterRange.to(5).toArray(); ==> [0, 1, 2, 3, 4]
-IterRange.between(2, 6).toArray(); ==> [2, 3, 4, 5]
+IterRange.to(5).toArray();                                   ==> [0, 1, 2, 3, 4]
+IterRange.between(2, 6).toArray();                           ==> [2, 3, 4, 5]
+IterRange.partition(0, 1, .2).toArray();                     ==> [0, .2, .4, .6, .8, 1]
 ```
 
 ###### Creating Maps and arbitrary mutable collections
 
 ```
-Iterate.over("a", "b").toMap(x -> x, x -> x + x); ==> {"a": "aa", "b": "bb"}
-Iterate.over("0", "1", "2", "3").groupBy(x -> parseInt(x) % 2); ==> {0: ["0", "2"], 1: ["1", "3"]}
-Iterate.over("0", "1").toCollection(ArrayList::new); ==> ArrayList<String>["0", "1"]
+Iter.over("a", "b").toMap(x -> x, x -> x + x);               ==> {"a": "aa", "b": "bb"}
+Iter.over("0", "1", "2", "3").groupBy(x -> parseInt(x) % 2); ==> {0: ["0", "2"], 1: ["1", "3"]}
+Iterate.over("0", "1").toCollection(ArrayList::new);         ==> ArrayList["0", "1"]
 ```
 
-###### Zipping, enumerating and combining
+###### Zipping and enumerating
 
 ```
-FlowList<String> strings = Lists.build("a", "b");
-FlowList<Integer> integers = Lists.build(1, 2, 3);
+Seq<String> strings = Seq.of("a", "b");
+Seq<Integer> integers = Seq.of(1, 2, 3);
 
-strings.flow().zipWith(integers).toList(); ==> [("a", 1), ("b", 2)]
-strings.enumerate().toList(); ==> [(0, "a"), (1, "b")]
-integers.flow().combineWith(strings, (n, s) -> s + n).toList(); ==> ["a1", "b2"]
+strings.flow().zipWith(integers).toSeq();                    ==> Seq[("a", 1), ("b", 2)]
+strings.flow().enumerate().toSeq();                          ==> [(0, "a"), (1, "b")]
 ```
 
 ###### Folding
 ```
-Lists.build("1", "2").fold("0", (a, b) -> a + b); ==> "012"
+Iter.over("0", "1", "2", "3")
+.fold(new StringBuilder(), (b, s) -> b.append(s))
+.toString();                                                 ==> "0123"
 ```
 
 #### Building the Jar files and documentation
@@ -98,12 +92,8 @@ Lists.build("1", "2").fold("0", (a, b) -> a + b); ==> "012"
 To us this library you need to build the archives and documentation from this source 
 repository. To build the latest version on Windows do the following:
 
-1. Clone this repository
-2. Make sure the pwd is the directory containing gradle.bat
-3. Run the command `gradlew clean build` in the command prompt
+1. Clone the parent repository (this project is only a subproject).
+2. Navigate to the directory containing the gradlew executable in the terminal.
+3. Run the command `./gradlew :JFlow:clean :JFlow:build` (use `gradlew :JFlow:clean :JFlow:build`` if running windows).
 
-The jars (including source and javadoc) will be built in `build/libs` directory and an uncompressed 
-version of the documentation ready to be viewed in a browser will be built in the `build/docs/javadoc` 
-directory. If you are using Unix simply substitute the command prompt instruction for the following 
-command in the Terminal `./gradlew clean build`.
-
+The jars (including source and Javadoc) will be built in `JFlow/build/libs` directory and an uncompressed version of the documentation ready to be viewed in a browser will be built in the `JFlow/build/docs/javadoc` directory.
