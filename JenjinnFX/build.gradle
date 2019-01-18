@@ -1,7 +1,7 @@
 version = '1.0'
 
 dependencies {
-    compile project(':JFlowOpen')
+    compile project(':JFlow')
     compile project(':Jenjinn2')
 }
 

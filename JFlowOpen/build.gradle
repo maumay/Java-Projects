@@ -1,9 +1,0 @@
-
-version = '0.4'
-
-jar {
-    manifest {
-        attributes 'Implementation-Title': 'JFlow',
-                   'Implementation-Version': version
-    }
-}

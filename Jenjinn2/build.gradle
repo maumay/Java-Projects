@@ -1,6 +1,6 @@
 
 dependencies {
-	compile project(':JFlowOpen')
+	compile project(':JFlow')
 }
 
 version = '1.0'

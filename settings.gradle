@@ -1,1 +1,1 @@
-include 'JFlowOpen', 'Jenjinn2', 'JenjinnFX'
+include 'JFlow', 'Jenjinn2', 'JenjinnFX'
