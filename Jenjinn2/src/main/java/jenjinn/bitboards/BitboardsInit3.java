@@ -17,7 +17,7 @@ import jflow.seq.Seq;
  * @author ThomasB
  * @date 18/04/18
  */
-final class BitboardsInitialisationSection3
+final class BitboardsInit3
 {
 	static long[][] generateRookMagicMoveDatabase()
 	{

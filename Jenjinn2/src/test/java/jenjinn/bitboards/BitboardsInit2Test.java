@@ -4,7 +4,7 @@
 package jenjinn.bitboards;
 
 import static java.util.Arrays.asList;
-import static jenjinn.bitboards.BitboardsInitialisationSection2.calculateOccupancyVariations;
+import static jenjinn.bitboards.BitboardsInit2.calculateOccupancyVariations;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.HashSet;
@@ -17,20 +17,20 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import jenjinn.base.Dir;
 import jenjinn.base.Square;
-import jenjinn.bitboards.BitboardsInitialisationSection2;
+import jenjinn.bitboards.BitboardsInit2;
 import jflow.iterators.factories.Iter;
 import jflow.seq.Seq;
 
 /**
  * @author ThomasB
  */
-class BitboardsInitialisationSection2Test
+class BitboardsInit2Test
 {
 	@ParameterizedTest
 	@MethodSource
 	void testFindAllPossibleOrCombos(long[] input, Set<Long> expectedResult)
 	{
-		assertEquals(expectedResult, Iter.overLongs(BitboardsInitialisationSection2.foldedPowerset(input)).boxed().toSet());
+		assertEquals(expectedResult, Iter.overLongs(BitboardsInit2.foldedPowerset(input)).boxed().toSet());
 	}
 
 	static Stream<Arguments> testFindAllPossibleOrCombos()

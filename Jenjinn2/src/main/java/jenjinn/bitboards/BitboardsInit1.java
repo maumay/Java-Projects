@@ -12,7 +12,7 @@ import jflow.seq.Seq;
  * @author Tom
  * @date 18 April 2018
  */
-final class BitboardsInitialisationSection1
+final class BitboardsInit1
 {
 	static long[] generateSingleOccupancyBitboards()
 	{

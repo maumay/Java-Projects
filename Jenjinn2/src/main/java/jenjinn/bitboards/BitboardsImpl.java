@@ -4,21 +4,21 @@
 package jenjinn.bitboards;
 
 import static jenjinn.bitboards.BitboardUtils.bitwiseOr;
-import static jenjinn.bitboards.BitboardsInitialisationSection1.generateAllEmptyBoardPieceAttackBitboards;
-import static jenjinn.bitboards.BitboardsInitialisationSection1.generateAllEmptyBoardPieceMovementBitboards;
-import static jenjinn.bitboards.BitboardsInitialisationSection1.generateAntidiagonalBitboards;
-import static jenjinn.bitboards.BitboardsInitialisationSection1.generateDiagonalBitboards;
-import static jenjinn.bitboards.BitboardsInitialisationSection1.generateFileBitboards;
-import static jenjinn.bitboards.BitboardsInitialisationSection1.generateRankBitboards;
-import static jenjinn.bitboards.BitboardsInitialisationSection1.generateSingleOccupancyBitboards;
-import static jenjinn.bitboards.BitboardsInitialisationSection2.generateAllBishopOccupancyVariations;
-import static jenjinn.bitboards.BitboardsInitialisationSection2.generateAllRookOccupancyVariations;
-import static jenjinn.bitboards.BitboardsInitialisationSection2.generateBishopMagicBitshifts;
-import static jenjinn.bitboards.BitboardsInitialisationSection2.generateBishopOccupancyMasks;
-import static jenjinn.bitboards.BitboardsInitialisationSection2.generateRookMagicBitshifts;
-import static jenjinn.bitboards.BitboardsInitialisationSection2.generateRookOccupancyMasks;
-import static jenjinn.bitboards.BitboardsInitialisationSection3.generateBishopMagicMoveDatabase;
-import static jenjinn.bitboards.BitboardsInitialisationSection3.generateRookMagicMoveDatabase;
+import static jenjinn.bitboards.BitboardsInit1.generateAllEmptyBoardPieceAttackBitboards;
+import static jenjinn.bitboards.BitboardsInit1.generateAllEmptyBoardPieceMovementBitboards;
+import static jenjinn.bitboards.BitboardsInit1.generateAntidiagonalBitboards;
+import static jenjinn.bitboards.BitboardsInit1.generateDiagonalBitboards;
+import static jenjinn.bitboards.BitboardsInit1.generateFileBitboards;
+import static jenjinn.bitboards.BitboardsInit1.generateRankBitboards;
+import static jenjinn.bitboards.BitboardsInit1.generateSingleOccupancyBitboards;
+import static jenjinn.bitboards.BitboardsInit2.generateAllBishopOccupancyVariations;
+import static jenjinn.bitboards.BitboardsInit2.generateAllRookOccupancyVariations;
+import static jenjinn.bitboards.BitboardsInit2.generateBishopMagicBitshifts;
+import static jenjinn.bitboards.BitboardsInit2.generateBishopOccupancyMasks;
+import static jenjinn.bitboards.BitboardsInit2.generateRookMagicBitshifts;
+import static jenjinn.bitboards.BitboardsInit2.generateRookOccupancyMasks;
+import static jenjinn.bitboards.BitboardsInit3.generateBishopMagicMoveDatabase;
+import static jenjinn.bitboards.BitboardsInit3.generateRookMagicMoveDatabase;
 
 /**
  * @author ThomasB

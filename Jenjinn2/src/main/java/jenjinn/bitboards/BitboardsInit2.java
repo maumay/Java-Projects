@@ -23,7 +23,7 @@ import jflow.seq.Seq;
  * @author TB
  * @date 23 Jan 2017
  */
-final class BitboardsInitialisationSection2
+final class BitboardsInit2
 {
 	static long[][] generateAllBishopOccupancyVariations()
 	{
