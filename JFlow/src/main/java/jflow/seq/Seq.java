@@ -6,6 +6,7 @@ package jflow.seq;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 import java.util.Spliterator;
 import java.util.function.Function;
@@ -239,7 +240,8 @@ public interface Seq<E> extends FlowIterable<E>
 	 * passed an array it won't make a copy.
 	 * 
 	 * @param elements
-	 * @return
+	 * @return a seq containing the parameter elements with the ordering 
+	 * retained.
 	 */
 	@SafeVarargs
 	static <E> Seq<E> of(E... elements)
