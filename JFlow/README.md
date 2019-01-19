@@ -1,6 +1,6 @@
 # A functional iterator library for Java
 
-Provides support for a multitude of sequence manipulation features for both objects and primitives using sequential lazy evaluating iterators inspired by Java streams, Python generators and Scala collections. An compact, immutable `List` alternative (`Seq`) is also provided which comes with lots of convenience methods for piping data using the aforementioned iterators. Since immutability is guaranteed a `Seq` can also contruct the 'perfect' spliterator for parallel streams.
+Provides support for a multitude of sequence manipulation features for both objects and primitives using sequential lazy evaluating iterators inspired by Java streams, Python generators and Scala collections. An compact, immutable `List` alternative (`Seq`) is also provided which comes with lots of convenience methods for piping data using the aforementioned iterators. Since immutability is guaranteed a `Seq` can also construct the 'perfect' `Spliterator` for parallel streams.
 
 #### Why use this library?
 

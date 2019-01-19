@@ -1,12 +1,4 @@
 # Jenjinn2
-Version 2 of my chess engine written in Java and built on top of my JFlow library. I wrote it with the aim of demonstrating how adopting a more functional style of coding leads to higher code quality overall. Particularly in terms of reduced number of bugs, more concise yet more readable code and maybe most importantly a more enjoyable experience for anyone who interacts with the code, either reading it or writing it. To this end I wanted to write a reasonably powerful but easy to understand engine utilising JFlow which I think I have achieved. I've provided a simple JavaFX wrapper application for playing against Jenjinn, to get it working you will need to clone this repository and build the executable jar from source (I apologise for the size of the repository ~150Mb. The vast majority is made up of resource files for testing, the jar will end up at about 2Mb which is mainly made up of resources for chess openings).
+This is the source code for my chess engine written in Java and built on top of my JFlow library. I decided to write a chess engine as my first side project since it seemed to be just the right level of complexity for my skills at the time. This turned out to be fairly accurate, there were many difficulties but nothing that was insurmountable. Looking back I can say that I underestimated the difficulty of writing a strong engine and expecting performance comparable to that of the best chess engines was unrealistic. The completed version ended up at roughly the same level as myself, I have no appetite to keep working on improving the strength and would rather use my time on other projects. The engine can be played via a JavaFX application, for details please see the 'JenjinnFX' project which is also in this repository.
 
-Work has ceased for now on this project. I will not be making further changes (maybe except a lil refactoring) to the core engine code for a long while, I do however plan to write a web interface for playing Jenjinn at some point.
-
-
-To play do the following (if windows swap terminal for command prompt):
-
-1. Run `java -version` in the terminal to check the Java 8 runtime environment is setup.
-2. Clone this repository to your local machine and set it as the pwd in the terminal.
-3. Run the command `./gradlew clean build` (or `gradlew clean build` on Windows).
-5. Run `java -jar build/libs/Jenjinn2.jar` 
+The test coverage is fairly thorough however documentation is admittedly a bit sparse, I have learnt the value of writing documention in an incremental fashion alongside the code itself so that I don't end up in a situation like this where I have masses of Javadoc to write in one go. The likelihood of this documentation getting written properly is now very low, I have better things to be doing with my free time than writing lots of Javadoc which will probably never be read anyway.
