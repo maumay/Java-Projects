@@ -10,7 +10,7 @@ public final class DoublePair
 {
 	public final double _1, _2;
 
-	public DoublePair(double first, double second) 
+	public DoublePair(double first, double second)
 	{
 		this._1 = first;
 		this._2 = second;
@@ -21,12 +21,12 @@ public final class DoublePair
 		return new DoublePair(first, second);
 	}
 
-	public double _1() 
+	public double _1()
 	{
 		return _1;
 	}
 
-	public double _2() 
+	public double _2()
 	{
 		return _2;
 	}
@@ -34,16 +34,13 @@ public final class DoublePair
 	@Override
 	public String toString()
 	{
-		return new StringBuilder("(")
-				.append(_1)
-				.append(", ")
-				.append(_2)
-				.append(")")
+		return new StringBuilder("(").append(_1).append(", ").append(_2).append(")")
 				.toString();
 	}
 
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		int prime = 31;
 		int result = 1;
 		long temp;
@@ -55,7 +52,8 @@ public final class DoublePair
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj)
+	{
 		if (this == obj)
 			return true;
 		if (obj == null)

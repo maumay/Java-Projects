@@ -27,12 +27,12 @@ public final class ApplicationFlow
 	{
 		private final UnaryOperator<E> applicationOperator;
 		private E currentValue;
-		
+
 		public OfObjects(UnaryOperator<E> applicationOperator, E initialValue)
 		{
 			super(OptionalInt.empty());
 			this.applicationOperator = applicationOperator;
-			this.currentValue        = initialValue;
+			this.currentValue = initialValue;
 		}
 
 		@Override
@@ -55,7 +55,7 @@ public final class ApplicationFlow
 			currentValue = applicationOperator.apply(currentValue);
 		}
 	}
-	
+
 	public static class OfInts extends AbstractIntFlow
 	{
 		private final IntUnaryOperator applicationOperator;
@@ -81,14 +81,14 @@ public final class ApplicationFlow
 			currentValue = applicationOperator.applyAsInt(currentValue);
 			return prev;
 		}
-		
+
 		@Override
 		public void skip()
 		{
 			currentValue = applicationOperator.applyAsInt(currentValue);
 		}
 	}
-	
+
 	public static class OfLongs extends AbstractLongFlow
 	{
 		private final LongUnaryOperator applicationOperator;
@@ -114,14 +114,14 @@ public final class ApplicationFlow
 			currentValue = applicationOperator.applyAsLong(currentValue);
 			return prev;
 		}
-		
+
 		@Override
 		public void skip()
 		{
 			currentValue = applicationOperator.applyAsLong(currentValue);
 		}
 	}
-	
+
 	public static class OfDoubles extends AbstractDoubleFlow
 	{
 		private final DoubleUnaryOperator applicationOperator;
@@ -147,7 +147,7 @@ public final class ApplicationFlow
 			currentValue = applicationOperator.applyAsDouble(currentValue);
 			return prev;
 		}
-		
+
 		@Override
 		public void skip()
 		{

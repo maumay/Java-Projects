@@ -48,8 +48,7 @@ import jflow.iterators.misc.Pair;
  * A skeletal implementation of a Flow, users writing custom Flows should
  * subclass this class.
  *
- * @param <E>
- *            The type of elements produced by this Flow.
+ * @param <E> The type of elements produced by this Flow.
  *
  * @author ThomasB
  */
@@ -85,7 +84,8 @@ public abstract class AbstractFlow<E> extends AbstractOptionallySized implements
 	}
 
 	@Override
-	public <R> AbstractFlow<R> flatMap(Function<? super E, ? extends Iterator<? extends R>> mapping)
+	public <R> AbstractFlow<R> flatMap(
+			Function<? super E, ? extends Iterator<? extends R>> mapping)
 	{
 		return new FlattenedFlow.OfObject<>(this, mapping);
 	}
@@ -103,7 +103,8 @@ public abstract class AbstractFlow<E> extends AbstractOptionallySized implements
 	}
 
 	@Override
-	public AbstractDoubleFlow flatMapToDouble(Function<? super E, ? extends DoubleFlow> mapping)
+	public AbstractDoubleFlow flatMapToDouble(
+			Function<? super E, ? extends DoubleFlow> mapping)
 	{
 		return new FlattenedFlow.OfDouble<>(this, mapping);
 	}
@@ -257,7 +258,7 @@ public abstract class AbstractFlow<E> extends AbstractOptionallySized implements
 	{
 		return ObjectReductionConsumption.reduceOption(this, reducer);
 	}
-	
+
 	@Override
 	public E fold(BinaryOperator<E> reducer)
 	{

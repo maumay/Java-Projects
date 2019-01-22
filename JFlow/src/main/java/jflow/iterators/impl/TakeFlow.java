@@ -18,7 +18,9 @@ import jflow.iterators.misc.Optionals;
  */
 public final class TakeFlow
 {
-	private TakeFlow() {}
+	private TakeFlow()
+	{
+	}
 
 	public static class OfObject<E> extends AbstractFlow<E>
 	{
@@ -48,8 +50,7 @@ public final class TakeFlow
 		{
 			if (count++ < takeCount) {
 				return src.next();
-			}
-			else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}
@@ -59,8 +60,7 @@ public final class TakeFlow
 		{
 			if (count++ < takeCount) {
 				src.skip();
-			}
-			else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}
@@ -94,8 +94,7 @@ public final class TakeFlow
 		{
 			if (count++ < takeCount) {
 				return src.nextLong();
-			}
-			else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}
@@ -105,8 +104,7 @@ public final class TakeFlow
 		{
 			if (count++ < takeCount) {
 				src.skip();
-			}
-			else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}
@@ -140,8 +138,7 @@ public final class TakeFlow
 		{
 			if (count++ < takeCount) {
 				return src.nextInt();
-			}
-			else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}
@@ -151,8 +148,7 @@ public final class TakeFlow
 		{
 			if (count++ < takeCount) {
 				src.nextInt();
-			}
-			else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}
@@ -186,8 +182,7 @@ public final class TakeFlow
 		{
 			if (count++ < takeCount) {
 				return src.nextDouble();
-			}
-			else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}
@@ -197,8 +192,7 @@ public final class TakeFlow
 		{
 			if (count++ < takeCount) {
 				src.nextDouble();
-			}
-			else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}

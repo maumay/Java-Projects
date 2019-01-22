@@ -224,7 +224,7 @@ public abstract class AbstractLongFlow extends AbstractOptionallySized implement
 	{
 		return LongReductionConsumption.fold(this, id, reducer);
 	}
-	
+
 	@Override
 	public long fold(LongBinaryOperator reducer)
 	{

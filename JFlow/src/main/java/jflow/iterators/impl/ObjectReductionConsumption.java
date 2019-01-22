@@ -16,42 +16,43 @@ import jflow.iterators.Skippable;
  */
 public class ObjectReductionConsumption
 {
-	private ObjectReductionConsumption() {}
+	private ObjectReductionConsumption()
+	{
+	}
 
-	public static <E> Optional<E> reduceOption(Iterator<? extends E> source, BinaryOperator<E> reducer)
+	public static <E> Optional<E> reduceOption(Iterator<? extends E> source,
+			BinaryOperator<E> reducer)
 	{
 		E reduction = null;
 		while (source.hasNext()) {
 			if (reduction == null) {
 				reduction = source.next();
-			}
-			else {
+			} else {
 				reduction = reducer.apply(reduction, source.next());
 			}
 		}
 		return reduction == null ? Optional.empty() : Optional.of(reduction);
 	}
-	
+
 	public static <E> E reduce(Iterator<? extends E> source, BinaryOperator<E> reducer)
 	{
 		E reduction = null;
 		while (source.hasNext()) {
 			if (reduction == null) {
 				reduction = source.next();
-			}
-			else {
+			} else {
 				reduction = reducer.apply(reduction, source.next());
 			}
 		}
 		if (reduction == null) {
 			throw new NoSuchElementException();
-		}
-		else {
+		} else {
 			return reduction;
 		}
 	}
 
-	public static <E, R> R fold(Iterator<? extends E> source, R id, BiFunction<R, E, R> reducer)
+	public static <E, R> R fold(Iterator<? extends E> source, R id,
+			BiFunction<R, E, R> reducer)
 	{
 		R reduction = id;
 		while (source.hasNext()) {
@@ -67,8 +68,7 @@ public class ObjectReductionConsumption
 		while (source.hasNext()) {
 			if (sourceSkippable) {
 				((Skippable) source).skip();
-			}
-			else {
+			} else {
 				source.next();
 			}
 			count++;

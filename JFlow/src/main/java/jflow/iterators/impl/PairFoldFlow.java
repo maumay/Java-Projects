@@ -15,7 +15,9 @@ import jflow.iterators.misc.Optionals;
  */
 public final class PairFoldFlow
 {
-	private PairFoldFlow() {}
+	private PairFoldFlow()
+	{
+	}
 
 	public static class OfObject<E, R> extends AbstractFlow<R>
 	{
@@ -24,12 +26,13 @@ public final class PairFoldFlow
 
 		private E cached;
 
-		public OfObject(final Flow<E> source, final BiFunction<? super E, ? super E, R> foldFunction)
+		public OfObject(final Flow<E> source,
+				final BiFunction<? super E, ? super E, R> foldFunction)
 		{
 			super(Optionals.map(n -> Math.max(n - 1, 0), source.size()));
 			this.source = source;
 			this.foldFunction = foldFunction;
-			this.cached = source.hasNext()? source.next() : null;
+			this.cached = source.hasNext() ? source.next() : null;
 		}
 
 		@Override

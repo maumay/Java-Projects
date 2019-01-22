@@ -24,7 +24,9 @@ import jflow.iterators.misc.Optionals;
  */
 public final class AppendFlow
 {
-	private AppendFlow() {}
+	private AppendFlow()
+	{
+	}
 
 	public static class OfObject<E> extends AbstractFlow<E>
 	{
@@ -47,7 +49,7 @@ public final class AppendFlow
 		@Override
 		public E next()
 		{
-			return source.hasNext()? source.next() : appended.next();
+			return source.hasNext() ? source.next() : appended.next();
 		}
 
 		@Override
@@ -55,8 +57,7 @@ public final class AppendFlow
 		{
 			if (source.hasNext()) {
 				source.skip();
-			}
-			else {
+			} else {
 				ImplUtils.skip(appended);
 			}
 		}
@@ -67,7 +68,8 @@ public final class AppendFlow
 		private final DoubleFlow source;
 		private final PrimitiveIterator.OfDouble appended;
 
-		public OfDouble(final DoubleFlow source, final PrimitiveIterator.OfDouble appended)
+		public OfDouble(final DoubleFlow source,
+				final PrimitiveIterator.OfDouble appended)
 		{
 			super(Optionals.add(source.size(), getSize(appended)));
 			this.source = source;
@@ -83,7 +85,7 @@ public final class AppendFlow
 		@Override
 		public double nextDouble()
 		{
-			return source.hasNext()? source.nextDouble() : appended.nextDouble();
+			return source.hasNext() ? source.nextDouble() : appended.nextDouble();
 		}
 
 		@Override
@@ -91,8 +93,7 @@ public final class AppendFlow
 		{
 			if (source.hasNext()) {
 				source.skip();
-			}
-			else {
+			} else {
 				ImplUtils.skip(appended);
 			}
 		}
@@ -119,7 +120,7 @@ public final class AppendFlow
 		@Override
 		public long nextLong()
 		{
-			return source.hasNext()? source.nextLong() : appended.nextLong();
+			return source.hasNext() ? source.nextLong() : appended.nextLong();
 		}
 
 		@Override
@@ -127,8 +128,7 @@ public final class AppendFlow
 		{
 			if (source.hasNext()) {
 				source.skip();
-			}
-			else {
+			} else {
 				ImplUtils.skip(appended);
 			}
 		}
@@ -155,7 +155,7 @@ public final class AppendFlow
 		@Override
 		public int nextInt()
 		{
-			return source.hasNext()? source.nextInt() : appended.nextInt();
+			return source.hasNext() ? source.nextInt() : appended.nextInt();
 		}
 
 		@Override
@@ -163,8 +163,7 @@ public final class AppendFlow
 		{
 			if (source.hasNext()) {
 				source.skip();
-			}
-			else {
+			} else {
 				ImplUtils.skip(appended);
 			}
 		}

@@ -12,7 +12,8 @@ import java.util.function.IntConsumer;
  *
  * @author t
  */
-public interface PrototypeIntFlow extends PrimitiveIterator.OfInt, Skippable, OptionallySized
+public interface PrototypeIntFlow
+		extends PrimitiveIterator.OfInt, Skippable, OptionallySized
 {
 	/**
 	 * A safe alternative to directly calling {@link #nextInt()} method.
@@ -28,8 +29,7 @@ public interface PrototypeIntFlow extends PrimitiveIterator.OfInt, Skippable, Op
 	 * Perform the supplied action for each element left in this iterator sequence,
 	 * in doing so the iterator is consumed.
 	 *
-	 * @param action
-	 *            The action to perform.
+	 * @param action The action to perform.
 	 */
 	default void forEach(final IntConsumer action)
 	{
@@ -42,6 +42,7 @@ public interface PrototypeIntFlow extends PrimitiveIterator.OfInt, Skippable, Op
 	@Deprecated
 	default Integer next()
 	{
-		throw new UnsupportedOperationException("Boxing using this method is banned for Flows!!");
+		throw new UnsupportedOperationException(
+				"Boxing using this method is banned for Flows!!");
 	}
 }

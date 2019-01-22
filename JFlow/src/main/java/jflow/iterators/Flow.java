@@ -34,7 +34,6 @@ import jflow.iterators.misc.Pair;
 import jflow.seq.Seq;
 import jflow.seq.VectorSeq;
 
-
 /**
  * A Flow is a sequential, single use iterator with lots of functionality in the
  * style of the {@link Stream} interface. It bears a strong resemblance in that
@@ -219,8 +218,8 @@ public interface Flow<E> extends PrototypeFlow<E>
 	 * Creates a new Flow from this Flow by selecting elements with indices defined
 	 * by the parameter index mapping.
 	 *
-	 * @param indexMap
-	 *            A strictly monotonically increasing function {@code f: N -> N}
+	 * @param indexMap A strictly monotonically increasing function
+	 *                 {@code f: N -> N}
 	 * @return Let {@code F} denote this source Flow, let {@code n = length(F)} and
 	 *         denote the indexMap by {@code f}. Then this method returns a Flow
 	 *         {@code G} given by:
@@ -234,10 +233,8 @@ public interface Flow<E> extends PrototypeFlow<E>
 	/**
 	 * Creates a new Flow from this Flow by selecting the first n elements.
 	 *
-	 * @param n
-	 *            A non-negative integer.
-	 * @throws IllegalArgumentException
-	 *             If parameter is negative.
+	 * @param n A non-negative integer.
+	 * @throws IllegalArgumentException If parameter is negative.
 	 * @return Let {@code F} denote this source Flow. We return a Flow consisting of
 	 *         the first {@code max(n, length(F))} elements of {@code F}.
 	 */
@@ -247,8 +244,7 @@ public interface Flow<E> extends PrototypeFlow<E>
 	 * Creates a new Flow from this Flow by selecting elements until an element
 	 * fails the supplied test, the first failure is not selected.
 	 *
-	 * @param predicate
-	 *            A predicate applicable to the type of elements in this Flow.
+	 * @param predicate A predicate applicable to the type of elements in this Flow.
 	 * @return Let {@code n} be the index of the first element that the parameter
 	 *         predicate fails for. Then this method returns a Flow consisting of
 	 *         the first {@code n} elements of this source Flow. If no element fails
@@ -259,10 +255,8 @@ public interface Flow<E> extends PrototypeFlow<E>
 	/**
 	 * Creates a new Flow from this Flow by removing the first n elements.
 	 *
-	 * @param n
-	 *            A non-negative integer.
-	 * @throws IllegalArgumentException
-	 *             If parameter is negative.
+	 * @param n A non-negative integer.
+	 * @throws IllegalArgumentException If parameter is negative.
 	 * @return Let {@code F} denote this source Flow. We return a Flow missing the
 	 *         first {@code min(n, length(F))} elements of {@code F}.
 	 */
@@ -272,8 +266,7 @@ public interface Flow<E> extends PrototypeFlow<E>
 	 * Creates a new Flow from this Flow by removing elements until an element fails
 	 * the supplied test, the first failure is the first element of the result.
 	 *
-	 * @param predicate
-	 *            A predicate applicable to the type of elements in this Flow.
+	 * @param predicate A predicate applicable to the type of elements in this Flow.
 	 * @return Let {@code n} be the index of the first element that the parameter
 	 *         predicate fails for. Then this method returns a Flow missing
 	 *         {@code n} elements of this source Flow. If no element fails the
@@ -285,8 +278,7 @@ public interface Flow<E> extends PrototypeFlow<E>
 	 * Creates a new Flow from this Flow by removing any element which fails the
 	 * supplied predicate test.
 	 *
-	 * @param predicate
-	 *            A predicate applicable to the type of elements in this Flow.
+	 * @param predicate A predicate applicable to the type of elements in this Flow.
 	 * @return A Flow containing only those elements of this source Flow which pass
 	 *         the test defined by the parameter predicate. The relative ordering of
 	 *         elements is retained.
@@ -297,9 +289,8 @@ public interface Flow<E> extends PrototypeFlow<E>
 	 * Creates a new Flow from this Flow by adding each element of the supplied
 	 * iterator to its end in order.
 	 *
-	 * @param other
-	 *            An Iterator containing elements of the same type as this source
-	 *            Flow.
+	 * @param other An Iterator containing elements of the same type as this source
+	 *              Flow.
 	 * @return a Flow consisting of the elements of this source Flow followed by the
 	 *         elements of the parameter Iterator.
 	 */
@@ -309,9 +300,8 @@ public interface Flow<E> extends PrototypeFlow<E>
 	 * Creates a new Flow from this Flow by adding each element to the end of the
 	 * supplied iterator in order.
 	 *
-	 * @param other
-	 *            An Iterator containing elements of the same type as this source
-	 *            Flow.
+	 * @param other An Iterator containing elements of the same type as this source
+	 *              Flow.
 	 * @return a Flow consisting of the elements of the parameter Iterator followed
 	 *         by the elements of this source Flow.
 	 */
@@ -320,8 +310,7 @@ public interface Flow<E> extends PrototypeFlow<E>
 	/**
 	 * Applies a scanning operation to this Flow to produce a new Flow.
 	 *
-	 * @param accumulator
-	 *            The accumulation function.
+	 * @param accumulator The accumulation function.
 	 * @return Let {@code F} denote this source Flow and {@code g} denote the
 	 *         accumulation function. Then the Flow returned is of the form:
 	 *         <ul>
@@ -333,13 +322,10 @@ public interface Flow<E> extends PrototypeFlow<E>
 	/**
 	 * Applies a scanning operation to this Flow to produce a new Flow.
 	 *
-	 * @param <R>
-	 *            The target element type of the accumulation.
+	 * @param             <R> The target element type of the accumulation.
 	 *
-	 * @param id
-	 *            The identity element in the accumulation.
-	 * @param accumulator
-	 *            The accumulator function.
+	 * @param id          The identity element in the accumulation.
+	 * @param accumulator The accumulator function.
 	 * @return Let {@code F} denote this source Flow and {@code g} denote the
 	 *         accumulation function. Then the Flow returned is of the form:
 	 *         <ul>
@@ -352,10 +338,8 @@ public interface Flow<E> extends PrototypeFlow<E>
 	 * Combines consecutive pairs of elements in this Flow via a two argument
 	 * function to create a new Flow which is one element shorter.
 	 *
-	 * @param <R>
-	 *            The target type of the pair folding operation.
-	 * @param foldFunction
-	 *            The function defining the pair folding operation.
+	 * @param              <R> The target type of the pair folding operation.
+	 * @param foldFunction The function defining the pair folding operation.
 	 * @return Let {@code F = [F[0], F[1], ...]} represent this source Flow and
 	 *         denote the folding function by {@code f}. Then we return a new Flow
 	 *         instance defined as follows:
@@ -372,8 +356,8 @@ public interface Flow<E> extends PrototypeFlow<E>
 	 * Calculates the minimum element in this Flow with respect to the ordering
 	 * specified by the parameter.
 	 *
-	 * @param orderingFunction
-	 *            This function defines the ordering on this element type.
+	 * @param orderingFunction This function defines the ordering on this element
+	 *                         type.
 	 * @return Nothing if the Flow is empty. Otherwise the minimum element in this
 	 *         Flow.
 	 */
@@ -383,8 +367,8 @@ public interface Flow<E> extends PrototypeFlow<E>
 	 * Calculates the maximum element in this Flow with respect to the ordering
 	 * specified by the parameter.
 	 *
-	 * @param orderingFunction
-	 *            This function defines the ordering on this element type.
+	 * @param orderingFunction This function defines the ordering on this element
+	 *                         type.
 	 * @return Nothing if the Flow is empty. Otherwise the maximum element in this
 	 *         Flow.
 	 */
@@ -512,7 +496,7 @@ public interface Flow<E> extends PrototypeFlow<E>
 	 *         {@code f(...f(f(F[0], F[1]), F[2])..., F[n - 1])}
 	 */
 	Optional<E> foldOption(BinaryOperator<E> reducer);
-	
+
 	/**
 	 * Reduces this Flow to a single value via some reduction function. This method
 	 * throws an exception if this iterator is empty. This method is a 'consuming
@@ -534,8 +518,7 @@ public interface Flow<E> extends PrototypeFlow<E>
 	 * @return the number of elements in this Flow.
 	 */
 	long count();
-	
-	
+
 	/**
 	 * Caches the elements in this Flow into an immutable (unmodifiable) List. This
 	 * method is a 'consuming method', i.e. it will iterate through this Flow.
@@ -576,13 +559,13 @@ public interface Flow<E> extends PrototypeFlow<E>
 	 */
 	default Set<E> toSet()
 	{
-		Set<E> set = sizeIsKnown()? new HashSet<>(size().getAsInt()) : new HashSet<>();
+		Set<E> set = sizeIsKnown() ? new HashSet<>(size().getAsInt()) : new HashSet<>();
 		while (hasNext()) {
 			set.add(next());
 		}
 		return set;
 	}
-	
+
 	/**
 	 * @return An immutable view of the result of {@link Flow#toSet()}.
 	 */
@@ -590,7 +573,7 @@ public interface Flow<E> extends PrototypeFlow<E>
 	{
 		return Collections.unmodifiableSet(toSet());
 	}
-	
+
 	/**
 	 * Caches the elements in this Flow into a List. This method is a 'consuming
 	 * method', i.e. it will iterate through this Flow.
@@ -606,7 +589,7 @@ public interface Flow<E> extends PrototypeFlow<E>
 		}
 		return xs;
 	}
-	
+
 	/**
 	 * @return An immutable view of the result of {@link Flow#toList()}.
 	 */
@@ -638,7 +621,8 @@ public interface Flow<E> extends PrototypeFlow<E>
 	 *         an element of this source Flow, say {@code e}, is associated to the
 	 *         key value pair {@code (k(e), v(e))}.
 	 */
-	default <K, V> Map<K, V> toMap(Function<? super E, ? extends K> keyMapper, Function<? super E, ? extends V> valueMapper)
+	default <K, V> Map<K, V> toMap(Function<? super E, ? extends K> keyMapper,
+			Function<? super E, ? extends V> valueMapper)
 	{
 		Map<K, V> collected = new HashMap<>();
 		while (hasNext()) {
@@ -646,19 +630,19 @@ public interface Flow<E> extends PrototypeFlow<E>
 			K key = keyMapper.apply(next);
 			if (collected.containsKey(key)) {
 				throw new IllegalStateException();
-			}
-			else {
+			} else {
 				collected.put(key, valueMapper.apply(next));
 			}
 		}
 		return collected;
 	}
-	
+
 	/**
 	 * @return An immutable view of the result of
 	 *         {@link Flow#toMap(Function, Function)}.
 	 */
-	default <K, V> Map<K, V> toUnmodifiableMap(Function<? super E, ? extends K> keyMapper, Function<? super E, ? extends V> valueMapper)
+	default <K, V> Map<K, V> toUnmodifiableMap(Function<? super E, ? extends K> keyMapper,
+			Function<? super E, ? extends V> valueMapper)
 	{
 		return unmodifiableMap(toMap(keyMapper, valueMapper));
 	}

@@ -15,9 +15,12 @@ import jflow.iterators.Skippable;
  */
 public final class DoubleReductionConsumption
 {
-	private DoubleReductionConsumption() {}
+	private DoubleReductionConsumption()
+	{
+	}
 
-	public static OptionalDouble foldOption(PrimitiveIterator.OfDouble source, DoubleBinaryOperator reducer)
+	public static OptionalDouble foldOption(PrimitiveIterator.OfDouble source,
+			DoubleBinaryOperator reducer)
 	{
 		boolean reductionUninitialised = true;
 		double reduction = -1L;
@@ -25,15 +28,16 @@ public final class DoubleReductionConsumption
 			if (reductionUninitialised) {
 				reduction = source.nextDouble();
 				reductionUninitialised = false;
-			}
-			else {
+			} else {
 				reduction = reducer.applyAsDouble(reduction, source.nextDouble());
 			}
 		}
-		return reductionUninitialised ? OptionalDouble.empty() : OptionalDouble.of(reduction);
+		return reductionUninitialised ? OptionalDouble.empty()
+				: OptionalDouble.of(reduction);
 	}
-	
-	public static double fold(PrimitiveIterator.OfDouble source, DoubleBinaryOperator reducer)
+
+	public static double fold(PrimitiveIterator.OfDouble source,
+			DoubleBinaryOperator reducer)
 	{
 		boolean reductionUninitialised = true;
 		double reduction = -1L;
@@ -41,20 +45,19 @@ public final class DoubleReductionConsumption
 			if (reductionUninitialised) {
 				reduction = source.nextDouble();
 				reductionUninitialised = false;
-			}
-			else {
+			} else {
 				reduction = reducer.applyAsDouble(reduction, source.nextDouble());
 			}
 		}
 		if (reductionUninitialised) {
 			throw new NoSuchElementException("Attempted fold on empty iterator");
-		}
-		else {
+		} else {
 			return reduction;
 		}
 	}
 
-	public static double fold(PrimitiveIterator.OfDouble source, double id, DoubleBinaryOperator reducer)
+	public static double fold(PrimitiveIterator.OfDouble source, double id,
+			DoubleBinaryOperator reducer)
 	{
 		double reduction = id;
 		while (source.hasNext()) {
@@ -70,8 +73,7 @@ public final class DoubleReductionConsumption
 		while (source.hasNext()) {
 			if (sourceSkippable) {
 				((Skippable) source).skip();
-			}
-			else {
+			} else {
 				source.nextDouble();
 			}
 			count++;

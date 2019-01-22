@@ -256,7 +256,7 @@ public abstract class AbstractIntFlow extends AbstractOptionallySized implements
 	{
 		return IntReductionConsumption.fold(this, id, reducer);
 	}
-	
+
 	@Override
 	public int fold(IntBinaryOperator reducer)
 	{
@@ -276,7 +276,8 @@ public abstract class AbstractIntFlow extends AbstractOptionallySized implements
 	}
 
 	@Override
-	public <K, V> Map<K, V> toMap(IntFunction<? extends K> keyMapper, IntFunction<? extends V> valueMapper)
+	public <K, V> Map<K, V> toMap(IntFunction<? extends K> keyMapper,
+			IntFunction<? extends V> valueMapper)
 	{
 		return IntCollectionConsumption.toMap(this, keyMapper, valueMapper);
 	}

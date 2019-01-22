@@ -10,28 +10,26 @@ import java.util.Objects;
 public final class Pair<T, U>
 {
 	/**
-	 * First element of the pair. I use the Scala naming convention
-	 * for compactness.
+	 * First element of the pair. I use the Scala naming convention for compactness.
 	 */
 	public final T _1;
-	
+
 	/**
-	 * Second element of the pair. I use the Scala naming convention
-	 * for compactness.
+	 * Second element of the pair. I use the Scala naming convention for
+	 * compactness.
 	 */
 	public final U _2;
 
-	
 	public Pair(T first, U second)
 	{
 		this._1 = Objects.requireNonNull(first);
 		this._2 = Objects.requireNonNull(second);
 	}
-	
+
 	/*
-	 * I provide getters so that e.g Pair::_1 can be used instead of 
-	 * a lambda x -> x._1 (mainly for compatibility with existing code,
-	 * there is only one character difference).
+	 * I provide getters so that e.g Pair::_1 can be used instead of a lambda x ->
+	 * x._1 (mainly for compatibility with existing code, there is only one
+	 * character difference).
 	 */
 	/**
 	 * First element of the pair. I use the Scala naming convention.
@@ -57,26 +55,23 @@ public final class Pair<T, U>
 	@Override
 	public String toString()
 	{
-		return new StringBuilder("(")
-				.append(_1.toString())
-				.append(", ")
-				.append(_2.toString())
-				.append(")")
-				.toString();
+		return new StringBuilder("(").append(_1.toString()).append(", ")
+				.append(_2.toString()).append(")").toString();
 	}
 
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		return Objects.hash(_1, _2);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj)
+	{
 		if (obj instanceof Pair<?, ?>) {
 			Pair<?, ?> p = (Pair<?, ?>) obj;
-			return _1.equals(p._1) && _2.equals(p._2); 
-		}
-		else {
+			return _1.equals(p._1) && _2.equals(p._2);
+		} else {
 			return false;
 		}
 	}

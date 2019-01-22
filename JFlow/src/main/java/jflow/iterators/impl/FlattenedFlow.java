@@ -19,7 +19,9 @@ import jflow.iterators.LongFlow;
  */
 public final class FlattenedFlow
 {
-	private FlattenedFlow() {}
+	private FlattenedFlow()
+	{
+	}
 
 	public static class OfObject<E, R> extends AbstractFlow<R>
 	{
@@ -28,7 +30,8 @@ public final class FlattenedFlow
 
 		private Iterator<? extends R> currentSubFlow;
 
-		public OfObject(final Flow<E> src, final Function<? super E, ? extends Iterator<? extends R>> mapping)
+		public OfObject(final Flow<E> src,
+				final Function<? super E, ? extends Iterator<? extends R>> mapping)
 		{
 			super(OptionalInt.empty());
 			this.src = src;
@@ -37,7 +40,8 @@ public final class FlattenedFlow
 
 		private void init()
 		{
-			while (src.hasNext() && (currentSubFlow == null || !currentSubFlow.hasNext())) {
+			while (src.hasNext()
+					&& (currentSubFlow == null || !currentSubFlow.hasNext())) {
 				currentSubFlow = mapping.apply(src.next());
 			}
 		}
@@ -60,8 +64,7 @@ public final class FlattenedFlow
 
 			if (currentSubFlow == null) {
 				throw new NoSuchElementException();
-			}
-			else {
+			} else {
 				final R next = currentSubFlow.next();
 				while (!currentSubFlow.hasNext() && src.hasNext()) {
 					currentSubFlow = mapping.apply(src.next());
@@ -84,7 +87,8 @@ public final class FlattenedFlow
 
 		private LongFlow currentSubFlow;
 
-		public OfLong(final Flow<E> src, final Function<? super E, ? extends LongFlow> mapping)
+		public OfLong(final Flow<E> src,
+				final Function<? super E, ? extends LongFlow> mapping)
 		{
 			super(OptionalInt.empty());
 			this.src = src;
@@ -93,7 +97,8 @@ public final class FlattenedFlow
 
 		private void init()
 		{
-			while (src.hasNext() && (currentSubFlow == null || !currentSubFlow.hasNext())) {
+			while (src.hasNext()
+					&& (currentSubFlow == null || !currentSubFlow.hasNext())) {
 				currentSubFlow = mapping.apply(src.next());
 			}
 		}
@@ -116,8 +121,7 @@ public final class FlattenedFlow
 
 			if (currentSubFlow == null) {
 				throw new NoSuchElementException();
-			}
-			else {
+			} else {
 				final long next = currentSubFlow.nextLong();
 				while (!currentSubFlow.hasNext() && src.hasNext()) {
 					currentSubFlow = mapping.apply(src.next());
@@ -140,7 +144,8 @@ public final class FlattenedFlow
 
 		private DoubleFlow currentSubFlow;
 
-		public OfDouble(final Flow<E> src, final Function<? super E, ? extends DoubleFlow> mapping)
+		public OfDouble(final Flow<E> src,
+				final Function<? super E, ? extends DoubleFlow> mapping)
 		{
 			super(OptionalInt.empty());
 			this.src = src;
@@ -149,7 +154,8 @@ public final class FlattenedFlow
 
 		private void init()
 		{
-			while (src.hasNext() && (currentSubFlow == null || !currentSubFlow.hasNext())) {
+			while (src.hasNext()
+					&& (currentSubFlow == null || !currentSubFlow.hasNext())) {
 				currentSubFlow = mapping.apply(src.next());
 			}
 		}
@@ -172,8 +178,7 @@ public final class FlattenedFlow
 
 			if (currentSubFlow == null) {
 				throw new NoSuchElementException();
-			}
-			else {
+			} else {
 				final double next = currentSubFlow.nextDouble();
 				while (!currentSubFlow.hasNext() && src.hasNext()) {
 					currentSubFlow = mapping.apply(src.next());
@@ -196,7 +201,8 @@ public final class FlattenedFlow
 
 		private IntFlow currentSubFlow;
 
-		public OfInt(final Flow<E> src, final Function<? super E, ? extends IntFlow> mapping)
+		public OfInt(final Flow<E> src,
+				final Function<? super E, ? extends IntFlow> mapping)
 		{
 			super(OptionalInt.empty());
 			this.src = src;
@@ -205,7 +211,8 @@ public final class FlattenedFlow
 
 		private void init()
 		{
-			while (src.hasNext() && (currentSubFlow == null || !currentSubFlow.hasNext())) {
+			while (src.hasNext()
+					&& (currentSubFlow == null || !currentSubFlow.hasNext())) {
 				currentSubFlow = mapping.apply(src.next());
 			}
 		}
@@ -228,8 +235,7 @@ public final class FlattenedFlow
 
 			if (currentSubFlow == null) {
 				throw new NoSuchElementException();
-			}
-			else {
+			} else {
 				final int next = currentSubFlow.nextInt();
 				while (!currentSubFlow.hasNext() && src.hasNext()) {
 					currentSubFlow = mapping.apply(src.next());

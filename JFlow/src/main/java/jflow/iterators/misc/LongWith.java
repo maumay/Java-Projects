@@ -14,7 +14,7 @@ public final class LongWith<T>
 		this._L = longVal;
 		this._o = element;
 	}
-	
+
 	public static <T> LongWith<T> of(long longVal, T element)
 	{
 		return new LongWith<>(longVal, element);
@@ -25,7 +25,6 @@ public final class LongWith<T>
 		return _L;
 	}
 
-
 	public T _o()
 	{
 		return _o;
@@ -34,12 +33,8 @@ public final class LongWith<T>
 	@Override
 	public String toString()
 	{
-		return new StringBuilder("(")
-				.append(_L)
-				.append(", ")
-				.append(_o.toString())
-				.append(")")
-				.toString();
+		return new StringBuilder("(").append(_L).append(", ").append(_o.toString())
+				.append(")").toString();
 	}
 
 	@Override
@@ -62,13 +57,11 @@ public final class LongWith<T>
 		if (getClass() != obj.getClass())
 			return false;
 		@SuppressWarnings("rawtypes")
-		final
-		LongWith other = (LongWith) obj;
+		final LongWith other = (LongWith) obj;
 		if (_o == null) {
 			if (other._o != null)
 				return false;
-		}
-		else if (!_o.equals(other._o))
+		} else if (!_o.equals(other._o))
 			return false;
 		if (_L != other._L)
 			return false;

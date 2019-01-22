@@ -28,8 +28,7 @@ public interface PrototypeDoubleFlow extends OfDouble, Skippable, OptionallySize
 	 * Perform the supplied action for each element left in this iterator sequence,
 	 * in doing so the iterator is consumed.
 	 *
-	 * @param action
-	 *            The action to perform.
+	 * @param action The action to perform.
 	 */
 	default void forEach(final DoubleConsumer action)
 	{
@@ -42,6 +41,7 @@ public interface PrototypeDoubleFlow extends OfDouble, Skippable, OptionallySize
 	@Deprecated
 	default Double next()
 	{
-		throw new UnsupportedOperationException("Boxing using this method is banned for Flows!!");
+		throw new UnsupportedOperationException(
+				"Boxing using this method is banned for Flows!!");
 	}
 }

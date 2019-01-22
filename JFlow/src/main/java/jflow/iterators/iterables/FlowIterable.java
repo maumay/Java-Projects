@@ -17,13 +17,11 @@ import java.util.function.Supplier;
 import jflow.iterators.Flow;
 import jflow.iterators.misc.Bool;
 
-
 /**
  * Abstraction of iterable object which can construct enhanced iterators
  * ({@link Flow}).
  *
- * @param <E>
- *            The type of element this object can iterate over.
+ * @param <E> The type of element this object can iterate over.
  *
  * @author ThomasB
  */
@@ -34,18 +32,17 @@ public interface FlowIterable<E> extends Iterable<E>
 	 * @return A Flow over the elements in this iterable.
 	 */
 	Flow<E> flow();
-	
+
 	@Override
 	default Flow<E> iterator()
 	{
 		return flow();
 	}
-	
+
 	/**
 	 * Finds the first element (if any) which satisfies a given predicate.
 	 * 
-	 * @param predicate
-	 *            The predicate which will be used to test elements.
+	 * @param predicate The predicate which will be used to test elements.
 	 * @return The first element to pass the predicate test if there is one, nothing
 	 *         otherwise.
 	 */
@@ -143,7 +140,7 @@ public interface FlowIterable<E> extends Iterable<E>
 	{
 		return flow().groupBy(classifier);
 	}
-	
+
 	/**
 	 * A convenience method which spawns a Flow and delegates to its
 	 * {@link Flow#fold(Object, BiFunction)} method.
@@ -161,27 +158,28 @@ public interface FlowIterable<E> extends Iterable<E>
 	{
 		return flow().foldOption(reducer);
 	}
-	
+
 	default E fold(BinaryOperator<E> reducer)
 	{
 		return flow().fold(reducer);
 	}
-	
-	default <K, V> Map<K, V> toMap(Function<? super E, ? extends K> keyMap, Function<? super E, ? extends V> valueMap)
+
+	default <K, V> Map<K, V> toMap(Function<? super E, ? extends K> keyMap,
+			Function<? super E, ? extends V> valueMap)
 	{
 		return flow().toMap(keyMap, valueMap);
 	}
-	
+
 	default List<E> toList()
 	{
 		return toCollection(ArrayList::new);
 	}
-	
+
 	default Set<E> toSet()
 	{
 		return toCollection(HashSet::new);
 	}
-	
+
 	default <C extends Collection<E>> C toCollection(Supplier<C> collectionFactory)
 	{
 		return flow().toCollection(collectionFactory);

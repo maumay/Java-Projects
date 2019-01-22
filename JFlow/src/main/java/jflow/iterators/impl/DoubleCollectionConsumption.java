@@ -15,7 +15,9 @@ import java.util.function.DoubleFunction;
  */
 public final class DoubleCollectionConsumption
 {
-	private DoubleCollectionConsumption() {}
+	private DoubleCollectionConsumption()
+	{
+	}
 
 	public static double[] toArray(final PrimitiveIterator.OfDouble iterator)
 	{
@@ -27,9 +29,9 @@ public final class DoubleCollectionConsumption
 				cache[index++] = iterator.nextDouble();
 			}
 			return cache;
-		}
-		else {
-			final ArrayAccumulators.OfDouble accumulater = ArrayAccumulators.doubleAccumulator();
+		} else {
+			final ArrayAccumulators.OfDouble accumulater = ArrayAccumulators
+					.doubleAccumulator();
 			while (iterator.hasNext()) {
 				accumulater.add(iterator.nextDouble());
 			}
@@ -37,7 +39,8 @@ public final class DoubleCollectionConsumption
 		}
 	}
 
-	public static <K, V> Map<K, V> toMap(final PrimitiveIterator.OfDouble iterator, final DoubleFunction<K> keyMapper, final DoubleFunction<V> valueMapper)
+	public static <K, V> Map<K, V> toMap(final PrimitiveIterator.OfDouble iterator,
+			final DoubleFunction<K> keyMapper, final DoubleFunction<V> valueMapper)
 	{
 		final Map<K, V> collected = new HashMap<>();
 		while (iterator.hasNext()) {
@@ -45,15 +48,15 @@ public final class DoubleCollectionConsumption
 			final K key = keyMapper.apply(next);
 			if (collected.containsKey(key)) {
 				throw new IllegalStateException();
-			}
-			else {
+			} else {
 				collected.put(key, valueMapper.apply(next));
 			}
 		}
 		return collected;
 	}
 
-	public static <K> Map<K, double[]> groupBy(final PrimitiveIterator.OfDouble iterator, final DoubleFunction<K> classifier)
+	public static <K> Map<K, double[]> groupBy(final PrimitiveIterator.OfDouble iterator,
+			final DoubleFunction<K> classifier)
 	{
 		final Map<K, ArrayAccumulators.OfDouble> accumulationMap = new HashMap<>();
 		while (iterator.hasNext()) {

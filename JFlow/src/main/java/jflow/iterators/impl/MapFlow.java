@@ -23,14 +23,17 @@ import jflow.iterators.LongFlow;
  */
 public class MapFlow
 {
-	private MapFlow() {}
+	private MapFlow()
+	{
+	}
 
 	public static class OfObject<E, R> extends AbstractFlow<R>
 	{
 		private final Flow<E> sourceFlow;
 		private final Function<? super E, ? extends R> mappingFunction;
 
-		public OfObject(Flow<E> sourceFlow, Function<? super E, ? extends R> mappingFunction)
+		public OfObject(Flow<E> sourceFlow,
+				Function<? super E, ? extends R> mappingFunction)
 		{
 			super(sourceFlow.size());
 			this.sourceFlow = sourceFlow;

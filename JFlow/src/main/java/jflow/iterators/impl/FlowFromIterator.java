@@ -19,7 +19,9 @@ import jflow.iterators.AbstractLongFlow;
  */
 public final class FlowFromIterator
 {
-	private FlowFromIterator() {}
+	private FlowFromIterator()
+	{
+	}
 
 	public static class OfObject<E> extends AbstractFlow<E>
 	{
@@ -33,7 +35,7 @@ public final class FlowFromIterator
 
 		public OfObject(final Iterator<? extends E> src, int size)
 		{
-			super(size < 0? OptionalInt.empty() : OptionalInt.of(size));
+			super(size < 0 ? OptionalInt.empty() : OptionalInt.of(size));
 			this.iterator = src;
 		}
 

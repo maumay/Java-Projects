@@ -13,9 +13,12 @@ import java.util.Optional;
  */
 public final class ObjectMinMaxConsumption
 {
-	private ObjectMinMaxConsumption() {}
+	private ObjectMinMaxConsumption()
+	{
+	}
 
-	public static <E> Optional<E> findMin(final Iterator<? extends E> source, final Comparator<? super E> orderingFunction)
+	public static <E> Optional<E> findMin(final Iterator<? extends E> source,
+			final Comparator<? super E> orderingFunction)
 	{
 		final Comparator<? super E> cf = orderingFunction;
 		E min = null;
@@ -25,10 +28,11 @@ public final class ObjectMinMaxConsumption
 				min = next;
 			}
 		}
-		return min == null? Optional.empty() : Optional.of(min);
+		return min == null ? Optional.empty() : Optional.of(min);
 	}
 
-	public static <E> Optional<E> findMax(final Iterator<? extends E> source, final Comparator<? super E> orderingFunction)
+	public static <E> Optional<E> findMax(final Iterator<? extends E> source,
+			final Comparator<? super E> orderingFunction)
 	{
 		final Comparator<? super E> cf = orderingFunction;
 		E max = null;
@@ -38,6 +42,6 @@ public final class ObjectMinMaxConsumption
 				max = next;
 			}
 		}
-		return max == null? Optional.empty() : Optional.of(max);
+		return max == null ? Optional.empty() : Optional.of(max);
 	}
 }

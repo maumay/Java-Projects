@@ -19,7 +19,9 @@ import jflow.iterators.AbstractLongFlow;
  */
 public final class ReverseFlowFromValues
 {
-	private ReverseFlowFromValues() {}
+	private ReverseFlowFromValues()
+	{
+	}
 
 	public static class OfObject<E> extends AbstractFlow<E>
 	{
@@ -42,7 +44,8 @@ public final class ReverseFlowFromValues
 		}
 
 		@Override
-		public boolean hasNext() {
+		public boolean hasNext()
+		{
 			return count >= 0;
 		}
 
@@ -52,8 +55,7 @@ public final class ReverseFlowFromValues
 		{
 			if (hasNext()) {
 				return (E) source[count--];
-			}
-			else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}
@@ -80,7 +82,8 @@ public final class ReverseFlowFromValues
 		}
 
 		@Override
-		public boolean hasNext() {
+		public boolean hasNext()
+		{
 			return count >= 0;
 		}
 
@@ -89,8 +92,7 @@ public final class ReverseFlowFromValues
 		{
 			if (hasNext()) {
 				return source[count--];
-			}
-			else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}
@@ -117,7 +119,8 @@ public final class ReverseFlowFromValues
 		}
 
 		@Override
-		public boolean hasNext() {
+		public boolean hasNext()
+		{
 			return count >= 0;
 		}
 
@@ -126,8 +129,7 @@ public final class ReverseFlowFromValues
 		{
 			if (hasNext()) {
 				return source[count--];
-			}
-			else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}
@@ -154,7 +156,8 @@ public final class ReverseFlowFromValues
 		}
 
 		@Override
-		public boolean hasNext() {
+		public boolean hasNext()
+		{
 			return count >= 0;
 		}
 
@@ -163,8 +166,7 @@ public final class ReverseFlowFromValues
 		{
 			if (hasNext()) {
 				return source[count--];
-			}
-			else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}

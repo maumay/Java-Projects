@@ -25,37 +25,33 @@ import jflow.iterators.Flow;
 import jflow.iterators.factories.IterRange;
 import jflow.iterators.misc.Pair;
 
-
-
 /**
  * An immutable implementation of {@link Seq} which stores only non null
  * references. This class is very space efficient as it simply wraps a single
  * Object array. When combined with {@link Flow} instances one can write very
  * clean, efficient and safe code code without ever needing to reference this
- * type directly. 
+ * type directly.
  *
- * @param <E>
- *            The type of the elements contained in this List.
+ * @param <E> The type of the elements contained in this List.
  *
  * @author ThomasB
  */
 public final class VectorSeq<E> implements Seq<E>
 {
 	private static final Object[] EMPTY = new Object[0];
-	
+
 	private final Object[] data;
-	
-	
+
 	public VectorSeq()
 	{
 		data = EMPTY;
 	}
-	
+
 	public VectorSeq(Object[] cache)
 	{
 		this.data = cache;
 	}
-	
+
 	public VectorSeq(Iterator<? extends E> src)
 	{
 		if (src instanceof Flow<?> && ((Flow<?>) src).sizeIsKnown()) {
@@ -64,8 +60,7 @@ public final class VectorSeq<E> implements Seq<E>
 			while (src.hasNext()) {
 				data[index++] = Objects.requireNonNull(src.next());
 			}
-		}
-		else {
+		} else {
 			List<E> mut = new ArrayList<>(10);
 			while (src.hasNext()) {
 				mut.add(Objects.requireNonNull(src.next()));
@@ -73,7 +68,7 @@ public final class VectorSeq<E> implements Seq<E>
 			data = mut.toArray();
 		}
 	}
-	
+
 	public VectorSeq(Collection<? extends E> src)
 	{
 		data = new Object[src.size()];
@@ -82,22 +77,22 @@ public final class VectorSeq<E> implements Seq<E>
 			data[index++] = Objects.requireNonNull(itr.next());
 		}
 	}
-	
+
 	private VectorSeq(Iterator<? extends E> src, int knownSizeUpperBound)
 	{
 		int sze = knownSizeUpperBound;
 		if (src instanceof Flow<?> && ((Flow<?>) src).sizeIsKnown()) {
 			sze = Math.min(sze, ((Flow<?>) src).size().getAsInt());
 		}
-		
+
 		Object[] initialTry = new Object[sze];
 		int index = 0;
 		while (src.hasNext()) {
 			initialTry[index++] = Objects.requireNonNull(src.next());
 		}
-		data = index == sze? initialTry : Arrays.copyOf(initialTry, index);
+		data = index == sze ? initialTry : Arrays.copyOf(initialTry, index);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public E get(int index)
@@ -145,7 +140,7 @@ public final class VectorSeq<E> implements Seq<E>
 		sb.append("]");
 		return sb.toString();
 	}
-	
+
 	@Override
 	public Spliterator<E> spliterator()
 	{
@@ -165,13 +160,15 @@ public final class VectorSeq<E> implements Seq<E>
 			int count = 0;
 
 			@Override
-			public boolean hasNext() {
+			public boolean hasNext()
+			{
 				return count < data.length;
 			}
 
 			@SuppressWarnings("unchecked")
 			@Override
-			public E next() {
+			public E next()
+			{
 				if (hasNext()) {
 					return (E) data[data.length - 1 - count++];
 				} else {
@@ -180,7 +177,8 @@ public final class VectorSeq<E> implements Seq<E>
 			}
 
 			@Override
-			public void skip() {
+			public void skip()
+			{
 				if (count++ >= data.length) {
 					throw new NoSuchElementException();
 				}
@@ -195,13 +193,15 @@ public final class VectorSeq<E> implements Seq<E>
 			int count = 0;
 
 			@Override
-			public boolean hasNext() {
+			public boolean hasNext()
+			{
 				return count < data.length;
 			}
 
 			@SuppressWarnings("unchecked")
 			@Override
-			public E next() {
+			public E next()
+			{
 				if (hasNext()) {
 					return (E) data[count++];
 				} else {
@@ -210,7 +210,8 @@ public final class VectorSeq<E> implements Seq<E>
 			}
 
 			@Override
-			public void skip() {
+			public void skip()
+			{
 				if (count++ >= data.length) {
 					throw new NoSuchElementException();
 				}
@@ -229,7 +230,8 @@ public final class VectorSeq<E> implements Seq<E>
 	}
 
 	@Override
-	public <R> Seq<R> flatMap(Function<? super E, ? extends Iterator<? extends R>> mapping)
+	public <R> Seq<R> flatMap(
+			Function<? super E, ? extends Iterator<? extends R>> mapping)
 	{
 		return new VectorSeq<>(iterator().flatMap(mapping));
 	}
@@ -250,12 +252,11 @@ public final class VectorSeq<E> implements Seq<E>
 	public Seq<E> append(Iterable<? extends E> other)
 	{
 		boolean isSeq = other instanceof Seq<?>;
-		
+
 		if (isSeq || other instanceof Collection<?>) {
 			int osize = isSeq ? ((Seq<?>) other).size() : ((Collection<?>) other).size();
 			return new VectorSeq<>(iterator().append(other.iterator()), size() + osize);
-		}
-		else {
+		} else {
 			return new VectorSeq<>(iterator().append(other.iterator()));
 		}
 	}
@@ -268,7 +269,7 @@ public final class VectorSeq<E> implements Seq<E>
 		newData[size()] = other;
 		return new VectorSeq<>(newData);
 	}
-	
+
 	@Override
 	public Seq<E> insert(Iterable<? extends E> other)
 	{
@@ -277,8 +278,7 @@ public final class VectorSeq<E> implements Seq<E>
 		if (isSeq || other instanceof Collection<?>) {
 			int osize = isSeq ? ((Seq<?>) other).size() : ((Collection<?>) other).size();
 			return new VectorSeq<>(iterator().insert(other.iterator()), size() + osize);
-		}
-		else {
+		} else {
 			return new VectorSeq<>(iterator().insert(other.iterator()));
 		}
 	}
@@ -295,9 +295,12 @@ public final class VectorSeq<E> implements Seq<E>
 	@Override
 	public Seq<E> take(int n)
 	{
-		if (n >= size()) return this;
-		else if (n == 0) return new VectorSeq<>();
-		else return new VectorSeq<>(iterator().take(n));
+		if (n >= size())
+			return this;
+		else if (n == 0)
+			return new VectorSeq<>();
+		else
+			return new VectorSeq<>(iterator().take(n));
 	}
 
 	@Override
@@ -309,9 +312,12 @@ public final class VectorSeq<E> implements Seq<E>
 	@Override
 	public Seq<E> drop(int n)
 	{
-		if (n == 0) return this;
-		else if (n >= size()) return new VectorSeq<>();
-		else return new VectorSeq<>(iterator().drop(n));
+		if (n == 0)
+			return this;
+		else if (n >= size())
+			return new VectorSeq<>();
+		else
+			return new VectorSeq<>(iterator().drop(n));
 	}
 
 	@Override
@@ -328,8 +334,7 @@ public final class VectorSeq<E> implements Seq<E>
 		for (Object o : data) {
 			if (predicate.test((E) o)) {
 				split++;
-			}
-			else {
+			} else {
 				break;
 			}
 		}
@@ -338,7 +343,7 @@ public final class VectorSeq<E> implements Seq<E>
 		System.arraycopy(data, first.length, second, 0, second.length);
 		return Pair.of(new VectorSeq<>(first), new VectorSeq<>(second));
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public Pair<Seq<E>, Seq<E>> partition(Predicate<? super E> predicate)
@@ -349,14 +354,15 @@ public final class VectorSeq<E> implements Seq<E>
 		for (Object o : data) {
 			if (predicate.test((E) o)) {
 				tmp[trueIndex++] = o;
-			}
-			else {
+			} else {
 				tmp[n - 1 - falseIndex++] = o;
 			}
 		}
 		Object[] passed = new Object[trueIndex], failed = new Object[falseIndex];
-		for (int i = 0; i < trueIndex; i++) passed[i] = tmp[i];
-		for (int i = 0; i < falseIndex; i++) failed[i] = tmp[tmp.length - 1 - i];
+		for (int i = 0; i < trueIndex; i++)
+			passed[i] = tmp[i];
+		for (int i = 0; i < falseIndex; i++)
+			failed[i] = tmp[tmp.length - 1 - i];
 		return Pair.of(new VectorSeq<>(passed), new VectorSeq<>(failed));
 	}
 
@@ -370,7 +376,7 @@ public final class VectorSeq<E> implements Seq<E>
 		}
 		return set;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<E> toList()

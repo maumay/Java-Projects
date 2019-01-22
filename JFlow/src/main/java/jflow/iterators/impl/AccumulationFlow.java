@@ -21,7 +21,9 @@ import jflow.iterators.LongFlow;
  */
 public final class AccumulationFlow
 {
-	private AccumulationFlow() {}
+	private AccumulationFlow()
+	{
+	}
 
 	public static class OfObjectWithMixedTypes<T, R> extends AbstractFlow<R>
 	{
@@ -30,7 +32,8 @@ public final class AccumulationFlow
 
 		private R accumulationValue;
 
-		public OfObjectWithMixedTypes(final Flow<T> src, final R id, final BiFunction<R, T, R> accumulator)
+		public OfObjectWithMixedTypes(final Flow<T> src, final R id,
+				final BiFunction<R, T, R> accumulator)
 		{
 			super(src.size());
 			this.src = src;
@@ -101,7 +104,8 @@ public final class AccumulationFlow
 		private long accumulationValue;
 		private boolean initialized;
 
-		public OfLong(final LongFlow src, final long id, final LongBinaryOperator accumulator)
+		public OfLong(final LongFlow src, final long id,
+				final LongBinaryOperator accumulator)
 		{
 			super(src.size());
 			this.src = src;
@@ -128,9 +132,9 @@ public final class AccumulationFlow
 		public long nextLong()
 		{
 			if (initialized) {
-				accumulationValue = accumulator.applyAsLong(accumulationValue, src.nextLong());
-			}
-			else {
+				accumulationValue = accumulator.applyAsLong(accumulationValue,
+						src.nextLong());
+			} else {
 				initialized = true;
 				accumulationValue = src.nextLong();
 			}
@@ -179,9 +183,9 @@ public final class AccumulationFlow
 		public int nextInt()
 		{
 			if (initialized) {
-				accumulationValue = accumulator.applyAsInt(accumulationValue, src.nextInt());
-			}
-			else {
+				accumulationValue = accumulator.applyAsInt(accumulationValue,
+						src.nextInt());
+			} else {
 				initialized = true;
 				accumulationValue = src.nextInt();
 			}
@@ -203,7 +207,8 @@ public final class AccumulationFlow
 		private double accumulationValue;
 		private boolean initialized;
 
-		public OfDouble(final DoubleFlow src, final double id, final DoubleBinaryOperator accumulator)
+		public OfDouble(final DoubleFlow src, final double id,
+				final DoubleBinaryOperator accumulator)
 		{
 			super(src.size());
 			this.src = src;
@@ -230,9 +235,9 @@ public final class AccumulationFlow
 		public double nextDouble()
 		{
 			if (initialized) {
-				accumulationValue = accumulator.applyAsDouble(accumulationValue, src.nextDouble());
-			}
-			else {
+				accumulationValue = accumulator.applyAsDouble(accumulationValue,
+						src.nextDouble());
+			} else {
 				initialized = true;
 				accumulationValue = src.nextDouble();
 			}

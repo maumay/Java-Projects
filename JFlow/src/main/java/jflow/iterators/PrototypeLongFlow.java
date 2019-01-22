@@ -12,7 +12,8 @@ import java.util.function.LongConsumer;
  *
  * @author t
  */
-public interface PrototypeLongFlow extends Skippable, PrimitiveIterator.OfLong, OptionallySized
+public interface PrototypeLongFlow
+		extends Skippable, PrimitiveIterator.OfLong, OptionallySized
 {
 	/**
 	 * A safe alternative to directly calling {@link #nextLong()} method.
@@ -28,8 +29,7 @@ public interface PrototypeLongFlow extends Skippable, PrimitiveIterator.OfLong, 
 	 * Perform the supplied action for each element left in this iterator sequence,
 	 * in doing so the iterator is consumed.
 	 *
-	 * @param action
-	 *            The action to perform.
+	 * @param action The action to perform.
 	 */
 	default void forEach(final LongConsumer action)
 	{
@@ -42,6 +42,7 @@ public interface PrototypeLongFlow extends Skippable, PrimitiveIterator.OfLong, 
 	@Deprecated
 	default Long next()
 	{
-		throw new UnsupportedOperationException("Boxing using this method is banned for Flows!!");
+		throw new UnsupportedOperationException(
+				"Boxing using this method is banned for Flows!!");
 	}
 }

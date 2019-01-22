@@ -23,8 +23,7 @@ public final class Iterators
 	 * Wraps an existing iterator in a Flow to enable use of all extra
 	 * functionality.
 	 *
-	 * @param src
-	 *            The iterator to wrap.
+	 * @param src The iterator to wrap.
 	 * @return A flow wrapping the provided iterator.
 	 */
 	public static <E> Flow<E> wrap(Iterator<? extends E> src)
@@ -36,10 +35,8 @@ public final class Iterators
 	 * Construct a Flow which wraps an iterator provided from an existing iterable
 	 * object.
 	 *
-	 * @param <E>
-	 *            The upper bound on the source iterable element type.
-	 * @param src
-	 *            An object which can construct an iterator over it's elements.
+	 * @param     <E> The upper bound on the source iterable element type.
+	 * @param src An object which can construct an iterator over it's elements.
 	 * @return A Flow instance wrapping an iterator constructed from the source
 	 *         sequence.
 	 */

@@ -15,9 +15,12 @@ import jflow.iterators.Skippable;
  */
 public final class IntReductionConsumption
 {
-	private IntReductionConsumption() {}
+	private IntReductionConsumption()
+	{
+	}
 
-	public static OptionalInt foldOption(PrimitiveIterator.OfInt source, IntBinaryOperator reducer)
+	public static OptionalInt foldOption(PrimitiveIterator.OfInt source,
+			IntBinaryOperator reducer)
 	{
 		boolean reductionUninitialised = true;
 		int reduction = -1;
@@ -25,14 +28,13 @@ public final class IntReductionConsumption
 			if (reductionUninitialised) {
 				reduction = source.nextInt();
 				reductionUninitialised = false;
-			}
-			else {
+			} else {
 				reduction = reducer.applyAsInt(reduction, source.nextInt());
 			}
 		}
 		return reductionUninitialised ? OptionalInt.empty() : OptionalInt.of(reduction);
 	}
-	
+
 	public static int fold(PrimitiveIterator.OfInt source, IntBinaryOperator reducer)
 	{
 		boolean reductionUninitialised = true;
@@ -41,20 +43,19 @@ public final class IntReductionConsumption
 			if (reductionUninitialised) {
 				reduction = source.nextInt();
 				reductionUninitialised = false;
-			}
-			else {
+			} else {
 				reduction = reducer.applyAsInt(reduction, source.nextInt());
 			}
 		}
 		if (reductionUninitialised) {
 			throw new NoSuchElementException("Attempted to unsafely fold empty iterator");
-		}
-		else {
+		} else {
 			return reduction;
 		}
 	}
 
-	public static int fold(PrimitiveIterator.OfInt source, int id, IntBinaryOperator reducer)
+	public static int fold(PrimitiveIterator.OfInt source, int id,
+			IntBinaryOperator reducer)
 	{
 		int reduction = id;
 		while (source.hasNext()) {
@@ -70,8 +71,7 @@ public final class IntReductionConsumption
 		while (source.hasNext()) {
 			if (sourceSkippable) {
 				((Skippable) source).skip();
-			}
-			else {
+			} else {
 				source.nextInt();
 			}
 			count++;

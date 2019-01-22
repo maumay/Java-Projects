@@ -33,12 +33,8 @@ public final class DoubleWith<T>
 	@Override
 	public String toString()
 	{
-		return new StringBuilder("(")
-				.append(_d)
-				.append(", ")
-				.append(_o.toString())
-				.append(")")
-				.toString();
+		return new StringBuilder("(").append(_d).append(", ").append(_o.toString())
+				.append(")").toString();
 	}
 
 	@Override
@@ -69,8 +65,7 @@ public final class DoubleWith<T>
 		if (this._o == null) {
 			if (other._o != null)
 				return false;
-		}
-		else if (!this._o.equals(other._o))
+		} else if (!this._o.equals(other._o))
 			return false;
 		return true;
 	}

@@ -15,9 +15,12 @@ import jflow.iterators.Skippable;
  */
 public final class LongReductionConsumption
 {
-	private LongReductionConsumption() {}
+	private LongReductionConsumption()
+	{
+	}
 
-	public static OptionalLong foldOption(PrimitiveIterator.OfLong source, LongBinaryOperator reducer)
+	public static OptionalLong foldOption(PrimitiveIterator.OfLong source,
+			LongBinaryOperator reducer)
 	{
 		boolean reductionUninitialised = true;
 		long reduction = -1L;
@@ -25,14 +28,13 @@ public final class LongReductionConsumption
 			if (reductionUninitialised) {
 				reduction = source.nextLong();
 				reductionUninitialised = false;
-			}
-			else {
+			} else {
 				reduction = reducer.applyAsLong(reduction, source.nextLong());
 			}
 		}
 		return reductionUninitialised ? OptionalLong.empty() : OptionalLong.of(reduction);
 	}
-	
+
 	public static long fold(PrimitiveIterator.OfLong source, LongBinaryOperator reducer)
 	{
 		boolean reductionUninitialised = true;
@@ -41,21 +43,20 @@ public final class LongReductionConsumption
 			if (reductionUninitialised) {
 				reduction = source.nextLong();
 				reductionUninitialised = false;
-			}
-			else {
+			} else {
 				reduction = reducer.applyAsLong(reduction, source.nextLong());
 			}
 		}
-		
+
 		if (reductionUninitialised) {
 			throw new NoSuchElementException("Attempted to unsafely fold empty iterator");
-		}
-		else {
+		} else {
 			return reduction;
 		}
 	}
 
-	public static long fold(PrimitiveIterator.OfLong source, long id, LongBinaryOperator reducer)
+	public static long fold(PrimitiveIterator.OfLong source, long id,
+			LongBinaryOperator reducer)
 	{
 		long reduction = id;
 		while (source.hasNext()) {
@@ -71,8 +72,7 @@ public final class LongReductionConsumption
 		while (source.hasNext()) {
 			if (sourceSkippable) {
 				((Skippable) source).skip();
-			}
-			else {
+			} else {
 				source.nextLong();
 			}
 			count++;

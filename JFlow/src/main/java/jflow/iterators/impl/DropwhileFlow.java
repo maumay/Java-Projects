@@ -23,9 +23,12 @@ import jflow.iterators.LongFlow;
  * @author t
  *
  */
-public class DropwhileFlow {
+public class DropwhileFlow
+{
 
-	private DropwhileFlow() {}
+	private DropwhileFlow()
+	{
+	}
 
 	public static class OfObject<T> extends AbstractFlow<T>
 	{
@@ -35,7 +38,8 @@ public class DropwhileFlow {
 		private boolean firstFailureConsumed = false;
 		private T firstFailure = null;
 
-		public OfObject(final Flow<T> src, final Predicate<? super T> predicate) {
+		public OfObject(final Flow<T> src, final Predicate<? super T> predicate)
+		{
 			super(OptionalInt.empty());
 			this.src = src;
 			this.predicate = predicate;
@@ -53,49 +57,43 @@ public class DropwhileFlow {
 					}
 				}
 				return false;
-			}
-			else if (!firstFailureConsumed) {
+			} else if (!firstFailureConsumed) {
 				return true;
-			}
-			else {
+			} else {
 				return src.hasNext();
 			}
 		}
 
 		@Override
-		public T next() {
+		public T next()
+		{
 			if (firstFailure == null) {
 				if (hasNext()) {
 					firstFailureConsumed = true;
 					return firstFailure;
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
-			}
-			else if (firstFailureConsumed) {
+			} else if (firstFailureConsumed) {
 				return src.next();
-			}
-			else {
+			} else {
 				firstFailureConsumed = true;
 				return firstFailure;
 			}
 		}
 
 		@Override
-		public void skip() {
+		public void skip()
+		{
 			if (firstFailure == null) {
 				if (hasNext()) {
 					firstFailureConsumed = true;
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
-			}
-			else if (firstFailureConsumed) {
+			} else if (firstFailureConsumed) {
 				src.skip();
-			}
-			else {
+			} else {
 				firstFailureConsumed = true;
 			}
 		}
@@ -109,7 +107,8 @@ public class DropwhileFlow {
 		private boolean firstFailureInitialized, firstFailureConsumed;
 		private long firstFailure;
 
-		public OfLong(final LongFlow src, final LongPredicate predicate) {
+		public OfLong(final LongFlow src, final LongPredicate predicate)
+		{
 			super(OptionalInt.empty());
 			this.src = src;
 			this.predicate = predicate;
@@ -128,49 +127,43 @@ public class DropwhileFlow {
 					}
 				}
 				return false;
-			}
-			else if (!firstFailureConsumed) {
+			} else if (!firstFailureConsumed) {
 				return true;
-			}
-			else {
+			} else {
 				return src.hasNext();
 			}
 		}
 
 		@Override
-		public long nextLong() {
+		public long nextLong()
+		{
 			if (!firstFailureInitialized) {
 				if (hasNext()) {
 					firstFailureConsumed = true;
 					return firstFailure;
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
-			}
-			else if (firstFailureConsumed) {
+			} else if (firstFailureConsumed) {
 				return src.nextLong();
-			}
-			else {
+			} else {
 				firstFailureConsumed = true;
 				return firstFailure;
 			}
 		}
 
 		@Override
-		public void skip() {
+		public void skip()
+		{
 			if (!firstFailureInitialized) {
 				if (hasNext()) {
 					firstFailureConsumed = true;
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
-			}
-			else if (firstFailureConsumed) {
+			} else if (firstFailureConsumed) {
 				src.skip();
-			}
-			else {
+			} else {
 				firstFailureConsumed = true;
 			}
 		}
@@ -184,7 +177,8 @@ public class DropwhileFlow {
 		private boolean firstFailureInitialized, firstFailureConsumed;
 		private double firstFailure;
 
-		public OfDouble(final DoubleFlow src, final DoublePredicate predicate) {
+		public OfDouble(final DoubleFlow src, final DoublePredicate predicate)
+		{
 			super(OptionalInt.empty());
 			this.src = src;
 			this.predicate = predicate;
@@ -203,49 +197,43 @@ public class DropwhileFlow {
 					}
 				}
 				return false;
-			}
-			else if (!firstFailureConsumed) {
+			} else if (!firstFailureConsumed) {
 				return true;
-			}
-			else {
+			} else {
 				return src.hasNext();
 			}
 		}
 
 		@Override
-		public double nextDouble() {
+		public double nextDouble()
+		{
 			if (!firstFailureInitialized) {
 				if (hasNext()) {
 					firstFailureConsumed = true;
 					return firstFailure;
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
-			}
-			else if (firstFailureConsumed) {
+			} else if (firstFailureConsumed) {
 				return src.nextDouble();
-			}
-			else {
+			} else {
 				firstFailureConsumed = true;
 				return firstFailure;
 			}
 		}
 
 		@Override
-		public void skip() {
+		public void skip()
+		{
 			if (!firstFailureInitialized) {
 				if (hasNext()) {
 					firstFailureConsumed = true;
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
-			}
-			else if (firstFailureConsumed) {
+			} else if (firstFailureConsumed) {
 				src.skip();
-			}
-			else {
+			} else {
 				firstFailureConsumed = true;
 			}
 		}
@@ -259,7 +247,8 @@ public class DropwhileFlow {
 		private boolean firstFailureInitialized, firstFailureConsumed;
 		private int firstFailure;
 
-		public OfInt(final IntFlow src, final IntPredicate predicate) {
+		public OfInt(final IntFlow src, final IntPredicate predicate)
+		{
 			super(OptionalInt.empty());
 			this.src = src;
 			this.predicate = predicate;
@@ -278,49 +267,43 @@ public class DropwhileFlow {
 					}
 				}
 				return false;
-			}
-			else if (!firstFailureConsumed) {
+			} else if (!firstFailureConsumed) {
 				return true;
-			}
-			else {
+			} else {
 				return src.hasNext();
 			}
 		}
 
 		@Override
-		public int nextInt() {
+		public int nextInt()
+		{
 			if (!firstFailureInitialized) {
 				if (hasNext()) {
 					firstFailureConsumed = true;
 					return firstFailure;
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
-			}
-			else if (firstFailureConsumed) {
+			} else if (firstFailureConsumed) {
 				return src.nextInt();
-			}
-			else {
+			} else {
 				firstFailureConsumed = true;
 				return firstFailure;
 			}
 		}
 
 		@Override
-		public void skip() {
+		public void skip()
+		{
 			if (!firstFailureInitialized) {
 				if (hasNext()) {
 					firstFailureConsumed = true;
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
-			}
-			else if (firstFailureConsumed) {
+			} else if (firstFailureConsumed) {
 				src.skip();
-			}
-			else {
+			} else {
 				firstFailureConsumed = true;
 			}
 		}

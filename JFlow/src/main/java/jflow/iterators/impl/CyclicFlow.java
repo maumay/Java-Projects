@@ -19,14 +19,17 @@ import jflow.iterators.AbstractLongFlow;
  */
 public final class CyclicFlow
 {
-	private CyclicFlow() {}
+	private CyclicFlow()
+	{
+	}
 
 	public static class OfObject<T> extends AbstractFlow<T>
 	{
 		private final Supplier<? extends Iterator<? extends T>> iteratorSupply;
 		private Iterator<? extends T> iter;
 
-		public OfObject(Supplier<? extends Iterator<? extends T>> iteratorSupply) {
+		public OfObject(Supplier<? extends Iterator<? extends T>> iteratorSupply)
+		{
 			super(OptionalInt.empty());
 			this.iteratorSupply = iteratorSupply;
 			iter = iteratorSupply.get();
@@ -36,12 +39,14 @@ public final class CyclicFlow
 		}
 
 		@Override
-		public boolean hasNext() {
+		public boolean hasNext()
+		{
 			return true;
 		}
 
 		@Override
-		public T next() {
+		public T next()
+		{
 			if (!iter.hasNext()) {
 				iter = iteratorSupply.get();
 			}
@@ -49,7 +54,8 @@ public final class CyclicFlow
 		}
 
 		@Override
-		public void skip() {
+		public void skip()
+		{
 			if (!iter.hasNext()) {
 				iter = iteratorSupply.get();
 			}
@@ -62,7 +68,8 @@ public final class CyclicFlow
 		private final Supplier<? extends PrimitiveIterator.OfLong> iteratorSupplier;
 		private PrimitiveIterator.OfLong iter;
 
-		public OfLong(Supplier<? extends PrimitiveIterator.OfLong> iteratorSupplier) {
+		public OfLong(Supplier<? extends PrimitiveIterator.OfLong> iteratorSupplier)
+		{
 			super(OptionalInt.empty());
 			this.iteratorSupplier = iteratorSupplier;
 			iter = iteratorSupplier.get();
@@ -72,12 +79,14 @@ public final class CyclicFlow
 		}
 
 		@Override
-		public boolean hasNext() {
+		public boolean hasNext()
+		{
 			return true;
 		}
 
 		@Override
-		public long nextLong() {
+		public long nextLong()
+		{
 			if (!iter.hasNext()) {
 				iter = iteratorSupplier.get();
 			}
@@ -85,7 +94,8 @@ public final class CyclicFlow
 		}
 
 		@Override
-		public void skip() {
+		public void skip()
+		{
 			if (!iter.hasNext()) {
 				iter = iteratorSupplier.get();
 			}
@@ -98,7 +108,8 @@ public final class CyclicFlow
 		private final Supplier<? extends PrimitiveIterator.OfDouble> iteratorSupplier;
 		private PrimitiveIterator.OfDouble iter;
 
-		public OfDouble(Supplier<? extends PrimitiveIterator.OfDouble> iteratorSupplier) {
+		public OfDouble(Supplier<? extends PrimitiveIterator.OfDouble> iteratorSupplier)
+		{
 			super(OptionalInt.empty());
 			this.iteratorSupplier = iteratorSupplier;
 			iter = iteratorSupplier.get();
@@ -108,12 +119,14 @@ public final class CyclicFlow
 		}
 
 		@Override
-		public boolean hasNext() {
+		public boolean hasNext()
+		{
 			return true;
 		}
 
 		@Override
-		public double nextDouble() {
+		public double nextDouble()
+		{
 			if (!iter.hasNext()) {
 				iter = iteratorSupplier.get();
 			}
@@ -121,7 +134,8 @@ public final class CyclicFlow
 		}
 
 		@Override
-		public void skip() {
+		public void skip()
+		{
 			if (!iter.hasNext()) {
 				iter = iteratorSupplier.get();
 			}
@@ -134,7 +148,8 @@ public final class CyclicFlow
 		private final Supplier<? extends PrimitiveIterator.OfInt> iteratorSupplier;
 		private PrimitiveIterator.OfInt iter;
 
-		public OfInt(Supplier<? extends PrimitiveIterator.OfInt> iteratorSupplier) {
+		public OfInt(Supplier<? extends PrimitiveIterator.OfInt> iteratorSupplier)
+		{
 			super(OptionalInt.empty());
 			this.iteratorSupplier = iteratorSupplier;
 			iter = iteratorSupplier.get();
@@ -144,12 +159,14 @@ public final class CyclicFlow
 		}
 
 		@Override
-		public boolean hasNext() {
+		public boolean hasNext()
+		{
 			return true;
 		}
 
 		@Override
-		public int nextInt() {
+		public int nextInt()
+		{
 			if (!iter.hasNext()) {
 				iter = iteratorSupplier.get();
 			}
@@ -157,7 +174,8 @@ public final class CyclicFlow
 		}
 
 		@Override
-		public void skip() {
+		public void skip()
+		{
 			if (!iter.hasNext()) {
 				iter = iteratorSupplier.get();
 			}

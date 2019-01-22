@@ -11,7 +11,9 @@ import java.util.function.Predicate;
  */
 public final class ObjectPredicateConsumption
 {
-	public ObjectPredicateConsumption() {}
+	public ObjectPredicateConsumption()
+	{
+	}
 
 	public static <E> boolean allEqual(final Iterator<? extends E> source)
 	{
@@ -20,15 +22,15 @@ public final class ObjectPredicateConsumption
 			final E next = source.next();
 			if (last == null || last.equals(next)) {
 				last = next;
-			}
-			else {
+			} else {
 				return false;
 			}
 		}
 		return true;
 	}
 
-	public static <E> boolean allMatch(final Iterator<? extends E> source, final Predicate<? super E> predicate)
+	public static <E> boolean allMatch(final Iterator<? extends E> source,
+			final Predicate<? super E> predicate)
 	{
 		while (source.hasNext()) {
 			if (!predicate.test(source.next())) {
@@ -38,7 +40,8 @@ public final class ObjectPredicateConsumption
 		return true;
 	}
 
-	public static <E> boolean anyMatch(final Iterator<? extends E> source, final Predicate<? super E> predicate)
+	public static <E> boolean anyMatch(final Iterator<? extends E> source,
+			final Predicate<? super E> predicate)
 	{
 		while (source.hasNext()) {
 			if (predicate.test(source.next())) {
@@ -48,7 +51,8 @@ public final class ObjectPredicateConsumption
 		return false;
 	}
 
-	public static <E> boolean noneMatch(final Iterator<? extends E> source, final Predicate<? super E> predicate)
+	public static <E> boolean noneMatch(final Iterator<? extends E> source,
+			final Predicate<? super E> predicate)
 	{
 		while (source.hasNext()) {
 			if (predicate.test(source.next())) {

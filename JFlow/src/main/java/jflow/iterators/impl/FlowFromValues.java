@@ -16,7 +16,9 @@ import jflow.iterators.AbstractLongFlow;
  */
 public final class FlowFromValues
 {
-	private FlowFromValues() {}
+	private FlowFromValues()
+	{
+	}
 
 	public static class OfObject<E> extends AbstractFlow<E>
 	{
@@ -41,17 +43,18 @@ public final class FlowFromValues
 		{
 			return count < size.getAsInt();
 		}
+
 		@SuppressWarnings("unchecked")
 		@Override
 		public E next()
 		{
 			if (hasNext()) {
 				return (E) cache[count++];
-			}
-			else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}
+
 		@Override
 		public void skip()
 		{
@@ -66,7 +69,7 @@ public final class FlowFromValues
 		private final long[] cache;
 		private int count;
 
-		public OfLong(final long...src)
+		public OfLong(final long... src)
 		{
 			super(OptionalInt.of(src.length));
 			this.cache = src;
@@ -77,16 +80,17 @@ public final class FlowFromValues
 		{
 			return count < size.getAsInt();
 		}
+
 		@Override
 		public long nextLong()
 		{
 			if (hasNext()) {
 				return cache[count++];
-			}
-			else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}
+
 		@Override
 		public void skip()
 		{
@@ -101,7 +105,7 @@ public final class FlowFromValues
 		private final double[] cache;
 		private int count;
 
-		public OfDouble(final double...src)
+		public OfDouble(final double... src)
 		{
 			super(OptionalInt.of(src.length));
 			this.cache = src;
@@ -112,16 +116,17 @@ public final class FlowFromValues
 		{
 			return count < size.getAsInt();
 		}
+
 		@Override
 		public double nextDouble()
 		{
 			if (hasNext()) {
 				return cache[count++];
-			}
-			else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}
+
 		@Override
 		public void skip()
 		{
@@ -136,7 +141,7 @@ public final class FlowFromValues
 		private final int[] cache;
 		private int count;
 
-		public OfInt(final int...src)
+		public OfInt(final int... src)
 		{
 			super(OptionalInt.of(src.length));
 			this.cache = src;
@@ -147,16 +152,17 @@ public final class FlowFromValues
 		{
 			return count < size.getAsInt();
 		}
+
 		@Override
 		public int nextInt()
 		{
 			if (hasNext()) {
 				return cache[count++];
-			}
-			else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}
+
 		@Override
 		public void skip()
 		{

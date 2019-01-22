@@ -22,7 +22,9 @@ import jflow.iterators.LongFlow;
  */
 public final class TakewhileFlow
 {
-	private TakewhileFlow() {}
+	private TakewhileFlow()
+	{
+	}
 
 	public static class OfObject<E> extends AbstractFlow<E>
 	{
@@ -47,19 +49,16 @@ public final class TakewhileFlow
 			}
 			if (cached != null) {
 				return true;
-			}
-			else if(src.hasNext()) {
-				final E tmp  = src.next();
+			} else if (src.hasNext()) {
+				final E tmp = src.next();
 				if (predicate.test(tmp)) {
 					cached = tmp;
 					return true;
-				}
-				else {
+				} else {
 					iteratorExhausted = true;
 					return false;
 				}
-			}
-			else {
+			} else {
 				iteratorExhausted = true;
 				return false;
 			}
@@ -70,19 +69,16 @@ public final class TakewhileFlow
 		{
 			if (iteratorExhausted) {
 				throw new NoSuchElementException();
-			}
-			else if (cached != null) {
+			} else if (cached != null) {
 				final E tmp = cached;
 				cached = null;
 				return tmp;
-			}
-			else { // hasnext wasn't called
+			} else { // hasnext wasn't called
 				if (hasNext()) {
 					final E tmp = cached;
 					cached = null;
 					return tmp;
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
 			}
@@ -93,15 +89,12 @@ public final class TakewhileFlow
 		{
 			if (iteratorExhausted) {
 				throw new NoSuchElementException();
-			}
-			else if (cached != null) {
+			} else if (cached != null) {
 				cached = null;
-			}
-			else { // hasnext wasn't called
+			} else { // hasnext wasn't called
 				if (hasNext()) {
 					cached = null;
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
 			}
@@ -132,20 +125,17 @@ public final class TakewhileFlow
 			}
 			if (nextReady) {
 				return true;
-			}
-			else if (src.hasNext()) {
+			} else if (src.hasNext()) {
 				final int tmp = src.nextInt();
 				if (predicate.test(tmp)) {
 					cached = tmp;
 					nextReady = true;
 					return true;
-				}
-				else {
+				} else {
 					iteratorExhausted = true;
 					return false;
 				}
-			}
-			else {
+			} else {
 				iteratorExhausted = true;
 				return false;
 			}
@@ -156,17 +146,14 @@ public final class TakewhileFlow
 		{
 			if (iteratorExhausted) {
 				throw new NoSuchElementException();
-			}
-			else if (nextReady) {
+			} else if (nextReady) {
 				nextReady = false;
 				return cached;
-			}
-			else { // hasnext wasn't called
+			} else { // hasnext wasn't called
 				if (hasNext()) {
 					nextReady = false;
 					return cached;
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
 			}
@@ -177,15 +164,12 @@ public final class TakewhileFlow
 		{
 			if (iteratorExhausted) {
 				throw new NoSuchElementException();
-			}
-			else if (nextReady) {
+			} else if (nextReady) {
 				nextReady = false;
-			}
-			else { // hasnext wasn't called
+			} else { // hasnext wasn't called
 				if (hasNext()) {
 					nextReady = false;
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
 			}
@@ -216,20 +200,17 @@ public final class TakewhileFlow
 			}
 			if (nextReady) {
 				return true;
-			}
-			else if (src.hasNext()) {
+			} else if (src.hasNext()) {
 				final double tmp = src.nextDouble();
 				if (predicate.test(tmp)) {
 					cached = tmp;
 					nextReady = true;
 					return true;
-				}
-				else {
+				} else {
 					iteratorExhausted = true;
 					return false;
 				}
-			}
-			else {
+			} else {
 				iteratorExhausted = true;
 				return false;
 			}
@@ -240,17 +221,14 @@ public final class TakewhileFlow
 		{
 			if (iteratorExhausted) {
 				throw new NoSuchElementException();
-			}
-			else if (nextReady) {
+			} else if (nextReady) {
 				nextReady = false;
 				return cached;
-			}
-			else { // hasnext wasn't called
+			} else { // hasnext wasn't called
 				if (hasNext()) {
 					nextReady = false;
 					return cached;
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
 			}
@@ -261,15 +239,12 @@ public final class TakewhileFlow
 		{
 			if (iteratorExhausted) {
 				throw new NoSuchElementException();
-			}
-			else if (nextReady) {
+			} else if (nextReady) {
 				nextReady = false;
-			}
-			else { // hasnext wasn't called
+			} else { // hasnext wasn't called
 				if (hasNext()) {
 					nextReady = false;
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
 			}
@@ -300,20 +275,17 @@ public final class TakewhileFlow
 			}
 			if (nextReady) {
 				return true;
-			}
-			else if (src.hasNext()) {
+			} else if (src.hasNext()) {
 				final long tmp = src.nextLong();
 				if (predicate.test(tmp)) {
 					cached = tmp;
 					nextReady = true;
 					return true;
-				}
-				else {
+				} else {
 					iteratorExhausted = true;
 					return false;
 				}
-			}
-			else {
+			} else {
 				iteratorExhausted = true;
 				return false;
 			}
@@ -324,17 +296,14 @@ public final class TakewhileFlow
 		{
 			if (iteratorExhausted) {
 				throw new NoSuchElementException();
-			}
-			else if (nextReady) {
+			} else if (nextReady) {
 				nextReady = false;
 				return cached;
-			}
-			else { // hasnext wasn't called
+			} else { // hasnext wasn't called
 				if (hasNext()) {
 					nextReady = false;
 					return cached;
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
 			}
@@ -345,15 +314,12 @@ public final class TakewhileFlow
 		{
 			if (iteratorExhausted) {
 				throw new NoSuchElementException();
-			}
-			else if (nextReady) {
+			} else if (nextReady) {
 				nextReady = false;
-			}
-			else { // hasnext wasn't called
+			} else { // hasnext wasn't called
 				if (hasNext()) {
 					nextReady = false;
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
 			}

@@ -29,8 +29,7 @@ final class VectorSeqSpliterator<E> implements Spliterator<E>
 		if (position < upperBound) {
 			action.accept(src.get(position++));
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
@@ -43,8 +42,7 @@ final class VectorSeqSpliterator<E> implements Spliterator<E>
 			final int oldPosition = position;
 			position = midpoint;
 			return new VectorSeqSpliterator<>(src, oldPosition, midpoint);
-		}
-		else {
+		} else {
 			return null;
 		}
 	}

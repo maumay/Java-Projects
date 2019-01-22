@@ -15,7 +15,9 @@ import java.util.function.IntFunction;
  */
 public final class IntCollectionConsumption
 {
-	private IntCollectionConsumption() {}
+	private IntCollectionConsumption()
+	{
+	}
 
 	public static int[] toArray(PrimitiveIterator.OfInt iterator)
 	{
@@ -27,8 +29,7 @@ public final class IntCollectionConsumption
 				cache[index++] = iterator.nextInt();
 			}
 			return cache;
-		}
-		else {
+		} else {
 			ArrayAccumulators.OfInt accumulater = ArrayAccumulators.intAccumulator();
 			while (iterator.hasNext()) {
 				accumulater.add(iterator.nextInt());
@@ -37,7 +38,8 @@ public final class IntCollectionConsumption
 		}
 	}
 
-	public static <K, V> Map<K, V> toMap(PrimitiveIterator.OfInt iterator, IntFunction<? extends K> keyMapper, IntFunction<? extends V> valueMapper)
+	public static <K, V> Map<K, V> toMap(PrimitiveIterator.OfInt iterator,
+			IntFunction<? extends K> keyMapper, IntFunction<? extends V> valueMapper)
 	{
 		Map<K, V> collected = new HashMap<>();
 		while (iterator.hasNext()) {
@@ -45,15 +47,15 @@ public final class IntCollectionConsumption
 			K key = keyMapper.apply(next);
 			if (collected.containsKey(key)) {
 				throw new IllegalStateException();
-			}
-			else {
+			} else {
 				collected.put(key, valueMapper.apply(next));
 			}
 		}
 		return collected;
 	}
 
-	public static <K> Map<K, int[]> groupBy(PrimitiveIterator.OfInt iterator, IntFunction<? extends K> classifier)
+	public static <K> Map<K, int[]> groupBy(PrimitiveIterator.OfInt iterator,
+			IntFunction<? extends K> classifier)
 	{
 		Map<K, ArrayAccumulators.OfInt> accumulationMap = new HashMap<>();
 		while (iterator.hasNext()) {

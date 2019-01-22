@@ -23,7 +23,9 @@ import jflow.iterators.misc.Optionals;
  */
 public final class InsertFlow
 {
-	private InsertFlow() {}
+	private InsertFlow()
+	{
+	}
 
 	public static class OfObject<E> extends AbstractFlow<E>
 	{
@@ -46,7 +48,7 @@ public final class InsertFlow
 		@Override
 		public E next()
 		{
-			return inserted.hasNext()? inserted.next() : source.next();
+			return inserted.hasNext() ? inserted.next() : source.next();
 		}
 
 		@Override
@@ -54,8 +56,7 @@ public final class InsertFlow
 		{
 			if (inserted.hasNext()) {
 				ImplUtils.skip(inserted);
-			}
-			else {
+			} else {
 				source.skip();
 			}
 		}
@@ -66,7 +67,8 @@ public final class InsertFlow
 		private final DoubleFlow source;
 		private final PrimitiveIterator.OfDouble inserted;
 
-		public OfDouble(final DoubleFlow source, final PrimitiveIterator.OfDouble inserted)
+		public OfDouble(final DoubleFlow source,
+				final PrimitiveIterator.OfDouble inserted)
 		{
 			super(Optionals.add(source.size(), getSize(inserted)));
 			this.source = source;
@@ -82,7 +84,7 @@ public final class InsertFlow
 		@Override
 		public double nextDouble()
 		{
-			return inserted.hasNext()? inserted.nextDouble() : source.nextDouble();
+			return inserted.hasNext() ? inserted.nextDouble() : source.nextDouble();
 		}
 
 		@Override
@@ -90,8 +92,7 @@ public final class InsertFlow
 		{
 			if (inserted.hasNext()) {
 				ImplUtils.skip(inserted);
-			}
-			else {
+			} else {
 				source.skip();
 			}
 		}
@@ -118,7 +119,7 @@ public final class InsertFlow
 		@Override
 		public long nextLong()
 		{
-			return inserted.hasNext()? inserted.nextLong() : source.nextLong();
+			return inserted.hasNext() ? inserted.nextLong() : source.nextLong();
 		}
 
 		@Override
@@ -126,8 +127,7 @@ public final class InsertFlow
 		{
 			if (inserted.hasNext()) {
 				ImplUtils.skip(inserted);
-			}
-			else {
+			} else {
 				source.skip();
 			}
 		}
@@ -154,7 +154,7 @@ public final class InsertFlow
 		@Override
 		public int nextInt()
 		{
-			return inserted.hasNext()? inserted.nextInt() : source.nextInt();
+			return inserted.hasNext() ? inserted.nextInt() : source.nextInt();
 		}
 
 		@Override
@@ -162,8 +162,7 @@ public final class InsertFlow
 		{
 			if (inserted.hasNext()) {
 				ImplUtils.skip(inserted);
-			}
-			else {
+			} else {
 				source.skip();
 			}
 		}

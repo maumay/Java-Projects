@@ -21,14 +21,17 @@ import jflow.iterators.misc.Pair;
  */
 public final class ZipFlow
 {
-	private ZipFlow() {}
+	private ZipFlow()
+	{
+	}
 
 	public static class OfObjects<E1, E2> extends AbstractFlow<Pair<E1, E2>>
 	{
 		private final Flow<? extends E1> firstSource;
 		private final Iterator<? extends E2> secondSource;
 
-		public OfObjects(final Flow<? extends E1> firstSource, final Iterator<? extends E2> secondSource)
+		public OfObjects(final Flow<? extends E1> firstSource,
+				final Iterator<? extends E2> secondSource)
 		{
 			super(ImplUtils.calculateNewSize(firstSource, secondSource));
 			this.firstSource = firstSource;
@@ -60,7 +63,8 @@ public final class ZipFlow
 		private final Iterator<? extends E> objectSource;
 		private final PrimitiveIterator.OfLong longSource;
 
-		public OfObjectAndLong(final Iterator<? extends E> objectSource, final PrimitiveIterator.OfLong longSource)
+		public OfObjectAndLong(final Iterator<? extends E> objectSource,
+				final PrimitiveIterator.OfLong longSource)
 		{
 			super(ImplUtils.calculateNewSize(objectSource, longSource));
 			this.objectSource = objectSource;
@@ -92,7 +96,8 @@ public final class ZipFlow
 		private final Iterator<? extends E> objectSource;
 		private final PrimitiveIterator.OfDouble doubleSource;
 
-		public OfObjectAndDouble(final Iterator<? extends E> objectSource, final PrimitiveIterator.OfDouble doubleSource)
+		public OfObjectAndDouble(final Iterator<? extends E> objectSource,
+				final PrimitiveIterator.OfDouble doubleSource)
 		{
 			super(ImplUtils.calculateNewSize(objectSource, doubleSource));
 			this.objectSource = objectSource;
@@ -124,7 +129,8 @@ public final class ZipFlow
 		private final Iterator<? extends E> objectSource;
 		private final PrimitiveIterator.OfInt intSource;
 
-		public OfObjectAndInt(final Iterator<? extends E> objectSource, final PrimitiveIterator.OfInt intSource)
+		public OfObjectAndInt(final Iterator<? extends E> objectSource,
+				final PrimitiveIterator.OfInt intSource)
 		{
 			super(ImplUtils.calculateNewSize(objectSource, intSource));
 			this.objectSource = objectSource;
@@ -156,7 +162,8 @@ public final class ZipFlow
 		private final PrimitiveIterator.OfInt firstIntSource;
 		private final PrimitiveIterator.OfInt secondIntSource;
 
-		public OfIntPair(final PrimitiveIterator.OfInt firstIntSource, final PrimitiveIterator.OfInt secondIntSource)
+		public OfIntPair(final PrimitiveIterator.OfInt firstIntSource,
+				final PrimitiveIterator.OfInt secondIntSource)
 		{
 			super(ImplUtils.calculateNewSize(firstIntSource, secondIntSource));
 			this.firstIntSource = firstIntSource;
@@ -188,7 +195,8 @@ public final class ZipFlow
 		private final PrimitiveIterator.OfDouble firstDoubleSource;
 		private final PrimitiveIterator.OfDouble secondDoubleSource;
 
-		public OfDoublePair(final PrimitiveIterator.OfDouble firstDoubleSource, final PrimitiveIterator.OfDouble secondDoubleSource)
+		public OfDoublePair(final PrimitiveIterator.OfDouble firstDoubleSource,
+				final PrimitiveIterator.OfDouble secondDoubleSource)
 		{
 			super(ImplUtils.calculateNewSize(firstDoubleSource, secondDoubleSource));
 			this.firstDoubleSource = firstDoubleSource;
@@ -204,7 +212,8 @@ public final class ZipFlow
 		@Override
 		public DoublePair next()
 		{
-			return DoublePair.of(firstDoubleSource.nextDouble(), secondDoubleSource.nextDouble());
+			return DoublePair.of(firstDoubleSource.nextDouble(),
+					secondDoubleSource.nextDouble());
 		}
 
 		@Override
@@ -220,7 +229,8 @@ public final class ZipFlow
 		private final PrimitiveIterator.OfLong firstLongSource;
 		private final PrimitiveIterator.OfLong secondLongSource;
 
-		public OfLongPair(final PrimitiveIterator.OfLong firstLongSource, final PrimitiveIterator.OfLong secondLongSource)
+		public OfLongPair(final PrimitiveIterator.OfLong firstLongSource,
+				final PrimitiveIterator.OfLong secondLongSource)
 		{
 			super(ImplUtils.calculateNewSize(firstLongSource, secondLongSource));
 			this.firstLongSource = firstLongSource;

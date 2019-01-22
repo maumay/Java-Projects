@@ -6,7 +6,6 @@ import static java.lang.Math.signum;
 import jflow.iterators.DoubleFlow;
 import jflow.iterators.IntFlow;
 
-
 /**
  * Static methods for building primitive number ranges.
  *
@@ -21,8 +20,7 @@ public class IterRange
 	/**
 	 * Builds an integer range between 0 and some provided upper bound.
 	 *
-	 * @param upperBound
-	 *            The upper bound (exclusive) on the iteration interval.
+	 * @param upperBound The upper bound (exclusive) on the iteration interval.
 	 * @return Let n be the upper bound. If n is non-positive we return an empty
 	 *         iteration otherwise we return an ordered iteration over the integers
 	 *         contained in the half open interval:
@@ -33,17 +31,16 @@ public class IterRange
 	 */
 	public static IntFlow to(int upperBound)
 	{
-		return upperBound > 0 ? Iter.intsByIndexing(i -> i, upperBound) : Iter.emptyInts();
+		return upperBound > 0 ? Iter.intsByIndexing(i -> i, upperBound)
+				: Iter.emptyInts();
 	}
 
 	/**
 	 * Builds an integer range between provided lower and upper bounds.
 	 *
-	 * @param low
-	 *            The lower bound (inclusive) on the iteration interval.
+	 * @param low  The lower bound (inclusive) on the iteration interval.
 	 *
-	 * @param high
-	 *            The upper bound (exclusive) on the iteration interval.
+	 * @param high The upper bound (exclusive) on the iteration interval.
 	 * @return Let m be the lower bound and n be the upper bound. If (n - m) is
 	 *         non-positive we return an empty iteration otherwise we return an
 	 *         ordered iteration over the integers contained in the half open
@@ -55,21 +52,19 @@ public class IterRange
 	 */
 	public static IntFlow between(int low, int high)
 	{
-		return high > low ? Iter.intsByIndexing(i -> i + low, high - low) : Iter.emptyInts();
+		return high > low ? Iter.intsByIndexing(i -> i + low, high - low)
+				: Iter.emptyInts();
 	}
 
 	/**
 	 * Builds an integer range between provided lower and upper bounds with a given
 	 * step size.
 	 *
-	 * @param start
-	 *            The start bound (inclusive) on the iteration interval.
+	 * @param start The start bound (inclusive) on the iteration interval.
 	 *
-	 * @param end
-	 *            The end bound (exclusive) on the iteration interval.
+	 * @param end   The end bound (exclusive) on the iteration interval.
 	 *
-	 * @param step
-	 *            The difference between consecutive integers in the iteration.
+	 * @param step  The difference between consecutive integers in the iteration.
 	 * @return Let m be the start bound and n be the end bound. If sign(n - m) is
 	 *         not equal to sign(step) we return an empty iteration otherwise we
 	 *         return an ordered iteration starting at m over the integers contained
@@ -80,20 +75,18 @@ public class IterRange
 	{
 		int length = end - start;
 		int elementCount = (int) Math.ceil(abs((double) length / step));
-		return signum(step) == signum(length) ? Iter.intsByIndexing(i -> start + i * step, elementCount)
+		return signum(step) == signum(length)
+				? Iter.intsByIndexing(i -> start + i * step, elementCount)
 				: Iter.emptyInts();
 	}
 
 	/**
 	 * Builds a Flow iterating over the boundary points of a partitioned interval.
 	 *
-	 * @param start
-	 *            The start of the interval to be partitioned.
-	 * @param end
-	 *            The end of the interval to be partitioned.
-	 * @param nSubIntervals
-	 *            The number of equal length subintervals to partition the interval
-	 *            into.
+	 * @param start         The start of the interval to be partitioned.
+	 * @param end           The end of the interval to be partitioned.
+	 * @param nSubIntervals The number of equal length subintervals to partition the
+	 *                      interval into.
 	 * @return Let m be the required number of subintervals and J the be interval.
 	 *         Then partition J into m non-overlapping same length sub intervals say
 	 *         {J_m}. Take the unique boundary points of all intervals in the family

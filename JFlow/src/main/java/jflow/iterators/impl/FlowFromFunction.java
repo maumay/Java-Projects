@@ -21,43 +21,48 @@ import jflow.iterators.AbstractLongFlow;
  */
 public final class FlowFromFunction
 {
-	private FlowFromFunction() {}
+	private FlowFromFunction()
+	{
+	}
 
 	public static class OfObject<T> extends AbstractFlow<T>
 	{
 		private final IntFunction<T> src;
 		private int count = 0;
 
-		public OfObject(final IntFunction<T> src, final int elementCap) {
-			super(elementCap < 0? OptionalInt.empty() : OptionalInt.of(elementCap));
+		public OfObject(final IntFunction<T> src, final int elementCap)
+		{
+			super(elementCap < 0 ? OptionalInt.empty() : OptionalInt.of(elementCap));
 			this.src = src;
 		}
 
-		public OfObject(final IntFunction<T> src) {
+		public OfObject(final IntFunction<T> src)
+		{
 			this(src, -1);
 		}
 
 		@Override
-		public boolean hasNext() {
+		public boolean hasNext()
+		{
 			return !size.isPresent() || count < size.getAsInt();
 		}
 
 		@Override
-		public T next() {
+		public T next()
+		{
 			if (hasNext()) {
 				return src.apply(count++);
-			}
-			else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}
 
 		@Override
-		public void skip() {
+		public void skip()
+		{
 			if (hasNext()) {
 				count++;
-			}
-			else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}
@@ -68,32 +73,34 @@ public final class FlowFromFunction
 		private final IntToLongFunction src;
 		private int count = 0;
 
-		public OfLong(final IntToLongFunction src, final int elementCap) {
-			super(elementCap < 0? OptionalInt.empty() : OptionalInt.of(elementCap));
+		public OfLong(final IntToLongFunction src, final int elementCap)
+		{
+			super(elementCap < 0 ? OptionalInt.empty() : OptionalInt.of(elementCap));
 			this.src = src;
 		}
 
 		@Override
-		public boolean hasNext() {
+		public boolean hasNext()
+		{
 			return !size.isPresent() || count < size.getAsInt();
 		}
 
 		@Override
-		public long nextLong() {
+		public long nextLong()
+		{
 			if (hasNext()) {
 				return src.applyAsLong(count++);
-			}
-			else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}
 
 		@Override
-		public void skip() {
+		public void skip()
+		{
 			if (hasNext()) {
 				count++;
-			}
-			else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}
@@ -104,32 +111,34 @@ public final class FlowFromFunction
 		private final IntUnaryOperator src;
 		private int count = 0;
 
-		public OfInt(final IntUnaryOperator src, final int elementCap) {
-			super(elementCap < 0? OptionalInt.empty() : OptionalInt.of(elementCap));
+		public OfInt(final IntUnaryOperator src, final int elementCap)
+		{
+			super(elementCap < 0 ? OptionalInt.empty() : OptionalInt.of(elementCap));
 			this.src = src;
 		}
 
 		@Override
-		public boolean hasNext() {
+		public boolean hasNext()
+		{
 			return !size.isPresent() || count < size.getAsInt();
 		}
 
 		@Override
-		public int nextInt() {
+		public int nextInt()
+		{
 			if (hasNext()) {
 				return src.applyAsInt(count++);
-			}
-			else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}
 
 		@Override
-		public void skip() {
+		public void skip()
+		{
 			if (hasNext()) {
 				count++;
-			}
-			else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}
@@ -140,32 +149,34 @@ public final class FlowFromFunction
 		private final IntToDoubleFunction src;
 		private int count = 0;
 
-		public OfDouble(final IntToDoubleFunction src, final int elementCap) {
-			super(elementCap < 0? OptionalInt.empty() : OptionalInt.of(elementCap));
+		public OfDouble(final IntToDoubleFunction src, final int elementCap)
+		{
+			super(elementCap < 0 ? OptionalInt.empty() : OptionalInt.of(elementCap));
 			this.src = src;
 		}
 
 		@Override
-		public boolean hasNext() {
+		public boolean hasNext()
+		{
 			return !size.isPresent() || count < size.getAsInt();
 		}
 
 		@Override
-		public double nextDouble() {
+		public double nextDouble()
+		{
 			if (hasNext()) {
 				return src.applyAsDouble(count++);
-			}
-			else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}
 
 		@Override
-		public void skip() {
+		public void skip()
+		{
 			if (hasNext()) {
 				count++;
-			}
-			else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}

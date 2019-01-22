@@ -18,16 +18,15 @@ import jflow.iterators.misc.Bool;
 import jflow.iterators.misc.DoublePair;
 import jflow.iterators.misc.DoubleWith;
 
-
 /**
- * A sequential, single use iterator with lots of functionality
- * in the style of the {@link DoubleStream} interface. It bears a strong
- * resemblance in that it they are lazily-evaluated, possibly infinite sequences
- * of values. It was written with the intention of providing a cleaner API for
- * common sequence manipulations as well as providing the user more fine-grained
- * control over value consumption compared to streams. This finer control comes
- * at the cost of any potential parallelism in computations and therefore Flows
- * should be viewed as an accompaniment to Streams, not as replacements.
+ * A sequential, single use iterator with lots of functionality in the style of
+ * the {@link DoubleStream} interface. It bears a strong resemblance in that it
+ * they are lazily-evaluated, possibly infinite sequences of values. It was
+ * written with the intention of providing a cleaner API for common sequence
+ * manipulations as well as providing the user more fine-grained control over
+ * value consumption compared to streams. This finer control comes at the cost
+ * of any potential parallelism in computations and therefore Flows should be
+ * viewed as an accompaniment to Streams, not as replacements.
  *
  * @author ThomasB
  * @since 20 Apr 2018
@@ -37,8 +36,7 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	/**
 	 * Applies a function elementwise to this DoubleFlow to make new DoubleFlow.
 	 *
-	 * @param f
-	 *            A mapping function.
+	 * @param f A mapping function.
 	 * @return A new DoubleFlow instance whose elements are obtained by applying the
 	 *         parameter mapping function to each element of this DoubleFlow
 	 *         instance in turn.
@@ -48,10 +46,8 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	/**
 	 * Applies a function elementwise to this DoubleFlow to make new Flow.
 	 *
-	 * @param <E>
-	 *            The target type of the mapping function.
-	 * @param f
-	 *            A mapping function.
+	 * @param   <E> The target type of the mapping function.
+	 * @param f A mapping function.
 	 * @return A new Flow instance whose elements are obtained by applying the
 	 *         parameter mapping function to each element of this DoubleFlow
 	 *         instance in turn.
@@ -61,8 +57,7 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	/**
 	 * Applies a function elementwise to this DoubleFlow to make new LongFlow.
 	 *
-	 * @param f
-	 *            A mapping function.
+	 * @param f A mapping function.
 	 * @return A new LongFlow instance whose elements are obtained by applying the
 	 *         parameter mapping function to each element of this DoubleFlow
 	 *         instance in turn.
@@ -72,8 +67,7 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	/**
 	 * Applies a function elementwise to this DoubleFlow to make a new IntFlow.
 	 *
-	 * @param f
-	 *            A mapping function.
+	 * @param f A mapping function.
 	 * @return A new IntFlow instance whose elements are obtained by applying the
 	 *         parameter mapping function to each element of this DoubleFlow
 	 *         instance in turn.
@@ -85,10 +79,8 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 * consisting of pairs of elements with the same index in their respective
 	 * origins.
 	 *
-	 * @param <E>
-	 *            The upper type bound on the parameter Iterator.
-	 * @param other
-	 *            The Iterator to zip this source Flow with.
+	 * @param       <E> The upper type bound on the parameter Iterator.
+	 * @param other The Iterator to zip this source Flow with.
 	 *
 	 * @return Denote this source DoubleFlow by {@code F} with the parameter
 	 *         Iterator denoted by {@code I}. We return a new Flow instance
@@ -105,8 +97,7 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 * consisting of pairs of elements with the same index in their respective
 	 * origins.
 	 *
-	 * @param other
-	 *            The primitive iterator to zip this source DoubleFlow with.
+	 * @param other The primitive iterator to zip this source DoubleFlow with.
 	 *
 	 * @return Denote this source DoubleFlow by {@code F} with the parameter
 	 *         primitive iterator denoted by {@code I}. We return a new Flow
@@ -135,8 +126,8 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 * Creates a new DoubleFlow from this DoubleFlow by selecting elements with
 	 * indices defined by the parameter index mapping.
 	 *
-	 * @param indexMap
-	 *            A strictly monotonically increasing function {@code f: N -> N}
+	 * @param indexMap A strictly monotonically increasing function
+	 *                 {@code f: N -> N}
 	 * @return Let {@code F} denote this source DoubleFlow, let
 	 *         {@code n = length(F)} and denote the indexMap by {@code f}. Then this
 	 *         method returns a DoubleFlow {@code G} given by:
@@ -151,10 +142,8 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 * Creates a new DoubleFlow from this DoubleFlow by selecting the first n
 	 * elements.
 	 *
-	 * @param n
-	 *            A non-negative integer.
-	 * @throws IllegalArgumentException
-	 *             If parameter is negative.
+	 * @param n A non-negative integer.
+	 * @throws IllegalArgumentException If parameter is negative.
 	 * @return Let {@code F} denote this source DoubleFlow. We return a DoubleFlow
 	 *         consisting of the first {@code max(n, length(F))} elements of
 	 *         {@code F}.
@@ -165,8 +154,7 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 * Creates a new DoubleFlow from this DoubleFlow by selecting elements until an
 	 * element fails the supplied test, the first failure is not selected.
 	 *
-	 * @param predicate
-	 *            A DoublePredicate.
+	 * @param predicate A DoublePredicate.
 	 * @return Let {@code n} be the index of the first element that the parameter
 	 *         predicate fails for. Then this method returns a DoubleFlow consisting
 	 *         of the first {@code n} elements of this source DoubleFlow. If no
@@ -179,10 +167,8 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 * Creates a new DoubleFlow from this DoubleFlow by removing the first n
 	 * elements.
 	 *
-	 * @param n
-	 *            A non-negative integer.
-	 * @throws IllegalArgumentException
-	 *             If parameter is negative.
+	 * @param n A non-negative integer.
+	 * @throws IllegalArgumentException If parameter is negative.
 	 * @return Let {@code F} denote this source DoubleFlow. We return a DoubleFlow
 	 *         missing the first {@code min(n, length(F))} elements of {@code F}.
 	 */
@@ -193,8 +179,7 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 * element fails the supplied test, the first failure is the first element of
 	 * the result.
 	 *
-	 * @param predicate
-	 *            A DoublePredicate.
+	 * @param predicate A DoublePredicate.
 	 * @return Let {@code n} be the index of the first element that the parameter
 	 *         predicate fails for. Then this method returns a DoubleFlow missing
 	 *         {@code n} elements of this source DoubleFlow. If no element fails the
@@ -206,8 +191,7 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 * Creates a new DoubleFlow from this DoubleFlow by removing any element which
 	 * fails the supplied predicate test.
 	 *
-	 * @param predicate
-	 *            A DoublePredicate.
+	 * @param predicate A DoublePredicate.
 	 * @return A DoubleFlow containing only those elements of this source DoubleFlow
 	 *         which pass the test defined by the parameter predicate. The relative
 	 *         ordering of elements is retained.
@@ -218,8 +202,7 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 * Creates a new DoubleFlow from this DoubleFlow by adding each element of the
 	 * supplied primitive iterator to its end in order.
 	 *
-	 * @param other
-	 *            A primitive iterator.
+	 * @param other A primitive iterator.
 	 * @return A DoubleFlow consisting of the elements of this source DoubleFlow
 	 *         followed by the elements of the parameter PrimitiveIterator.OfDouble.
 	 */
@@ -229,8 +212,7 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 * Creates a new DoubleFlow from this DoubleFlow by adding each element of the
 	 * supplied varargs array to its end in order.
 	 *
-	 * @param other
-	 *            - A varargs double array
+	 * @param other - A varargs double array
 	 * @return A DoubleFlow consisting of the elements of the source DoubleFlow
 	 *         followed by the elements in the parameter array.
 	 */
@@ -240,8 +222,7 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 * Creates a new DoubleFlow from this Flow by adding each element to the end of
 	 * the supplied primitive iterator in order.
 	 *
-	 * @param other
-	 *            A primitive iterator.
+	 * @param other A primitive iterator.
 	 * @return a DoubleFlow consisting of the elements of the parameter primitive
 	 *         iterator followed by the elements of this source DoubleFlow.
 	 */
@@ -251,8 +232,7 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 * Creates a new DoubleFlow from this Flow by adding each element to the end of
 	 * the supplied varargs array in order.
 	 *
-	 * @param other
-	 *            - A varargs double array
+	 * @param other - A varargs double array
 	 * @return an DoubleFlow consisting of the elements in the parameter array
 	 *         followed by the elements of the source DoubleFlow.
 	 */
@@ -262,8 +242,7 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 * Applies an accumulation operation to this DoubleFlow to produce a new
 	 * DoubleFlow.
 	 *
-	 * @param accumulator
-	 *            The accumulation function.
+	 * @param accumulator The accumulation function.
 	 * @return Let {@code F} denote this source DoubleFlow and {@code g} denote the
 	 *         accumulation function. Then the DoubleFlow returned is of the form:
 	 *         <ul>
@@ -276,10 +255,8 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 * Applies an accumulation operation to this DoubleFlow to produce a new
 	 * DoubleFlow.
 	 *
-	 * @param id
-	 *            The identity element in the accumulation.
-	 * @param accumulator
-	 *            The accumulator function.
+	 * @param id          The identity element in the accumulation.
+	 * @param accumulator The accumulator function.
 	 * @return Let {@code F} denote this source DoubleFlow and {@code g} denote the
 	 *         accumulation function. Then the DoubleFlow returned is of the form:
 	 *         <ul>
@@ -305,8 +282,7 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * DoubleFlow.
 	 *
-	 * @param defaultValue
-	 *            The value which will be returned if the source is empty.
+	 * @param defaultValue The value which will be returned if the source is empty.
 	 *
 	 * @return the smallest element in this DoubleFlow or the default value if the
 	 *         iteration is empty.
@@ -330,8 +306,7 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * DoubleFlow.
 	 *
-	 * @param defaultValue
-	 *            The value which will be returned if the source is empty.
+	 * @param defaultValue The value which will be returned if the source is empty.
 	 *
 	 * @return The largest element in this DoubleFlow or the default value if the
 	 *         iteration is empty.
@@ -368,8 +343,7 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * DoubleFlow.
 	 *
-	 * @param predicate
-	 *            The supplied test.
+	 * @param predicate The supplied test.
 	 * @return True if every element passes the parameter predicate test, false
 	 *         otherwise.
 	 */
@@ -382,8 +356,7 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * DoubleFlow.
 	 *
-	 * @param predicate
-	 *            The supplied test.
+	 * @param predicate The supplied test.
 	 * @return True if every element passes the parameter predicate test, false
 	 *         otherwise.
 	 */
@@ -399,13 +372,12 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * DoubleFlow.
 	 *
-	 * @param predicate
-	 *            The supplied test.
+	 * @param predicate The supplied test.
 	 * @return True if any element passes the parameter predicate test, false
 	 *         otherwise.
 	 */
 	boolean anyMatch(DoublePredicate predicate);
-	
+
 	/**
 	 * Checks whether any element in this DoubleFlow passes the supplied
 	 * DoublePredicate test.
@@ -413,8 +385,7 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * DoubleFlow.
 	 *
-	 * @param predicate
-	 *            The supplied test.
+	 * @param predicate The supplied test.
 	 * @return True if any element passes the parameter predicate test, false
 	 *         otherwise.
 	 */
@@ -430,13 +401,12 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * DoubleFlow.
 	 *
-	 * @param predicate
-	 *            The supplied test.
+	 * @param predicate The supplied test.
 	 * @return True if every element fails the parameter predicate test, false
 	 *         otherwise.
 	 */
 	boolean noneMatch(DoublePredicate predicate);
-	
+
 	/**
 	 * Checks whether every element in this DoubleFlow fails the supplied
 	 * DoublePredicate test.
@@ -444,8 +414,7 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * DoubleFlow.
 	 *
-	 * @param predicate
-	 *            The supplied test.
+	 * @param predicate The supplied test.
 	 * @return True if every element fails the parameter predicate test, false
 	 *         otherwise.
 	 */
@@ -461,10 +430,8 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * DoubleFlow.
 	 *
-	 * @param id
-	 *            The identity of the reduction operation
-	 * @param reducer
-	 *            The reduction function
+	 * @param id      The identity of the reduction operation
+	 * @param reducer The reduction function
 	 * @return If we denote this source DoubleFlow by {@code F}, the length of
 	 *         {@code F} by {@code n} and the reduction function by {@code f} then
 	 *         the result is equal to: <br>
@@ -472,7 +439,7 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 *         {@code f(...f(f(id, F[0]), F[1])..., F[n - 1])}
 	 */
 	double fold(double id, DoubleBinaryOperator reducer);
-	
+
 	/**
 	 * Reduces this DoubleFlow to a single value via some reduction function. Throws
 	 * exception if empty flow.
@@ -533,17 +500,13 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * DoubleFlow.
 	 *
-	 * @param <K>
-	 *            The type of the keys in the created mapping.
-	 * @param <V>
-	 *            The type of the values in the created mapping.
-	 * @param keyMapper
-	 *            A function mapping doubles to elements of the key type.
-	 * @param valueMapper
-	 *            A function mapping doubles to elements of the value type.
+	 * @param             <K> The type of the keys in the created mapping.
+	 * @param             <V> The type of the values in the created mapping.
+	 * @param keyMapper   A function mapping doubles to elements of the key type.
+	 * @param valueMapper A function mapping doubles to elements of the value type.
 	 *
-	 * @throws IllegalStateException
-	 *             If two elements of this DoubleFlow map to the same key.
+	 * @throws IllegalStateException If two elements of this DoubleFlow map to the
+	 *                               same key.
 	 *
 	 * @return A Map instance whose key-value pairs have a 1-to-1 correspondence
 	 *         with the elements in this source DoubleFlow. More specifically if:
@@ -563,11 +526,9 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * DoubleFlow.
 	 *
-	 * @param <K>
-	 *            The type of the keys in the grouping map.
+	 * @param            <K> The type of the keys in the grouping map.
 	 *
-	 * @param classifier
-	 *            A function defining the different groups of elements.
+	 * @param classifier A function defining the different groups of elements.
 	 * @return A Map instance whose keys partition the elements of this source
 	 *         DoubleFlow via the classification function. Elements in this source
 	 *         DoubleFlow who have equal (under .equals() contract) images under the
@@ -584,11 +545,9 @@ public interface DoubleFlow extends PrototypeDoubleFlow
 	 *
 	 * A convenience method for applying a global function onto this DoubleFlow.
 	 *
-	 * @param <C>
-	 *            The target type of the build function.
-	 * @param builder
-	 *            A function whose input encompasses DoubleFlow instances of this
-	 *            element type.
+	 * @param         <C> The target type of the build function.
+	 * @param builder A function whose input encompasses DoubleFlow instances of
+	 *                this element type.
 	 * @return the output of the supplied function applied to this DoubleFlow.
 	 */
 	default <C> C build(Function<? super DoubleFlow, C> builder)

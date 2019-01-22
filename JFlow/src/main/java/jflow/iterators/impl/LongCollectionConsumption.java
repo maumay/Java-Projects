@@ -15,7 +15,9 @@ import java.util.function.LongFunction;
  */
 public final class LongCollectionConsumption
 {
-	private LongCollectionConsumption() {}
+	private LongCollectionConsumption()
+	{
+	}
 
 	public static long[] toArray(final PrimitiveIterator.OfLong iterator)
 	{
@@ -27,9 +29,9 @@ public final class LongCollectionConsumption
 				cache[index++] = iterator.nextLong();
 			}
 			return cache;
-		}
-		else {
-			final ArrayAccumulators.OfLong accumulater = ArrayAccumulators.longAccumulator();
+		} else {
+			final ArrayAccumulators.OfLong accumulater = ArrayAccumulators
+					.longAccumulator();
 			while (iterator.hasNext()) {
 				accumulater.add(iterator.nextLong());
 			}
@@ -37,7 +39,8 @@ public final class LongCollectionConsumption
 		}
 	}
 
-	public static <K, V> Map<K, V> toMap(final PrimitiveIterator.OfLong iterator, final LongFunction<K> keyMapper, final LongFunction<V> valueMapper)
+	public static <K, V> Map<K, V> toMap(final PrimitiveIterator.OfLong iterator,
+			final LongFunction<K> keyMapper, final LongFunction<V> valueMapper)
 	{
 		final Map<K, V> collected = new HashMap<>();
 		while (iterator.hasNext()) {
@@ -45,15 +48,15 @@ public final class LongCollectionConsumption
 			final K key = keyMapper.apply(next);
 			if (collected.containsKey(key)) {
 				throw new IllegalStateException();
-			}
-			else {
+			} else {
 				collected.put(key, valueMapper.apply(next));
 			}
 		}
 		return collected;
 	}
 
-	public static <K> Map<K, long[]> groupBy(final PrimitiveIterator.OfLong iterator, final LongFunction<K> classifier)
+	public static <K> Map<K, long[]> groupBy(final PrimitiveIterator.OfLong iterator,
+			final LongFunction<K> classifier)
 	{
 		final Map<K, ArrayAccumulators.OfLong> accumulationMap = new HashMap<>();
 		while (iterator.hasNext()) {

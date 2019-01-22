@@ -13,7 +13,9 @@ import jflow.iterators.LongFlow;
 
 public final class EmptyFlow
 {
-	private EmptyFlow() {}
+	private EmptyFlow()
+	{
+	}
 
 	public static class OfObjects<T> extends AbstractFlow<T>
 	{
@@ -21,23 +23,26 @@ public final class EmptyFlow
 		{
 			super(OptionalInt.of(0));
 		}
+
 		@Override
 		public boolean hasNext()
 		{
 			return false;
 		}
+
 		@Override
 		public T next()
 		{
 			throw new NoSuchElementException();
 		}
+
 		@Override
 		public void skip()
 		{
 			throw new NoSuchElementException();
 		}
 	}
-	
+
 	public static final LongFlow OF_LONGS = new OfLongs();
 
 	private static class OfLongs extends AbstractLongFlow
@@ -46,23 +51,26 @@ public final class EmptyFlow
 		{
 			super(OptionalInt.of(0));
 		}
+
 		@Override
 		public boolean hasNext()
 		{
 			return false;
 		}
+
 		@Override
 		public long nextLong()
 		{
 			throw new NoSuchElementException();
 		}
+
 		@Override
 		public void skip()
 		{
 			throw new NoSuchElementException();
 		}
 	}
-	
+
 	public static final DoubleFlow OF_DOUBLES = new OfDoubles();
 
 	private static class OfDoubles extends AbstractDoubleFlow
@@ -71,23 +79,26 @@ public final class EmptyFlow
 		{
 			super(OptionalInt.of(0));
 		}
+
 		@Override
 		public boolean hasNext()
 		{
 			return false;
 		}
+
 		@Override
 		public double nextDouble()
 		{
 			throw new NoSuchElementException();
 		}
+
 		@Override
 		public void skip()
 		{
 			throw new NoSuchElementException();
 		}
 	}
-	
+
 	public static final IntFlow OF_INTS = new OfInts();
 
 	private static class OfInts extends AbstractIntFlow
@@ -96,16 +107,19 @@ public final class EmptyFlow
 		{
 			super(OptionalInt.of(0));
 		}
+
 		@Override
 		public boolean hasNext()
 		{
 			return false;
 		}
+
 		@Override
 		public int nextInt()
 		{
 			throw new NoSuchElementException();
 		}
+
 		@Override
 		public void skip()
 		{

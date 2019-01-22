@@ -17,14 +17,17 @@ import jflow.iterators.IntFlow;
  */
 public final class MapToLongFlow
 {
-	private MapToLongFlow() {}
+	private MapToLongFlow()
+	{
+	}
 
 	public static class FromObject<E> extends AbstractLongFlow
 	{
 		private final Flow<E> sourceFlow;
 		private final ToLongFunction<? super E> mappingFunction;
 
-		public FromObject(final Flow<E> src, final ToLongFunction<? super E> mappingFunction)
+		public FromObject(final Flow<E> src,
+				final ToLongFunction<? super E> mappingFunction)
 		{
 			super(src.size());
 			this.sourceFlow = src;
@@ -86,7 +89,8 @@ public final class MapToLongFlow
 		private final DoubleFlow sourceFlow;
 		private final DoubleToLongFunction mappingFunction;
 
-		public FromDouble(final DoubleFlow src, final DoubleToLongFunction mappingFunction)
+		public FromDouble(final DoubleFlow src,
+				final DoubleToLongFunction mappingFunction)
 		{
 			super(src.size());
 			this.sourceFlow = src;

@@ -17,9 +17,12 @@ import java.util.function.Supplier;
  */
 public final class ObjectCollectionConsumption
 {
-	private ObjectCollectionConsumption() {}
+	private ObjectCollectionConsumption()
+	{
+	}
 
-	public static <E, C extends Collection<E>> C toCollection(final Iterator<? extends E> iterator, final Supplier<C> collectionFactory)
+	public static <E, C extends Collection<E>> C toCollection(
+			final Iterator<? extends E> iterator, final Supplier<C> collectionFactory)
 	{
 		final C container = collectionFactory.get();
 		while (iterator.hasNext()) {
@@ -28,41 +31,45 @@ public final class ObjectCollectionConsumption
 		return container;
 	}
 
-//	public static <E> Seq<E> toSeq(final Flow<? extends E> iterator)
-//	{
-//		if (iterator.size().isPresent()) {
-//			return new VectorSeq<>(iterator);
-//		}
-//		else {
-//			final List<E> mutable = new ArrayList<>();
-//			while (iterator.hasNext()) {
-//				mutable.add(iterator.next());
-//			}
-//			return new VectorSeq<>(mutable);
-//		}
-//	}
+	// public static <E> Seq<E> toSeq(final Flow<? extends E> iterator)
+	// {
+	// if (iterator.size().isPresent()) {
+	// return new VectorSeq<>(iterator);
+	// }
+	// else {
+	// final List<E> mutable = new ArrayList<>();
+	// while (iterator.hasNext()) {
+	// mutable.add(iterator.next());
+	// }
+	// return new VectorSeq<>(mutable);
+	// }
+	// }
 
-//	public static <E> FSet<E> toMutableSet(final Flow<? extends E> iterator)
-//	{
-//		final OptionalInt size = iterator.size();
-//		final FSet<E> container = size.isPresent()? new FlowHashSet<>(size.getAsInt()) : new FlowHashSet<>();
-//		while (iterator.hasNext()) {
-//			container.add(iterator.next());
-//		}
-//		return container;
-//	}
-//
-//	public static <E> FSet<E> toImmutableSet(final Flow<? extends E> iterator)
-//	{
-//		final OptionalInt size = iterator.size();
-//		final FSet<E> container = size.isPresent()? new FlowHashSet<>(size.getAsInt()) : new FlowHashSet<>();
-//		while (iterator.hasNext()) {
-//			container.add(iterator.next());
-//		}
-//		return new UnmodifiableDelegatingFlowSet<>(container);
-//	}
+	// public static <E> FSet<E> toMutableSet(final Flow<? extends E> iterator)
+	// {
+	// final OptionalInt size = iterator.size();
+	// final FSet<E> container = size.isPresent()? new
+	// FlowHashSet<>(size.getAsInt()) : new FlowHashSet<>();
+	// while (iterator.hasNext()) {
+	// container.add(iterator.next());
+	// }
+	// return container;
+	// }
+	//
+	// public static <E> FSet<E> toImmutableSet(final Flow<? extends E> iterator)
+	// {
+	// final OptionalInt size = iterator.size();
+	// final FSet<E> container = size.isPresent()? new
+	// FlowHashSet<>(size.getAsInt()) : new FlowHashSet<>();
+	// while (iterator.hasNext()) {
+	// container.add(iterator.next());
+	// }
+	// return new UnmodifiableDelegatingFlowSet<>(container);
+	// }
 
-	public static <E, K, V> Map<K, V> toMap(Iterator<? extends E> iterator, Function<? super E, ? extends K> keyMapper, Function<? super E, ? extends V> valueMapper)
+	public static <E, K, V> Map<K, V> toMap(Iterator<? extends E> iterator,
+			Function<? super E, ? extends K> keyMapper,
+			Function<? super E, ? extends V> valueMapper)
 	{
 		Map<K, V> collected = new HashMap<>();
 		while (iterator.hasNext()) {
@@ -70,15 +77,15 @@ public final class ObjectCollectionConsumption
 			K key = keyMapper.apply(next);
 			if (collected.containsKey(key)) {
 				throw new IllegalStateException();
-			}
-			else {
+			} else {
 				collected.put(key, valueMapper.apply(next));
 			}
 		}
 		return collected;
 	}
 
-	public static <E, K> Map<K, List<E>> groupBy(Iterator<? extends E> iterator, Function<? super E, ? extends K> classifier)
+	public static <E, K> Map<K, List<E>> groupBy(Iterator<? extends E> iterator,
+			Function<? super E, ? extends K> classifier)
 	{
 		Map<K, List<E>> collected = new HashMap<>();
 		while (iterator.hasNext()) {

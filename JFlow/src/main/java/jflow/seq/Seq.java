@@ -20,7 +20,6 @@ import jflow.iterators.Flow;
 import jflow.iterators.iterables.FlowIterable;
 import jflow.iterators.misc.Pair;
 
-
 /**
  * <p>
  * A sequence is an <b>immutable</b> alternative to a {@link List} which
@@ -39,7 +38,7 @@ public interface Seq<E> extends FlowIterable<E>
 	 * @return The number of elements in this sequence.
 	 */
 	int size();
-	
+
 	/**
 	 * @return An iteration of the elements in this List in reverse order.
 	 */
@@ -80,7 +79,7 @@ public interface Seq<E> extends FlowIterable<E>
 	 *         relative order preserved.
 	 */
 	<R> Seq<R> castTo(Class<R> klass);
-	
+
 	/**
 	 * @return A sequence containing the elements of this sequence with order
 	 *         retained followed by the elements of the parameter iterable whose
@@ -93,25 +92,25 @@ public interface Seq<E> extends FlowIterable<E>
 	 *         preserved followed by the parameter element.
 	 */
 	Seq<E> append(E other);
-	
+
 	/**
 	 * @return A sequence containing the elements of the parameter iterable whose
 	 *         order is determined by the iterator it produces followed by the
 	 *         elements of this sequence whose relative order is preserved.
 	 */
 	Seq<E> insert(Iterable<? extends E> other);
-	
+
 	/**
 	 * @return A sequence containing the parameter element followed by the elements
 	 *         of this sequence whose relative order is preserved.
 	 */
 	Seq<E> insert(E other);
-	
+
 	// TODO implement these
-//	Seq<E> slice(int fromIndex, int toIndex, int step);
-//	
-//	Seq<E> rslice(int from, int to, int step);
-	
+	// Seq<E> slice(int fromIndex, int toIndex, int step);
+	//
+	// Seq<E> rslice(int from, int to, int step);
+
 	/**
 	 * @return A sequence consisting of the first n elements of this sequence with
 	 *         their relative order retained. If the requested number of elements is
@@ -134,21 +133,21 @@ public interface Seq<E> extends FlowIterable<E>
 	 *         than zero an exception will be thrown.
 	 */
 	Seq<E> drop(int n);
-	
+
 	/**
 	 * @return A sequence consisting of the elements in this sequence which occur
 	 *         after the first element which fails the predicate. This first failure
 	 *         <b>is</b> included.
 	 */
 	Seq<E> dropWhile(Predicate<? super E> predicate);
-	
+
 	/**
 	 * @return A pair whose first element is the result of
 	 *         {@link Seq#takeWhile(Predicate)} and whose second element is a
 	 *         sequence of all elements who were not included in the first sequence.
 	 */
 	Pair<Seq<E>, Seq<E>> span(Predicate<? super E> predicate);
-	
+
 	/**
 	 * @return A pair of sequences whose first element is all the elements of this
 	 *         sequence which pass the given predicate, the second is all the
@@ -161,10 +160,9 @@ public interface Seq<E> extends FlowIterable<E>
 	 *         the supplied comparator.
 	 */
 	Seq<E> sorted(Comparator<? super E> orderingFunction);
-	
-	
+
 	// Default methods
-	
+
 	/**
 	 * @param element The instance to check for membership.
 	 * @return true if the given element is in this sequence, false otherwise.
@@ -173,7 +171,7 @@ public interface Seq<E> extends FlowIterable<E>
 	{
 		return anyMatch(x -> x.equals(element));
 	}
-	
+
 	/**
 	 * @return A parallel stream over the elements of this sequence in order.
 	 */
@@ -181,52 +179,52 @@ public interface Seq<E> extends FlowIterable<E>
 	{
 		return stream().parallel();
 	}
-	
+
 	default Optional<E> getOption(int index)
 	{
-		return -1 < index && index < size()? Optional.of(get(index)) : Optional.empty();
+		return -1 < index && index < size() ? Optional.of(get(index)) : Optional.empty();
 	}
-	
+
 	default E head()
 	{
 		return get(0);
 	}
-	
+
 	default Optional<E> headOption()
 	{
-		return size() > 0? Optional.of(head()) : Optional.empty();
+		return size() > 0 ? Optional.of(head()) : Optional.empty();
 	}
-	
+
 	default E last()
 	{
 		return get(size() - 1);
 	}
-	
+
 	default Optional<E> lastOption()
 	{
-		return size() > 0? Optional.of(last()) : Optional.empty();
+		return size() > 0 ? Optional.of(last()) : Optional.empty();
 	}
-	
+
 	default int[] mapToInt(ToIntFunction<? super E> mappingFunction)
 	{
 		return flow().mapToInt(mappingFunction).toArray();
 	}
-	
+
 	default double[] mapToDouble(ToDoubleFunction<? super E> mappingFunction)
 	{
 		return flow().mapToDouble(mappingFunction).toArray();
 	}
-	
+
 	default long[] mapToLong(ToLongFunction<? super E> mappingFunction)
 	{
 		return flow().mapToLong(mappingFunction).toArray();
 	}
-	
+
 	default boolean isEmpty()
 	{
 		return size() == 0;
 	}
-	
+
 	/**
 	 * @return An empty sequence
 	 */
@@ -234,26 +232,25 @@ public interface Seq<E> extends FlowIterable<E>
 	{
 		return new VectorSeq<>();
 	}
-	
+
 	/**
-	 * Note that this method is only designed for varargs. If it is
-	 * passed an array it won't make a copy.
+	 * Note that this method is only designed for varargs. If it is passed an array
+	 * it won't make a copy.
 	 * 
 	 * @param elements
-	 * @return a seq containing the parameter elements with the ordering 
-	 * retained.
+	 * @return a seq containing the parameter elements with the ordering retained.
 	 */
 	@SafeVarargs
 	static <E> Seq<E> of(E... elements)
 	{
 		return new VectorSeq<>(elements);
 	}
-	
+
 	static <E> Seq<E> copy(Collection<? extends E> collection)
 	{
 		return new VectorSeq<>(collection);
 	}
-	
+
 	static <E> Seq<E> copy(Iterable<? extends E> iterable)
 	{
 		return new VectorSeq<>(iterable.iterator());

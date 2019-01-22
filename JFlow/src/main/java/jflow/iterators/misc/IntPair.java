@@ -11,7 +11,7 @@ public final class IntPair
 {
 	public final int _1, _2;
 
-	public IntPair(final int first, final int second) 
+	public IntPair(final int first, final int second)
 	{
 		this._1 = first;
 		this._2 = second;
@@ -22,12 +22,12 @@ public final class IntPair
 		return new IntPair(first, second);
 	}
 
-	public int _1() 
+	public int _1()
 	{
 		return _1;
 	}
 
-	public int _2() 
+	public int _2()
 	{
 		return _2;
 	}
@@ -35,16 +35,13 @@ public final class IntPair
 	@Override
 	public String toString()
 	{
-		return new StringBuilder("(")
-				.append(_1)
-				.append(", ")
-				.append(_2)
-				.append(")")
+		return new StringBuilder("(").append(_1).append(", ").append(_2).append(")")
 				.toString();
 	}
 
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + _1;
@@ -53,7 +50,8 @@ public final class IntPair
 	}
 
 	@Override
-	public boolean equals(final Object obj) {
+	public boolean equals(final Object obj)
+	{
 		if (this == obj)
 			return true;
 		if (obj == null)

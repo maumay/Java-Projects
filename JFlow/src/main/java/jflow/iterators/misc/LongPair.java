@@ -11,29 +11,29 @@ public final class LongPair
 {
 	public final long _1, _2;
 
-	public LongPair(long first, long second) 
+	public LongPair(long first, long second)
 	{
 		this._1 = first;
 		this._2 = second;
 	}
 
-	public static LongPair of(long first, long second) 
+	public static LongPair of(long first, long second)
 	{
 		return new LongPair(first, second);
 	}
 
-	public long _1() 
+	public long _1()
 	{
 		return _1;
 	}
 
-	public long _2() 
+	public long _2()
 	{
 		return _2;
 	}
 
 	@Override
-	public int hashCode() 
+	public int hashCode()
 	{
 		int prime = 31;
 		int result = 1;
@@ -43,7 +43,7 @@ public final class LongPair
 	}
 
 	@Override
-	public boolean equals(Object obj) 
+	public boolean equals(Object obj)
 	{
 		if (this == obj)
 			return true;

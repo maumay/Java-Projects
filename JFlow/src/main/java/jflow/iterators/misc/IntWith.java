@@ -33,12 +33,8 @@ public final class IntWith<T>
 	@Override
 	public String toString()
 	{
-		return new StringBuilder("(")
-				.append(_i)
-				.append(", ")
-				.append(_o.toString())
-				.append(")")
-				.toString();
+		return new StringBuilder("(").append(_i).append(", ").append(_o.toString())
+				.append(")").toString();
 	}
 
 	@Override
@@ -65,8 +61,7 @@ public final class IntWith<T>
 		if (_o == null) {
 			if (other._o != null)
 				return false;
-		}
-		else if (!_o.equals(other._o))
+		} else if (!_o.equals(other._o))
 			return false;
 		if (_i != other._i)
 			return false;

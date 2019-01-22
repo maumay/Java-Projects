@@ -16,7 +16,9 @@ import jflow.iterators.misc.Optionals;
  */
 public final class DropFlow
 {
-	private DropFlow() {}
+	private DropFlow()
+	{
+	}
 
 	public static class OfObject<T> extends AbstractFlow<T>
 	{
@@ -62,7 +64,8 @@ public final class DropFlow
 			src.skip();
 		}
 
-		private void dropElements() {
+		private void dropElements()
+		{
 			for (int count = 0; count < dropCount && src.hasNext(); count++) {
 				src.skip();
 			}
@@ -114,7 +117,8 @@ public final class DropFlow
 			src.skip();
 		}
 
-		private void dropElements() {
+		private void dropElements()
+		{
 			for (int count = 0; count < dropCount && src.hasNext(); count++) {
 				src.skip();
 			}
@@ -166,7 +170,8 @@ public final class DropFlow
 			src.skip();
 		}
 
-		private void dropElements() {
+		private void dropElements()
+		{
 			for (int count = 0; count < dropCount && src.hasNext(); count++) {
 				src.skip();
 			}
@@ -218,7 +223,8 @@ public final class DropFlow
 			src.skip();
 		}
 
-		private void dropElements() {
+		private void dropElements()
+		{
 			for (int count = 0; count < dropCount && src.hasNext(); count++) {
 				src.skip();
 			}

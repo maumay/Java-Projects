@@ -12,7 +12,6 @@ import java.util.function.DoubleUnaryOperator;
 import java.util.function.IntUnaryOperator;
 import java.util.function.LongUnaryOperator;
 
-
 /**
  * Static methods for working with optional values.
  *
@@ -28,10 +27,8 @@ public final class Optionals
 	 * Performs a 'safe-cast' of a source object to a type specified by the given
 	 * class parameter.
 	 * 
-	 * @param src
-	 *            The object to cast.
-	 * @param targetType
-	 *            The type to attempt to cast to.
+	 * @param src        The object to cast.
+	 * @param targetType The type to attempt to cast to.
 	 * @return The result of the cast if the given object is an instance of the
 	 *         target type. Nothing otherwise.
 	 */
@@ -40,8 +37,7 @@ public final class Optionals
 	{
 		if (targetType.isInstance(src)) {
 			return Optional.of((R) src);
-		}
-		else {
+		} else {
 			return Optional.empty();
 		}
 	}
@@ -49,8 +45,7 @@ public final class Optionals
 	/**
 	 * Static factory for wrapping values in optional instances.
 	 *
-	 * @param t
-	 *            The value to wrap in an optional.
+	 * @param t The value to wrap in an optional.
 	 * @return An optional wrapping the parameter value.
 	 */
 	public static <T> Optional<T> of(T t)
@@ -61,8 +56,7 @@ public final class Optionals
 	/**
 	 * Static factory for wrapping values in optional instances.
 	 *
-	 * @param x
-	 *            The value to wrap in an optional.
+	 * @param x The value to wrap in an optional.
 	 * @return An optional wrapping the parameter value.
 	 */
 	public static OptionalInt ofInt(int x)
@@ -73,8 +67,7 @@ public final class Optionals
 	/**
 	 * Static factory for wrapping values in optional instances.
 	 *
-	 * @param x
-	 *            The value to wrap in an optional.
+	 * @param x The value to wrap in an optional.
 	 * @return An optional wrapping the parameter value.
 	 */
 	public static OptionalDouble ofInt(double x)
@@ -85,8 +78,7 @@ public final class Optionals
 	/**
 	 * Static factory for wrapping values in optional instances.
 	 *
-	 * @param x
-	 *            The value to wrap in an optional.
+	 * @param x The value to wrap in an optional.
 	 * @return An optional wrapping the parameter value.
 	 */
 	public static OptionalLong ofLong(int x)
@@ -97,54 +89,50 @@ public final class Optionals
 	/**
 	 * Applies a function to a given optional value if it exists.
 	 *
-	 * @param f
-	 *            The mapping function.
-	 * @param x
-	 *            The optional value.
+	 * @param f The mapping function.
+	 * @param x The optional value.
 	 * @return An optional wrapping the mapped value if the original value existed.
 	 *         Otherwise nothing is returned.
 	 */
 	public static OptionalInt map(IntUnaryOperator f, OptionalInt x)
 	{
-		return x.isPresent() ? OptionalInt.of(f.applyAsInt(x.getAsInt())) : OptionalInt.empty();
+		return x.isPresent() ? OptionalInt.of(f.applyAsInt(x.getAsInt()))
+				: OptionalInt.empty();
 	}
 
 	/**
 	 * Applies a function to a given optional value if it exists.
 	 *
-	 * @param f
-	 *            The mapping function.
-	 * @param x
-	 *            The optional value.
+	 * @param f The mapping function.
+	 * @param x The optional value.
 	 * @return An optional wrapping the mapped value if the original value existed.
 	 *         Otherwise nothing is returned.
 	 */
 	public static OptionalDouble map(DoubleUnaryOperator f, OptionalDouble x)
 	{
-		return x.isPresent() ? OptionalDouble.of(f.applyAsDouble(x.getAsDouble())) : OptionalDouble.empty();
+		return x.isPresent() ? OptionalDouble.of(f.applyAsDouble(x.getAsDouble()))
+				: OptionalDouble.empty();
 	}
 
 	/**
 	 * Applies a function to a given optional value if it exists.
 	 *
-	 * @param f
-	 *            The mapping function.
-	 * @param x
-	 *            The optional value.
+	 * @param f The mapping function.
+	 * @param x The optional value.
 	 * @return An optional wrapping the mapped value if the original value existed.
 	 *         Otherwise nothing is returned.
 	 */
 	public static OptionalLong map(LongUnaryOperator f, OptionalLong x)
 	{
-		return x.isPresent() ? OptionalLong.of(f.applyAsLong(x.getAsLong())) : OptionalLong.empty();
+		return x.isPresent() ? OptionalLong.of(f.applyAsLong(x.getAsLong()))
+				: OptionalLong.empty();
 	}
 
 	/**
 	 * Given an optional value this method attempts to retrieve the value contained
 	 * inside, if the optional is empty an {@linkplain AssertionError} is thrown.
 	 *
-	 * @param x
-	 *            The optional to extract a value from.
+	 * @param x The optional to extract a value from.
 	 * @return The value inside the optional if it exists.
 	 */
 	public static <T> T extract(Optional<? extends T> x, String errorMessage)
@@ -156,8 +144,7 @@ public final class Optionals
 	 * Given an optional value this method attempts to retrieve the value contained
 	 * inside, if the optional is empty an {@linkplain AssertionError} is thrown.
 	 *
-	 * @param x
-	 *            The optional to extract a value from.
+	 * @param x The optional to extract a value from.
 	 * @return The value inside the optional if it exists.
 	 */
 	public static int extract(OptionalInt x, String errorMessage)
@@ -169,8 +156,7 @@ public final class Optionals
 	 * Given an optional value this method attempts to retrieve the value contained
 	 * inside, if the optional is empty an {@linkplain AssertionError} is thrown.
 	 *
-	 * @param x
-	 *            The optional to extract a value from.
+	 * @param x The optional to extract a value from.
 	 * @return The value inside the optional if it exists.
 	 */
 	public static double extract(OptionalDouble x, String errorMessage)
@@ -182,8 +168,7 @@ public final class Optionals
 	 * Given an optional value this method attempts to retrieve the value contained
 	 * inside, if the optional is empty an {@linkplain AssertionError} is thrown.
 	 *
-	 * @param x
-	 *            The optional to extract a value from.
+	 * @param x The optional to extract a value from.
 	 * @return The value inside the optional if it exists.
 	 */
 	public static double extract(OptionalLong x, String errorMessage)
@@ -194,48 +179,45 @@ public final class Optionals
 	/**
 	 * An addition function acting on optional values.
 	 *
-	 * @param first
-	 *            An optional value
-	 * @param second
-	 *            An optional value
+	 * @param first  An optional value
+	 * @param second An optional value
 	 * @return An optional wrapping the result of adding the numbers wrapped by the
 	 *         provided optionals if they both exist, nothing otherwise.
 	 */
 	public static OptionalInt add(OptionalInt first, OptionalInt second)
 	{
-		return first.isPresent() && second.isPresent() ? OptionalInt.of(first.getAsInt() + second.getAsInt())
+		return first.isPresent() && second.isPresent()
+				? OptionalInt.of(first.getAsInt() + second.getAsInt())
 				: OptionalInt.empty();
 	}
 
 	/**
 	 * An addition function acting on optional values.
 	 *
-	 * @param first
-	 *            An optional value
-	 * @param second
-	 *            An optional value
+	 * @param first  An optional value
+	 * @param second An optional value
 	 * @return An optional wrapping the result of adding the numbers wrapped by the
 	 *         provided optionals if they both exist, nothing otherwise.
 	 */
 	public static OptionalDouble add(OptionalDouble first, OptionalDouble second)
 	{
-		return first.isPresent() && second.isPresent() ? OptionalDouble.of(first.getAsDouble() + second.getAsDouble())
+		return first.isPresent() && second.isPresent()
+				? OptionalDouble.of(first.getAsDouble() + second.getAsDouble())
 				: OptionalDouble.empty();
 	}
 
 	/**
 	 * An addition function acting on optional values.
 	 *
-	 * @param first
-	 *            An optional value
-	 * @param second
-	 *            An optional value
+	 * @param first  An optional value
+	 * @param second An optional value
 	 * @return An optional wrapping the result of adding the numbers wrapped by the
 	 *         provided optionals if they both exist, nothing otherwise.
 	 */
 	public static OptionalLong add(OptionalLong first, OptionalLong second)
 	{
-		return first.isPresent() && second.isPresent() ? OptionalLong.of(first.getAsLong() + second.getAsLong())
+		return first.isPresent() && second.isPresent()
+				? OptionalLong.of(first.getAsLong() + second.getAsLong())
 				: OptionalLong.empty();
 	}
 

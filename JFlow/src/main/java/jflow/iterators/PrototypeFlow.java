@@ -28,8 +28,7 @@ public interface PrototypeFlow<E> extends Iterator<E>, Skippable, OptionallySize
 	 * Perform the supplied action for each element left in this iterator sequence,
 	 * in doing so the iterator is consumed.
 	 *
-	 * @param action
-	 *            The action to perform.
+	 * @param action The action to perform.
 	 */
 	default void forEach(final Consumer<? super E> action)
 	{

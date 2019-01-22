@@ -11,7 +11,9 @@ import java.util.function.LongPredicate;
  */
 public final class LongPredicateConsumption
 {
-	public LongPredicateConsumption() {}
+	public LongPredicateConsumption()
+	{
+	}
 
 	public static boolean allEqual(final PrimitiveIterator.OfLong source)
 	{
@@ -22,18 +24,17 @@ public final class LongPredicateConsumption
 			if (!initialised) {
 				initialised = true;
 				last = next;
-			}
-			else if (last == next) {
+			} else if (last == next) {
 				last = next;
-			}
-			else {
+			} else {
 				return false;
 			}
 		}
 		return true;
 	}
 
-	public static boolean allMatch(final PrimitiveIterator.OfLong source, final LongPredicate predicate)
+	public static boolean allMatch(final PrimitiveIterator.OfLong source,
+			final LongPredicate predicate)
 	{
 		while (source.hasNext()) {
 			if (!predicate.test(source.nextLong())) {
@@ -43,7 +44,8 @@ public final class LongPredicateConsumption
 		return true;
 	}
 
-	public static boolean anyMatch(final PrimitiveIterator.OfLong source, final LongPredicate predicate)
+	public static boolean anyMatch(final PrimitiveIterator.OfLong source,
+			final LongPredicate predicate)
 	{
 		while (source.hasNext()) {
 			if (predicate.test(source.nextLong())) {
@@ -53,7 +55,8 @@ public final class LongPredicateConsumption
 		return false;
 	}
 
-	public static boolean noneMatch(final PrimitiveIterator.OfLong source, final LongPredicate predicate)
+	public static boolean noneMatch(final PrimitiveIterator.OfLong source,
+			final LongPredicate predicate)
 	{
 		while (source.hasNext()) {
 			if (predicate.test(source.nextLong())) {

@@ -41,7 +41,7 @@ public final class ArrayUtils
 	private ArrayUtils()
 	{
 	}
-	
+
 	// Combining
 	/**
 	 * Combines two arrays into a single array via a binary operator.
@@ -79,7 +79,8 @@ public final class ArrayUtils
 	 *         <li>{@code sizeOf(zs) = min(xs.length, ys.length)}</li>
 	 *         </ul>
 	 */
-	public static double[] combine(DoubleBinaryOperator combiner, double[] xs, double[] ys)
+	public static double[] combine(DoubleBinaryOperator combiner, double[] xs,
+			double[] ys)
 	{
 		int newLength = Math.min(xs.length, ys.length);
 		double[] combined = new double[newLength];
@@ -111,7 +112,7 @@ public final class ArrayUtils
 		}
 		return combined;
 	}
-	
+
 	// Filtering
 	/**
 	 * Filters an array according to some predicate.
@@ -172,7 +173,7 @@ public final class ArrayUtils
 		}
 		return Arrays.copyOf(filtered, arrcount);
 	}
-	
+
 	// Folding
 	/**
 	 * Reduces an array to a single value via some operator in a right associative
@@ -236,7 +237,7 @@ public final class ArrayUtils
 		}
 		return cumulativeFold;
 	}
-	
+
 	// Mapping
 	/**
 	 * Sequentially applies a mapping function elementwise to an finite, ordered
@@ -291,7 +292,7 @@ public final class ArrayUtils
 		}
 		return mapped;
 	}
-	
+
 	/**
 	 * Sequentially applies a mapping function elementwise to an finite input
 	 * collection to produce a double array.
@@ -302,7 +303,8 @@ public final class ArrayUtils
 	 *         mapped values of the source elements with order retained if the input
 	 *         has a defined order.
 	 */
-	public static <E> double[] doubleMap(ToDoubleFunction<? super E> f, Collection<? extends E> xs)
+	public static <E> double[] doubleMap(ToDoubleFunction<? super E> f,
+			Collection<? extends E> xs)
 	{
 		double[] dest = new double[xs.size()];
 		int counter = 0;
@@ -365,16 +367,16 @@ public final class ArrayUtils
 		}
 		return mapped;
 	}
-	
+
 	/**
 	 * Sequentially applies a mapping function elementwise to an finite input
 	 * collection to produce a int array.
 	 *
 	 * @param f  The function defining the mapping.
 	 * @param xs The source collection.
-	 * @return An int array of the same length as the source containing the
-	 *         mapped values of the source elements with order retained if the input
-	 *         has a defined order.
+	 * @return An int array of the same length as the source containing the mapped
+	 *         values of the source elements with order retained if the input has a
+	 *         defined order.
 	 */
 	public static <E> int[] intMap(ToIntFunction<? super E> f, Collection<? extends E> xs)
 	{
@@ -439,18 +441,19 @@ public final class ArrayUtils
 		}
 		return mapped;
 	}
-	
+
 	/**
 	 * Sequentially applies a mapping function elementwise to an finite input
 	 * collection to produce a long array.
 	 *
 	 * @param f  The function defining the mapping.
 	 * @param xs The source collection.
-	 * @return An long array of the same length as the source containing the
-	 *         mapped values of the source elements with order retained if the input
-	 *         has a defined order.
+	 * @return An long array of the same length as the source containing the mapped
+	 *         values of the source elements with order retained if the input has a
+	 *         defined order.
 	 */
-	public static <E> long[] longMap(ToLongFunction<? super E> f, Collection<? extends E> xs)
+	public static <E> long[] longMap(ToLongFunction<? super E> f,
+			Collection<? extends E> xs)
 	{
 		long[] dest = new long[xs.size()];
 		int counter = 0;
@@ -510,7 +513,7 @@ public final class ArrayUtils
 		Flow<R> intermediate = Iter.overLongs(xs).mapToObject(f);
 		return intermediate.toSeq();
 	}
-	
+
 	// Predicate checking
 	/**
 	 * Checks whether every element in a sequence satisfies a given predicate.
@@ -619,7 +622,7 @@ public final class ArrayUtils
 		}
 		return false;
 	}
-	
+
 	// Sum/product/min/max
 	/**
 	 * Calculates the sum of the parameter values.
@@ -776,7 +779,7 @@ public final class ArrayUtils
 	{
 		return foldr(Math::max, Long.MIN_VALUE, xs);
 	}
-	
+
 	// General manipulation
 	/**
 	 * Reverses an int array.
@@ -1022,7 +1025,7 @@ public final class ArrayUtils
 		System.arraycopy(xs, 0, newArr, 0, n);
 		return newArr;
 	}
-	
+
 	/**
 	 * Append an element to the end of an array.
 	 *
@@ -1039,7 +1042,7 @@ public final class ArrayUtils
 		System.arraycopy(xs, 0, newArr, 0, n);
 		return newArr;
 	}
-	
+
 	/**
 	 * Append an element to the end of an array.
 	 *
@@ -1056,7 +1059,7 @@ public final class ArrayUtils
 		System.arraycopy(xs, 0, newArr, 0, n);
 		return newArr;
 	}
-	
+
 	/**
 	 * Append an element to the end of an array.
 	 *
@@ -1090,7 +1093,7 @@ public final class ArrayUtils
 		System.arraycopy(xs, 0, newArr, 1, n);
 		return newArr;
 	}
-	
+
 	/**
 	 * Insert an element at the beginning of an array.
 	 *
@@ -1107,7 +1110,7 @@ public final class ArrayUtils
 		System.arraycopy(xs, 0, newArr, 1, n);
 		return newArr;
 	}
-	
+
 	/**
 	 * Insert an element at the beginning of an array.
 	 *
@@ -1124,7 +1127,7 @@ public final class ArrayUtils
 		System.arraycopy(xs, 0, newArr, 1, n);
 		return newArr;
 	}
-	
+
 	/**
 	 * Insert an element at the beginning of an array.
 	 *

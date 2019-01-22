@@ -42,7 +42,8 @@ import jflow.iterators.misc.DoubleWith;
  * @author ThomasB
  * @since 23 Apr 2018
  */
-public abstract class AbstractDoubleFlow extends AbstractOptionallySized implements DoubleFlow
+public abstract class AbstractDoubleFlow extends AbstractOptionallySized
+		implements DoubleFlow
 {
 	public AbstractDoubleFlow(OptionalInt size)
 	{
@@ -222,7 +223,7 @@ public abstract class AbstractDoubleFlow extends AbstractOptionallySized impleme
 	{
 		return DoubleReductionConsumption.fold(this, id, reducer);
 	}
-	
+
 	@Override
 	public double fold(DoubleBinaryOperator reducer)
 	{
@@ -242,7 +243,8 @@ public abstract class AbstractDoubleFlow extends AbstractOptionallySized impleme
 	}
 
 	@Override
-	public <K, V> Map<K, V> toMap(DoubleFunction<K> keyMapper, DoubleFunction<V> valueMapper)
+	public <K, V> Map<K, V> toMap(DoubleFunction<K> keyMapper,
+			DoubleFunction<V> valueMapper)
 	{
 		return DoubleCollectionConsumption.toMap(this, keyMapper, valueMapper);
 	}

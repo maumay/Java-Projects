@@ -22,7 +22,9 @@ import jflow.iterators.LongFlow;
  */
 public class FilteredFlow
 {
-	private FilteredFlow() {}
+	private FilteredFlow()
+	{
+	}
 
 	public static class OfObject<T> extends AbstractFlow<T>
 	{
@@ -57,8 +59,7 @@ public class FilteredFlow
 				final T tmp = cached;
 				cached = null;
 				return tmp;
-			}
-			else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}
@@ -68,8 +69,7 @@ public class FilteredFlow
 		{
 			if (hasNext()) {
 				cached = null;
-			}
-			else {
+			} else {
 				throw new NoSuchElementException();
 			}
 		}
@@ -83,14 +83,16 @@ public class FilteredFlow
 		private boolean nextReady = false;
 		private long cached = -1;
 
-		public OfLong(final LongFlow src, final LongPredicate predicate) {
+		public OfLong(final LongFlow src, final LongPredicate predicate)
+		{
 			super(OptionalInt.empty());
 			this.src = src;
 			this.predicate = predicate;
 		}
 
 		@Override
-		public boolean hasNext() {
+		public boolean hasNext()
+		{
 			while (!nextReady && src.hasNext()) {
 				final long next = src.nextLong();
 				if (predicate.test(next)) {
@@ -102,32 +104,30 @@ public class FilteredFlow
 		}
 
 		@Override
-		public long nextLong() {
+		public long nextLong()
+		{
 			if (nextReady) {
 				nextReady = false;
 				return cached;
-			}
-			else {
+			} else {
 				if (hasNext()) {
 					nextReady = false;
 					return cached;
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
 			}
 		}
 
 		@Override
-		public void skip() {
+		public void skip()
+		{
 			if (nextReady) {
 				nextReady = false;
-			}
-			else {
+			} else {
 				if (hasNext()) {
 					nextReady = false;
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
 			}
@@ -142,14 +142,16 @@ public class FilteredFlow
 		private boolean nextReady = false;
 		private int cached = -1;
 
-		public OfInt(final IntFlow src, final IntPredicate predicate) {
+		public OfInt(final IntFlow src, final IntPredicate predicate)
+		{
 			super(OptionalInt.empty());
 			this.src = src;
 			this.predicate = predicate;
 		}
 
 		@Override
-		public boolean hasNext() {
+		public boolean hasNext()
+		{
 			while (!nextReady && src.hasNext()) {
 				final int next = src.nextInt();
 				if (predicate.test(next)) {
@@ -161,32 +163,30 @@ public class FilteredFlow
 		}
 
 		@Override
-		public int nextInt() {
+		public int nextInt()
+		{
 			if (nextReady) {
 				nextReady = false;
 				return cached;
-			}
-			else {
+			} else {
 				if (hasNext()) {
 					nextReady = false;
 					return cached;
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
 			}
 		}
 
 		@Override
-		public void skip() {
+		public void skip()
+		{
 			if (nextReady) {
 				nextReady = false;
-			}
-			else {
+			} else {
 				if (hasNext()) {
 					nextReady = false;
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
 			}
@@ -201,14 +201,16 @@ public class FilteredFlow
 		private boolean nextReady = false;
 		private double cached = -1;
 
-		public OfDouble(final DoubleFlow src, final DoublePredicate predicate) {
+		public OfDouble(final DoubleFlow src, final DoublePredicate predicate)
+		{
 			super(OptionalInt.empty());
 			this.src = src;
 			this.predicate = predicate;
 		}
 
 		@Override
-		public boolean hasNext() {
+		public boolean hasNext()
+		{
 			while (!nextReady && src.hasNext()) {
 				final double next = src.nextDouble();
 				if (predicate.test(next)) {
@@ -220,32 +222,30 @@ public class FilteredFlow
 		}
 
 		@Override
-		public double nextDouble() {
+		public double nextDouble()
+		{
 			if (nextReady) {
 				nextReady = false;
 				return cached;
-			}
-			else {
+			} else {
 				if (hasNext()) {
 					nextReady = false;
 					return cached;
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
 			}
 		}
 
 		@Override
-		public void skip() {
+		public void skip()
+		{
 			if (nextReady) {
 				nextReady = false;
-			}
-			else {
+			} else {
 				if (hasNext()) {
 					nextReady = false;
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
 			}

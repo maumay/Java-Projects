@@ -18,7 +18,9 @@ import jflow.iterators.LongFlow;
  */
 public final class MapToObjectFlow
 {
-	private MapToObjectFlow() {}
+	private MapToObjectFlow()
+	{
+	}
 
 	public static class FromLong<E> extends AbstractFlow<E>
 	{

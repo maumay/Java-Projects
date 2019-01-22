@@ -37,10 +37,8 @@ public final class Numbers
 	/**
 	 * Iterates over the Fibonacci numbers with custom starting values.
 	 *
-	 * @param first
-	 *            The first start val
-	 * @param second
-	 *            The second start val
+	 * @param first  The first start val
+	 * @param second The second start val
 	 * @return The Fibonnaci numbers
 	 */
 	public static LongFlow fibonacci(final int first, final int second)

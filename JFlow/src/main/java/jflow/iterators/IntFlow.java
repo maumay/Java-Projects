@@ -17,7 +17,6 @@ import jflow.iterators.misc.Bool;
 import jflow.iterators.misc.IntPair;
 import jflow.iterators.misc.IntWith;
 
-
 /**
  * A sequential, single use iterator with lots of functionality in the style of
  * the {@link IntStream} interface. It bears a strong resemblance in that it
@@ -36,8 +35,7 @@ public interface IntFlow extends PrototypeIntFlow
 	/**
 	 * Applies a function elementwise to this IntFlow to make new IntFlow.
 	 *
-	 * @param f
-	 *            A mapping function.
+	 * @param f A mapping function.
 	 * @return A new IntFlow instance whose elements are obtained by applying the
 	 *         parameter mapping function to each element of this IntFlow instance
 	 *         in turn.
@@ -47,10 +45,8 @@ public interface IntFlow extends PrototypeIntFlow
 	/**
 	 * Applies a function elementwise to this IntFlow to make new Flow.
 	 *
-	 * @param <E>
-	 *            The target type of the mapping function.
-	 * @param f
-	 *            A mapping function.
+	 * @param   <E> The target type of the mapping function.
+	 * @param f A mapping function.
 	 * @return A new Flow instance whose elements are obtained by applying the
 	 *         parameter mapping function to each element of this IntFlow instance
 	 *         in turn.
@@ -60,8 +56,7 @@ public interface IntFlow extends PrototypeIntFlow
 	/**
 	 * Applies a function elementwise to this IntFlow to make a new DoubleFlow.
 	 *
-	 * @param f
-	 *            A mapping function.
+	 * @param f A mapping function.
 	 * @return A new DoubleFlow instance whose elements are obtained by applying the
 	 *         parameter mapping function to each element of this IntFlow instance
 	 *         in turn.
@@ -71,8 +66,7 @@ public interface IntFlow extends PrototypeIntFlow
 	/**
 	 * Applies a function elementwise to this IntFlow to make new LongFlow.
 	 *
-	 * @param f
-	 *            A mapping function.
+	 * @param f A mapping function.
 	 * @return A new LongFlow instance whose elements are obtained by applying the
 	 *         parameter mapping function to each element of this IntFlow instance
 	 *         in turn.
@@ -83,10 +77,8 @@ public interface IntFlow extends PrototypeIntFlow
 	 * Combines this IntFlow with an iterator to create a new Flow consisting of
 	 * pairs of elements with the same index in their respective origins.
 	 *
-	 * @param <E>
-	 *            The upper type bound on the parameter iterator.
-	 * @param other
-	 *            The Iterator to zip this source IntFlow with.
+	 * @param       <E> The upper type bound on the parameter iterator.
+	 * @param other The Iterator to zip this source IntFlow with.
 	 *
 	 * @return Denote this source IntFlow by {@code F} with the parameter iterator
 	 *         denoted by {@code I}. We return a new Flow instance {@code G} defined
@@ -103,8 +95,7 @@ public interface IntFlow extends PrototypeIntFlow
 	 * consisting of pairs of elements with the same index in their respective
 	 * origins.
 	 *
-	 * @param other
-	 *            The primitive iterator to zip this source IntFlow with.
+	 * @param other The primitive iterator to zip this source IntFlow with.
 	 *
 	 * @return Denote this source IntFlow by {@code F} with the parameter primitive
 	 *         iterator denoted by {@code I}. We return a new Flow instance
@@ -133,8 +124,8 @@ public interface IntFlow extends PrototypeIntFlow
 	 * Creates a new IntFlow from this IntFlow by selecting elements with indices
 	 * defined by the parameter index mapping.
 	 *
-	 * @param indexMap
-	 *            A strictly monotonically increasing function {@code f: N -> N}
+	 * @param indexMap A strictly monotonically increasing function
+	 *                 {@code f: N -> N}
 	 * @return Let {@code F} denote this source IntFlow, let {@code n = length(F)}
 	 *         and denote the indexMap by {@code f}. Then this method returns a
 	 *         LongFlow {@code G} given by:
@@ -148,10 +139,8 @@ public interface IntFlow extends PrototypeIntFlow
 	/**
 	 * Creates a new IntFlow from this IntFlow by selecting the first n elements.
 	 *
-	 * @param n
-	 *            A non-negative integer.
-	 * @throws IllegalArgumentException
-	 *             If parameter is negative.
+	 * @param n A non-negative integer.
+	 * @throws IllegalArgumentException If parameter is negative.
 	 * @return Let {@code F} denote this source IntFlow. We return a IntFlow
 	 *         consisting of the first {@code max(n, length(F))} elements of
 	 *         {@code F}.
@@ -162,8 +151,7 @@ public interface IntFlow extends PrototypeIntFlow
 	 * Creates a new IntFlow from this IntFlow by selecting elements until an
 	 * element fails the supplied test, the first failure is not selected.
 	 *
-	 * @param predicate
-	 *            A IntPredicate.
+	 * @param predicate A IntPredicate.
 	 * @return Let {@code n} be the index of the first element that the parameter
 	 *         predicate fails for. Then this method returns a IntFlow consisting of
 	 *         the first {@code n} elements of this source IntFlow. If no element
@@ -174,10 +162,8 @@ public interface IntFlow extends PrototypeIntFlow
 	/**
 	 * Creates a new IntFlow from this IntFlow by removing the first n elements.
 	 *
-	 * @param n
-	 *            A non-negative integer.
-	 * @throws IllegalArgumentException
-	 *             If parameter is negative.
+	 * @param n A non-negative integer.
+	 * @throws IllegalArgumentException If parameter is negative.
 	 * @return Let {@code F} denote this source IntFlow. We return a IntFlow missing
 	 *         the first {@code min(n, length(F))} elements of {@code F}.
 	 */
@@ -188,8 +174,7 @@ public interface IntFlow extends PrototypeIntFlow
 	 * fails the supplied test, the first failure is the first element of the
 	 * result.
 	 *
-	 * @param predicate
-	 *            An IntPredicate.
+	 * @param predicate An IntPredicate.
 	 * @return Let {@code n} be the index of the first element that the parameter
 	 *         predicate fails for. Then this method returns a IntFlow missing
 	 *         {@code n} elements of this source IntFlow. If no element fails the
@@ -201,8 +186,7 @@ public interface IntFlow extends PrototypeIntFlow
 	 * Creates a new IntFlow from this IntFlow by removing any element which fails
 	 * the supplied predicate test.
 	 *
-	 * @param predicate
-	 *            A IntPredicate.
+	 * @param predicate A IntPredicate.
 	 * @return An IntFlow containing only those elements of this source IntFlow
 	 *         which pass the test defined by the parameter predicate. The relative
 	 *         ordering of elements is retained.
@@ -213,8 +197,7 @@ public interface IntFlow extends PrototypeIntFlow
 	 * Creates a new IntFlow from this IntFlow by adding each element of the
 	 * supplied primitive iterator to its end in order.
 	 *
-	 * @param other
-	 *            A primitive iterator.
+	 * @param other A primitive iterator.
 	 * @return An IntFlow consisting of the elements of this source IntFlow followed
 	 *         by the elements of the parameter primitive iterator.
 	 */
@@ -224,8 +207,7 @@ public interface IntFlow extends PrototypeIntFlow
 	 * Creates a new IntFlow from this IntFlow by adding each element of the
 	 * supplied varargs array to its end in order.
 	 *
-	 * @param other
-	 *            - A varargs int array
+	 * @param other - A varargs int array
 	 * @return An IntFlow consisting of the elements of the source IntFlow followed
 	 *         by the elements in the parameter array.
 	 */
@@ -235,8 +217,7 @@ public interface IntFlow extends PrototypeIntFlow
 	 * Creates a new IntFlow from this Flow by adding each element to the end of the
 	 * supplied primitive iterator in order.
 	 *
-	 * @param other
-	 *            A primitive iterator.
+	 * @param other A primitive iterator.
 	 * @return a IntFlow consisting of the elements of the parameter primitive
 	 *         iterator followed by the elements of this source IntFlow.
 	 */
@@ -246,8 +227,7 @@ public interface IntFlow extends PrototypeIntFlow
 	 * Creates a new IntFlow from this Flow by adding each element to the end of the
 	 * supplied varargs array in order.
 	 *
-	 * @param other
-	 *            - A varargs int array
+	 * @param other - A varargs int array
 	 * @return an IntFlow consisting of the elements in the parameter array followed
 	 *         by the elements of the source IntFlow.
 	 */
@@ -256,8 +236,7 @@ public interface IntFlow extends PrototypeIntFlow
 	/**
 	 * Applies an accumulation operation to this IntFlow to produce a new IntFlow.
 	 *
-	 * @param accumulator
-	 *            The accumulation function.
+	 * @param accumulator The accumulation function.
 	 * @return Let {@code F} denote this source IntFlow and {@code g} denote the
 	 *         accumulation function. Then the IntFlow returned is of the form:
 	 *         <ul>
@@ -269,10 +248,8 @@ public interface IntFlow extends PrototypeIntFlow
 	/**
 	 * Applies an accumulation operation to this IntFlow to produce a new IntFlow.
 	 *
-	 * @param id
-	 *            The identity element in the accumulation.
-	 * @param accumulator
-	 *            The accumulator function.
+	 * @param id          The identity element in the accumulation.
+	 * @param accumulator The accumulator function.
 	 * @return Let {@code F} denote this source IntFlow and {@code g} denote the
 	 *         accumulation function. Then the IntFlow returned is of the form:
 	 *         <ul>
@@ -298,8 +275,8 @@ public interface IntFlow extends PrototypeIntFlow
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * IntFlow.
 	 *
-	 * @param defaultValue
-	 *            - The value which will be returned if the source is empty.
+	 * @param defaultValue - The value which will be returned if the source is
+	 *                     empty.
 	 *
 	 * @return the smallest element in this IntFlow or the default value if the
 	 *         iteration is empty.
@@ -313,11 +290,9 @@ public interface IntFlow extends PrototypeIntFlow
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * IntFlow.
 	 *
-	 * @param <C>
-	 *            A type equipped with a natural ordering.
+	 * @param     <C> A type equipped with a natural ordering.
 	 *
-	 * @param key
-	 *            A function mapping the elements of this IntFlow to some data type
+	 * @param key A function mapping the elements of this IntFlow to some data type
 	 *            with an ordering.
 	 * @return The element of this IntFlow whose image under the key mapping is the
 	 *         minimum among all images. Nothing is returned if the source is empty.
@@ -341,8 +316,8 @@ public interface IntFlow extends PrototypeIntFlow
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * IntFlow.
 	 *
-	 * @param defaultValue
-	 *            - The value which will be returned if the source is empty.
+	 * @param defaultValue - The value which will be returned if the source is
+	 *                     empty.
 	 *
 	 * @return The largest element in this IntFlow or the default value if the
 	 *         iteration is empty.
@@ -356,11 +331,9 @@ public interface IntFlow extends PrototypeIntFlow
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * IntFlow.
 	 *
-	 * @param <C>
-	 *            A type equipped with a natural ordering.
+	 * @param     <C> A type equipped with a natural ordering.
 	 *
-	 * @param key
-	 *            A function mapping the elements of this IntFlow to some data type
+	 * @param key A function mapping the elements of this IntFlow to some data type
 	 *            with an ordering.
 	 * @return The element of this IntFlow whose image under the key mapping is the
 	 *         maximum among all images. Nothing is returned if the source is empty.
@@ -397,8 +370,7 @@ public interface IntFlow extends PrototypeIntFlow
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * IntFlow.
 	 *
-	 * @param predicate
-	 *            The supplied test.
+	 * @param predicate The supplied test.
 	 * @return True if every element passes the parameter predicate test, false
 	 *         otherwise.
 	 */
@@ -411,8 +383,7 @@ public interface IntFlow extends PrototypeIntFlow
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * IntFlow.
 	 *
-	 * @param predicate
-	 *            The supplied test.
+	 * @param predicate The supplied test.
 	 * @return True if every element passes the parameter predicate test, false
 	 *         otherwise.
 	 */
@@ -428,8 +399,7 @@ public interface IntFlow extends PrototypeIntFlow
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * IntFlow.
 	 *
-	 * @param predicate
-	 *            The supplied test.
+	 * @param predicate The supplied test.
 	 * @return True if any element passes the parameter predicate test, false
 	 *         otherwise.
 	 */
@@ -442,8 +412,7 @@ public interface IntFlow extends PrototypeIntFlow
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * IntFlow.
 	 *
-	 * @param predicate
-	 *            The supplied test.
+	 * @param predicate The supplied test.
 	 * @return True if any element passes the parameter predicate test, false
 	 *         otherwise.
 	 */
@@ -459,8 +428,7 @@ public interface IntFlow extends PrototypeIntFlow
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * IntFlow.
 	 *
-	 * @param predicate
-	 *            The supplied test.
+	 * @param predicate The supplied test.
 	 * @return True if every element fails the parameter predicate test, false
 	 *         otherwise.
 	 */
@@ -473,8 +441,7 @@ public interface IntFlow extends PrototypeIntFlow
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * IntFlow.
 	 *
-	 * @param predicate
-	 *            The supplied test.
+	 * @param predicate The supplied test.
 	 * @return True if every element fails the parameter predicate test, false
 	 *         otherwise.
 	 */
@@ -490,10 +457,8 @@ public interface IntFlow extends PrototypeIntFlow
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * IntFlow.
 	 *
-	 * @param id
-	 *            The identity of the reduction operation
-	 * @param reducer
-	 *            The reduction function
+	 * @param id      The identity of the reduction operation
+	 * @param reducer The reduction function
 	 * @return If we denote this source IntFlow by {@code F}, the length of
 	 *         {@code F} by {@code n} and the reduction function by {@code f} then
 	 *         the result is equal to: <br>
@@ -501,7 +466,7 @@ public interface IntFlow extends PrototypeIntFlow
 	 *         {@code f(...f(f(id, F[0]), F[1])..., F[n - 1])}
 	 */
 	int fold(int id, IntBinaryOperator reducer);
-	
+
 	/**
 	 * Reduces this IntFlow to a single value via some reduction function. Throws
 	 * exception if empty flow.
@@ -561,17 +526,13 @@ public interface IntFlow extends PrototypeIntFlow
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * IntFlow.
 	 *
-	 * @param <K>
-	 *            The type of the keys in the created mapping.
-	 * @param <V>
-	 *            The type of the values in the created mapping.
-	 * @param keyMapper
-	 *            A function mapping longs to elements of the key type.
-	 * @param valueMapper
-	 *            A function mapping longs to elements of the value type.
+	 * @param             <K> The type of the keys in the created mapping.
+	 * @param             <V> The type of the values in the created mapping.
+	 * @param keyMapper   A function mapping longs to elements of the key type.
+	 * @param valueMapper A function mapping longs to elements of the value type.
 	 *
-	 * @throws IllegalStateException
-	 *             If two elements of this IntFlow map to the same key.
+	 * @throws IllegalStateException If two elements of this IntFlow map to the same
+	 *                               key.
 	 *
 	 * @return A Map instance whose key-value pairs have a 1-to-1 correspondence
 	 *         with the elements in this source IntFlow. More specifically if:
@@ -582,7 +543,8 @@ public interface IntFlow extends PrototypeIntFlow
 	 *         an element of this source IntFlow, say {@code e}, is associated to
 	 *         the key value pair {@code (k(e), v(e))}.
 	 */
-	<K, V> Map<K, V> toMap(IntFunction<? extends K> keyMapper, IntFunction<? extends V> valueMapper);
+	<K, V> Map<K, V> toMap(IntFunction<? extends K> keyMapper,
+			IntFunction<? extends V> valueMapper);
 
 	/**
 	 * Groups elements in this IntFlow via their image under some supplied
@@ -591,11 +553,9 @@ public interface IntFlow extends PrototypeIntFlow
 	 * This method is a 'consuming method', i.e. it will iterate through this
 	 * IntFlow.
 	 *
-	 * @param <K>
-	 *            The type of the keys in the grouping map.
+	 * @param            <K> The type of the keys in the grouping map.
 	 *
-	 * @param classifier
-	 *            A function defining the different groups of elements.
+	 * @param classifier A function defining the different groups of elements.
 	 * @return A Map instance whose keys partition the elements of this source
 	 *         IntFlow via the classification function. Elements in this source
 	 *         IntFlow who have equal (under .equals() contract) images under the
@@ -612,11 +572,9 @@ public interface IntFlow extends PrototypeIntFlow
 	 *
 	 * A convenience method for applying a global function onto this IntFlow.
 	 *
-	 * @param <C>
-	 *            The target type of the build function.
-	 * @param builder
-	 *            - a function whose input encompasses IntFlow instances of this
-	 *            element type.
+	 * @param         <C> The target type of the build function.
+	 * @param builder - a function whose input encompasses IntFlow instances of this
+	 *                element type.
 	 * @return the output of the supplied function applied to this IntFlow.
 	 */
 	default <C> C build(Function<? super IntFlow, C> builder)

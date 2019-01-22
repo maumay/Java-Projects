@@ -22,7 +22,9 @@ import jflow.iterators.LongFlow;
  */
 public final class SlicedFlow
 {
-	private SlicedFlow() {}
+	private SlicedFlow()
+	{
+	}
 
 	public static class OfObject<E> extends AbstractFlow<E>
 	{
@@ -63,8 +65,7 @@ public final class SlicedFlow
 				if (src.hasNext()) {
 					src.skip();
 					iteratorCount++;
-				}
-				else {
+				} else {
 					srcExhausted = true;
 					return false;
 				}
@@ -75,70 +76,64 @@ public final class SlicedFlow
 				iteratorCount++;
 				updateCheckpoint(indexMapping.applyAsInt(++indexCount));
 				return true;
-			}
-			else {
+			} else {
 				srcExhausted = true;
 				return false;
 			}
 		}
 
 		@Override
-		public boolean hasNext() {
+		public boolean hasNext()
+		{
 			if (checkpoint < 0) {
 				init();
 			}
 
 			if (srcExhausted) {
 				return false;
-			}
-			else if (cached == null) {
+			} else if (cached == null) {
 				return cacheNextElement();
-			}
-			else {
+			} else {
 				return true;
 			}
 		}
 
 		@Override
-		public E next() {
+		public E next()
+		{
 			if (checkpoint < 0) {
 				init();
 			}
 
 			if (srcExhausted) {
 				throw new NoSuchElementException();
-			}
-			else if (cached == null) {
+			} else if (cached == null) {
 				if (cacheNextElement()) {
 					return returnCacheAndErase();
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
-			}
-			else {
+			} else {
 				return returnCacheAndErase();
 			}
 		}
 
 		@Override
-		public void skip() {
+		public void skip()
+		{
 			if (checkpoint < 0) {
 				init();
 			}
 
 			if (srcExhausted) {
 				throw new NoSuchElementException();
-			}
-			else if (cached == null) {
+			} else if (cached == null) {
 				if (cacheNextElement()) {
 					returnCacheAndErase();
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
-			}
-			else {
+			} else {
 				returnCacheAndErase();
 			}
 		}
@@ -191,8 +186,7 @@ public final class SlicedFlow
 				if (src.hasNext()) {
 					src.skip();
 					iteratorCount++;
-				}
-				else {
+				} else {
 					srcExhausted = true;
 					return false;
 				}
@@ -204,70 +198,64 @@ public final class SlicedFlow
 				iteratorCount++;
 				updateCheckpoint(indexMapping.applyAsInt(++indexCount));
 				return true;
-			}
-			else {
+			} else {
 				srcExhausted = true;
 				return false;
 			}
 		}
 
 		@Override
-		public boolean hasNext() {
+		public boolean hasNext()
+		{
 			if (checkpoint < 0) {
 				init();
 			}
 
 			if (srcExhausted) {
 				return false;
-			}
-			else if (!elementCached) {
+			} else if (!elementCached) {
 				return cacheNextElement();
-			}
-			else {
+			} else {
 				return true;
 			}
 		}
 
 		@Override
-		public int nextInt() {
+		public int nextInt()
+		{
 			if (checkpoint < 0) {
 				init();
 			}
 
 			if (srcExhausted) {
 				throw new NoSuchElementException();
-			}
-			else if (!elementCached) {
+			} else if (!elementCached) {
 				if (cacheNextElement()) {
 					return returnCacheAndErase();
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
-			}
-			else {
+			} else {
 				return returnCacheAndErase();
 			}
 		}
 
 		@Override
-		public void skip() {
+		public void skip()
+		{
 			if (checkpoint < 0) {
 				init();
 			}
 
 			if (srcExhausted) {
 				throw new NoSuchElementException();
-			}
-			else if (!elementCached) {
+			} else if (!elementCached) {
 				if (cacheNextElement()) {
 					returnCacheAndErase();
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
-			}
-			else {
+			} else {
 				returnCacheAndErase();
 			}
 		}
@@ -319,8 +307,7 @@ public final class SlicedFlow
 				if (src.hasNext()) {
 					src.skip();
 					iteratorCount++;
-				}
-				else {
+				} else {
 					srcExhausted = true;
 					return false;
 				}
@@ -332,70 +319,64 @@ public final class SlicedFlow
 				iteratorCount++;
 				updateCheckpoint(indexMapping.applyAsInt(++indexCount));
 				return true;
-			}
-			else {
+			} else {
 				srcExhausted = true;
 				return false;
 			}
 		}
 
 		@Override
-		public boolean hasNext() {
+		public boolean hasNext()
+		{
 			if (checkpoint < 0) {
 				init();
 			}
 
 			if (srcExhausted) {
 				return false;
-			}
-			else if (!elementCached) {
+			} else if (!elementCached) {
 				return cacheNextElement();
-			}
-			else {
+			} else {
 				return true;
 			}
 		}
 
 		@Override
-		public double nextDouble() {
+		public double nextDouble()
+		{
 			if (checkpoint < 0) {
 				init();
 			}
 
 			if (srcExhausted) {
 				throw new NoSuchElementException();
-			}
-			else if (!elementCached) {
+			} else if (!elementCached) {
 				if (cacheNextElement()) {
 					return returnCacheAndErase();
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
-			}
-			else {
+			} else {
 				return returnCacheAndErase();
 			}
 		}
 
 		@Override
-		public void skip() {
+		public void skip()
+		{
 			if (checkpoint < 0) {
 				init();
 			}
 
 			if (srcExhausted) {
 				throw new NoSuchElementException();
-			}
-			else if (!elementCached) {
+			} else if (!elementCached) {
 				if (cacheNextElement()) {
 					returnCacheAndErase();
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
-			}
-			else {
+			} else {
 				returnCacheAndErase();
 			}
 		}
@@ -447,8 +428,7 @@ public final class SlicedFlow
 				if (src.hasNext()) {
 					src.skip();
 					iteratorCount++;
-				}
-				else {
+				} else {
 					srcExhausted = true;
 					return false;
 				}
@@ -460,70 +440,64 @@ public final class SlicedFlow
 				iteratorCount++;
 				updateCheckpoint(indexMapping.applyAsInt(++indexCount));
 				return true;
-			}
-			else {
+			} else {
 				srcExhausted = true;
 				return false;
 			}
 		}
 
 		@Override
-		public boolean hasNext() {
+		public boolean hasNext()
+		{
 			if (checkpoint < 0) {
 				init();
 			}
 
 			if (srcExhausted) {
 				return false;
-			}
-			else if (!elementCached) {
+			} else if (!elementCached) {
 				return cacheNextElement();
-			}
-			else {
+			} else {
 				return true;
 			}
 		}
 
 		@Override
-		public long nextLong() {
+		public long nextLong()
+		{
 			if (checkpoint < 0) {
 				init();
 			}
 
 			if (srcExhausted) {
 				throw new NoSuchElementException();
-			}
-			else if (!elementCached) {
+			} else if (!elementCached) {
 				if (cacheNextElement()) {
 					return returnCacheAndErase();
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
-			}
-			else {
+			} else {
 				return returnCacheAndErase();
 			}
 		}
 
 		@Override
-		public void skip() {
+		public void skip()
+		{
 			if (checkpoint < 0) {
 				init();
 			}
 
 			if (srcExhausted) {
 				throw new NoSuchElementException();
-			}
-			else if (!elementCached) {
+			} else if (!elementCached) {
 				if (cacheNextElement()) {
 					returnCacheAndErase();
-				}
-				else {
+				} else {
 					throw new NoSuchElementException();
 				}
-			}
-			else {
+			} else {
 				returnCacheAndErase();
 			}
 		}

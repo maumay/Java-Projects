@@ -14,14 +14,17 @@ import jflow.iterators.LongFlow;
  */
 public final class MapToDoubleFlow
 {
-	private MapToDoubleFlow() {}
+	private MapToDoubleFlow()
+	{
+	}
 
 	public static class FromObject<E> extends AbstractDoubleFlow
 	{
 		private final Flow<E> sourceFlow;
 		private final ToDoubleFunction<? super E> mappingFunction;
 
-		public FromObject(final Flow<E> src, final ToDoubleFunction<? super E> mappingFunction)
+		public FromObject(final Flow<E> src,
+				final ToDoubleFunction<? super E> mappingFunction)
 		{
 			super(src.size());
 			this.sourceFlow = src;

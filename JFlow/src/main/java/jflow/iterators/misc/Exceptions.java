@@ -18,8 +18,7 @@ public final class Exceptions
 	 * Checks a given condition is true, if it is then nothing happens otherwise a
 	 * {@linkplain RuntimeException} with no message is thrown.
 	 * 
-	 * @param condition
-	 *            The condition which is required to be true.
+	 * @param condition The condition which is required to be true.
 	 */
 	public static void require(boolean condition)
 	{
@@ -30,11 +29,9 @@ public final class Exceptions
 	 * Checks a given condition is true, if it is then nothing happens otherwise a
 	 * {@linkplain RuntimeException} with the provided message is thrown.
 	 * 
-	 * @param condition
-	 *            The condition which is required to be true.
-	 * @param message
-	 *            The message which should be attached to the exception if it is
-	 *            thrown.
+	 * @param condition The condition which is required to be true.
+	 * @param message   The message which should be attached to the exception if it
+	 *                  is thrown.
 	 */
 	public static void require(boolean condition, String message)
 	{
@@ -47,8 +44,7 @@ public final class Exceptions
 	 * Checks a given condition is true, if it is then nothing happens otherwise a
 	 * {@linkplain IllegalArgumentException} with no message is thrown.
 	 * 
-	 * @param condition
-	 *            The condition which is required to be true.
+	 * @param condition The condition which is required to be true.
 	 */
 	public static void requireArgument(boolean condition)
 	{
@@ -59,11 +55,9 @@ public final class Exceptions
 	 * Checks a given condition is true, if it is then nothing happens otherwise a
 	 * {@linkplain IllegalArgumentException} with the provided message is thrown.
 	 * 
-	 * @param condition
-	 *            The condition which is required to be true.
-	 * @param message
-	 *            The message which should be attached to the exception if it is
-	 *            thrown.
+	 * @param condition The condition which is required to be true.
+	 * @param message   The message which should be attached to the exception if it
+	 *                  is thrown.
 	 */
 	public static void requireArgument(boolean condition, String message)
 	{
